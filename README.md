@@ -1,6 +1,6 @@
 # P4 projekt, AAU CCT4 (PLACEHOLDER / TEMPLATE)
-# Theme: Security in Application Development
-## Requirements / Outline:
+## Theme: Security in Application Development
+### Requirements / Outline:
 - The project involves analyze and implementation of cyber solution to secure data transmission between users (remotely) at the network level
 
 - The application should mimic a real-world problem where security is essential
