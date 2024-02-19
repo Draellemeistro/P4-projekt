@@ -1,5 +1,52 @@
 # P4 projekt, AAU CCT4 (PLACEHOLDER / TEMPLATE)
 ## Theme: Security in Application Development
+### nogle ting at kigge på
+#### Artikler
+1.  [How to make a secure messaging app](https://www.amplework.com/blog/how-to-make-a-secure-messaging-app/)
+2. [Developing a real-time secure chat application like WhatsApp & Signal with end-to-end encryption.](https://www.qed42.com/insights/developing-a-real-time-secure-chat-application-like-whatsapp-signal-with-end-to-end-encryption)
+3. [Build an End-to-End Encrypted Chat with Seald and PubNub](https://www.pubnub.com/blog/build-an-end-to-end-encrypted-chat-with-seald-and-pubnub/)
+4. [How encrypted messaging changed the way we protest](https://cybernews.com/news/how-encrypted-messaging-changed-the-way-we-protest/)
+5. [What is AES encryption and how does it work?](https://cybernews.com/resources/what-is-aes-encryption/)
+6. [Python chat](https://github.com/ludvigknutsmark/python-chat)
+7. [A Cryptographer's Guide to End-to-End Encryption](https://hackernoon.com/a-cryptographers-guide-to-end-to-end-encryption?ref=hackernoon.com)
+8. [60 Stories To Learn About Compliance](https://hackernoon.com/60-stories-to-learn-about-compliance?ref=hackernoon.com)
+
+   
+#### Lign. produkter
+- Signal
+- Telegram
+- WhatsApp
+- Wickr Me
+- Wire - Secure Messenger
+
+#### Redskaber, ting at kigge på etc.
+- AES-256
+- Extended Triple Diffie-Hellman
+- Elliptic Curve Diffie-Hellman
+- Double Ratchet
+- Sesame protocols
+- SPN (substitution permutation network)
+- 
+
+
+##### send data
+1. **Refresh Webpage**
+2. **HTTP protocol**
+3. **HTTP 1.1 Keep-Alive Protocol**
+4. **Short Polling**
+5. **Long Polling**
+6. **Server-Sent Events**
+4, 5, 6: [Polling vs SSE vs WebSocket— How to choose the right one](https://codeburst.io/polling-vs-sse-vs-websocket-how-to-choose-the-right-one-1859e4e13bd9)
+1(?), 2, 3: [HTTP Request/Response Cycle](https://backend.turing.edu/module2/lessons/how_the_web_works_http#:~:text=The%20Request%20and%20Response%20Cycle&text=When%20the%20server%20receives%20that,be%20rendered%20to%20the%20user.) og [Building Real-Time Applications with WebSockets](https://frontend.turing.edu/lessons/module-4/websockets.html)
+
+##### Features
+- **Open source protocol**
+- **Encrypted messages** / **End-to-end encryption** / **Device-to-device encryption**
+- **Passcode and Touch ID protection.**
+- **Screen capture blocking.**
+- **Timed conversations.**
+
+  
 ### Requirements / Outline:
 - The project involves analyze and implementation of cyber solution to secure data transmission between users (remotely) at the network level
 
