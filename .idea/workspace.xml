@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/.eslintignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/.eslintrc.cjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/.npmrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/.prettierignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/.prettierrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/playwright.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/app.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/index.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/lib/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/+page.svelte" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/Box.svelte" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/color/+page.svelte" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/color/BlueThing.svelte" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/color/GreenThing.svelte" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/color/Inner.svelte" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/color/RedThing.svelte" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/LoginForm.svelte" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/userContext.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/vote/+page.svelte" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/vote/Modal.svelte" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/static/favicon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/svelte.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/tests/test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/vite.config.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Draellemeistro&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="d5c41a0b-fa1e-4052-b6ab-d8df73448915" />
+        <option name="url" value="https://github.com/Draellemeistro/P4-projekt.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2davILGcQnxb2AJFjDZnhEO3hpQ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "6f83454",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/and/OneDrive - Hafsjold Data Consult/Dokumenter/GitHub/P4-projekt",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.3.4\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="" />
+      <created>1710258923554</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1710258923554</updated>
+      <workItem from="1710258924800" duration="1493000" />
+      <workItem from="1710331527336" duration="609000" />
+      <workItem from="1710335781768" duration="46000" />
+      <workItem from="1710336148301" duration="34000" />
+      <workItem from="1710352448974" duration="2014000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
