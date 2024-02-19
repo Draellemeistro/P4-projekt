@@ -29,7 +29,7 @@
 - 
 
 
-##### send data
+#### Data transfer
 1. **Refresh Webpage**
 2. **HTTP protocol**
 3. **HTTP 1.1 Keep-Alive Protocol**
@@ -39,7 +39,7 @@
 4, 5, 6: [Polling vs SSE vs WebSocket— How to choose the right one](https://codeburst.io/polling-vs-sse-vs-websocket-how-to-choose-the-right-one-1859e4e13bd9)
 1(?), 2, 3: [HTTP Request/Response Cycle](https://backend.turing.edu/module2/lessons/how_the_web_works_http#:~:text=The%20Request%20and%20Response%20Cycle&text=When%20the%20server%20receives%20that,be%20rendered%20to%20the%20user.) og [Building Real-Time Applications with WebSockets](https://frontend.turing.edu/lessons/module-4/websockets.html)
 
-##### Features
+#### Features
 - **Open source protocol**
 - **Encrypted messages** / **End-to-end encryption** / **Device-to-device encryption**
 - **Passcode and Touch ID protection.**
