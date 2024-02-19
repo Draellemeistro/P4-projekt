@@ -11,6 +11,26 @@
 
 - It could be desktop or web application
 
+  
+#### What needs to be covered?
+- `Definition and analysis of the problem:` 
+	- Define a concrete use-case that involves security challenges
+	- Identify and analyze potential security vulnerabilities (e.g., cyber fraud, data breaches, unauthorized access)
+- `Security Solution:`
+	- Implement a security solution to prevent the identified potential threats of the application
+	- The security mechanism must cover Input validation
+	- In addition, at minimum 1 extra security mechanism (multifactor authentication for login, secure session management, access control)
+	- Make different analyses of how to secure the data, and select the best based on your project
+	- Test and evaluate the implemented solution by simulating cyber attacks
+- `Data Communication:`
+	- Define the communication protocol(s) used in your project (HTTP, TCP, UDP, ….)
+	- Use a platform for sniffing the data, i.e., capture and analyze the network traffic (e.g., detecting anomalies or test your developed security mechanism)
+- `UML and Scrum`
+	- Use again UML, SCRUM in your work, analyses, and design
+	- With respect to UML it is a good idea to extend the normal UML use cases with ”dark use cases” where you investigate different attacks and let that guide the selection of security mechanisms
+
+ ![image](https://github.com/Draellemeistro/P4-projekt/assets/117720444/94c9776e-bf5e-435b-b33d-194197c4d28d)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
