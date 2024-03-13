@@ -1,14 +1,20 @@
     <script>
     let candidate;
+    let party = [];
+    let vote;
+
+    party[0]="DF"
+
     import Modal from './Modal.svelte';
 
     let showModal = false;
-    function showCastVoteButton(candidate){
-        return candidate > 0;
+    function printCandidate(candidate){
+        console.log(candidate);
     }
 </script>
 
-<h2>Size</h2>
+<h2>{party[0]}</h2> <!-- Display the party name -->
+
 <div>
     <div>
         <div>
@@ -29,15 +35,12 @@
                 Poul Hartling
             </label>
         </div>
+    </div>
 
-    </div>
-    <div>
-        <p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
-    </div>
     {#if (candidate)}
-        <button on:click={() => (showModal = true)}> show modal </button>
-    {/if}
-    {#if !candidate}
+        <button on:click={() => (showModal = true)}>CAST VOTE</button>
+        <button on:click={() => printCandidate(candidate)}>PRINT VOTE</button>
+    {:else}
         <p>Select a candidate!</p>
     {/if}
 
