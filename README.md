@@ -1,13 +1,24 @@
 # P4 projekt, AAU CCT4 (PLACEHOLDER / TEMPLATE)
 ## Theme: Security in Application Development
 ### nogle ting at kigge på
+- verifiability. Verifiability typically includes:
+	-  individual verifiability (a voter can check that her ballot is counted);
+	- universal verifiability (anyone can check that the result corresponds to the published ballots);
+    - eligibility verifiability (only legitimate voters may vote).
+- vote privacy: no one should know how I voted;
+
+
+These two goals are often seen as antagonistic and some national agencies even impose a hierarchy between them: first privacy, and then verifiability as an additional feature.
+
+De her opdelte det i fire dele ifht. sikkerhed:
+
+- integrity
+- observers help us to assure that the secure procedure for the voting method was correctly put into practice
+- confidentiality
+-transparency
+- coercion-resistance.
 #### Artikler
-1.  [How to make a secure messaging app](https://www.amplework.com/blog/how-to-make-a-secure-messaging-app/)
-2. [Developing a real-time secure chat application like WhatsApp & Signal with end-to-end encryption.](https://www.qed42.com/insights/developing-a-real-time-secure-chat-application-like-whatsapp-signal-with-end-to-end-encryption)
-3. [Build an End-to-End Encrypted Chat with Seald and PubNub](https://www.pubnub.com/blog/build-an-end-to-end-encrypted-chat-with-seald-and-pubnub/)
-4. [How encrypted messaging changed the way we protest](https://cybernews.com/news/how-encrypted-messaging-changed-the-way-we-protest/)
-5. [What is AES encryption and how does it work?](https://cybernews.com/resources/what-is-aes-encryption/)
-6. [Python chat](https://github.com/ludvigknutsmark/python-chat)
+
 7. [A Cryptographer's Guide to End-to-End Encryption](https://hackernoon.com/a-cryptographers-guide-to-end-to-end-encryption?ref=hackernoon.com)
 8. [60 Stories To Learn About Compliance](https://hackernoon.com/60-stories-to-learn-about-compliance?ref=hackernoon.com)
 
