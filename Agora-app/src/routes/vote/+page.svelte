@@ -1,70 +1,52 @@
-    <script>
-    let candidate;
-    let party = [];
-    let vote;
-
-    party[0]="DF"
-
+<script>
     import Modal from './Modal.svelte';
-
     let showModal = false;
-    function printCandidate(candidate){
-        console.log(candidate);
-    }
+
+    let selectedOption;
+    let candidates = [
+        ["Lars Løkke Rasmussen", "DF"],
+        ["Anders Fog Rasmussen", "DF"],
+        ["Poul Hartling","DF"],
+        ["Meg Griffin", "V"]
+    ];
+
+    // Group candidates by party
+    let parties = {};
+    candidates.forEach(([name, party]) => {
+        if (!parties[party]) parties[party] = [];
+        parties[party].push(name);
+    });
 </script>
 
-<h2>{party[0]}</h2> <!-- Display the party name -->
-
-<div>
+{#each Object.entries(parties) as [party, candidates]}
     <div>
-        <div>
-            <label>
-                <input type="radio" bind:group={candidate} value={1} />
-                Lars Løkke Rasmussen
-            </label>
-        </div>
-        <div>
-            <label>
-                <input type="radio" bind:group={candidate} value={2} />
-                Anders Fog Rasmussen
-            </label>
-        </div>
-        <div>
-            <label>
-                <input type="radio" bind:group={candidate} value={3} />
-                Poul Hartling
-            </label>
-        </div>
+        <h2>
+            <input type="radio" bind:group={selectedOption} value={`Party: ${party}`} />
+            {party}
+        </h2>
     </div>
 
-    {#if (candidate)}
-        <button on:click={() => (showModal = true)}>CAST VOTE</button>
-        <button on:click={() => printCandidate(candidate)}>PRINT VOTE</button>
-    {:else}
-        <p>Select a candidate!</p>
-    {/if}
+    {#each candidates as candidate}
+        <div>
+            <label>
+                <input type="radio" bind:group={selectedOption} value={`Candidate: ${candidate} (${party})`} />
+                {candidate}
+            </label>
+        </div>
+    {/each}
+{/each}
 
-    <Modal bind:showModal>
-        <h2 slot="header">
-            modal
-            <small><em>adjective</em> mod·al \ˈmō-dəl\</small>
-        </h2>
+{#if selectedOption !== undefined}
+    <button on:click={() => (showModal = true)}>CAST VOTE</button>
+{:else}
+    <p>Select a candidate or a party!</p>
+{/if}
 
-        <ol class="definition-list">
-            <li>of or relating to modality in logic</li>
-            <li>
-                containing provisions as to the mode of procedure or the manner of taking effect —used of a
-                contract or legacy
-            </li>
-            <li>of or relating to a musical mode</li>
-            <li>of or relating to structure as opposed to substance</li>
-            <li>
-                of, relating to, or constituting a grammatical form or category characteristically indicating
-                predication
-            </li>
-            <li>of or relating to a statistical mode</li>
-        </ol>
+<Modal bind:showModal>
+    <h2 slot="header">
+        Cast vote for {selectedOption}
+    </h2>
 
-        <a href="https://www.merriam-webster.com/dictionary/modal">merriam-webster.com</a>
-    </Modal>
-</div>
+
+    <a href="https://www.merriam-webster.com/dictionary/modal">merriam-webster.com</a>
+</Modal>

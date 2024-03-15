@@ -23,14 +23,14 @@
         <slot />
         <hr />
         <!-- svelte-ignore a11y-autofocus -->
-        <button autofocus on:click={() => dialog.close()}>close modal</button>
-        <button autofocus on:click={() => voteHandler()}>i understand</button>
+        <button autofocus on:click={() => dialog.close()}>Go back</button>
+        <button on:click={() => voteHandler()}>CAST VOTE</button>
     </div>
 </dialog>
 
 <style>
     dialog {
-        max-width: 32em;
+        max-width: 40em;
         border-radius: 0.2em;
         border: none;
         padding: 0;
@@ -64,6 +64,7 @@
         }
     }
     button {
+        padding-bottom: 3px;
         display: block;
     }
 </style>
