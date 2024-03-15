@@ -7,21 +7,31 @@
         ["Lars Løkke Rasmussen", "DF"],
         ["Anders Fog Rasmussen", "DF"],
         ["Poul Hartling","DF"],
-        ["Meg Griffin", "V"]
+        ["Meg Griffin", "V"],
+        ["Donald Duck", "SF"],
+        ["Donald Shmuck", "N/A"]
     ];
 
     // Group candidates by party
     let parties = {};
     candidates.forEach(([name, party]) => {
-        if (!parties[party]) parties[party] = [];
+        if (party === "N/A")
+            party = "Outside of the parties"
+
+        if (!parties[party])
+            parties[party] = [];
+
         parties[party].push(name);
     });
+
 </script>
 
 {#each Object.entries(parties) as [party, candidates]}
     <div>
         <h2>
-            <input type="radio" bind:group={selectedOption} value={`Party: ${party}`} />
+            {#if party !== "Outside of the parties"}
+                <input type="radio" bind:group={selectedOption} value={`Party: ${party}`} />
+            {/if}
             {party}
         </h2>
     </div>
@@ -37,7 +47,7 @@
 {/each}
 
 {#if selectedOption !== undefined}
-    <button on:click={() => (showModal = true)}>CAST VOTE</button>
+    <button on:click={() => (showModal = true)}>Proceed</button>
 {:else}
     <p>Select a candidate or a party!</p>
 {/if}
