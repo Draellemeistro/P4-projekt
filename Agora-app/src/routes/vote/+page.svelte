@@ -1,4 +1,4 @@
-<script>
+    <script>
     let candidate;
     import Modal from './Modal.svelte';
 
