@@ -1,0 +1,10 @@
+
+
+.grid-item {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.party-header {
+    border-top: 3px solid black; /* Adjust thickness as needed */
+    border-bottom: 1px solid black;
+}

@@ -1,5 +1,11 @@
+<style>
+    @import './votespageStyles.css';
+</style>
+
+
 <script>
     import Modal from './Modal.svelte';
+
     let showModal = false;
 
     let selectedOption;
@@ -23,11 +29,10 @@
 
         parties[party].push(name);
     });
-
 </script>
 
 {#each Object.entries(parties) as [party, candidates]}
-    <div>
+    <div class="party-header">
         <h2>
             {#if party !== "Outside of the parties"}
                 <input type="radio" bind:group={selectedOption} value={`Party: ${party}`} />
@@ -37,7 +42,7 @@
     </div>
 
     {#each candidates as candidate}
-        <div>
+        <div class="grid-item">
             <label>
                 <input type="radio" bind:group={selectedOption} value={`Candidate: ${candidate} (${party})`} />
                 {candidate}
@@ -56,7 +61,6 @@
     <h2 slot="header">
         Cast vote for {selectedOption}
     </h2>
-
 
     <a href="https://www.merriam-webster.com/dictionary/modal">merriam-webster.com</a>
 </Modal>
