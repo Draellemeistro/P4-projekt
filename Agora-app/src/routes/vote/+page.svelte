@@ -30,32 +30,33 @@
         parties[party].push(name);
     });
 </script>
-
-{#each Object.entries(parties) as [party, candidates]}
-    <div class="party-header">
-        <h2>
-            {#if party !== "Outside of the parties"}
-                <input type="radio" bind:group={selectedOption} value={`Party: ${party}`} />
-            {/if}
-            {party}
-        </h2>
-    </div>
-
-    {#each candidates as candidate}
-        <div class="grid-item">
-            <label>
-                <input type="radio" bind:group={selectedOption} value={`Candidate: ${candidate} (${party})`} />
-                {candidate}
+<div class="main-container">
+    {#each Object.entries(parties) as [party, candidates]}
+        <div class="party-header">
+            <label >
+                {#if party !== "Outside of the parties"}
+                    <input type="radio" bind:group={selectedOption} value={`Party: ${party}`} />
+                {/if}
+                {party}
             </label>
         </div>
-    {/each}
-{/each}
 
-{#if selectedOption !== undefined}
-    <button on:click={() => (showModal = true)}>Proceed</button>
-{:else}
-    <p>Select a candidate or a party!</p>
-{/if}
+        {#each candidates as candidate}
+            <div class="grid-item">
+                <label>
+                    <input type="radio" bind:group={selectedOption} value={`Candidate: ${candidate} (${party})`} />
+                    {candidate}
+                </label>
+            </div>
+        {/each}
+    {/each}
+
+    {#if selectedOption !== undefined}
+        <button on:click={() => (showModal = true)}>Proceed</button>
+    {:else}
+        <p>Select a candidate or a party!</p>
+    {/if}
+</div>
 
 <Modal bind:showModal>
     <h2 slot="header">
