@@ -5,42 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/.eslintignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/.eslintrc.cjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/.npmrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/.prettierignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/.prettierrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/playwright.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/app.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/index.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/lib/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/+page.svelte" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/Box.svelte" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/color/+page.svelte" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/color/BlueThing.svelte" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/color/GreenThing.svelte" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/color/Inner.svelte" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/color/RedThing.svelte" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/LoginForm.svelte" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/userContext.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/vote/+page.svelte" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/vote/Modal.svelte" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/static/favicon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/svelte.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/tests/test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/vite.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -81,19 +60,32 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "6f83454",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/and/OneDrive - Hafsjold Data Consult/Dokumenter/GitHub/P4-projekt",
+    "javascript.nodejs.core.library.configured.version": "20.11.1",
+    "javascript.nodejs.core.library.typings.version": "20.11.30",
+    "last_opened_file_path": "C:/Users/ronie/OneDrive - Aalborg Universitet/Desktop/AGORA/P4-projekt",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.3.4\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "greenplum",
+      "mysql"
+    ]
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ronie\OneDrive - Aalborg Universitet\Desktop\AGORA\P4-projekt\backend" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -107,6 +99,9 @@
       <workItem from="1710335781768" duration="46000" />
       <workItem from="1710336148301" duration="34000" />
       <workItem from="1710352448974" duration="2014000" />
+      <workItem from="1712140551353" duration="709000" />
+      <workItem from="1712653178093" duration="6633000" />
+      <workItem from="1712672873238" duration="4282000" />
     </task>
     <servers />
   </component>
