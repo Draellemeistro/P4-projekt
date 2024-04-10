@@ -1,0 +1,100 @@
+dialog {
+    max-width: 40em;
+    min-width: 30em;
+    min-height: 20em;
+    border-radius: 0.2em;
+    border: none;
+    padding: 0;
+}
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.3);
+}
+dialog > div {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+dialog[open] {
+    animation: zoom 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes zoom {
+    from {
+        transform: scale(0.95);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+dialog[open]::backdrop {
+    animation: fade 0.2s ease-out;
+}
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+button {
+    padding-bottom: 3px;
+    display: block;
+}
+
+
+input {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    transition: all 300ms ease-in-out;
+    width: 100%;
+    padding-top: 20px;
+    font-size: x-large;
+}
+
+input:focus {
+    outline: 0;
+    border-bottom: 1px solid #666;
+}
+
+button {
+    margin-top: 70px;
+    background: black;
+    color: white;
+    padding: 10px 0;
+    width: 200px;
+    border-radius: 25px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 300ms ease-in-out;
+
+}
+
+button:hover {
+    transform: translateY(-2.5px);
+    box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.58);
+}
+
+h2 {
+    margin: 10px 20px 30px 20px;
+    font-size: 40px;
+}
+
+.errors {
+    list-style-type: none;
+    padding: 10px;
+    margin: 0;
+    border: 2px solid #be6283;
+    color: #be6283;
+    background: rgba(190, 98, 131, 0.3);
+}
+
+.success {
+    font-size: 24px;
+    text-align: center;
+}
