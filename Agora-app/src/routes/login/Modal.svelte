@@ -9,7 +9,7 @@
     $: if (dialog && showModal) dialog.showModal();
 
     function confirmHandler() {
-        //TODO: Bind with backend halløj
+        //TODO: Bind with backend
     }
 
 </script>

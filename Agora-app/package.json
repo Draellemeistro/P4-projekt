@@ -30,6 +30,7 @@
 	"type": "module",
 	"dependencies": {
 		"express": "^4.19.2",
+		"mysql2": "^3.9.4",
 		"nodemailer": "^6.9.13"
 	}
 }

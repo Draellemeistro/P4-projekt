@@ -931,7 +931,7 @@ users|schema||user||UPDATE|G</Grants>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="290" parent="1" name="users">
-      <LastIntrospectionLocalTimestamp>2024-04-10.13:15:57</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-04-10.22:05:02</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <user id="291" parent="1" name="user"/>
@@ -951,20 +951,20 @@ users|schema||user||UPDATE|G</Grants>
       <DasType>char(10)|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="296" parent="293" name="person_ID">
+    <column id="296" parent="293" name="person_id">
       <DasType>int|0s</DasType>
       <Position>1</Position>
     </column>
     <column id="297" parent="293" name="email">
-      <DasType>char(1)|0s</DasType>
+      <DasType>varchar(40)|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="298" parent="293" name="vote_ID">
+    <column id="298" parent="293" name="vote_id">
       <DasType>int|0s</DasType>
       <Position>3</Position>
     </column>
     <column id="299" parent="293" name="secret_key">
-      <DasType>int|0s</DasType>
+      <DasType>char(32)|0s</DasType>
       <Position>4</Position>
     </column>
   </database-model>
