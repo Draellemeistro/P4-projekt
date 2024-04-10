@@ -9,6 +9,9 @@
 
     import LoginForm from "./LoginForm.svelte";
     import { goto } from '$app/navigation';
+    import Modal from './Modal.svelte';
+
+    let showModal = false;
 
     onMount(() => {
         setContext(userContextKey, userContextInitialValue);
@@ -18,13 +21,15 @@
         new Promise((resolve, reject) => {
             setTimeout(() => {
                 setContext(userContextKey, {
-                    name: "Foo",
+                    /*name: "Foo",
                     lastName: "Bar",
-                    email: "foo@bar.com"
+                    email: "foo@bar.com"*/
                 });
                 resolve();
             }, 1000);
-            goto('/vote');
+            //goto('/vote');
+            showModal = true
+
         });
 </script>
 
@@ -47,26 +52,7 @@
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .login-form input {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
 
-    .login-form button {
-        width: 100%;
-        padding: 10px;
-        border: none;
-        background: #007BFF;
-        color: #fff;
-        cursor: pointer;
-    }
-
-    .login-form button:hover {
-        background: #0056b3;
-    }
 
     .logo {
         margin-bottom: 20px;
@@ -80,6 +66,13 @@
     </div>
 </section>
 
-<section>
-    <LoginForm {submit} />
-</section>
+<Modal bind:showModal>
+    <!--<h2 slot="header" align="center">
+        2 FACTOR AUTH
+    </h2>-->
+
+
+<!--
+    <a href="https://www.merriam-webster.com/dictionary/modal">merriam-webster.com</a>
+-->
+</Modal>
