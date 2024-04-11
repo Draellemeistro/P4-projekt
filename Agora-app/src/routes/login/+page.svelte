@@ -12,7 +12,7 @@
     const submit = ({ personId, voteId }) => {
         console.log('1 this gets to run');
 
-        fetch('/get-email', {
+        fetch('http://localhost:3000/get-email,', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -31,6 +31,7 @@
           })
           .catch(err => {
               errors.server = err;
+              console.log('errror +page')
           });
     };
 
@@ -46,8 +47,8 @@
 
 <section>
     <div class="login-form">
-        <img class="logo" src="/path/to/your/logo.png" alt="Logo" />
-        <LoginForm {submit} />
+        <!--<img class="logo" src="/path/to/your/logo.png" alt="Logo" />
+-->        <LoginForm {submit} />
     </div>
 </section>
 
