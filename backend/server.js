@@ -1,12 +1,17 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
 const mysql = require('mysql2');
+const cors = require('cors');
 const crypto = require("crypto");
 
 const app = express();
 
-// Middleware to parse JSON bodies
 app.use(express.json());
+app.use(cors({
+	origin: 'http://localhost:5173', // Update with your frontend URL
+	methods: ['GET', 'POST'],
+	allowedHeaders: ['Content-Type'],
+}));
 
 
 //Maybe replace with mysql.createPool
@@ -21,6 +26,30 @@ connection.connect((err) => {
 	if (err) throw err;
 	console.log('Connected to MySQL');
 });
+
+app.listen(3000, () => console.log('Server started'));
+
+
+app.post('/get-email', async (req, res) => {
+	const personId = req.body.personId;
+	const voteId = req.body.voteId;
+	console.log('this ran')
+
+	connection.query('SELECT email FROM users WHERE person_id = ? AND vote_id = ?', [personId, voteId], (err, results) => {
+		if (err) {
+			res.status(500).send('Error fetching email from database');
+		} else {
+			if (results.length > 0) {
+				const email = results[0].email;
+				res.send(email);
+			} else {
+				res.status(404).send('User not found');
+			}
+		}
+	});
+});
+
+
 function getSecretKey(email, callback) {
 	connection.query('SELECT secret_key FROM users WHERE email = ?', [email], (err, results) => {
 		if (err) {
@@ -67,9 +96,8 @@ app.post('/send-2fa', async (req, res) => {
 
 			res.send('2FA code sent');
 		}
-
-
 	});
+});
 
 app.post('/verify-2fa', async (req, res) => {
 	const userEmail = req.body.email;
@@ -85,4 +113,4 @@ app.post('/verify-2fa', async (req, res) => {
 	}
 });
 
-app.listen(3000, () => console.log('Server started'));});
+

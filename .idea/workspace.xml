@@ -4,14 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/Modal.svelte" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/modalStyles.css" afterDir="false" />
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="2fa modal">
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/loginFormStyles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/79f94f10-9b93-402b-af2b-94ac4f87eb5f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/79f94f10-9b93-402b-af2b-94ac4f87eb5f.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/LoginForm.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/LoginForm.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/Modal.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/Modal.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,33 +63,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "javascript.nodejs.core.library.configured.version": "20.11.1",
-    "javascript.nodejs.core.library.typings.version": "20.11.30",
-    "last_opened_file_path": "C:/Users/ronie/OneDrive - Aalborg Universitet/Desktop/AGORA/P4-projekt/Agora-app/src/routes/login",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.3.4\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;20.11.1&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.11.30&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ronie/OneDrive - Aalborg Universitet/Desktop/AGORA/P4-projekt/Agora-app/src/routes/login&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2023.3.4\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "greenplum",
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;greenplum&quot;,
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ronie\OneDrive - Aalborg Universitet\Desktop\AGORA\P4-projekt\Agora-app\src\routes\login" />
@@ -111,8 +114,18 @@
       <workItem from="1712140551353" duration="709000" />
       <workItem from="1712653178093" duration="6633000" />
       <workItem from="1712672873238" duration="4282000" />
-      <workItem from="1712763209405" duration="10362000" />
+      <workItem from="1712763209405" duration="12204000" />
+      <workItem from="1712783594721" duration="7361000" />
     </task>
+    <task id="LOCAL-00001" summary="2fa modal">
+      <option name="closed" value="true" />
+      <created>1712781772240</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1712781772240</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -140,5 +153,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="2fa modal" />
+    <option name="LAST_COMMIT_MESSAGE" value="2fa modal" />
   </component>
 </project>

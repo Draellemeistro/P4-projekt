@@ -1,62 +1,47 @@
 <h1>Welcome to login page</h1>
+
 <script>
-    import { onMount, setContext } from "svelte";
-
-    import {
-        key as userContextKey,
-        initialValue as userContextInitialValue
-    } from "./userContext";
-
+    import { onMount } from 'svelte';
     import LoginForm from "./LoginForm.svelte";
-    import { goto } from '$app/navigation';
     import Modal from './Modal.svelte';
 
     let showModal = false;
+    let email = '';
+    let errors = {};
+
+    const submit = ({ personId, voteId }) => {
+        console.log('1 this gets to run');
+
+        fetch('/get-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ personId, voteId }),
+        })
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error('Error fetching email 2');
+              }
+              return response.text();
+          })
+          .then(data => {
+              email = data;
+              showModal = true;
+          })
+          .catch(err => {
+              errors.server = err;
+          });
+    };
 
     onMount(() => {
-        setContext(userContextKey, userContextInitialValue);
+        // Additional initialization logic can be added here
     });
 
-    const submit = ({ email, password }) =>
-        new Promise((resolve, reject) => {
-            setTimeout(() => {
-                setContext(userContextKey, {
-                    /*name: "Foo",
-                    lastName: "Bar",
-                    email: "foo@bar.com"*/
-                });
-                resolve();
-            }, 1000);
-            //goto('/vote');
-            showModal = true
-
-        });
 </script>
 
 <style>
-    section {
-        height: 100vh;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: #fff;
-    }
-
-    .login-form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 300px;
-        padding: 20px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    }
-
-
-
-    .logo {
-        margin-bottom: 20px;
-    }
+    @import './loginFormStyles.css';
 </style>
 
 <section>
@@ -67,12 +52,10 @@
 </section>
 
 <Modal bind:showModal>
-    <!--<h2 slot="header" align="center">
-        2 FACTOR AUTH
-    </h2>-->
-
-
-<!--
-    <a href="https://www.merriam-webster.com/dictionary/modal">merriam-webster.com</a>
--->
+    {#if email}
+        <p>Email: {email}</p>
+    {/if}
+    {#if errors.server}
+        <p>Error: {errors.server.message}</p>
+    {/if}
 </Modal>
