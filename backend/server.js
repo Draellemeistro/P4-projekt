@@ -35,13 +35,36 @@ app.post('/get-email', async (req, res) => {
 	const voteId = req.body.voteId;
 	console.log('this ran')
 
-	connection.query('SELECT email FROM users WHERE person_id = ? AND vote_id = ?', [personId, voteId], (err, results) => {
+	connection.query('SELECT email FROM users WHERE person_id = ? AND vote_id = ?', [personId, voteId], async (err, results) => {
 		if (err) {
 			res.status(500).send('Error fetching email from database');
 		} else {
 			if (results.length > 0) {
 				const email = results[0].email;
+				console.log(email)
 				res.send(email);
+
+
+				const transporter = nodemailer.createTransport({
+					service: 'gmail',
+					auth: {
+						user: 'agoraAuth@gmail.com',
+						pass: 'vnfpggwavqkwfrmu'
+					}
+				});
+
+				// Define email options
+				const mailOptions = {
+					from: 'agoraAuth@gmail.com',
+					to: email,
+					subject: 'Your AGORA 2FA Code',
+					text: `Your AGORA 2FA code is CODE`
+				};
+
+				// Send the email
+				const info = await transporter.sendMail(mailOptions);
+
+
 			} else {
 				res.status(404).send('User not found');
 			}
@@ -55,10 +78,15 @@ function getSecretKey(email, callback) {
 		if (err) {
 			callback(err);
 		} else {
-			callback(null, results[0].secret_key);
+			if (results && results.length > 0 && results[0].secret_key) {
+				callback(null, results[0].secret_key);
+			} else {
+				callback(new Error('Secret key not found'));
+			}
 		}
 	});
 }
+
 
 //TODO implement TOPT
 function generateOTP(secretKey) {
@@ -73,31 +101,37 @@ app.post('/send-2fa', async (req, res) => {
 		if (err) {
 			res.status(500).send('Error fetching secret key');
 		} else {
-			const otp = generateOTP(secretKey);
-			// Create a Nodemailer transporter using SMTP
-			const transporter = nodemailer.createTransport({
-				service: 'gmail',
-				auth: {
-					user: 'agoraAuth@gmail.com',
-					pass: '1agoraAuthentication!'
-				}
-			});
+			console.log('Secret key:', secretKey); // Add this line for logging
+			if (secretKey) {
+				const otp = generateOTP(secretKey);
+				// Create a Nodemailer transporter using SMTP
+				const transporter = nodemailer.createTransport({
+					service: 'gmail',
+					auth: {
+						user: 'agoraAuth@gmail.com',
+						pass: 'vnfpggwavqkwfrmu'
+					}
+				});
 
-			// Define email options
-			const mailOptions = {
-				from: 'agoraAuth@gmail.com',
-				to: userEmail,
-				subject: 'Your AGORA 2FA Code',
-				text: `Your AGORA 2FA code is ${otp}`
-			};
+				// Define email options
+				const mailOptions = {
+					from: 'agoraAuth@gmail.com',
+					to: userEmail,
+					subject: 'Your AGORA 2FA Code',
+					text: `Your AGORA 2FA code is ${otp}`
+				};
 
-			// Send the email
-			const info = await transporter.sendMail(mailOptions);
+				// Send the email
+				const info = await transporter.sendMail(mailOptions);
 
-			res.send('2FA code sent');
+				res.send('2FA code sent');
+			} else {
+				res.status(500).send('Secret key not found');
+			}
 		}
 	});
 });
+
 
 app.post('/verify-2fa', async (req, res) => {
 	const userEmail = req.body.email;
