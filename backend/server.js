@@ -3,6 +3,9 @@ const nodemailer = require('nodemailer');
 const mysql = require('mysql2');
 const cors = require('cors');
 const crypto = require("crypto");
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 
@@ -13,6 +16,17 @@ app.use(cors({
 	allowedHeaders: ['Content-Type'],
 }));
 
+const privateKey = fs.readFileSync(path.join(__dirname, 'cert', 'key.pem'), 'utf8');
+const certificate = fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'), 'utf8');
+
+// Create a credentials object
+const credentials = {
+	key: privateKey,
+	cert: certificate,
+	secureProtocol: 'TLSv1_2_method' // Use TLS 1.2
+};
+// Create an HTTPS service with the Express app
+const httpsServer = https.createServer(credentials, app);
 
 //Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
@@ -27,9 +41,10 @@ connection.connect((err) => {
 	console.log('Connected to MySQL');
 });
 
-app.listen(3000, () => console.log('Server started'));
+httpsServer.listen(3000, () => console.log('HTTPS Server started'));
 
 
+//TODO Still returning email maybe error codes
 app.post('/get-email', async (req, res) => {
 	const personId = req.body.personId;
 	const voteId = req.body.voteId;
@@ -41,32 +56,40 @@ app.post('/get-email', async (req, res) => {
 		} else {
 			if (results.length > 0) {
 				const email = results[0].email;
-				console.log(email)
-				res.send(email);
+				console.log('Email:', email); // Add this line for logging
+				getSecretKey(email, async (err, secretKey) => {
+					if (err) {
+						res.status(500).send('Error fetching secret key');
+					} else {
+						console.log('Secret key:', secretKey); // Add this line for logging
+						if (secretKey) {
+							const otp = generateOTP(secretKey);
+							// Create a Nodemailer transporter using SMTP
+							const transporter = nodemailer.createTransport({
+								service: 'gmail',
+								auth: {
+									user: 'agoraAuth@gmail.com',
+									pass: 'vnfpggwavqkwfrmu'
+								}
+							});
 
+							// Define email options
+							const mailOptions = {
+								from: 'agoraAuth@gmail.com',
+								to: userEmail,
+								subject: 'Your AGORA 2FA Code',
+								text: `Your AGORA 2FA code is ${otp}`
+							};
 
-				const transporter = nodemailer.createTransport({
-					service: 'gmail',
-					auth: {
-						user: 'agoraAuth@gmail.com',
-						pass: 'vnfpggwavqkwfrmu'
+							// Send the email
+							const info = await transporter.sendMail(mailOptions);
+
+							res.send('2FA code sent');
+						} else {
+							res.status(500).send('Secret key not found');
+						}
 					}
 				});
-
-				// Define email options
-				const mailOptions = {
-					from: 'agoraAuth@gmail.com',
-					to: email,
-					subject: 'Your AGORA 2FA Code',
-					text: `Your AGORA 2FA code is CODE`
-				};
-
-				// Send the email
-				const info = await transporter.sendMail(mailOptions);
-
-
-			} else {
-				res.status(404).send('User not found');
 			}
 		}
 	});
@@ -95,42 +118,7 @@ function generateOTP(secretKey) {
 	return otp;
 }
 
-app.post('/send-2fa', async (req, res) => {
-	const userEmail = req.body.email;
-	getSecretKey(userEmail, async (err, secretKey) => {
-		if (err) {
-			res.status(500).send('Error fetching secret key');
-		} else {
-			console.log('Secret key:', secretKey); // Add this line for logging
-			if (secretKey) {
-				const otp = generateOTP(secretKey);
-				// Create a Nodemailer transporter using SMTP
-				const transporter = nodemailer.createTransport({
-					service: 'gmail',
-					auth: {
-						user: 'agoraAuth@gmail.com',
-						pass: 'vnfpggwavqkwfrmu'
-					}
-				});
 
-				// Define email options
-				const mailOptions = {
-					from: 'agoraAuth@gmail.com',
-					to: userEmail,
-					subject: 'Your AGORA 2FA Code',
-					text: `Your AGORA 2FA code is ${otp}`
-				};
-
-				// Send the email
-				const info = await transporter.sendMail(mailOptions);
-
-				res.send('2FA code sent');
-			} else {
-				res.status(500).send('Secret key not found');
-			}
-		}
-	});
-});
 
 
 app.post('/verify-2fa', async (req, res) => {
