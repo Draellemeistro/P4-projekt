@@ -80,7 +80,7 @@ app.post('/get-email', async (req, res) => {
 							// Define email options
 							const mailOptions = {
 								from: 'agoraAuth@gmail.com',
-								to: userEmail,
+								to: email,
 								subject: 'Your AGORA 2FA Code',
 								text: `Your AGORA 2FA code is ${otp}`
 							};
