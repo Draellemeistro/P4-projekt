@@ -42,7 +42,11 @@ connection.connect((err) => {
 	console.log('Connected to MySQL');
 });
 
-app.listen(3000, () => console.log('HTTP Server started'));
+app.use(express.static(path.join(__dirname, '../public')));
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname, '../public/index.html'));
+});
+app.listen(80, () => console.log('HTTP Server started'));
 
 
 //TODO Still returning email maybe error codes

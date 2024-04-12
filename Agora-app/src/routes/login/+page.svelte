@@ -12,7 +12,7 @@
     const submit = ({ personId, voteId }) => {
         console.log('1 this gets to run');
 
-        fetch('http://20.79.40.89:3000/get-email,', {
+        fetch('http://20.79.40.89:80/get-email,', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
