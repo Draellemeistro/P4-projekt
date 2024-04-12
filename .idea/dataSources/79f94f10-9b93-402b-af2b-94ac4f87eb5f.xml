@@ -1,30 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="@20.79.40.89">
   <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.51">
-    <root id="1">
-      <DefaultCasing>exact</DefaultCasing>
-      <DefaultEngine>InnoDB</DefaultEngine>
-      <DefaultTmpEngine>InnoDB</DefaultTmpEngine>
-      <Grants>users|schema||user||ALTER|G
-users|schema||user||ALTER ROUTINE|G
-users|schema||user||CREATE|G
-users|schema||user||CREATE ROUTINE|G
-users|schema||user||CREATE TEMPORARY TABLES|G
-users|schema||user||CREATE VIEW|G
-users|schema||user||DELETE|G
-users|schema||user||DROP|G
-users|schema||user||EVENT|G
-users|schema||user||EXECUTE|G
-users|schema||user||INDEX|G
-users|schema||user||INSERT|G
-users|schema||user||LOCK TABLES|G
-users|schema||user||REFERENCES|G
-users|schema||user||SELECT|G
-users|schema||user||SHOW VIEW|G
-users|schema||user||TRIGGER|G
-users|schema||user||UPDATE|G</Grants>
-      <ServerVersion>8.0.36</ServerVersion>
-    </root>
+    <root id="1"/>
     <collation id="2" parent="1" name="armscii8_general_ci">
       <Charset>armscii8</Charset>
       <DefaultForCharset>1</DefaultForCharset>
