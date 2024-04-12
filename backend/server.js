@@ -42,12 +42,12 @@ connection.connect((err) => {
 	if (err) throw err;
 	console.log('Connected to MySQL');
 });
-/*
+
 app.use(express.static(path.join(__dirname, '../public')));
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../public/index.html'));
 });
-*/
+
 
 app.listen(3000, () => console.log('HTTP Server started'));
 
