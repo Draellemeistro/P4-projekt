@@ -4,7 +4,7 @@ const mysql = require('mysql2');
 const cors = require('cors');
 const crypto = require("crypto");
 const https = require('https');
-const fs = require('fs');ç
+const fs = require('fs');
 const path = require('path');
 
 const app = express();
