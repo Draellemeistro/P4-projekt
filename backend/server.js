@@ -29,6 +29,7 @@ const credentials = {
 // Create an HTTPS service with the Express app
 const httpsServer = https.createServer(credentials, app);
 */
+
 //Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
 	host: '20.79.40.89',
@@ -41,11 +42,13 @@ connection.connect((err) => {
 	if (err) throw err;
 	console.log('Connected to MySQL');
 });
-
+/*
 app.use(express.static(path.join(__dirname, '../public')));
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../public/index.html'));
 });
+*/
+
 app.listen(80, () => console.log('HTTP Server started'));
 
 

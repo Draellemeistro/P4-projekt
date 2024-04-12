@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Prepared to host on server">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/79f94f10-9b93-402b-af2b-94ac4f87eb5f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/79f94f10-9b93-402b-af2b-94ac4f87eb5f.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/node_modules/.bin/mime" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/.bin/mime" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +110,7 @@
       <workItem from="1712783594721" duration="7361000" />
       <workItem from="1712837157084" duration="10572000" />
       <workItem from="1712924872789" duration="3958000" />
-      <workItem from="1712929081084" duration="4840000" />
+      <workItem from="1712929081084" duration="11226000" />
     </task>
     <task id="LOCAL-00001" summary="2fa modal">
       <option name="closed" value="true" />
@@ -162,7 +160,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712934909392</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Prepared to host on server">
+      <option name="closed" value="true" />
+      <created>1712935844497</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1712935844497</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
