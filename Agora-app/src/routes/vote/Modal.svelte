@@ -6,7 +6,7 @@
     $: if (dialog && showModal) dialog.showModal();
     function voteHandler(){
         dialog.close()
-        return location.href='/color'
+        return location.href='/receipt'
     }
 </script>
 

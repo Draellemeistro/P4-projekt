@@ -7,8 +7,7 @@
     <p class="homepage-description">Digital stemmeseddel</p>
 
     <Box>
-        <input type="button" onclick="location.href='/login';" value="go to login" />
-        <input type="button" onclick="location.href='/color';" value="Go to color" />
+        <input type="button" onclick="location.href='/login';" value="go to login" /><input type="button" onclick="location.href='/receipt';" value="Go to color" />
         <input type="button" onclick="location.href='/vote';" value="Go to voting page" />
     </Box>
 </div>
