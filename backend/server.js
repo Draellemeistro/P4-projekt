@@ -16,6 +16,7 @@ app.use(cors({
 	allowedHeaders: ['Content-Type'],
 }));
 
+/*
 const privateKey = fs.readFileSync(path.join(__dirname, 'cert', 'key.pem'), 'utf8');
 const certificate = fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'), 'utf8');
 
@@ -27,7 +28,7 @@ const credentials = {
 };
 // Create an HTTPS service with the Express app
 const httpsServer = https.createServer(credentials, app);
-
+*/
 //Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
 	host: '20.79.40.89',
@@ -41,7 +42,7 @@ connection.connect((err) => {
 	console.log('Connected to MySQL');
 });
 
-httpsServer.listen(3000, () => console.log('HTTPS Server started'));
+app.listen(3000, () => console.log('HTTP Server started'));
 
 
 //TODO Still returning email maybe error codes
