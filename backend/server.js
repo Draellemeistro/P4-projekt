@@ -49,7 +49,7 @@ app.get('*', (req, res) => {
 });
 */
 
-app.listen(80, () => console.log('HTTP Server started'));
+app.listen(3000, () => console.log('HTTP Server started'));
 
 
 //TODO Still returning email maybe error codes
