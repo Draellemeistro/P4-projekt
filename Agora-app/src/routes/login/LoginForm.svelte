@@ -23,7 +23,7 @@
         if (Object.keys(errors).length === 0) {
             isLoading = true;
             console.log('2 this gets to run');
-            fetch('http://localhost:3000/get-email', {
+            fetch('http://20.79.40.89:3000/get-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

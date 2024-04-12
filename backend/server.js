@@ -4,7 +4,7 @@ const mysql = require('mysql2');
 const cors = require('cors');
 const crypto = require("crypto");
 const https = require('https');
-const fs = require('fs');
+const fs = require('fs');ç
 const path = require('path');
 
 const app = express();
@@ -54,13 +54,16 @@ app.post('/get-email', async (req, res) => {
 	connection.query('SELECT email FROM users WHERE person_id = ? AND vote_id = ?', [personId, voteId], async (err, results) => {
 		if (err) {
 			res.status(500).send('Error fetching email from database');
+		console.log('Error 500')
 		} else {
 			if (results.length > 0) {
 				const email = results[0].email;
 				console.log('Email:', email); // Add this line for logging
 				getSecretKey(email, async (err, secretKey) => {
 					if (err) {
-						res.status(500).send('Error fetching secret key');
+						res.status(501).send('Error fetching secret key');
+						console.log('Error 501')
+
 					} else {
 						console.log('Secret key:', secretKey); // Add this line for logging
 						if (secretKey) {
