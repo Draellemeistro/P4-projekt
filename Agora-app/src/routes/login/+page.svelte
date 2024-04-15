@@ -3,13 +3,17 @@
 <script>
     import { onMount } from 'svelte';
     import LoginForm from "./LoginForm.svelte";
-    import Modal from './Modal.svelte';
+    import Modal from '../vote/Modal.svelte';
 
-    let showModal = false;
     let email = '';
     let errors = {};
 
-    const submit = ({ personId, voteId }) => {
+    export let submit;
+
+
+    let showModal = false;
+
+     submit = ({ personId, voteId }) => {
         console.log('1 this gets to run');
 
         fetch('http://20.79.40.89:80/get-email,', {
@@ -27,7 +31,8 @@
           })
           .then(data => {
               email = data;
-              showModal = true;
+              console.log('showModal runs')
+
           })
           .catch(err => {
               errors.server = err;
@@ -51,12 +56,7 @@
 -->        <LoginForm {submit} />
     </div>
 </section>
-
 <Modal bind:showModal>
-    {#if email}
-        <p>Email: {email}</p>
-    {/if}
-    {#if errors.server}
-        <p>Error: {errors.server.message}</p>
-    {/if}
+
 </Modal>
+
