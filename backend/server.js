@@ -43,7 +43,7 @@ connection.connect((err) => {
 	console.log('Connected to MySQL');
 });
 
-app.use(express.static(path.join(__dirname, '../build')));
+app.use(express.static(path.join(__dirname, '../Agora-app/build')));
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../build/index.html'));
 	console.log('Static file server is running'); // Add this line
