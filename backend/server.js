@@ -45,7 +45,7 @@ connection.connect((err) => {
 
 app.use(express.static(path.join(__dirname, '../Agora-app/build')));
 app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname, '../build/index.html'));
+	res.sendFile(path.join(__dirname, '../Agora-app/build/index.html'));
 	console.log('Static file server is running'); // Add this line
 });
 
