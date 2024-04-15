@@ -1,25 +1,18 @@
-<script>
-    // Import necessary modules/components
-    import Modal from './Modal.svelte';
+<style>
+    @import './loginFormStyles.css';
+</style>
 
-    // Declare reactive variables
+<script>
     let personId = "";
     let voteId = "";
     let isLoading = false;
     let isSuccess = false;
-    let showModal = false;
-    let twoFactorCode = '';
+
     let errors = {};
 
-    // Function to handle form submission
     const handleSubmit = () => {
-        // Reset errors
         errors = {};
 
-        // Show modal when form is submitted
-        showModal = true;
-
-        // Validate form fields
         if (personId.length === 0) {
             errors.personIdLabel = "Field should not be empty";
         }
@@ -27,10 +20,10 @@
             errors.voteId = "Field should not be empty";
         }
 
-        // If no errors, proceed with fetching data
         if (Object.keys(errors).length === 0) {
             isLoading = true;
-            fetch('http://localhost:3000/get-email', {
+            console.log('2 this gets to run');
+            fetch('http://20.79.40.89:3000/get-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -44,9 +37,9 @@
                   return response.text();
               })
               .then(email => {
+                  // Handle the retrieved email
                   console.log('Retrieved email:', email);
                   isLoading = false;
-                  isSuccess = true;
               })
               .catch(err => {
                   errors.server = err;
@@ -55,34 +48,29 @@
               });
         }
     };
+
 </script>
 
-<!-- Form section -->
 <form on:submit|preventDefault={handleSubmit}>
     {#if isSuccess}
         <div class="success">
-            <!-- Success message -->
+            🔓
+            <br />
+            You've been successfully logged in.
         </div>
     {:else}
         <h1>👤</h1>
-        <!-- Input fields -->
+
         <label>CPR
             <input name="personIdLabel" placeholder="1234561234" bind:value={personId} />
         </label>
         <label>Vote ID
             <input name="voteIdLabel" placeholder="123456789" bind:value={voteId} />
         </label>
-        <!-- Submit button -->
         <button type="submit">
-            {#if isLoading}
-                <!-- Loading message -->
-                Logging in...
-            {:else}
-                <!-- Normal login button -->
-                Log in 🔒
-            {/if}
+            {#if isLoading}Logging in...{:else}Log in 🔒{/if}
         </button>
-        <!-- Error messages -->
+
         {#if Object.keys(errors).length > 0}
             <ul class="errors">
                 {#each Object.keys(errors) as field}
@@ -92,10 +80,3 @@
         {/if}
     {/if}
 </form>
-
-<!-- Modal component -->
-<Modal
-  {twoFactorCode}
-  {showModal}
-  on:close={() => showModal = false}
-/>

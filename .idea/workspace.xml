@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="2fa modal" />
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Prepared to host on server">
+      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,7 +64,7 @@
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;20.11.1&quot;,
     &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.11.30&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ronie/OneDrive - Aalborg Universitet/Desktop/AGORA/P4-projekt/Agora-app/src/routes/login&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/umarrashid/WebstormProjects/P4-projekt&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -70,7 +72,7 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2023.3.4\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -107,6 +109,8 @@
       <workItem from="1712763209405" duration="12204000" />
       <workItem from="1712783594721" duration="7361000" />
       <workItem from="1712837157084" duration="10572000" />
+      <workItem from="1712924872789" duration="3958000" />
+      <workItem from="1712929081084" duration="11533000" />
     </task>
     <task id="LOCAL-00001" summary="2fa modal">
       <option name="closed" value="true" />
@@ -118,13 +122,61 @@
     </task>
     <task id="LOCAL-00002" summary="2fa modal">
       <option name="closed" value="true" />
-      <created>1713188172680</created>
+      <created>1712929709355</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1713188172680</updated>
+      <updated>1712929709355</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="2fa modal">
+      <option name="closed" value="true" />
+      <created>1712933305135</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1712933305135</updated>
+    </task>
+    <task id="LOCAL-00004" summary="2fa modal">
+      <option name="closed" value="true" />
+      <created>1712933379114</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1712933379114</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fixed email variable">
+      <option name="closed" value="true" />
+      <created>1712933544824</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1712933544824</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Prepared to host on server">
+      <option name="closed" value="true" />
+      <created>1712934909392</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1712934909392</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Prepared to host on server">
+      <option name="closed" value="true" />
+      <created>1712935844497</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1712935844497</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Prepared to host on server">
+      <option name="closed" value="true" />
+      <created>1712943098580</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1712943098580</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -155,6 +207,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="2fa modal" />
-    <option name="LAST_COMMIT_MESSAGE" value="2fa modal" />
+    <MESSAGE value="fixed email variable" />
+    <MESSAGE value="Prepared to host on server" />
+    <option name="LAST_COMMIT_MESSAGE" value="Prepared to host on server" />
   </component>
 </project>
