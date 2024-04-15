@@ -43,11 +43,11 @@ connection.connect((err) => {
 	console.log('Connected to MySQL');
 });
 
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '../build')));
 app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname, '../public/index.html'));
+	res.sendFile(path.join(__dirname, '../build/index.html'));
+	console.log('Static file server is running'); // Add this line
 });
-
 
 app.listen(3000, () => console.log('HTTP Server started'));
 
@@ -133,8 +133,7 @@ function generateOTP(secretKey) {
 
 
 app.post('/verify-2fa', async (req, res) => {
-	const userEmail = req.body.email;
-	const user2FACode = req.body.twoFactorCode;
+	const user2FACode = req.body.twoFACode;
 
 	// TODO: Retrieve the 2FA code from your database associated with the user
 
