@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Prepared to host on server">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

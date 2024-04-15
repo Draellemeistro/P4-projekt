@@ -5,7 +5,7 @@
     import LoginForm from "./LoginForm.svelte";
     import Modal from '../vote/Modal.svelte';
 
-    let email = '';
+    let email = ""
     let errors = {};
 
     export let submit;
@@ -16,7 +16,7 @@
      submit = ({ personId, voteId }) => {
         console.log('1 this gets to run');
 
-        fetch('http://20.79.40.89:80/get-email,', {
+        fetch('http://20.79.40.89:80/get-email', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -27,10 +27,11 @@
               if (!response.ok) {
                   throw new Error('Error fetching email 2');
               }
-              return response.text();
+              return response.json();
           })
           .then(data => {
               email = data;
+              showModal = true;
               console.log('showModal runs')
 
           })
