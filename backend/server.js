@@ -131,7 +131,19 @@ function generateOTP(secretKey) {
 	return otp;
 }
 
+app.post('/insert-ballot', (req, res) => {
+	const { rsaKey, ballot } = req.body;
+	const query = 'INSERT INTO encrypted_ballot_box (rsa_key, ballot) VALUES (?, ?)';
 
+	connection.query(query, [rsaKey, ballot], (err, results) => {
+		if (err) {
+			console.error(err);
+			res.status(500).send('Error inserting data into database');
+		} else {
+			res.json({ message: 'Data inserted successfully', results });
+		}
+	});
+});
 
 
 app.post('/verify-2fa', async (req, res) => {
