@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="changed messege to json">
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Prepared to host on server">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/79f94f10-9b93-402b-af2b-94ac4f87eb5f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/79f94f10-9b93-402b-af2b-94ac4f87eb5f.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
     </list>
@@ -13,12 +16,16 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseLocalColorSettings">
+    <colors>
+      <entry key="5a5e9d2a-0596-4f19-b960-c5f294c9957c" value="Yellow" />
+    </colors>
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
         <option value="CSS File" />
-        <option value="twoFAForm" />
       </list>
     </option>
   </component>
@@ -48,9 +55,6 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -65,10 +69,10 @@
     "Node.js.server.js.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "localServerHosting",
     "ignore.virus.scanning.warn.message": "true",
-    "javascript.nodejs.core.library.configured.version": "20.11.1",
-    "javascript.nodejs.core.library.typings.version": "20.11.30",
+    "javascript.nodejs.core.library.configured.version": "21.7.1",
+    "javascript.nodejs.core.library.typings.version": "20.12.7",
     "last_opened_file_path": "/Users/umarrashid/WebstormProjects/P4-projekt",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
@@ -76,8 +80,8 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.keymap",
-    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.3.4\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -116,6 +120,7 @@
       <workItem from="1712837157084" duration="10572000" />
       <workItem from="1712924872789" duration="3958000" />
       <workItem from="1712929081084" duration="11533000" />
+      <workItem from="1713466816510" duration="6555000" />
     </task>
     <task id="LOCAL-00001" summary="2fa modal">
       <option name="closed" value="true" />
@@ -181,47 +186,7 @@
       <option name="project" value="LOCAL" />
       <updated>1712943098580</updated>
     </task>
-    <task id="LOCAL-00009" summary="Prepared to host on server">
-      <option name="closed" value="true" />
-      <created>1713190686911</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1713190686911</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Modal shit">
-      <option name="closed" value="true" />
-      <created>1713192204166</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1713192204166</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Modal shit">
-      <option name="closed" value="true" />
-      <created>1713628277057</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1713628277057</updated>
-    </task>
-    <task id="LOCAL-00012" summary="changed messege to json">
-      <option name="closed" value="true" />
-      <created>1713629233204</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1713629233204</updated>
-    </task>
-    <task id="LOCAL-00013" summary="changed messege to json">
-      <option name="closed" value="true" />
-      <created>1713632689643</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1713632689643</updated>
-    </task>
-    <option name="localTasksCounter" value="14" />
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -254,8 +219,6 @@
     <MESSAGE value="2fa modal" />
     <MESSAGE value="fixed email variable" />
     <MESSAGE value="Prepared to host on server" />
-    <MESSAGE value="Modal shit" />
-    <MESSAGE value="changed messege to json" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed messege to json" />
+    <option name="LAST_COMMIT_MESSAGE" value="Prepared to host on server" />
   </component>
 </project>

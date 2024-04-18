@@ -5,7 +5,6 @@
       <database-info product="MySQL" version="8.0.36-0ubuntu0.20.04.1" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-j-8.2.0 (Revision: 06a1f724497fd81c6a659131fda822c9e5085b6c)" dbms="MYSQL" exact-version="8.0.36" exact-driver-version="8.2">
         <extra-name-characters>#@</extra-name-characters>
         <identifier-quote-string>`</identifier-quote-string>
-        <jdbc-catalog-is-schema>true</jdbc-catalog-is-schema>
       </database-info>
       <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>
@@ -19,23 +18,27 @@
         </introspection-scope>
       </schema-mapping>
     </data-source>
-    <data-source name="@130.225.39.205" uuid="8973223e-ce36-416c-9e0f-2436a953da46">
+    <data-source name="@127.0.0.1" uuid="5a5e9d2a-0596-4f19-b960-c5f294c9957c">
       <database-info product="MySQL" version="8.0.36-0ubuntu0.22.04.1" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-j-8.2.0 (Revision: 06a1f724497fd81c6a659131fda822c9e5085b6c)" dbms="MYSQL" exact-version="8.0.36" exact-driver-version="8.2">
         <extra-name-characters>#@</extra-name-characters>
         <identifier-quote-string>`</identifier-quote-string>
         <jdbc-catalog-is-schema>true</jdbc-catalog-is-schema>
       </database-info>
       <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact" />
-      <secret-storage>master_key</secret-storage>
-      <user-name>user</user-name>
+      <user-name>root</user-name>
       <schema-mapping>
         <introspection-scope>
           <node kind="schema">
             <name qname="@" />
-            <name qname="Agora" />
+            <name qname="users" />
+            <name qname="voters" />
           </node>
         </introspection-scope>
       </schema-mapping>
+      <ssh-properties>
+        <enabled>true</enabled>
+        <ssh-config-id>edf06a3d-5232-4f06-8d07-de7342fef562</ssh-config-id>
+      </ssh-properties>
     </data-source>
   </component>
 </project>
