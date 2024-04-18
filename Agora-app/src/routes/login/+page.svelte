@@ -3,23 +3,42 @@
 <script>
     import { onMount } from 'svelte';
     import LoginForm from "./LoginForm.svelte";
-    import TwoFAForm from "./TwoFAForm.svelte";
     import Modal from '../vote/Modal.svelte';
 
     let email = ""
     let errors = {};
 
+    export let submit;
 
 
-    let showModal = true;
-    let isSubmitted = false;
+    let showModal = false;
 
-
-    const submit = (user_email) => {
-        email = user_email;
+     submit = ({ personId, voteId }) => {
         console.log('1 this gets to run');
-        showModal = true
-        isSubmitted = true;  // Set isSubmitted to true when the form is submitted
+
+        fetch('http://192.168.0.113:3000/get-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ personId, voteId }),
+        })
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error('Error fetching email 2');
+              }
+              return response.json();
+          })
+          .then(data => {
+              email = data;
+              showModal = true;
+              console.log('showModal runs')
+
+          })
+          .catch(err => {
+              errors.server = err;
+              console.log('errror +page')
+          });
     };
 
     onMount(() => {
@@ -34,12 +53,11 @@
 
 <section>
     <div class="login-form">
-        {#if !isSubmitted}
-            <LoginForm {submit} bind:showModal />
-        {:else}
-            <TwoFAForm {email} />
-        {/if}
+        <!--<img class="logo" src="/path/to/your/logo.png" alt="Logo" />
+-->        <LoginForm {submit} />
     </div>
 </section>
+<Modal bind:showModal>
 
+</Modal>
 

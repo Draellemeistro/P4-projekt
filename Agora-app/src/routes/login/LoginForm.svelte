@@ -7,8 +7,8 @@
     let voteId = "";
     let isLoading = false;
     let isSuccess = false;
+
     let errors = {};
-    export let submit;
 
     const handleSubmit = () => {
         errors = {};
@@ -23,7 +23,7 @@
         if (Object.keys(errors).length === 0) {
             isLoading = true;
             console.log('2 this gets to run');
-            fetch('http://130.225.39.205:3000/get-email', {
+            fetch('http://192.168.0.113:3000/get-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -39,9 +39,7 @@
               .then(email => {
                   // Handle the retrieved email
                   console.log('Retrieved email:', email);
-                  isLoading = false
-                  submit(email)
-
+                  isLoading = false;
               })
               .catch(err => {
                   errors.server = err;
@@ -52,6 +50,7 @@
     };
 
 </script>
+
 <form on:submit|preventDefault={handleSubmit}>
     {#if isSuccess}
         <div class="success">
