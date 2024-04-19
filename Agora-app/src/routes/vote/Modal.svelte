@@ -1,12 +1,18 @@
 <script>
-    export let showModal; // boolean
+    import { sendBallotToServer } from './castVote.js';
 
+    export let showModal; // boolean
+    export let selectedOptionModal;
+    export let publicKeyModal;
     let dialog; // HTMLDialogElement
 
     $: if (dialog && showModal) dialog.showModal();
     function voteHandler(){
         dialog.close()
-        return location.href='/receipt'
+        console.log(selectedOptionModal);
+        console.log(publicKeyModal);
+        sendBallotToServer(selectedOptionModal, publicKeyModal);
+        //return location.href='/receipt'
     }
 </script>
 
