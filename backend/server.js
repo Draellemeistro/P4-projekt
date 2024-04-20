@@ -96,7 +96,7 @@ app.post('/get-email', async (req, res) => {
 							// Send the email
 							const info = await transporter.sendMail(mailOptions);
 
-							$res.json({ message: '2FA code sent' });
+							res.json({ message: '2FA code sent' });
 						} else {
 							res.status(500).send('Secret key not found');
 						}

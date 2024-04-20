@@ -14,8 +14,7 @@
 
      const submit = ({ personId, voteId }) => {
         console.log('1 this gets to run');
-
-        fetch('http://20.79.40.89:80/get-email', {
+        fetch('http://130.225.39.205:3000/get-email', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,6 +23,7 @@
         })
           .then(response => {
               if (!response.ok) {
+                  console.log('Error fetching email 2');
                   throw new Error('Error fetching email 2');
               }
               return response.json();
