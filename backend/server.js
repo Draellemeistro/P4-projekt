@@ -47,6 +47,8 @@ app.post('/verify-email-code', async (req, res) => {
 	const { email, code } = req.body;
 
 	if (otps[email] === code) {
+		console.log(otps[email]);
+		console.log(code);
 		res.send({ message: 'Email verified' }
 		);
 	}else{
