@@ -6,6 +6,7 @@
 
 	const handleSubmit = () => {
 		// Validate and handle the 2FA code
+		console.log({ email, code });  // Log the email and code
 		fetch('http://130.225.39.205:3000/verify-email-code', {
 			method: 'POST',
 			headers: {

@@ -45,7 +45,7 @@ app.listen(3000, () => console.log('HTTP Server started'));
 //TODO Still returning email maybe error codes
 app.post('/verify-email-code', async (req, res) => {
 	const { email, code } = req.body;
-	console.log(otps[email]);
+	console.log('otps as check', otps[email]);
 	console.log(code);
 
 	if (otps[email] === code) {
@@ -80,6 +80,7 @@ app.post('/get-email', async (req, res) => {
 						if (secretKey) {
 							const otp = generateOTP(secretKey);
 							otps[email] = otp;
+							console.log('otps as set', otps[email])
 							// Create a Nodemailer transporter using SMTP
 							const transporter = nodemailer.createTransport({
 								service: 'gmail',
