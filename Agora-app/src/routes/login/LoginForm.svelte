@@ -3,13 +3,12 @@
 </style>
 
 <script>
-    import Modal from './Modal.svelte'; // Update the path according to your project structure
-    export let showModal = false;
     let personId = "";
     let voteId = "";
     let isLoading = false;
     let isSuccess = false;
     let errors = {};
+    export let submit;
 
     const handleSubmit = () => {
         errors = {};
@@ -40,10 +39,8 @@
               .then(email => {
                   // Handle the retrieved email
                   console.log('Retrieved email:', email);
-                  showModal = true
-                  console.log(showModal)  // THIS RUNS
-                  isLoading = false;
-
+                  isLoading = false
+                  submit(email)
 
               })
               .catch(err => {
@@ -56,9 +53,6 @@
 
 </script>
 <form on:submit|preventDefault={handleSubmit}>
-    {#if showModal}
-        <Modal />
-    {/if}
     {#if isSuccess}
         <div class="success">
             🔓

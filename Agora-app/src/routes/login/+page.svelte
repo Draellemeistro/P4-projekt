@@ -3,6 +3,7 @@
 <script>
     import { onMount } from 'svelte';
     import LoginForm from "./LoginForm.svelte";
+    import TwoFAForm from "./TwoFAForm.svelte";
     import Modal from '../vote/Modal.svelte';
 
     let email = ""
@@ -11,33 +12,14 @@
 
 
     let showModal = true;
+    let isSubmitted = false;
 
-     const submit = ({ personId, voteId }) => {
+
+    const submit = (user_email) => {
+        email = user_email;
         console.log('1 this gets to run');
-        fetch('http://130.225.39.205:3000/get-email', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ personId, voteId }),
-        })
-          .then(response => {
-              if (!response.ok) {
-                  console.log('Error fetching email 2');
-                  throw new Error('Error fetching email 2');
-              }
-              return response.json();
-          })
-          .then(data => {
-              email = data;
-              showModal = true;
-              console.log('showModal runs')
-
-          })
-          .catch(err => {
-              errors.server = err;
-              console.log('errror +page')
-          });
+        showModal = true
+        isSubmitted = true;  // Set isSubmitted to true when the form is submitted
     };
 
     onMount(() => {
@@ -52,8 +34,11 @@
 
 <section>
     <div class="login-form">
-        <!--<img class="logo" src="/path/to/your/logo.png" alt="Logo" />
--->        <LoginForm {submit} bind:showModal />
+        {#if !isSubmitted}
+            <LoginForm {submit} bind:showModal />
+        {:else}
+            <TwoFAForm {email} />
+        {/if}
     </div>
 </section>
 

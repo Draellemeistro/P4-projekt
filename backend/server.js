@@ -9,26 +9,15 @@ const path = require('path');
 
 const app = express();
 
+let otps = {};
+
+
 app.use(express.json());
 app.use(cors({
 	origin: 'http://localhost:5173', // Update with your frontend URL
 	methods: ['GET', 'POST'],
 	allowedHeaders: ['Content-Type'],
 }));
-
-/*
-const privateKey = fs.readFileSync(path.join(__dirname, 'cert', 'key.pem'), 'utf8');
-const certificate = fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'), 'utf8');
-
-// Create a credentials object
-const credentials = {
-	key: privateKey,
-	cert: certificate,
-	secureProtocol: 'TLSv1_2_method' // Use TLS 1.2
-};
-// Create an HTTPS service with the Express app
-const httpsServer = https.createServer(credentials, app);
-*/
 
 //Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
@@ -54,6 +43,18 @@ app.listen(3000, () => console.log('HTTP Server started'));
 
 
 //TODO Still returning email maybe error codes
+app.post('/verify-email-code', async (req, res) => {
+	const { email, code } = req.body;
+
+	if (otps[email] === code) {
+		res.send({ message: 'Email verified' }
+		);
+	}else{
+		res.status(500).send('Invalid code');
+	}
+});
+
+
 app.post('/get-email', async (req, res) => {
 	const personId = req.body.personId;
 	const voteId = req.body.voteId;
@@ -76,6 +77,7 @@ app.post('/get-email', async (req, res) => {
 						console.log('Secret key:', secretKey); // Add this line for logging
 						if (secretKey) {
 							const otp = generateOTP(secretKey);
+							otps[email] = otp;
 							// Create a Nodemailer transporter using SMTP
 							const transporter = nodemailer.createTransport({
 								service: 'gmail',
