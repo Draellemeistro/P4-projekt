@@ -11,18 +11,20 @@
 
     onMount(() => {
         dialog = document.querySelector('dialog');
-        if (showModal) {
+        if (showModal && dialog) {
             dialog.showModal();
         }
     });
 
     onDestroy(() => {
-        dialog.close();
+        if (dialog) {
+            dialog.close();
+        }
     });
 
-    $: if (showModal) {
+    $: if (showModal && dialog) {
         dialog.showModal();
-    } else {
+    } else if (dialog) {
         dialog.close();
     }
 

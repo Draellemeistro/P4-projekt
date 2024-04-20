@@ -41,7 +41,7 @@
                   // Handle the retrieved email
                   console.log('Retrieved email:', email);
                   showModal = true
-                  console.log(showModal)
+                  console.log(showModal)  // THIS RUNS
                   isLoading = false;
 
 
