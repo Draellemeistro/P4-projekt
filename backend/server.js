@@ -46,6 +46,7 @@ app.listen(3000, () => console.log('HTTP Server started'));
 app.post('/verify-email-code', async (req, res) => {
 	const { email, code } = req.body;
 	console.log('otps as check', otps[email]);
+	console.log('email as check', email);
 	console.log(code);
 
 	if (otps[email] === code) {
