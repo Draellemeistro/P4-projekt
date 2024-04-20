@@ -45,10 +45,10 @@ app.listen(3000, () => console.log('HTTP Server started'));
 //TODO Still returning email maybe error codes
 app.post('/verify-email-code', async (req, res) => {
 	const { email, code } = req.body;
+	console.log(otps[email]);
+	console.log(code);
 
 	if (otps[email] === code) {
-		console.log(otps[email]);
-		console.log(code);
 		res.send({ message: 'Email verified' }
 		);
 	}else{
