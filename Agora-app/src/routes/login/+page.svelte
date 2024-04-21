@@ -14,7 +14,7 @@
     let showModal = false;
 
     const serverIP = '130.225.39.205';
-    const serverPort = '80';
+    const serverPort = '443';
 
     const handleFormSubmitted = ({ detail }) => {
         console.log('handleFormSubmitted called');
