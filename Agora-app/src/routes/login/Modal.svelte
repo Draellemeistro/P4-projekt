@@ -13,7 +13,10 @@
     function handleClose() {
         dialog.close();
         showModal = false;
+        console.log('Dispatching close event');
         dispatch('close', { value: twoFactorCode }); // Dispatching a custom event with a value
+        console.log('after close');
+
     }
     function mfaHandler() {
         handleClose();
