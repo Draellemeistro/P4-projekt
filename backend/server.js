@@ -36,7 +36,7 @@ const connection = mysql.createConnection({
 	user: 'user',
 	password: 'password',
 	database: 'Agora',
-	port: '3306'
+	port: '3366'
 
 });
 
