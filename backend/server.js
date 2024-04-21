@@ -11,19 +11,20 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-/*
-const privateKey = fs.readFileSync(path.join(__dirname, 'cert', 'key.pem'), 'utf8');
-const certificate = fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'), 'utf8');
 
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/fullchain.pem', 'utf8');
 // Create a credentials object
 const credentials = {
 	key: privateKey,
 	cert: certificate,
 	secureProtocol: 'TLSv1_2_method' // Use TLS 1.2
 };
-// Create an HTTPS service with the Express app
-const httpsServer = https.createServer(credentials, app);
-*/
+
+https.createServer(credentials, (req, res) => {
+	res.writeHead(200);
+	res.end('Hello, world!\n');
+}).listen(443);
 
 //Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
@@ -46,7 +47,7 @@ app.get('*', (req, res) => {
 	console.log('Static file server is running'); // Add this line
 });
 
-app.listen(80, () => console.log('HTTP Server started'));
+//app.listen(80, () => console.log('HTTP Server started'));
 
 
 //TODO Still returning email maybe error codes
