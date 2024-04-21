@@ -11,7 +11,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({
-	origin: 'http://192.168.0.113:3000/', // Update with your frontend URL
+	origin: 'http://localhost:5173/', // Dont change, makes it  possible to run npm run dev local.
 	methods: ['GET', 'POST'],
 	allowedHeaders: ['Content-Type'],
 }));
