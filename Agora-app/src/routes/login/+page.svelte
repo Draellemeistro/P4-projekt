@@ -16,7 +16,7 @@
      submit = ({ personId, voteId }) => {
         console.log('1 this gets to run');
 
-        fetch('http://192.168.0.113:3000/get-email', {
+        fetch('http://130.225.39.205:3000/get-email', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
