@@ -32,7 +32,7 @@ const httpsServer = https.createServer(credentials, app);
 
 //Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
-	host: 'http://130.225.39.205:3000',
+	host: '130.225.39.205:3000',
 	user: 'user',
 	password: 'password',
 	database: 'Agora'
