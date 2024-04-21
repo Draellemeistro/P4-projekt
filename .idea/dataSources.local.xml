@@ -39,5 +39,11 @@
         <ssh-config-id>edf06a3d-5232-4f06-8d07-de7342fef562</ssh-config-id>
       </ssh-properties>
     </data-source>
+    <data-source name="@130.225.39.205" uuid="e1bc537f-91d2-47aa-9ad2-9bdfae1ac876">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>user</user-name>
+      <schema-mapping />
+    </data-source>
   </component>
 </project>

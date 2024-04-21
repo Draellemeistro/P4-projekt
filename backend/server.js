@@ -60,7 +60,7 @@ app.post('/get-email', async (req, res) => {
 	const voteId = req.body.voteId;
 	console.log('this ran')
 
-	connection.query('SELECT email FROM users.users WHERE person_id = ? AND vote_id = ?', [personId, voteId], async (err, results) => {
+	connection.query('SELECT email FROM Agora.users WHERE person_id = ? AND vote_id = ?', [personId, voteId], async (err, results) => {
 		if (err) {
 			res.status(500).send('Error fetching email from database');
 			console.log('Error 500')
@@ -113,7 +113,7 @@ app.post('/get-email', async (req, res) => {
 
 
 function getSecretKey(email, callback) {
-	connection.query('SELECT secret_key FROM users WHERE email = ?', [email], (err, results) => {
+	connection.query('SELECT secret_key FROM Agora.users WHERE email = ?', [email], (err, results) => {
 		if (err) {
 			callback(err);
 		} else {
@@ -163,7 +163,7 @@ app.post('/verify-2fa', async (req, res) => {
 	const voteId = req.body.voteId;
 	// TODO: Retrieve the 2FA code from your database associated with the user
 	console.log('this ran: verify start')
-	connection.query('SELECT secret_key FROM users.users WHERE person_id = ? AND vote_id = ?', [personId, voteId], async (err, results) => {
+	connection.query('SELECT secret_key FROM users WHERE person_id = ? AND vote_id = ?', [personId, voteId], async (err, results) => {
 		if (err) {
 			res.status(500).send('Error fetching 2FA code from database');
 			console.log('Error 500')
