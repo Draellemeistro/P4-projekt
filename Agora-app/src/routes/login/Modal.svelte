@@ -1,41 +1,42 @@
 <style>
     @import './modalStyles.css';
 </style>
-
 <script>
-    import { onMount, onDestroy } from 'svelte';
-    export let twoFactorCode;
-    export let showModal = false;
+    import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
 
+    export let twoFactorCodeActual;
+    export let twoFactorCode = '';
+    export let showModal;
     let dialog;
-
-    onMount(() => {
-        dialog = document.querySelector('dialog');
-        if (showModal && dialog) {
-            dialog.showModal();
-        }
-    });
-
-    onDestroy(() => {
-        if (dialog) {
-            dialog.close();
-        }
-    });
-
-    $: if (showModal && dialog) {
-        dialog.showModal();
-    } else if (dialog) {
-        dialog.close();
-    }
-
+    $: if (dialog && showModal) dialog.showModal();
     function handleClose() {
+        dialog.close();
         showModal = false;
+        dispatch('close', { value: twoFactorCode }); // Dispatching a custom event with a value
     }
+    function mfaHandler() {
+        handleClose();
+        console.log(twoFactorCode);
+        console.log(twoFactorCodeActual);
+    }
+
+
 </script>
 
-<dialog>
-    <input bind:value={twoFactorCode} />
-    <button on:click={handleClose}>
-        Close
-    </button>
+<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+<dialog
+  bind:this={dialog}
+  on:close={() => (showModal = false)}
+  on:click|self={() => dialog.close()}
+>
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <div on:click|stopPropagation>
+        <h2>Authenticate with email</h2>
+        <hr />
+
+        <!--<button autofocus on:click={() => dialog.close()}>Go back</button>-->
+        <input type="text" bind:value={twoFactorCode} placeholder="Enter 2-factor code" />
+        <button on:click={() => mfaHandler()}>Confirm</button>
+    </div>
 </dialog>
