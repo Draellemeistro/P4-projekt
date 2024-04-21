@@ -42,8 +42,11 @@
               })
               .then(email => {
                   // Handle the retrieved email
+                  showModal = true;
                   console.log('Retrieved email:', email);
+                  console.log('4 this gets to run');
                   isLoading = false;
+
               })
               .catch(err => {
                   errors.server = err;
