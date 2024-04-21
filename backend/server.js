@@ -46,7 +46,7 @@ app.get('*', (req, res) => {
 	console.log('Static file server is running'); // Add this line
 });
 
-app.listen(3000, () => console.log('HTTP Server started'));
+app.listen(80, () => console.log('HTTP Server started'));
 
 
 //TODO Still returning email maybe error codes
