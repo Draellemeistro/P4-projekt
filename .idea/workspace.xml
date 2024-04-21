@@ -4,15 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Added back cors localhost">
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/utils/formValidation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/LoginForm.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/LoginForm.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/Modal.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/Modal.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/userContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/userContext.js" afterDir="false" />
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Big restructuring, seperated code from loginform to relevant places">
+      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -270,7 +263,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713692773820</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Big restructuring, seperated code from loginform to relevant places">
+      <option name="closed" value="true" />
+      <created>1713699562846</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1713699562846</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -305,6 +306,7 @@
     <MESSAGE value="Prepared to host on server" />
     <MESSAGE value="Minor fixes" />
     <MESSAGE value="Added back cors localhost" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added back cors localhost" />
+    <MESSAGE value="Big restructuring, seperated code from loginform to relevant places" />
+    <option name="LAST_COMMIT_MESSAGE" value="Big restructuring, seperated code from loginform to relevant places" />
   </component>
 </project>

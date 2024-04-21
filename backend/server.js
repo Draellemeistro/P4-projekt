@@ -170,9 +170,11 @@ app.post('/verify-2fa', async (req, res) => {
 					compare2FACodes(user2FACode, twoFactorCodeFromDatabase, res);
 				} else {
 					res.status(500).send('2FA code not found');
+					console.log('Error 500 2FA code not found')
 				}
 			} else {
 				res.status(404).send('No user found with the provided personId and voteId');
+				console.log('Error 404 no user found')
 			}
 		}
 	});
