@@ -10,12 +10,7 @@ const path = require('path');
 const app = express();
 
 app.use(express.json());
-app.use(cors({
-	origin: 'http://localhost:5173/', // Dont change, makes it  possible to run npm run dev local.
-	methods: ['GET', 'POST'],
-	allowedHeaders: ['Content-Type'],
-}));
-
+app.use(cors());
 /*
 const privateKey = fs.readFileSync(path.join(__dirname, 'cert', 'key.pem'), 'utf8');
 const certificate = fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'), 'utf8');
