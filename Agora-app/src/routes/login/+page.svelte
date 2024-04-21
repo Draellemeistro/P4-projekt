@@ -13,10 +13,13 @@
     let errors = {};
     let showModal = false;
 
+    const serverIP = '130.225.39.205';
+    const serverPort = '80';
+
     const handleFormSubmitted = ({ detail }) => {
         console.log('handleFormSubmitted called');
         const { personId, voteId } = detail;
-        fetch('http://130.225.39.205:3000/get-email', {
+        fetch(`http://${serverIP}:${serverPort}/get-email`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -40,7 +43,7 @@
     const handleModalClose = ({ detail }) => {
         const { twoFactorCode, personId, voteId } = detail;
         console.log('handleModalClose called');
-        fetch('http://130.225.39.205:3000/verify-2fa', {
+        fetch(`http://${serverIP}:${serverPort}/verify-2fa`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
