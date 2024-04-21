@@ -21,10 +21,7 @@ const credentials = {
 	secureProtocol: 'TLSv1_2_method' // Use TLS 1.2
 };
 
-https.createServer(credentials, (req, res) => {
-	res.writeHead(200);
-	res.end('Hello, world!\n');
-}).listen(443);
+https.createServer(credentials, app).listen(443);
 
 //Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
