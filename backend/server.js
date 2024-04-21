@@ -157,7 +157,8 @@ app.post('/verify-2fa', async (req, res) => {
 	const personId = req.body.personId;
 	const voteId = req.body.voteId;
 	// TODO: Retrieve the 2FA code from your database associated with the user
-	console.log('this ran: verify start')
+	console.log(user2FACode, personId, voteId)
+
 	connection.query('SELECT secret_key FROM users WHERE person_id = ? AND vote_id = ?', [personId, voteId], async (err, results) => {
 		if (err) {
 			res.status(500).send('Error fetching 2FA code from database');
