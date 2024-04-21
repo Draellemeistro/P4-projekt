@@ -11,31 +11,18 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({
-	origin: 'http://192.168.0.113:3000/', // Update with your frontend URL
+	origin: 'http://localhost:5173', // Update with your frontend URL
 	methods: ['GET', 'POST'],
 	allowedHeaders: ['Content-Type'],
 }));
 
-/*
-const privateKey = fs.readFileSync(path.join(__dirname, 'cert', 'key.pem'), 'utf8');
-const certificate = fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'), 'utf8');
-
-// Create a credentials object
-const credentials = {
-	key: privateKey,
-	cert: certificate,
-	secureProtocol: 'TLSv1_2_method' // Use TLS 1.2
-};
-// Create an HTTPS service with the Express app
-const httpsServer = https.createServer(credentials, app);
-*/
-
 //Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
-	host: 'localhost',
-	user: 'root',
+	host: '130.225.39.205',
+	user: 'user',
 	password: 'password',
-	database: 'users'
+	database: 'Agora',
+	port: 3366
 });
 
 connection.connect((err) => {
