@@ -4,7 +4,8 @@
     import { onMount } from 'svelte';
     import LoginForm from "./LoginForm.svelte";
     import Modal from '../vote/Modal.svelte';
-
+    let personId = 1;
+    let twoFactorCode = 1234;
     let email = ""
     let errors = {};
 
@@ -13,10 +14,10 @@
 
     let showModal = false;
 
-     submit = ({ personId, voteId }) => {
+    submit = ({ personId, voteId }) => {
         console.log('1 this gets to run');
 
-        fetch('http://130.225.39.205:3000/get-email', {
+        fetch('http://130.225.39.205:3000/get-email', { // change server address here
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -54,10 +55,14 @@
 <section>
     <div class="login-form">
         <!--<img class="logo" src="/path/to/your/logo.png" alt="Logo" />
--->        <LoginForm {submit} />
+-->
+        <LoginForm {submit} />
     </div>
 </section>
-<Modal bind:showModal>
+<Modal bind:showModal {twoFactorCode}>
+    <h2 slot="header">
+        authenticate for {personId}
+    </h2>
 
+    <a href="https://www.merriam-webster.com/dictionary/modal">merriam-webster.com</a>
 </Modal>
-

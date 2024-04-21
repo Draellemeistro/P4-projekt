@@ -11,18 +11,32 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({
-	origin: 'http://localhost:5173', // Update with your frontend URL
+	origin: 'http://192.168.0.113:3000/', // Update with your frontend URL
 	methods: ['GET', 'POST'],
 	allowedHeaders: ['Content-Type'],
 }));
 
+/*
+const privateKey = fs.readFileSync(path.join(__dirname, 'cert', 'key.pem'), 'utf8');
+const certificate = fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'), 'utf8');
+
+// Create a credentials object
+const credentials = {
+	key: privateKey,
+	cert: certificate,
+	secureProtocol: 'TLSv1_2_method' // Use TLS 1.2
+};
+// Create an HTTPS service with the Express app
+const httpsServer = https.createServer(credentials, app);
+*/
+
 //Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
-	host: '130.225.39.205',
+	host: 'http://130.225.39.205:3000',
 	user: 'user',
 	password: 'password',
-	database: 'Agora',
-	port: 3366
+	database: 'Agora'
+
 });
 
 connection.connect((err) => {
@@ -45,10 +59,10 @@ app.post('/get-email', async (req, res) => {
 	const voteId = req.body.voteId;
 	console.log('this ran')
 
-	connection.query('SELECT email FROM users WHERE person_id = ? AND vote_id = ?', [personId, voteId], async (err, results) => {
+	connection.query('SELECT email FROM users.users WHERE person_id = ? AND vote_id = ?', [personId, voteId], async (err, results) => {
 		if (err) {
 			res.status(500).send('Error fetching email from database');
-		console.log('Error 500')
+			console.log('Error 500')
 		} else {
 			if (results.length > 0) {
 				const email = results[0].email;
@@ -83,14 +97,15 @@ app.post('/get-email', async (req, res) => {
 							const info = await transporter.sendMail(mailOptions);
 
 							res.json({ message: '2FA code sent' });
+
 						} else {
 							res.status(500).send('Secret key not found');
 						}
 					}
 				});
 			} else {
-			res.status(404).send('No user found with the provided personId and voteId');
-		}
+				res.status(404).send('No user found with the provided personId and voteId');
+			}
 		}
 	});
 });
@@ -118,9 +133,11 @@ function generateOTP(secretKey) {
 	return otp;
 }
 
+
 app.post('/insert-ballot', (req, res) => {
-	const { rsaKey, ballot } = req.body;
-	const query = 'INSERT INTO encrypted_ballot_box (rsa_key, ballot) VALUES (?, ?)';
+	const ballot= req.body.ballot;
+	const rsaKey = req.body.rsaKey;
+	const query = 'INSERT INTO users.encrypted_ballot_box (rsa_key, ballot) VALUES (?, ?)';
 
 	connection.query(query, [rsaKey, ballot], (err, results) => {
 		if (err) {
@@ -132,18 +149,35 @@ app.post('/insert-ballot', (req, res) => {
 	});
 });
 
-
-app.post('/verify-2fa', async (req, res) => {
-	const user2FACode = req.body.twoFACode;
-
-	// TODO: Retrieve the 2FA code from your database associated with the user
-
-	// Compare the 2FA code entered by the user with the one in your database
+function compare2FACodes(user2FACode, twoFactorCodeFromDatabase, res) {
 	if (user2FACode === twoFactorCodeFromDatabase) {
 		res.send('User verified');
 	} else {
 		res.send('Invalid 2FA code');
 	}
+}
+app.post('/verify-2fa', async (req, res) => {
+	const user2FACode = req.body.twoFACode;
+	const personId = req.body.personId;
+	const voteId = req.body.voteId;
+	// TODO: Retrieve the 2FA code from your database associated with the user
+	console.log('this ran: verify start')
+	connection.query('SELECT secret_key FROM users.users WHERE person_id = ? AND vote_id = ?', [personId, voteId], async (err, results) => {
+		if (err) {
+			res.status(500).send('Error fetching 2FA code from database');
+			console.log('Error 500')
+		} else {
+			if (results.length > 0) {
+				const twoFactorCodeFromDatabase = results[0].secret_key;
+				console.log('2FA code:', twoFactorCodeFromDatabase); // Add this line for logging
+				if (twoFactorCodeFromDatabase) {
+					compare2FACodes(user2FACode, twoFactorCodeFromDatabase, res);
+				} else {
+					res.status(500).send('2FA code not found');
+				}
+			} else {
+				res.status(404).send('No user found with the provided personId and voteId');
+			}
+		}
+	});
 });
-
-

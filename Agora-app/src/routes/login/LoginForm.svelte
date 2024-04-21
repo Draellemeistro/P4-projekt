@@ -3,12 +3,16 @@
 </style>
 
 <script>
+    import Modal from './Modal.svelte';
     let personId = "";
     let voteId = "";
     let isLoading = false;
     let isSuccess = false;
-
+    let showModal = false;
     let errors = {};
+    // eslint-disable-next-line no-unused-vars
+    let twoFactorCode = "";
+    let twoFactorCodeActual = '';
 
     const handleSubmit = () => {
         errors = {};
@@ -47,8 +51,43 @@
                   isLoading = false;
               });
         }
-    };
+    };const verify2FA = (twoFACode, personId, voteId) => {
+        fetch('http://130.225.39.205:3000/verify-2fa', { // change server address here
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ twoFACode, personId, voteId }),
+        })
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error('Error verifying 2FA');
+              }
+              return response.text();
+          })
+          .then(message => {
+              console.log('Server response:', message);
+              if (message === 'User verified') {
+                  isSuccess = true;
 
+              }
+          })
+          .catch(err => {
+              console.error('Error:', err);
+          });
+    };
+    function handleModalClose(event) {
+        console.log('Modal closed with mfa code:', event.detail.value);
+        twoFactorCode = event.detail.value;
+        verify2FA(twoFactorCode, personId, voteId);
+        console.log('5 this gets to run');
+
+        // Navigate to the next page with personId and voteId as query parameters
+        sessionStorage.setItem('personId', personId);
+        sessionStorage.setItem('voteId', voteId);
+        //navigate(`../vote/+page?personId=${personId}&voteId=${voteId}`);
+        return location.href='/vote'
+    }
 </script>
 
 <form on:submit|preventDefault={handleSubmit}>
@@ -80,3 +119,10 @@
         {/if}
     {/if}
 </form>
+<Modal bind:showModal {twoFactorCodeActual} on:close={handleModalClose}>
+    <h2 slot="header">
+        authenticate for {personId}
+    </h2>
+
+    <a href="https://www.merriam-webster.com/dictionary/modal">merriam-webster.com</a>
+</Modal>
