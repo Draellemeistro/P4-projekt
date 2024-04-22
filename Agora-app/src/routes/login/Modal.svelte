@@ -5,7 +5,6 @@
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
-    export let twoFactorCodeActual;
     export let twoFactorCode = '';
     export let showModal;
     let dialog;
@@ -15,13 +14,10 @@
         showModal = false;
         console.log('Dispatching close event');
         dispatch('close', { value: twoFactorCode }); // Dispatching a custom event with a value
-        console.log('after close');
 
     }
     function mfaHandler() {
         handleClose();
-        console.log(twoFactorCode);
-        console.log(twoFactorCodeActual);
     }
 
 

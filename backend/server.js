@@ -77,43 +77,32 @@ app.post('/get-email', async (req, res) => {
 			if (results.length > 0) {
 				const email = results[0].email;
 				console.log('Email:', email); // Add this line for logging
-				getSecretKey(email, async (err, secretKey) => {
-					if (err) {
-						res.status(501).send('Error fetching secret key');
-						console.log('Error 501')
 
-					} else {
-						console.log('Secret key:', secretKey); // Add this line for logging
-						if (secretKey) {
-							const otp = generateOTP(secretKey);
-							otpStore[personId] = otp;
-							// Create a Nodemailer transporter using SMTP
-							const transporter = nodemailer.createTransport({
-								service: 'gmail',
-								auth: {
-									user: 'agoraAuth@gmail.com',
-									pass: 'vnfpggwavqkwfrmu'
-								}
-							});
-
-							// Define email options
-							const mailOptions = {
-								from: 'agoraAuth@gmail.com',
-								to: email,
-								subject: 'Your AGORA 2FA Code',
-								text: `Your AGORA 2FA code is ${otp}`
-							};
-
-							// Send the email
-							const info = await transporter.sendMail(mailOptions);
-
-							res.json({ message: '2FA code sent' });
-
-						} else {
-							res.status(500).send('Secret key not found');
-						}
+				const otp = generateOTP();
+				const timestamp = Date.now(); // Get the current timestamp
+				otpStore[personId] = { otp, timestamp }; // Store the OTP and timestamp
+				// Create a Nodemailer transporter using SMTP
+				const transporter = nodemailer.createTransport({
+					service: 'gmail',
+					auth: {
+						user: 'agoraAuth@gmail.com',
+						pass: 'vnfpggwavqkwfrmu'
 					}
 				});
+
+				// Define email options
+				const mailOptions = {
+					from: 'agoraAuth@gmail.com',
+					to: email,
+					subject: 'Your AGORA 2FA Code',
+					text: `Your AGORA 2FA code is ${otp}`
+				};
+
+				// Send the email
+				const info = await transporter.sendMail(mailOptions);
+
+				res.json({ message: '2FA code sent' });
+
 			} else {
 				res.status(404).send('No user found with the provided personId and voteId');
 			}
@@ -138,10 +127,9 @@ function getSecretKey(email, callback) {
 
 
 //TODO implement TOPT
-function generateOTP(secretKey) {
-	const hmac = crypto.createHmac('sha256', secretKey);
-	const otp = hmac.digest('hex').substring(0, 6);
-	return otp;
+function generateOTP() {
+	return crypto.randomBytes(3).toString('hex');
+
 }
 
 
@@ -171,13 +159,18 @@ function compare2FACodes(user2FACode, twoFactorCodeFromDatabase, res) {
 app.post('/verify-2fa', async (req, res) => {
 	const user2FACode = req.body.twoFACode;
 	const personId = req.body.personId;
-	const voteId = req.body.voteId;
 
-	const otpFromMemory = otpStore[personId]; // Retrieve the OTP from memory
+	const otpData = otpStore[personId];
+	if (otpData) {
+		const isOTPMatch = otp === otpData.otp;
+		const isOTPExpired = Date.now() > otpData.timestamp + 5 * 60 * 1000; // Check if more than 5 minutes have passed
 
-	if (user2FACode === otpFromMemory) {
-		res.send('User verified');
+		if (isOTPMatch && !isOTPExpired) {
+			res.send('User verified');
+		} else {
+			res.send('Invalid OTP');
+		}
 	} else {
-		res.send('Invalid 2FA code');
+		res.send('Invalid OTP');
 	}
 });
