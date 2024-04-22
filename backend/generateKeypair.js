@@ -5,8 +5,9 @@
  */
 const crypto = require('crypto');
 const fs = require('fs');
+const { createECDH } = require('node:crypto');
 
-function genKeyPair() {
+function generateRSAKeyPair() {
 
 	// Generates an object where the keys are stored in properties `privateKey` and `publicKey`
 	const keyPair = crypto.generateKeyPairSync('rsa', {
@@ -20,7 +21,6 @@ function genKeyPair() {
 			format: 'pem' // Most common formatting choice
 		}
 	});
-
 	// Create the public key file
 	fs.writeFileSync(__dirname + '/id_rsa_pub.pem', keyPair.publicKey);
 
@@ -28,6 +28,18 @@ function genKeyPair() {
 	fs.writeFileSync(__dirname + '/id_rsa_priv.pem', keyPair.privateKey);
 
 }
-
+function generateECDHKeyPair() {
+	const serverECDH = createECDH('secp521r1');
+	const serverKeyECDH = serverECDH.generateKeys();
+	const serverPublicKeyBase64 = serverECDH.getPublicKey().toString('base64');
+	const serverPrivateKeyBase64 = serverECDH.getPrivateKey().toString('base64');
+	const pemFormattedPublicKeyECDH = `-----BEGIN PUBLIC KEY-----\n${serverPublicKeyBase64}\n-----END PUBLIC KEY-----`;
+	const pemFormattedPrivateKeyECDH = `-----BEGIN PRIVATE KEY-----\n${serverPrivateKeyBase64}\n-----END PRIVATE KEY-----`;
+	// Write the PEM formatted key to a file
+	fs.writeFileSync(__dirname + '/serverPublicKeyECDH.pem', pemFormattedPublicKeyECDH);
+	fs.writeFileSync(__dirname + '/serverPrivateKeyECDH.pem', pemFormattedPrivateKeyECDH);
+}
 // Generate the keypair
-genKeyPair();
+//generateRSAKeyPair();
+generateECDHKeyPair();
+
