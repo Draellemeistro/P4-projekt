@@ -19,7 +19,7 @@
     const handleFormSubmitted = ({ detail }) => {
         console.log('handleFormSubmitted called');
         const { personId, voteId } = detail;
-        fetch(`http://${serverIP}:${serverPort}/get-email`, {
+        fetch(`https://${serverIP}:${serverPort}/get-email`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -43,7 +43,7 @@
     const handleModalClose = ({ detail }) => {
         const { twoFactorCode, personId, voteId } = detail;
         console.log('handleModalClose called');
-        fetch(`http://${serverIP}:${serverPort}/verify-2fa`, {
+        fetch(`https://${serverIP}:${serverPort}/verify-2fa`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

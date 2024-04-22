@@ -131,7 +131,7 @@ function generateOTP(secretKey) {
 app.post('/insert-ballot', (req, res) => {
 	const ballot= req.body.ballot;
 	const rsaKey = req.body.rsaKey;
-	const query = 'INSERT INTO users.encrypted_ballot_box (rsa_key, ballot) VALUES (?, ?)';
+	const query = 'INSERT INTO Agora.users.encrypted_ballot_box (rsa_key, ballot) VALUES (?, ?)';
 
 	connection.query(query, [rsaKey, ballot], (err, results) => {
 		if (err) {
@@ -150,6 +150,7 @@ function compare2FACodes(user2FACode, twoFactorCodeFromDatabase, res) {
 		res.send('Invalid 2FA code');
 	}
 }
+
 app.post('/verify-2fa', async (req, res) => {
 	const user2FACode = req.body.twoFACode;
 	const personId = req.body.personId;
