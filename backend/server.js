@@ -26,6 +26,8 @@ app.use(cors({
 	credentials: true
 }));
 
+let otpStore = {};
+
 const privateKey = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/privkey.pem', 'utf8');
 const certificate = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/fullchain.pem', 'utf8');
 // Create a credentials object
@@ -84,6 +86,7 @@ app.post('/get-email', async (req, res) => {
 						console.log('Secret key:', secretKey); // Add this line for logging
 						if (secretKey) {
 							const otp = generateOTP(secretKey);
+							otpStore[personId] = otp;
 							// Create a Nodemailer transporter using SMTP
 							const transporter = nodemailer.createTransport({
 								service: 'gmail',
@@ -169,27 +172,12 @@ app.post('/verify-2fa', async (req, res) => {
 	const user2FACode = req.body.twoFACode;
 	const personId = req.body.personId;
 	const voteId = req.body.voteId;
-	// TODO: Retrieve the 2FA code from your database associated with the user
-	console.log(user2FACode, personId, voteId)
 
-	connection.query('SELECT secret_key FROM users WHERE person_id = ? AND vote_id = ?', [personId, voteId], async (err, results) => {
-		if (err) {
-			res.status(500).send('Error fetching 2FA code from database');
-			console.log('Error 500')
-		} else {
-			if (results.length > 0) {
-				const twoFactorCodeFromDatabase = results[0].secret_key;
-				console.log('2FA code:', twoFactorCodeFromDatabase); // Add this line for logging
-				if (twoFactorCodeFromDatabase) {
-					compare2FACodes(user2FACode, twoFactorCodeFromDatabase, res);
-				} else {
-					res.status(500).send('2FA code not found');
-					console.log('Error 500 2FA code not found')
-				}
-			} else {
-				res.status(404).send('No user found with the provided personId and voteId');
-				console.log('Error 404 no user found')
-			}
-		}
-	});
+	const otpFromMemory = otpStore[personId]; // Retrieve the OTP from memory
+
+	if (user2FACode === otpFromMemory) {
+		res.send('User verified');
+	} else {
+		res.send('Invalid 2FA code');
+	}
 });
