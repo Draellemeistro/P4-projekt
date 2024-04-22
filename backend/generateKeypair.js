@@ -22,10 +22,10 @@ function generateRSAKeyPair() {
 		}
 	});
 	// Create the public key file
-	fs.writeFileSync(__dirname + '/id_rsa_pub.pem', keyPair.publicKey);
+	fs.writeFileSync(__dirname + '/serverPublicKeyRSA.pem', keyPair.publicKey);
 
 	// Create the private key file
-	fs.writeFileSync(__dirname + '/id_rsa_priv.pem', keyPair.privateKey);
+	fs.writeFileSync(__dirname + '/serverPrivateKeyRSA.pem', keyPair.privateKey);
 
 }
 function generateECDHKeyPair() {
@@ -33,13 +33,10 @@ function generateECDHKeyPair() {
 	const serverKeyECDH = serverECDH.generateKeys();
 	const serverPublicKeyBase64 = serverECDH.getPublicKey().toString('base64');
 	const serverPrivateKeyBase64 = serverECDH.getPrivateKey().toString('base64');
-	const pemFormattedPublicKeyECDH = `-----BEGIN PUBLIC KEY-----\n${serverPublicKeyBase64}\n-----END PUBLIC KEY-----`;
-	const pemFormattedPrivateKeyECDH = `-----BEGIN PRIVATE KEY-----\n${serverPrivateKeyBase64}\n-----END PRIVATE KEY-----`;
 	// Write the PEM formatted key to a file
-	fs.writeFileSync(__dirname + '/serverPublicKeyECDH.pem', pemFormattedPublicKeyECDH);
-	fs.writeFileSync(__dirname + '/serverPrivateKeyECDH.pem', pemFormattedPrivateKeyECDH);
+	fs.writeFileSync(__dirname + '/serverPublicKeyECDH.pem', serverPublicKeyBase64);
+	fs.writeFileSync(__dirname + '/serverPrivateKeyECDH.pem', serverPrivateKeyBase64);
 }
-// Generate the keypair
+// Generate the keypairs
 //generateRSAKeyPair();
-generateECDHKeyPair();
-
+//generateECDHKeyPair();
