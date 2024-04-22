@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="fixed  HTTPS for requests">
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Changed cors info">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
     </list>
@@ -336,7 +336,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713786993834</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Changed cors info">
+      <option name="closed" value="true" />
+      <created>1713787503383</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1713787503383</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -376,6 +384,7 @@
     <MESSAGE value="Added better logs to verify-2fa" />
     <MESSAGE value="Added HTTPS" />
     <MESSAGE value="fixed  HTTPS for requests" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed  HTTPS for requests" />
+    <MESSAGE value="Changed cors info" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed cors info" />
   </component>
 </project>

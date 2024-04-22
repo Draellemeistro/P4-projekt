@@ -11,9 +11,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use(cors({
-	origin: 'https://agora.servernux.com/'
-}));
+//app.use(cors({}));
 
 const privateKey = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/privkey.pem', 'utf8');
 const certificate = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/fullchain.pem', 'utf8');
