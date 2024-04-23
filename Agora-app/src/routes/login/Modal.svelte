@@ -36,7 +36,6 @@
 
         <!--<button autofocus on:click={() => dialog.close()}>Go back</button>-->
         <input type="text" bind:value={twoFactorCode} placeholder="Enter 2-factor code" />
-        <input type="text" bind:value={voteId} placeholder="Enter vote ID" />
         <button on:click={() => mfaHandler()}>Confirm</button>
     </div>
 </dialog>

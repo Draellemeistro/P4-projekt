@@ -91,8 +91,7 @@
     </div>
 </section>
 
-<Modal bind:showModal bind:voteId {twoFactorCode} on:close={handleModalClose}>
-    <h2 slot="header">
+<Modal bind:showModal {voteId} {twoFactorCode} on:close={handleModalClose}>    <h2 slot="header">
         authenticate for {personId}
     </h2>
 
