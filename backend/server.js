@@ -95,6 +95,7 @@ app.post('/get-email', async (req, res) => {
 				console.log('OTP:', otp); // Add this line for logging
 				const timestamp = Date.now(); // Get the current timestamp
 				otpStore[personId] = { otp, timestamp }; // Store the OTP and timestamp
+				console.log(otpStore[personId])
 				// Create a Nodemailer transporter using SMTP
 				const transporter = nodemailer.createTransport({
 					service: 'gmail',
@@ -161,6 +162,8 @@ app.post('/verify-2fa', async (req, res) => {
 	const user2FACode = req.body.twoFACode;
 	const personId = req.body.personId;
 	const otpData = otpStore[personId];
+	console.log(personId)
+	console.log(otpStore[personId])
 
 	if (otpData) {
 		console.log(otpData.otp + ' ' + otpData.timestamp)
