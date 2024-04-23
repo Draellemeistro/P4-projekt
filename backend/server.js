@@ -28,6 +28,8 @@ app.use(express.json());
 // 	credentials: true
 // }));
 
+app.use(cors({}));
+
 
 let otpStore = {};
 

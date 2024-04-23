@@ -90,7 +90,9 @@
         <LoginForm on:formSubmitted={handleFormSubmitted} on:modalClosed={handleModalClose} />
     </div>
 </section>
-<Modal bind:showModal {twoFactorCode} {voteId} on:close={handleModalClose}>    <h2 slot="header">
+
+<Modal bind:showModal bind:voteId {twoFactorCode} on:close={handleModalClose}>
+    <h2 slot="header">
         authenticate for {personId}
     </h2>
 
