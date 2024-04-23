@@ -92,6 +92,7 @@ app.post('/get-email', async (req, res) => {
 				console.log('Email:', email); // Add this line for logging
 
 				const otp = generateOTP();
+				console.log('OTP:', otp); // Add this line for logging
 				const timestamp = Date.now(); // Get the current timestamp
 				otpStore[personId] = { otp, timestamp }; // Store the OTP and timestamp
 				// Create a Nodemailer transporter using SMTP
@@ -160,10 +161,10 @@ app.post('/verify-2fa', async (req, res) => {
 	const user2FACode = req.body.twoFACode;
 	const personId = req.body.personId;
 
-	const otpData = otpStore[personId];
 	console.log(otpData.otp + ' ' + otpData.timestamp)
 	if (otpData) {
-		const isOTPMatch = otp === otpData.otp;
+		const otpData = otpStore[personId];
+		const user2FACode = otp === otpData.otp;
 		const isOTPExpired = Date.now() > otpData.timestamp + 5 * 60 * 1000; // Check if more than 5 minutes have passed
 
 		if (isOTPMatch && !isOTPExpired) {
