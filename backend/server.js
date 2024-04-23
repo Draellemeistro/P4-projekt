@@ -161,7 +161,7 @@ app.post('/verify-2fa', async (req, res) => {
 	const personId = req.body.personId;
 
 	const otpData = otpStore[personId];
-	console.log(otpdata.otp + ' ' + otpdata.timestamp)
+	console.log(otpData.otp + ' ' + otpData.timestamp)
 	if (otpData) {
 		const isOTPMatch = otp === otpData.otp;
 		const isOTPExpired = Date.now() > otpData.timestamp + 5 * 60 * 1000; // Check if more than 5 minutes have passed
