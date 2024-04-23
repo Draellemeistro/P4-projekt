@@ -7,9 +7,9 @@
     import { navigate } from 'svelte-routing';
     import { userContext } from './userContext.js';
 
-    let personId = 1;
-    let twoFactorCode = 1234;
-    let email = ""
+    let personId;
+    let twoFactorCode;
+    let voteId;
     let errors = {};
     let showModal = false;
 
@@ -41,8 +41,9 @@
     };
 
     const handleModalClose = ({ detail }) => {
-        const { twoFactorCode, personId, voteId } = detail;
+        const { twoFactorCode, voteId } = detail;
         console.log(`Sending OTP for verification. twoFactorCode: ${twoFactorCode}, personId: ${personId}, voteId: ${voteId}`);
+
         fetch(`https://${serverIP}:${serverPort}/verify-2fa`, {
             method: 'POST',
             headers: {
@@ -89,8 +90,7 @@
         <LoginForm on:formSubmitted={handleFormSubmitted} on:modalClosed={handleModalClose} />
     </div>
 </section>
-<Modal bind:showModal {twoFactorCode} on:close={handleModalClose}>
-    <h2 slot="header">
+<Modal bind:showModal {twoFactorCode} {voteId} on:close={handleModalClose}>    <h2 slot="header">
         authenticate for {personId}
     </h2>
 

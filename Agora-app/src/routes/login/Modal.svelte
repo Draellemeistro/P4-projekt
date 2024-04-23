@@ -6,6 +6,7 @@
     const dispatch = createEventDispatcher();
 
     export let twoFactorCode = '';
+    export let voteId = '';
     export let showModal;
     let dialog;
     $: if (dialog && showModal) dialog.showModal();
@@ -13,8 +14,7 @@
         dialog.close();
         showModal = false;
         console.log('Dispatching close event');
-        dispatch('close', { value: twoFactorCode }); // Dispatching a custom event with a value
-
+        dispatch('close', { twoFactorCode, voteId });
     }
     function mfaHandler() {
         handleClose();
