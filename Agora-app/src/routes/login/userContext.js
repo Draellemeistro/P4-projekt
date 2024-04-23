@@ -1,3 +1,3 @@
-export const key = "userContext";
-export const initialValue = null;
-export const userContext = { key, initialValue };
+import { writable } from 'svelte/store';
+
+export const userContext = writable({ personId: null, voteId: null });
