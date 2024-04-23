@@ -6,15 +6,17 @@
     const dispatch = createEventDispatcher();
 
     export let twoFactorCode = '';
-    export let voteId = '';
     export let showModal;
+    export let voteId;
+
     let dialog;
     $: if (dialog && showModal) dialog.showModal();
     function handleClose() {
+        console.log('voteId', voteId);
         dialog.close();
         showModal = false;
         console.log('Dispatching close event');
-        dispatch('close', { twoFactorCode, voteId });
+        dispatch('close', { twoFactorCode});
     }
     function mfaHandler() {
         handleClose();
