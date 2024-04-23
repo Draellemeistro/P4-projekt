@@ -42,7 +42,7 @@
 
     const handleModalClose = ({ detail }) => {
         const { twoFactorCode, personId, voteId } = detail;
-        console.log('handleModalClose called');
+        console.log(`Sending OTP for verification. twoFactorCode: ${twoFactorCode}, personId: ${personId}, voteId: ${voteId}`);
         fetch(`https://${serverIP}:${serverPort}/verify-2fa`, {
             method: 'POST',
             headers: {
