@@ -82,7 +82,7 @@ app.get('*', (req, res) => {
 app.post('/get-email', async (req, res) => {
 	const personId = req.body.personId;
 	const voteId = req.body.voteId;
-	console.log('this ran')
+	console.log(voteId)
 
 	connection.query('SELECT email FROM Agora.users WHERE person_id = ? AND vote_id = ?', [personId, voteId], async (err, results) => {
 		if (err) {

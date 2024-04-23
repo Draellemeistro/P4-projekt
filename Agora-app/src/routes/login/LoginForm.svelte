@@ -4,7 +4,7 @@
 
 <script>
     import { createEventDispatcher } from 'svelte';
-    import Modal from './Modal.svelte';
+    //import Modal from './Modal.svelte';
     import { validateForm } from '../../utils/formValidation.js';
 
     let personId = "";
@@ -12,8 +12,6 @@
     let isLoading = false;
     let isSuccess = false;
     let errors = {};
-    let twoFactorCode = "";
-    let twoFactorCodeActual = '';
 
     const dispatch = createEventDispatcher();
 
