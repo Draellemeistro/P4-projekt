@@ -160,11 +160,11 @@ function compare2FACodes(user2FACode, twoFactorCodeFromDatabase, res) {
 app.post('/verify-2fa', async (req, res) => {
 	const user2FACode = req.body.twoFACode;
 	const personId = req.body.personId;
+	const otpData = otpStore[personId];
 
-	console.log(otpData.otp + ' ' + otpData.timestamp)
 	if (otpData) {
-		const otpData = otpStore[personId];
-		const user2FACode = otp === otpData.otp;
+		console.log(otpData.otp + ' ' + otpData.timestamp)
+		const isOTPMatch = user2FACode === otpData.otp;
 		const isOTPExpired = Date.now() > otpData.timestamp + 5 * 60 * 1000; // Check if more than 5 minutes have passed
 
 		if (isOTPMatch && !isOTPExpired) {
