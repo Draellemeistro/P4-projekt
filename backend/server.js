@@ -202,7 +202,7 @@ app.post('/insert-ballot', (req, res) => {
 	const enc_ballot = req.body.ballot;
 	const enc_voter = req.body.voter;
 	const pubKeyECDH = req.body.pubKeyECDH
-	const query = 'INSERT INTO Agora.users.encrypted_ballot_box (enc_ballot, enc_voter, pubKeyECDH) VALUES (?, ?, ?)';
+	const query = 'INSERT INTO Agora.encrypted_ballot_box (enc_ballot, enc_voter, pubKeyECDH) VALUES (?, ?, ?)';
 	connection.query(query, [enc_ballot, enc_voter, pubKeyECDH], (err, results) => {
 		if (err) {
 			console.error(err);

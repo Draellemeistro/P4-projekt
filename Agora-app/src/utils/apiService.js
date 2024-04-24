@@ -32,7 +32,7 @@ export const getCandidatesFromServer = () => {
 
 export const sendBallotToServer = (ballot) => {
 	const clientPubKeyECDH = 'test';
-	return fetch(`https://${serverIP}:${serverPort}/insert-ballot`, {
+	return fetch(`http://${serverIP}:${serverPort}/insert-ballot`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
