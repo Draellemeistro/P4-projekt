@@ -44,3 +44,21 @@ export const sendBallotToServer = async (ballot) => {
 
 	return response.json();
 }
+function getCandidatesFromServer() {
+	return fetch('/fetch-candidates')
+		.then(response => {
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+			return response.json();
+		})
+		.then(data => {
+			//console.log(data);
+			return data;
+		})
+		.catch(error => {
+			// Handle any errors that occurred while fetching the candidates
+			console.error('Error:', error);
+		});
+}
+module.exports = { getCandidatesFromServer, sendBallotToServer };

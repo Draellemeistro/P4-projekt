@@ -1,5 +1,5 @@
 <script>
-    import { sendBallotToServer } from './castVote.js';
+    import { sendBallotToServer } from './votePageUtils.js';
 
     export let showModal; // boolean
     export let selectedOptionModal;
