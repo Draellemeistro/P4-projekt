@@ -164,22 +164,20 @@ app.post('/verify-2fa', async (req, res) => {
 	const user2FACode = req.body.twoFACode;
 	const personId = req.body.personId;
 	const otpData = otpStore[personId];
-	console.log(`Verifying OTP for personId: ${personId}`);
-	console.log(personId)
-	console.log(otpStore[personId])
 
+	console.log(otpStore[personId])
+	console.log(user2FACode)
 	if (otpData) {
-		console.log(otpData.otp + ' ' + otpData.timestamp)
 		const isOTPMatch = user2FACode === otpData.otp;
 		const isOTPExpired = Date.now() > otpData.timestamp + 5 * 60 * 1000; // Check if more than 5 minutes have passed
 
 		if (isOTPMatch && !isOTPExpired) {
-			res.send('User verified');
+			res.json({ message: 'User verified' });
 		} else {
-			res.send('Invalid OTP');
+			res.json({ message: 'Invalid OTP' });
 		}
 	} else {
-		res.send('Invalid OTP');
+		res.json({ message: 'Invalid OTP' });
 	}
 });
 
