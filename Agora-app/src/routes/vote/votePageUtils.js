@@ -44,7 +44,7 @@ export const sendBallotToServer = async (ballot) => {
 
 	return response.json();
 }
-function getCandidatesFromServer() {
+export function getCandidatesFromServer() {
 	return fetch('/fetch-candidates')
 		.then(response => {
 			if (!response.ok) {
@@ -61,4 +61,3 @@ function getCandidatesFromServer() {
 			console.error('Error:', error);
 		});
 }
-module.exports = { getCandidatesFromServer, sendBallotToServer };

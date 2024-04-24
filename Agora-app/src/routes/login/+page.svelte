@@ -74,7 +74,7 @@
           .then(data => {
               if (data.message === 'User verified') {
                   userContext.set({ personId, voteId });
-                  navigate('/receipt');
+                  navigate('/vote');
               } else {
                   errors.server = 'Invalid 2FA code';
               }

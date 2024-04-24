@@ -151,15 +151,6 @@ function generateOTP() {
 
 
 
-
-function compare2FACodes(user2FACode, twoFactorCodeFromDatabase, res) {
-	if (user2FACode === twoFactorCodeFromDatabase) {
-		res.send('User verified');
-	} else {
-		res.send('Invalid 2FA code');
-	}
-}
-
 app.post('/verify-2fa', async (req, res) => {
 	const user2FACode = req.body.twoFactorCode;
 	const personId = req.body.personId;
