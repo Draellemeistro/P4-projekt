@@ -3,23 +3,25 @@
 </style>
 <script>
     import { createEventDispatcher } from 'svelte';
+
     const dispatch = createEventDispatcher();
 
+    export let twoFactorCodeActual;
     export let twoFactorCode = '';
     export let showModal;
-    export let voteId;
-
     let dialog;
     $: if (dialog && showModal) dialog.showModal();
+
     function handleClose() {
-        console.log('voteId', voteId);
         dialog.close();
         showModal = false;
-        console.log('Dispatching close event');
-        dispatch('close', { twoFactorCode});
+        dispatch('close', { value: twoFactorCode }); // Dispatching a custom event with a value
     }
+
     function mfaHandler() {
         handleClose();
+        console.log(twoFactorCode);
+        console.log(twoFactorCodeActual);
     }
 
 

@@ -3,28 +3,23 @@
 <script>
     import { onMount } from 'svelte';
     import LoginForm from "./LoginForm.svelte";
-    import Modal from './Modal.svelte';
-    import { navigate } from 'svelte-routing';
-    import { userContext } from './userContext.js';
+    import Modal from '../vote/Modal.svelte';
+    import { setServerCommand } from './loginUtils.js';
 
-    let personId;
-    let twoFactorCode;
-    let voteId;
+    export let personId;
+    export let twoFactorCode;
+    export let email = ""
     let errors = {};
+
+    export let submit;
+
+
     let showModal = false;
 
-    const serverIP = '130.225.39.205';
-    const serverPort = '443';
+    submit = ({ personId, voteId }) => {
+        console.log('1 this gets to run');
 
-    userContext.subscribe(value => {
-        personId = value.personId;
-        voteId = value.voteId;
-    });
-    const handleFormSubmitted = ({ detail }) => {
-        console.log('handleFormSubmitted called');
-        const { personId, voteId } = detail;
-        userContext.set({ personId, voteId });
-        fetch(`https://${serverIP}:${serverPort}/get-email`, {
+        fetch(setServerCommand('get-email'), { // change server address here
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -33,51 +28,19 @@
         })
           .then(response => {
               if (!response.ok) {
-                  throw new Error('Error fetching email 1');
+                  throw new Error('Error fetching email 2');
               }
-              return response.text();
+              return response.json();
           })
-          .then(email => {
-
+          .then(data => {
+              email = data;
               showModal = true;
+              console.log('showModal runs')
+
           })
           .catch(err => {
               errors.server = err;
-          });
-    };
-
-    const handleModalClose = ({ detail }) => {
-        const { twoFactorCode} = detail;
-
-        console.log(`Sending OTP for verification. twoFactorCode: ${twoFactorCode}`)
-        console.log('voteID', voteId)
-
-        fetch(`https://${serverIP}:${serverPort}/verify-2fa`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ twoFactorCode, personId, voteId }),
-        })
-          .then(response => {
-              if (!response.ok) {
-                  console.log('Error verifying 2FA code')
-                  throw new Error('Error verifying 2FA code');
-              }
-              return response.text();
-          })
-          .then(response => {
-              if (response === 'User verified') {
-                  console.log('User verified')
-                  userContext.set({ personId, voteId });
-                  navigate('/receipt');
-              } else {
-                  errors.server = 'Invalid 2FA code';
-                  console.log('Invalid 2FA code')
-              }
-          })
-          .catch(err => {
-              errors.server = err;
+              console.log('errror +page')
           });
     };
 
@@ -95,11 +58,11 @@
     <div class="login-form">
         <!--<img class="logo" src="/path/to/your/logo.png" alt="Logo" />
 -->
-        <LoginForm on:formSubmitted={handleFormSubmitted} on:modalClosed={handleModalClose} />
+        <LoginForm {submit} />
     </div>
 </section>
-
-<Modal bind:showModal {voteId} {twoFactorCode} on:close={handleModalClose}>    <h2 slot="header">
+<Modal bind:showModal {twoFactorCode}>
+    <h2 slot="header">
         authenticate for {personId}
     </h2>
 
