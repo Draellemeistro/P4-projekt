@@ -10,7 +10,9 @@
     let selectedOptionModal = "";
     let publicKeyModal = "";
     let selectedOption;
-    let rsaKey = "1234567890";
+
+
+    // TODO: Fetch candidates from the server
     let candidates = [
         ["Lars Løkke Rasmussen", "DF"],
         ["Anders Fog Rasmussen", "DF"],
@@ -31,9 +33,8 @@
 
         parties[party].push(name);
     });
-    function proceedHandler(selectedOption, rsaKey) {
+    function proceedHandler(selectedOption) {
         selectedOptionModal = selectedOption;
-        publicKeyModal = rsaKey;
         showModal = true;
 
     }
@@ -60,7 +61,7 @@
     {/each}
 
     {#if selectedOption !== undefined}
-        <button on:click={() => proceedHandler(selectedOption, rsaKey)}>Proceed</button>
+        <button on:click={() => proceedHandler(selectedOption)}>Proceed</button>
     {:else}
         <p>Select a candidate or a party!</p>
     {/if}

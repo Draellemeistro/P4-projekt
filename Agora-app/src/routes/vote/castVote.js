@@ -25,13 +25,17 @@ function encryptBallot(ballot, publicKey) {
 
 	return response.json();
 } */
-export const sendBallotToServer = async (ballot, rsaKey) => {
-	const response = await fetch('http://20.79.40.89:80/insert-ballot', {
+export const sendBallotToServer = async (ballot) => {
+	const serverIP = '130.225.39.205';
+	const serverPort = '443';
+	// TODO implement ECDH key exchange from utils folder
+	const clientPubKeyECDH = 'test';
+	const response = await fetch(`https://${serverIP}:${serverPort}/insert-ballot`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({ rsaKey, ballot })
+		body: JSON.stringify({ clientPubKeyECDH, ballot })
 	});
 
 	if (!response.ok) {

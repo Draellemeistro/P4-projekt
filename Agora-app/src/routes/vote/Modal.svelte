@@ -3,15 +3,13 @@
 
     export let showModal; // boolean
     export let selectedOptionModal;
-    export let publicKeyModal;
     let dialog; // HTMLDialogElement
 
     $: if (dialog && showModal) dialog.showModal();
     function voteHandler(){
         dialog.close()
         console.log(selectedOptionModal);
-        console.log(publicKeyModal);
-        sendBallotToServer(selectedOptionModal, publicKeyModal);
+        sendBallotToServer(selectedOptionModal);
         //return location.href='/receipt'
     }
 </script>
