@@ -22,7 +22,12 @@ export const verify2FA = (twoFactorCode, personId, voteId) => {
 };
 
 export const getCandidatesFromServer = () => {
-	return fetch('/fetch-candidates');
+	return fetch(`http://${serverIP}:${serverPort}/fetch-candidates`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	});
 };
 
 export const sendBallotToServer = (ballot) => {

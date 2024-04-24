@@ -128,19 +128,6 @@ app.post('/get-email', async (req, res) => {
 });
 
 
-function getSecretKey(email, callback) {
-	connection.query('SELECT secret_key FROM Agora.users WHERE email = ?', [email], (err, results) => {
-		if (err) {
-			callback(err);
-		} else {
-			if (results && results.length > 0 && results[0].secret_key) {
-				callback(null, results[0].secret_key);
-			} else {
-				callback(new Error('Secret key not found'));
-			}
-		}
-	});
-}
 
 
 //TODO implement TOPT
@@ -177,6 +164,7 @@ app.post('/fetch-candidates', (req, res) => {
 	connection.query('SELECT candidate, party FROM Agora.ballot', (err, results) => {
 		if (err) throw err;
 		else {
+			console.log(results);
 			res.json(results); // results is array of objects. each has candidate and party properties
 		}
 	});

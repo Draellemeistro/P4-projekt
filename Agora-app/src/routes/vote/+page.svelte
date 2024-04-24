@@ -4,49 +4,45 @@
 
 
 <script>
+    import { onMount } from 'svelte';
     import Modal from './Modal.svelte';
-    import { getCandidatesFromServer } from './votePageUtils.js';
-
+    import { getCandidatesFromServer } from '../../utils/apiService.js';
 
     let showModal = false;
     let selectedOptionModal = "";
-    let publicKeyModal = "";
     let selectedOption;
 
-
     // Candidates
-    let candidates = [
-        ["Lars Løkke Rasmussen", "DF"],
-        ["Anders Fog Rasmussen", "DF"],
-        ["Poul Hartling","DF"],
-        ["Meg Griffin", "V"],
-        ["Donald Duck", "SF"],
-        ["Donald Shmuck", "N/A"]
-    ];
+    let candidates = [];
 
-    //Fetch candidates from the server TODO: test this
-    let ballotData = getCandidatesFromServer();
-    let ballotArray = Object.values(ballotData);
-    console.log('ballotArray:', ballotArray);
-    console.log(ballotArray);
-    let ballotEntriesArray = Object.entries(ballotData);
-    console.log('ballotEntriesArray:', ballotEntriesArray);
+    onMount(async () => {
+        const response = await getCandidatesFromServer();
+        if (response.ok) {
+            const data = await response.json();
+            candidates = data.map(item => [item.candidate, item.party]);
+        } else {
+            console.error('Failed to fetch candidates');
+        }
+    });
 
     // Group candidates by party
     let parties = {};
-    candidates.forEach(([name, party]) => {
-        if (party === "N/A")
-            party = "Outside of the parties"
+    $: {
+        parties = {};
+        candidates.forEach(([name, party]) => {
+            if (party === "N/A")
+                party = "Outside of the parties"
 
-        if (!parties[party])
-            parties[party] = [];
+            if (!parties[party])
+                parties[party] = [];
 
-        parties[party].push(name);
-    });
+            parties[party].push(name);
+        });
+    }
+
     function proceedHandler(selectedOption) {
         selectedOptionModal = selectedOption;
         showModal = true;
-
     }
 </script>
 <div class="main-container">
@@ -73,11 +69,11 @@
     {#if selectedOption !== undefined}
         <button on:click={() => proceedHandler(selectedOption)}>Proceed</button>
     {:else}
-        <p>Select a candidate or a party!</p>
     {/if}
+    <p>Select a candidate or a party!</p>
 </div>
 
-<Modal bind:showModal {selectedOptionModal} {publicKeyModal}>
+<Modal bind:showModal {selectedOptionModal}>
     <h2 slot="header">
         Cast vote for {selectedOption}
     </h2>
