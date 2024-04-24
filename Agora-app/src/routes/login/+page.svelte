@@ -14,16 +14,19 @@
     let showModal = false;
 
     const serverIP = '130.225.39.205';
-    const serverPort = '443';
+    const serverPort = '80';
 
     userContext.subscribe(value => {
         personId = value.personId;
         voteId = value.voteId;
     });
+
     const handleFormSubmitted = ({ detail }) => {
         console.log('handleFormSubmitted called');
         const { personId, voteId } = detail;
+
         userContext.set({ personId, voteId });
+
         fetch(`https://${serverIP}:${serverPort}/get-email`, {
             method: 'POST',
             headers: {

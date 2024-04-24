@@ -52,7 +52,6 @@ const credentials = {
 	secureProtocol: 'TLSv1_2_method' // Use TLS 1.2
 };
 
-https.createServer(credentials, app).listen(443);
 
 //Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
@@ -75,7 +74,8 @@ app.get('*', (req, res) => {
 	console.log('Static file server is running'); // Add this line
 });
 
-//app.listen(80, () => console.log('HTTP Server started'));
+//https.createServer(credentials, app).listen(443);
+app.listen(80, () => console.log('HTTP Server started'));
 
 
 //TODO Still returning email maybe error codes
