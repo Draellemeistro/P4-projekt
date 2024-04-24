@@ -6,6 +6,7 @@
     import Modal from './Modal.svelte';
     import { navigate } from 'svelte-routing';
     import { userContext } from './userContext.js';
+    import { fetchEmail, verify2FA, getCandidatesFromServer, sendBallotToServer } from '../../utils/apiService.js';
 
     let personId;
     let twoFactorCode;
@@ -26,14 +27,7 @@
         const { personId, voteId } = detail;
 
         userContext.set({ personId, voteId });
-
-        fetch(`http://${serverIP}:${serverPort}/get-email`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ personId, voteId }),
-        })
+        fetchEmail(personId, voteId)
           .then(response => {
               if (!response.ok) {
                   throw new Error(response.statusText);
@@ -41,10 +35,13 @@
               return response.json();
           })
           .then(data => {
+              // Use the data here
+              console.log(data);
               showModal = true;
           })
-          .catch(err => {
-              errors.server = err.message;
+          .catch(error => {
+              // Handle any errors that occurred while fetching the data
+              console.error('Error:', error);
           });
     };
 
@@ -54,20 +51,10 @@
         console.log(`Sending OTP for verification. twoFactorCode: ${twoFactorCode}`)
         console.log('voteID', voteId)
 
-        fetch(`http://${serverIP}:${serverPort}/verify-2fa`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ twoFactorCode, personId, voteId }),
-        })
+        verify2FA(twoFactorCode, personId, voteId)
           .then(response => {
               if (!response.ok) {
                   throw new Error(response.statusText);
-              }
-              const contentType = response.headers.get('content-type');
-              if (!contentType || !contentType.includes('application/json')) {
-                  throw new TypeError("Oops, we haven't got JSON!");
               }
               return response.json();
           })
@@ -79,9 +66,9 @@
                   errors.server = 'Invalid 2FA code';
               }
           })
-          .catch(err => {
-              errors.server = err.message;
-              console.log(errors.server);
+          .catch(error => {
+              errors.server = error.message;
+              console.error('Error:', error);
           });
     };
 
