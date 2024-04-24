@@ -5,6 +5,8 @@
 
 <script>
     import Modal from './Modal.svelte';
+    import { getCandidatesFromServer } from './votePageUtils.js';
+
 
     let showModal = false;
     let selectedOptionModal = "";
@@ -12,7 +14,7 @@
     let selectedOption;
 
 
-    // TODO: Fetch candidates from the server
+    // Candidates
     let candidates = [
         ["Lars Løkke Rasmussen", "DF"],
         ["Anders Fog Rasmussen", "DF"],
@@ -21,6 +23,14 @@
         ["Donald Duck", "SF"],
         ["Donald Shmuck", "N/A"]
     ];
+
+    //Fetch candidates from the server TODO: test this
+    let ballotData = getCandidatesFromServer();
+    let ballotArray = Object.values(ballotData);
+    console.log('ballotArray:', ballotArray);
+    console.log(ballotArray);
+    let ballotEntriesArray = Object.entries(ballotData);
+    console.log('ballotEntriesArray:', ballotEntriesArray);
 
     // Group candidates by party
     let parties = {};
