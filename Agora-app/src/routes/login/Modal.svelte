@@ -5,7 +5,7 @@
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
-    export let twoFactorCode = '';
+    let twoFactorCode;
     export let showModal;
     export let voteId;
 

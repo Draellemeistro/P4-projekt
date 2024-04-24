@@ -5,28 +5,18 @@
     import LoginForm from "./LoginForm.svelte";
     import Modal from './Modal.svelte';
     import { navigate } from 'svelte-routing';
-    import { userContext } from './userContext.js';
-    import { fetchEmail, verify2FA, getCandidatesFromServer, sendBallotToServer } from '../../utils/apiService.js';
+    import { fetchEmail, verify2FA} from '../../utils/apiService.js';
 
     let personId;
-    let twoFactorCode;
     let voteId;
     let errors = {};
     let showModal = false;
 
-    const serverIP = '130.225.39.205';
-    const serverPort = '80';
-
-    userContext.subscribe(value => {
-        personId = value.personId;
-        voteId = value.voteId;
-    });
 
     const handleFormSubmitted = ({ detail }) => {
         console.log('handleFormSubmitted called');
-        const { personId, voteId } = detail;
-
-        userContext.set({ personId, voteId });
+        personId = detail.personId;
+        voteId = detail.voteId;
         fetchEmail(personId, voteId)
           .then(response => {
               if (!response.ok) {
@@ -47,10 +37,6 @@
 
     const handleModalClose = ({ detail }) => {
         const { twoFactorCode} = detail;
-
-        console.log(`Sending OTP for verification. twoFactorCode: ${twoFactorCode}`)
-        console.log('voteID', voteId)
-
         verify2FA(twoFactorCode, personId, voteId)
           .then(response => {
               if (!response.ok) {
@@ -60,7 +46,6 @@
           })
           .then(data => {
               if (data.message === 'User verified') {
-                  userContext.set({ personId, voteId });
                   navigate('/vote');
               } else {
                   errors.server = 'Invalid 2FA code';
@@ -89,7 +74,7 @@
     </div>
 </section>
 
-<Modal bind:showModal {voteId} {twoFactorCode} on:close={handleModalClose}>    <h2 slot="header">
+<Modal bind:showModal {voteId} on:close={handleModalClose}>    <h2 slot="header">
         authenticate for {personId}
     </h2>
 
