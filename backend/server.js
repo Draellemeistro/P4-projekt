@@ -184,6 +184,15 @@ app.post('/verify-2fa', async (req, res) => {
 	}
 });
 
+app.post('/fetch-candidates', (req, res) => {
+	connection.query('SELECT candidate, party FROM Agora.ballot', (err, results) => {
+		if (err) throw err;
+		else {
+			res.json(results); // results is array of objects. each has candidate and party properties
+		}
+	});
+} );
+
 
 app.get('/request-public-ecdh-key', (req, res) => {
 	res.send(serverPublicKeyECDH);
