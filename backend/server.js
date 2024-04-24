@@ -161,7 +161,7 @@ function compare2FACodes(user2FACode, twoFactorCodeFromDatabase, res) {
 }
 
 app.post('/verify-2fa', async (req, res) => {
-	const user2FACode = req.body.twoFACode;
+	const user2FACode = req.body.twoFactorCode;
 	const personId = req.body.personId;
 	const otpData = otpStore[personId];
 
