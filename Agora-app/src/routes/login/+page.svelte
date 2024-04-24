@@ -14,17 +14,20 @@
     let showModal = false;
 
     const serverIP = '130.225.39.205';
-    const serverPort = '443';
+    const serverPort = '80';
 
     userContext.subscribe(value => {
         personId = value.personId;
         voteId = value.voteId;
     });
+
     const handleFormSubmitted = ({ detail }) => {
         console.log('handleFormSubmitted called');
         const { personId, voteId } = detail;
+
         userContext.set({ personId, voteId });
-        fetch(`https://${serverIP}:${serverPort}/get-email`, {
+
+        fetch(`http://${serverIP}:${serverPort}/get-email`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -52,7 +55,7 @@
         console.log(`Sending OTP for verification. twoFactorCode: ${twoFactorCode}`)
         console.log('voteID', voteId)
 
-        fetch(`https://${serverIP}:${serverPort}/verify-2fa`, {
+        fetch(`http://${serverIP}:${serverPort}/verify-2fa`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
