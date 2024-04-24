@@ -36,16 +36,15 @@
         })
           .then(response => {
               if (!response.ok) {
-                  throw new Error('Error fetching email 1');
+                  throw new Error(response.statusText);
               }
-              return response.text();
+              return response.json();
           })
-          .then(email => {
-
+          .then(data => {
               showModal = true;
           })
           .catch(err => {
-              errors.server = err;
+              errors.server = err.message;
           });
     };
 
@@ -64,30 +63,26 @@
         })
           .then(response => {
               if (!response.ok) {
-                  console.log('Error verifying 2FA code')
-                  throw new Error('Error verifying 2FA code');
+                  throw new Error(response.statusText);
               }
-              return response.text();
+              return response.json();
           })
-          .then(response => {
-              if (response === 'User verified') {
-                  console.log('User verified')
+          .then(data => {
+              if (data.message === 'User verified') {
                   userContext.set({ personId, voteId });
                   navigate('/receipt');
               } else {
                   errors.server = 'Invalid 2FA code';
-                  console.log('Invalid 2FA code')
               }
           })
           .catch(err => {
-              errors.server = err;
+              errors.server = err.message;
           });
     };
 
     onMount(() => {
-        // Additional initialization logic can be added here
+        // Additional initialization logic to be ran after component is mounted can be added here
     });
-
 </script>
 
 <style>

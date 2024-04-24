@@ -92,7 +92,6 @@ app.post('/get-email', async (req, res) => {
 			if (results.length > 0) {
 				const email = results[0].email;
 				console.log('Email:', email); // Add this line for logging
-
 				const otp = generateOTP();
 				console.log('OTP:', otp); // Add this line for logging
 				const timestamp = Date.now(); // Get the current timestamp
