@@ -173,6 +173,7 @@ app.post('/verify-2fa', async (req, res) => {
 
 		if (isOTPMatch && !isOTPExpired) {
 			res.json({ message: 'User verified' });
+			console.log('User verified');
 		} else {
 			res.json({ message: 'Invalid OTP' });
 		}
