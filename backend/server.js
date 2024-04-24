@@ -36,14 +36,14 @@ let otpStore = {};
 const privateKey = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/privkey.pem', 'utf8');
 const certificate = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/fullchain.pem', 'utf8');
 
-//
-// const serverPublicKeyECDH = fs.readFileSync(__dirname + '/serverPublicKeyECDH.pem', 'base64');
-// const serverPrivateKeyECDH = fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem', 'base64');
-// const serverPublicRSAKey = fs.readFileSync(__dirname + '/serverPublicKeyRSA.pem', 'utf8');
-// const serverPrivateRSAKey = fs.readFileSync(__dirname + '/serverPrivateKeyRSA.pem', 'utf8');
-// const serverECDH = createECDH('secp521r1');
 
-// serverECDH.setPrivateKey(serverPrivateKeyECDH, 'base64');
+const serverPublicKeyECDH = fs.readFileSync(__dirname + '/serverPublicKeyECDH.pem', 'utf8');
+const serverPrivateKeyECDH = fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem', 'utf8');
+const serverPublicRSAKey = fs.readFileSync(__dirname + '/serverPublicKeyRSA.pem', 'utf8');
+const serverPrivateRSAKey = fs.readFileSync(__dirname + '/serverPrivateKeyRSA.pem', 'utf8');
+const serverECDH = createECDH('secp521r1');
+
+serverECDH.setPrivateKey(serverPrivateKeyECDH, 'base64');
 
 // Create a credentials object
 const credentials = {
@@ -186,7 +186,7 @@ app.post('/verify-2fa', async (req, res) => {
 
 
 app.get('/request-public-ecdh-key', (req, res) => {
-		res.send(serverPublicKeyECDH);
+	res.send(serverPublicKeyECDH);
 }	);
 app.get('/rsa-public-key', (req, res) => {
 	res.send(serverPublicRSAKey);
