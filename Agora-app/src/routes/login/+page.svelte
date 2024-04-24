@@ -27,7 +27,7 @@
 
         userContext.set({ personId, voteId });
 
-        fetch(`https://${serverIP}:${serverPort}/get-email`, {
+        fetch(`http://${serverIP}:${serverPort}/get-email`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -55,7 +55,7 @@
         console.log(`Sending OTP for verification. twoFactorCode: ${twoFactorCode}`)
         console.log('voteID', voteId)
 
-        fetch(`https://${serverIP}:${serverPort}/verify-2fa`, {
+        fetch(`http://${serverIP}:${serverPort}/verify-2fa`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
