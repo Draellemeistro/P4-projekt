@@ -18,7 +18,110 @@ const cryptoUtils = {
 	arrayBufferToString: function(buffer) {
 		return new TextDecoder().decode(new Uint8Array(buffer));
 	},
+	stringToByteString: function(str) {
+		return new Uint8Array(str);
+	},
+	byteStringToString: function(byteString) {
+		return String.fromCharCode.apply(null, byteString);
+	},
 
+	stringToArrayBuffer: function(str) {
+		return new TextEncoder().encode(str);
+	},
+
+	arrayBufferToBase64: function(buffer) {
+		let binary = '';
+		let bytes = new Uint8Array(buffer);
+		for (let i = 0; i < bytes.byteLength; i++) {
+			binary += String.fromCharCode(bytes[i]);
+		}
+		return window.btoa(binary);
+	},
+
+	base64ToArrayBuffer: function(base64) {
+		let binary_string = window.atob(base64);
+		let len = binary_string.length;
+		let bytes = new Uint8Array(len);
+		for (let i = 0; i < len; i++) {
+			bytes[i] = binary_string.charCodeAt(i);
+		}
+		return bytes.buffer;
+	},
+	bytesToIntegerBigEndian: function(bytes) {
+		let result = 0;
+		for (let i = 0; i < bytes.length; i++) {
+			result = result * 256 + bytes[i];
+		}
+		return result;
+	},
+	integerToBytesBigEndian: function(integer, length) {
+		let result = [];
+		for (let i = 0; i < length; i++) {
+			result.push(integer >> (8 * (length - i - 1)) & 0xFF);
+		}
+		return result;
+	},
+	randomIntegerUniform: function(min, max) {
+		let range = max - min + 1;
+		let bytes = window.crypto.getRandomValues(new Uint8Array(4));
+		let value = this.bytesToIntegerBigEndian(bytes);
+		return min + value % range;
+	},
+	bitLength: function(n) {
+		return Math.floor(Math.log2(n)) + 1;
+	},
+	inverseMod: function(a, n) {
+		let t = 0, newt = 1;
+		let r = n, newr = a;
+		while (newr !== 0) {
+			let quotient = Math.floor(r / newr);
+			[t, newt] = [newt, t - quotient * newt];
+			[r, newr] = [newr, r - quotient * newr];
+		}
+		if (r > 1) {
+			throw new Error('a is not invertible');
+		}
+		if (t < 0) {
+			t += n;
+		}
+		return t;
+	},
+	isCoprime: function(a, n) {
+		while (n !== 0) {
+			[a, n] = [n, a % n];
+		}
+		return a === 1;
+	},
+	lengthOfStringInBytes: function(n) {
+		return Math.ceil(this.bitLength(n) / 8);
+	},
+	random: function(n) { // generate n random bytes
+		return window.crypto.getRandomValues(new Uint8Array(n));
+	},
+	concatenate: function(...arrays) {
+		let totalLength = arrays.reduce((acc, arr) => acc + arr.length, 0);
+		let result = new Uint8Array(totalLength);
+		let offset = 0;
+		let resultMaybe = new Uint8Array(totalLength);
+		for (let arr of arrays) {
+			resultMaybe.concat(arr);
+			result.set(arr, offset);
+			offset += arr.length;
+		}
+		if (resultMaybe.length !== totalLength) {
+			throw new Error('Concatenation failed');
+		} else if (resultMaybe === result) {
+			return resultMaybe;
+		}else	return result;
+	},
+	slice: function(array, start, end) {
+		return array.slice(start, end);
+	},
+
+
+};
+
+const messageEncryption= {
 	sendEncryptedBallot: async function(encryptedBallot, clientPublicKeyBase64,EncryptedVoter) {
 		const response = await axios.post('http://20.79.40.89:80/insert-ballot', {
 			ballot: encryptedBallot,
@@ -54,29 +157,7 @@ const cryptoUtils = {
 		let encryptedVoter = RSACrypto.encrypt(voter, publicKey);
 		return await this.sendEncryptedBallot(encryptedBallotLayerTwo, getPublicKey(clientKeys), encryptedVoter);
 	},
-
-	stringToArrayBuffer: function(str) {
-		return new TextEncoder().encode(str);
-	},
-
-	arrayBufferToBase64: function(buffer) {
-		let binary = '';
-		let bytes = new Uint8Array(buffer);
-		for (let i = 0; i < bytes.byteLength; i++) {
-			binary += String.fromCharCode(bytes[i]);
-		}
-		return window.btoa(binary);
-	},
-
-	base64ToArrayBuffer: function(base64) {
-		let binary_string = window.atob(base64);
-		let len = binary_string.length;
-		let bytes = new Uint8Array(len);
-		for (let i = 0; i < len; i++) {
-			bytes[i] = binary_string.charCodeAt(i);
-		}
-		return bytes.buffer;
-	}
 };
 
 export default cryptoUtils;
+export { messageEncryption };
