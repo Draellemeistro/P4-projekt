@@ -26,9 +26,8 @@ function generateRSAKeyPair() {
 
 	// Create the private key file
 	fs.writeFileSync(__dirname + '/serverPrivateKeyRSA.pem', keyPair.privateKey);
-	keyPair.
-
 }
+
 function generateECDHKeyPair() {
 	const serverECDH = createECDH('secp521r1');
 	const serverKeyECDH = serverECDH.generateKeys();
@@ -38,6 +37,26 @@ function generateECDHKeyPair() {
 	fs.writeFileSync(__dirname + '/serverPublicKeyECDH.pem', serverPublicKeyBase64);
 	fs.writeFileSync(__dirname + '/serverPrivateKeyECDH.pem', serverPrivateKeyBase64);
 }
+function generateDSAKeyPair() {
+	const keyPair = crypto.generateKeyPairSync('dsa', {
+		modulusLength: 2048,
+		publicKeyEncoding: {
+			type: 'spki',
+			format: 'pem'
+		},
+		privateKeyEncoding: {
+			type: 'pkcs8',
+			format: 'pem'
+		}
+	});
+	// Create the public key file
+	fs.writeFileSync(__dirname + '/serverPublicKeyDSA.pem', keyPair.publicKey);
+
+	// Create the private key file
+	fs.writeFileSync(__dirname + '/serverPrivateKeyDSA.pem', keyPair.privateKey);
+}
+
 // Generate the keypairs
 //generateRSAKeyPair();
 //generateECDHKeyPair();
+//generateDSAKeyPair();
