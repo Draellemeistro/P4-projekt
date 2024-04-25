@@ -26,6 +26,7 @@ function generateRSAKeyPair() {
 
 	// Create the private key file
 	fs.writeFileSync(__dirname + '/serverPrivateKeyRSA.pem', keyPair.privateKey);
+	keyPair.
 
 }
 function generateECDHKeyPair() {

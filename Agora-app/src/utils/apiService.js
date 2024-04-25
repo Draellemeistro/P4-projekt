@@ -40,3 +40,13 @@ export const sendBallotToServer = (ballot) => {
 		body: JSON.stringify({ clientPubKeyECDH, ballot })
 	});
 };
+
+export const sendBlindedForSigning = (blindedMessage) => {
+	return fetch(`http://${serverIP}:${serverPort}/sign-blinded-msg`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ blindedMessage })
+	});
+};

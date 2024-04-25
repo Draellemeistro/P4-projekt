@@ -7,6 +7,9 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 const { createECDH } = require('node:crypto');
+const blindSignature = require('blind-signatures');
+const NodeRSA = require('node-rsa');
+
 
 const app = express();
 
@@ -42,8 +45,10 @@ const serverPrivateKeyECDH = fs.readFileSync(__dirname + '/serverPrivateKeyECDH.
 const serverPublicRSAKey = fs.readFileSync(__dirname + '/serverPublicKeyRSA.pem', 'utf8');
 const serverPrivateRSAKey = fs.readFileSync(__dirname + '/serverPrivateKeyRSA.pem', 'utf8');
 const serverECDH = createECDH('secp521r1');
+const serverRSAKeyPair = new NodeRSA();
+serverRSAKeyPair.importKey(serverPublicRSAKey, 'pkcs1-public-pem');
+serverRSAKeyPair.importKey(serverPrivateRSAKey, 'pkcs1-private-pem');
 
-serverECDH.setPrivateKey(serverPrivateKeyECDH, 'base64');
 
 // Create a credentials object
 const credentials = {
@@ -211,4 +216,15 @@ app.post('/insert-ballot', (req, res) => {
 			res.json({ message: 'Data inserted successfully', results });
 		}
 	});
+});
+
+app.post('/sign-blinded-msg', async (req, res) => {
+	const blindedMessage = req.body.blindedMessage;
+	const N = serverRSAKeyPair.keyPair.n.toString();
+	const E = serverRSAKeyPair.keyPair.e.toString();
+	const sign = blindSignature.sign({
+		blinded: blindedMessage,
+		key: serverRSAKeyPair.keyPair,
+	});
+	res.json(sign);
 });
