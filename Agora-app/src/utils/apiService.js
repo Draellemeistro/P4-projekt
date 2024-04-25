@@ -1,6 +1,6 @@
 const serverIP = '130.225.39.205';
 const serverPort = '80';
-
+import crypto from 'crypto';
 export const fetchEmail = (personId, voteId) => {
 	return fetch(`http://${serverIP}:${serverPort}/get-email`, {
 		method: 'POST',
@@ -49,4 +49,28 @@ export const sendBlindedForSigning = (blindedMessage) => {
 		},
 		body: JSON.stringify({ blindedMessage })
 	});
+};
+
+export const sendBallotToServerAndCheckHash = (ballot) => {
+	const clientPubKeyECDH = 'test';
+	const ballotHash = crypto.createHash('sha256').update(JSON.stringify(ballot)).digest('hex');
+	const serverBallotHash = fetch(`http://${serverIP}:${serverPort}/insert-ballot-and-return-hash`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ clientPubKeyECDH, ballot })
+	});
+	if (ballotHash === serverBallotHash) {
+		return true;
+	} else {
+		fetch(`http://${serverIP}:${serverPort}/mark-ballot-as-faulty`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ clientPubKeyECDH, ballot })
+		});
+		return false;
+	}
 };

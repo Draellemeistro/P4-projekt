@@ -185,6 +185,7 @@ app.get('/rsa-public-key', (req, res) => {
 
 // not relevant yet, might not be needed.
 app.post('/present-ecdh-key', async (req, res) => {
+	//TODO maybe delete. Shared secret can be computed from the client's public key
 	const clientPublicKeyBase64 = req.body.clientPublicKeyBase64;
 	const sharedSecret = serverECDH.computeSecret(clientPublicKeyBase64);
 	//TODO maybe encrypt the shared secret with a symmetric key
@@ -206,9 +207,42 @@ app.post('/present-ecdh-key', async (req, res) => {
 app.post('/insert-ballot', (req, res) => {
 	const enc_ballot = req.body.ballot;
 	const enc_voter = req.body.voter;
-	const pubKeyECDH = req.body.pubKeyECDH
+	const pubKeyECDH = req.body.pubKeyECDH;
 	const query = 'INSERT INTO Agora.ballotbox (ballotbox.encr_ballot, encr_voter_id, ECDH_pub_key) VALUES (?, ?, ?)';
-	connection.query(query, [enc_ballot, enc_voter, pubKeyECDH], (err, results) => {
+	connection.query(query, [enc_ballot, enc_voter, pubKeyECDH], (err, results) => { //TODO this query needs extra security.
+		if (err) {
+			console.error(err);
+			res.status(500).send('Error inserting data into database');
+		} else {
+			res.json({ message: 'Data inserted successfully', results });
+		}
+	});
+});
+
+app.post('/insert-ballot-and-return-hash', (req, res) => {
+	const enc_ballot = req.body.ballot;
+	const enc_voter = req.body.voter;
+	const pubKeyECDH = req.body.pubKeyECDH;
+
+	const ballotHash = crypto.createHash('sha256').update(JSON.stringify(enc_ballot)).digest('hex');
+	//const ECDHSharedSecret = serverECDH.computeSecret(pubKeyECDH);
+	// TODO decrypt the ballot with the shared secret and re-encrypt the hashed ballot for return
+	const query = 'INSERT INTO Agora.ballotbox (ballotbox.encr_ballot, encr_voter_id, ECDH_pub_key) VALUES (?, ?, ?)';
+	connection.query(query, [enc_ballot, enc_voter, pubKeyECDH], (err, results) => { //TODO this query needs extra security.
+		if (err) {
+			console.error(err);
+			res.status(500).send('Error inserting data into database');
+		} else {
+			res.json(JSON.stringify(ballotHash));
+		}
+});
+});
+app.post('/mark-ballot-as-faulty', (req, res) => {
+	const enc_ballot = req.body.ballot;
+	const enc_voter = req.body.voter;
+	const pubKeyECDH = req.body.pubKeyECDH;
+	const query = 'DELETE FROM Agora.ballotbox WHERE enc_ballot = ?';
+	connection.query(query, [enc_ballot, enc_voter, pubKeyECDH], (err, results) => { //TODO this query needs extra security.
 		if (err) {
 			console.error(err);
 			res.status(500).send('Error inserting data into database');
@@ -228,3 +262,16 @@ app.post('/sign-blinded-msg', async (req, res) => {
 	});
 	res.json(sign);
 });
+
+app.post('/verify-signed-blinded-msg', async (req, res) => {
+	const signedBlindedMessage = req.body.signedBlindedMessage;
+	const unblindedMessage = req.body.unblindedMessage;
+	const N = serverRSAKeyPair.keyPair.n.toString();
+	const E = serverRSAKeyPair.keyPair.e.toString();
+	const verify = blindSignature.verify({
+		unblinded: unblindedMessage,
+		key: serverRSAKeyPair.keyPair,
+		sig: signedBlindedMessage,
+	});
+	res.json(verify);
+}); //TODO check if this is correct
