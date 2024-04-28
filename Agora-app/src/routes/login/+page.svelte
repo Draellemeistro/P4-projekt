@@ -4,8 +4,9 @@
     import { onMount } from 'svelte';
     import LoginForm from "./LoginForm.svelte";
     import Modal from './Modal.svelte';
-    import { navigate } from 'svelte-routing';
     import { fetchEmail, verify2FA} from '../../utils/apiService.js';
+    import {checkAuthentication, login } from '../../utils/auth.js';
+    import { goto } from '$app/navigation';
 
     let personId;
     let voteId;
@@ -27,6 +28,7 @@
           .then(data => {
               // Use the data here
               console.log(data);
+              login();
               showModal = true;
           })
           .catch(error => {
@@ -46,7 +48,8 @@
           })
           .then(data => {
               if (data.message === 'User verified') {
-                  navigate('/vote');
+                  goto('/vote');
+                  return;
               } else {
                   errors.server = 'Invalid 2FA code';
               }

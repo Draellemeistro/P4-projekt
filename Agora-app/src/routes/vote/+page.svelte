@@ -7,6 +7,8 @@
     import { onMount } from 'svelte';
     import Modal from './Modal.svelte';
     import { getCandidatesFromServer } from '../../utils/apiService.js';
+    import { goto } from '$app/navigation';
+    import { checkAuthentication } from '../../utils/auth.js';
 
     let showModal = false;
     let selectedOptionModal = "";
@@ -16,6 +18,10 @@
     let candidates = [];
 
     onMount(async () => {
+        if (!checkAuthentication()) {
+            goto('/login');
+            return;
+        }
         const response = await getCandidatesFromServer();
         if (response.ok) {
             const data = await response.json();
