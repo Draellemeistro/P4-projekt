@@ -9,9 +9,12 @@ const fs = require('fs');
 const path = require('path');
 const { createECDH } = require('node:crypto');
 const app = express();
+app.use(express.json());
+app.use(cors({}));
 
 app.use('/get-email', getEmailRoute);
-app.use(express.json());
+
+
 
 // <
 // const allowedOrigins = ['https://agora.servernux.com', 'http://130.225.39.205'];
@@ -29,7 +32,6 @@ app.use(express.json());
 // 	credentials: true
 // }));
 
-app.use(cors({}));
 
 
 let otpStore = {};
