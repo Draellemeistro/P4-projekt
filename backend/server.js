@@ -1,4 +1,5 @@
 const express = require('express');
+const getEmailRoute = require('./routes/get-email');
 const nodemailer = require('nodemailer');
 const mysql = require('mysql2');
 const cors = require('cors');
@@ -7,7 +8,7 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 const { createECDH } = require('node:crypto');
-
+app.use('/get-email', getEmailRoute);
 const app = express();
 
 app.use(express.json());
@@ -79,53 +80,8 @@ app.listen(80, () => console.log('HTTP Server started'));
 
 
 //TODO Still returning email maybe error codes
-app.post('/get-email', async (req, res) => {
-	const personId = req.body.personId;
-	const voteId = req.body.voteId;
-	console.log(voteId)
+app.use('/get-email', getEmailRoute);
 
-	connection.query('SELECT email FROM Agora.users WHERE person_id = ? AND vote_id = ?', [personId, voteId], async (err, results) => {
-		if (err) {
-			res.status(500).send('Error fetching email from database');
-			console.log('Error 500')
-		} else {
-			if (results.length > 0) {
-				const email = results[0].email;
-				console.log('Email:', email); // Add this line for logging
-				const otp = generateOTP();
-				console.log('OTP:', otp); // Add this line for logging
-				const timestamp = Date.now(); // Get the current timestamp
-				otpStore[personId] = { otp, timestamp }; // Store the OTP and timestamp
-				console.log(otpStore[personId])
-				console.log(`Stored OTP for personId: ${personId}`);
-				// Create a Nodemailer transporter using SMTP
-				const transporter = nodemailer.createTransport({
-					service: 'gmail',
-					auth: {
-						user: 'agoraAuth@gmail.com',
-						pass: 'vnfpggwavqkwfrmu'
-					}
-				});
-
-				// Define email options
-				const mailOptions = {
-					from: 'agoraAuth@gmail.com',
-					to: email,
-					subject: 'Your AGORA 2FA Code',
-					text: `Your AGORA 2FA code is ${otp}`
-				};
-
-				// Send the email
-				const info = await transporter.sendMail(mailOptions);
-
-				res.json({ message: '2FA code sent' });
-
-			} else {
-				res.status(404).send('No user found with the provided personId and voteId');
-			}
-		}
-	});
-});
 
 
 
