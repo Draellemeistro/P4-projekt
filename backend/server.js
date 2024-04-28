@@ -8,9 +8,9 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 const { createECDH } = require('node:crypto');
-app.use('/get-email', getEmailRoute);
 const app = express();
 
+app.use('/get-email', getEmailRoute);
 app.use(express.json());
 
 // <
