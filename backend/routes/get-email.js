@@ -11,7 +11,7 @@ const connection = mysql.createConnection({
 	port: '3366'
 });
 
-router.post('/get-email', (req, res) => {
+router.post('/', (req, res) => {
 	const { personId, voteId } = req.body;
 
 	connection.query('SELECT email FROM Agora.users WHERE person_id = ? AND vote_id = ?', [personId, voteId], (err, results) => {
