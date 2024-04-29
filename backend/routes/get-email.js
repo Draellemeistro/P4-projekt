@@ -1,25 +1,48 @@
-const express = require('express');
-const mysql = require('mysql2');
+// routes/get-email.js
+import express from 'express';
+import nodemailer from 'nodemailer';
+import { generateOTP } from '../utils/generateOTP';
+import connection from '../utils/db';
+import { otpStore } from '../utils/otpStore';
 
 const router = express.Router();
-
-const connection = mysql.createConnection({
-	host: '130.225.39.205',
-	user: 'user',
-	password: 'password',
-	database: 'Agora',
-	port: '3366'
-});
 
 router.post('/', (req, res) => {
 	const { personId, voteId } = req.body;
 
-	connection.query('SELECT email FROM Agora.users WHERE person_id = ? AND vote_id = ?', [personId, voteId], (err, results) => {
+	connection.query('SELECT email FROM Agora.users WHERE person_id = ? AND vote_id = ?', [personId, voteId], async (err, results) => {
 		if (err) {
 			res.status(500).send('Error fetching email from database');
 		} else {
 			if (results.length > 0) {
 				const email = results[0].email;
+				console.log('Email:', email); // Add this line for logging
+				const otp = generateOTP();
+				console.log('OTP:', otp); // Add this line for logging
+				const timestamp = Date.now(); // Get the current timestamp
+				otpStore[personId] = { otp, timestamp }; // Store the OTP and timestamp
+				console.log(otpStore[personId])
+				console.log(`Stored OTP for personId: ${personId}`);
+				// Create a Nodemailer transporter using SMTP
+				const transporter = nodemailer.createTransport({
+					service: 'gmail',
+					auth: {
+						user: 'agoraAuth@gmail.com',
+						pass: 'vnfpggwavqkwfrmu'
+					}
+				});
+
+				// Define email options
+				const mailOptions = {
+					from: 'agoraAuth@gmail.com',
+					to: email,
+					subject: 'Your AGORA 2FA Code',
+					text: `Your AGORA 2FA code is ${otp}`
+				};
+
+				// Send the email
+				const info = await transporter.sendMail(mailOptions);
+
 				res.json({ email });
 			} else {
 				res.status(404).send('No user found with the provided personId and voteId');
@@ -28,4 +51,4 @@ router.post('/', (req, res) => {
 	});
 });
 
-module.exports = router;
+export default router;

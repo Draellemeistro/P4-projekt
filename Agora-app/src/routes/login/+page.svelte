@@ -5,7 +5,7 @@
     import LoginForm from "./LoginForm.svelte";
     import Modal from './Modal.svelte';
     import { fetchEmail, verify2FA} from '../../utils/apiService.js';
-    import {checkAuthentication, login } from '../../utils/auth.js';
+    import { login } from '../../utils/auth.js';
     import { goto } from '$app/navigation';
 
     let personId;

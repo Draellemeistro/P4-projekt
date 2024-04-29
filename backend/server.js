@@ -1,37 +1,22 @@
-const express = require('express');
-const getEmailRoute = require('./routes/get-email');
-const nodemailer = require('nodemailer');
-const mysql = require('mysql2');
-const cors = require('cors');
-const crypto = require("crypto");
-const https = require('https');
-const fs = require('fs');
-const path = require('path');
-const { createECDH } = require('node:crypto');
+import express from 'express';
+import getEmailRoute from './routes/get-email.js';
+import fetchCandidatesRoute from './routes/fetch-candidates.js';
+import verify2faRoute from './routes/verify-2fa.js';
+import mysql from 'mysql2';
+import cors from 'cors';
+import https from 'https';
+import fs from 'fs';
+import path from 'path';
+import { createECDH } from 'crypto';
+
 const app = express();
+
 app.use(express.json());
 app.use(cors({}));
 
 app.use('/get-email', getEmailRoute);
-
-
-
-// <
-// const allowedOrigins = ['https://agora.servernux.com', 'http://130.225.39.205'];
-//
-// app.use(cors({
-// 	origin: function(origin, callback){
-// 		// allow requests with no originike mobile apps or curl requests)
-// 		if(!origin) return callback(null, true);
-// 		if(allowedOrigins.indexOf(origin) === -1){
-// 			var msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-// 			return callback(new Error(msg), false);
-// 		}
-// 		return callback(null, true);
-// 	},
-// 	credentials: true
-// }));
-
+app.use('/fetch-candidates', fetchCandidatesRoute);
+app.use('/verify-2fa', verify2faRoute);
 
 
 let otpStore = {};
@@ -79,55 +64,6 @@ app.get('*', (req, res) => {
 
 //https.createServer(credentials, app).listen(443);
 app.listen(80, () => console.log('HTTP Server started'));
-
-
-//TODO Still returning email maybe error codes
-app.use('/get-email', getEmailRoute);
-
-
-
-
-
-//TODO implement TOPT
-function generateOTP() {
-	return crypto.randomBytes(3).toString('hex');
-
-}
-
-
-
-app.post('/verify-2fa', async (req, res) => {
-	const user2FACode = req.body.twoFactorCode;
-	const personId = req.body.personId;
-	const otpData = otpStore[personId];
-
-	console.log(otpStore[personId])
-	console.log(user2FACode)
-	if (otpData) {
-		const isOTPMatch = user2FACode === otpData.otp;
-		const isOTPExpired = Date.now() > otpData.timestamp + 5 * 60 * 1000; // Check if more than 5 minutes have passed
-
-		if (isOTPMatch && !isOTPExpired) {
-			res.json({ message: 'User verified' });
-			console.log('User verified');
-		} else {
-			res.json({ message: 'Invalid OTP' });
-		}
-	} else {
-		res.json({ message: 'Invalid OTP' });
-	}
-});
-
-app.post('/fetch-candidates', (req, res) => {
-	connection.query('SELECT candidate, party FROM Agora.ballot', (err, results) => {
-		if (err) throw err;
-		else {
-			console.log(results);
-			res.json(results); // results is array of objects. each has candidate and party properties
-		}
-	});
-} );
-
 
 app.get('/request-public-ecdh-key', (req, res) => {
 	res.send(serverPublicKeyECDH);
