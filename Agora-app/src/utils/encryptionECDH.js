@@ -2,10 +2,26 @@ import fs from 'fs';
 import axios from 'axios';
 import crypto from 'node:crypto';
 
+
 export const initECDH = () => {
-	const client = crypto.createECDH('secp521r1');
-	const clientKeys = client.generateKeys();
-	return { client, clientKeys };
+	let clientKeys;
+	window.crypto.subtle.generateKey(
+		{
+			name: "ECDH",
+			namedCurve: "P-521"
+		},
+		true,
+		["deriveKey", "deriveBits"]
+	).then(function(keyPair){
+		// Returns the public and private keys
+		console.log(keyPair.publicKey);
+		console.log(keyPair.privateKey);
+		clientKeys = keyPair;
+	}).catch(function(err){
+		console.error(err);
+	});
+
+	return { clientKeys };
 };
 
 // Function to get client's public key
