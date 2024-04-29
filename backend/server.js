@@ -79,7 +79,7 @@ app.get('*', (req, res) => {
 });
 
 //https.createServer(credentials, app).listen(443);
-app.listen(80, () => console.log('HTTP Server started'));
+app.listen(3000, () => console.log('HTTP Server started'));
 
 
 //TODO Still returning email maybe error codes
