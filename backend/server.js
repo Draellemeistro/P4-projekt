@@ -51,17 +51,18 @@ serverRSAKeyPair.importKey(serverPrivateRSAKey, 'pkcs1-private-pem');
 
 
 // Create a credentials object
-const credentials = {
-	key: privateKey,
-	cert: certificate,
-	secureProtocol: 'TLSv1_2_method' // Use TLS 1.2
-};
+app.use(express.json());
+app.use(cors({
+	origin: 'http://192.168.0.113:3000/', // Update with your frontend URL
+	methods: ['GET', 'POST'],
+	allowedHeaders: ['Content-Type'],
+}));
 
 
 //Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
-	host: '130.225.39.205',
-	user: 'user',
+	host: 'localhost',
+	user: 'root',
 	password: 'password',
 	database: 'Agora',
 	port: '3366'
