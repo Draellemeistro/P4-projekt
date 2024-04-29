@@ -6,6 +6,8 @@
 	} from '../../utils/encryptionECDH.js';
 	// eslint-disable-next-line no-unused-vars
 	import RSABlindSig from '../../utils/blindSignatureRSA.js';
+	import crypto from 'crypto';
+
 
 	let rsaPublicKey;
 	let ecdhKeys;

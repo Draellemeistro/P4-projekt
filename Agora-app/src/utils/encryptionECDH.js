@@ -1,6 +1,6 @@
 import fs from 'fs';
 import axios from 'axios';
-import crypto from 'node:crypto';
+import crypto from 'crypto';
 
 
 export const initECDH = () => {
