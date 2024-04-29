@@ -51,6 +51,16 @@ export const sendBlindedForSigning = (blindedMessage) => {
 	});
 };
 
+export const askForDecryptToCheck = (encryptedBallot) => {
+	return fetch(`http://${serverIP}:${serverPort}/decrypt-RSA-message-Test'`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ encryptedBallot })
+	});
+}
+
 export const sendBallotToServerAndCheckHash = (ballot) => {
 	const clientPubKeyECDH = 'test';
 	const ballotHash = crypto.createHash('sha256').update(JSON.stringify(ballot)).digest('hex');

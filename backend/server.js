@@ -274,3 +274,9 @@ app.post('/verify-signed-blinded-msg', async (req, res) => {
 	});
 	res.json(verify);
 }); //TODO check if this is correct
+
+app.post('/decrypt-RSA-message-Test', async (req, res) => {
+const encryptedMessage = req.body.encryptedMessage;
+	const decryptedMessage = serverRSAKeyPair.decrypt(encryptedMessage, 'utf8');
+	res.json(decryptedMessage);
+}

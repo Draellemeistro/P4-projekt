@@ -3,9 +3,10 @@ import axios from 'axios'; // You'll need to install axios using npm install axi
 
 
 const RSACrypto = {
-
 	request: async function requestPublicKey() {
-		const response = await axios.get('http://130.225.39.205:3366/rsa-public-key');
+		const serverIP = '192.168.0.113';
+		const 	serverPort = '3000';
+		const response = await axios.get(`http://${serverIP}:${serverPort}/rsa-public-key`);
 		sessionStorage.setItem('serverPublicKeyRSA', response.data);
 		return response.data;
 	},
