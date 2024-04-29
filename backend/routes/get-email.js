@@ -2,8 +2,8 @@
 import express from 'express';
 import nodemailer from 'nodemailer';
 import { generateOTP } from '../utils/generateOTP.js';
-import connection from '../utils/db';
-import { otpStore } from '../utils/otpStore';
+import connection from '../utils/db.js';
+import { otpStore } from '../utils/otpStore.js';
 
 const router = express.Router();
 

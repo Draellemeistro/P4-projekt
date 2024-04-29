@@ -1,5 +1,5 @@
 import express from 'express';
-import { otpStore } from '../utils/otpStore';
+import { otpStore } from '../utils/otpStore.js';
 const router = express.Router();
 
 router.post('/', async (req, res) => {
