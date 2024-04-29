@@ -8,7 +8,8 @@
 
     <Box>
         <input type="button" onclick="location.href='/login';" value="go to login" /><input type="button" onclick="location.href='/receipt';" value="Go to color" />
-        <input type="button" onclick="location.href='/vote';" value="Go to voting page" /><input type="button" onclick="location.href='/cryptoTests';" value="crypto test page" />
+        <input type="button" onclick="location.href='/vote';" value="Go to voting page" /><input type="button" onclick="location.href='/cryptoTests';" value="ECDH test page" />
+        <input type="button" onclick="location.href='/testingBlindSig';" value="blindSig test page" /><input type="button" onclick="location.href='/testingRSA';" value="RSA test page" />
     </Box>
 </div>
 
