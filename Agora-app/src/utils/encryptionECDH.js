@@ -15,7 +15,6 @@ export const initECDH = () => {
 		// Returns the public and private keys
 		console.log(keyPair.publicKey);
 		console.log(keyPair.privateKey);
-		return keyPair;
 	}).catch(function(err){
 		console.error(err);
 	});
