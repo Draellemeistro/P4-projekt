@@ -15,6 +15,7 @@ const app = express();
 
 app.use(express.json());
 
+
 // <
 // const allowedOrigins = ['https://agora.servernux.com', 'http://130.225.39.205'];
 //
@@ -36,8 +37,12 @@ app.use(cors({}));
 
 let otpStore = {};
 
-//const privateKey = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/privkey.pem', 'utf8');
-//const certificate = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/fullchain.pem', 'utf8');
+const privateKey = fs.readFileSync('./key.pem', 'utf8');
+const certificate = fs.readFileSync('./cert.pem', 'utf8');
+const credentials = { key: privateKey, cert: certificate };
+https.createServer(credentials, app).listen(3000, () => {
+	console.log('HTTPS Server running on port 3000');
+});
 
 
 const serverPublicKeyECDH = fs.readFileSync(__dirname + '/serverPublicKeyECDH.pem', 'utf8');
@@ -79,7 +84,6 @@ app.get('*', (req, res) => {
 });
 
 //https.createServer(credentials, app).listen(443);
-app.listen(3000, () => console.log('HTTP Server started'));
 
 
 //TODO Still returning email maybe error codes
