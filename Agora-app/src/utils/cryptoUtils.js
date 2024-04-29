@@ -1,7 +1,7 @@
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey#rsa_key_pair_generation
  */
-const crypto = require('crypto');
+import crypto from 'crypto';
 import axios from 'axios'; // You'll need to install axios using npm install axios
 import RSACrypto from './encryptionRSA.js';
 // eslint-disable-next-line no-unused-vars

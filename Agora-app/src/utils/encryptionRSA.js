@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+import crypto from 'crypto';
 import axios from 'axios'; // You'll need to install axios using npm install axios
 
 
