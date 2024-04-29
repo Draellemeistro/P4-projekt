@@ -4,8 +4,7 @@ import crypto from 'node:crypto';
 
 
 export const initECDH = () => {
-	let clientKeys;
-	window.crypto.subtle.generateKey(
+	return window.crypto.subtle.generateKey(
 		{
 			name: "ECDH",
 			namedCurve: "P-521"
@@ -16,13 +15,10 @@ export const initECDH = () => {
 		// Returns the public and private keys
 		console.log(keyPair.publicKey);
 		console.log(keyPair.privateKey);
-		clientKeys = keyPair;
-		return clientKeys;
+		return keyPair;
 	}).catch(function(err){
 		console.error(err);
 	});
-
-
 };
 
 // Function to get client's public key

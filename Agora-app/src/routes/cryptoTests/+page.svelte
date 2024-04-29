@@ -16,10 +16,8 @@
 
 	onMount(async () => {
 		rsaPublicKey = await RSACrypto.request();
-		ecdhKeys = initECDH();
+		ecdhKeys = await initECDH();
 	});
-
-
 </script>
 
 <div>
