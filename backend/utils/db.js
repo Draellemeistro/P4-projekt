@@ -1,5 +1,5 @@
 // utils/db.js
-const mysql = require('mysql2');
+import mysql from 'mysql2';
 
 const connection = mysql.createConnection({
 	host: '130.225.39.205',
@@ -14,4 +14,4 @@ connection.connect((err) => {
 	console.log('Connected to MySQL');
 });
 
-module.exports = connection;
+export default connection;
