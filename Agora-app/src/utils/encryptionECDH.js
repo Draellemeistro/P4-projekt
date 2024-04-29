@@ -17,11 +17,12 @@ export const initECDH = () => {
 		console.log(keyPair.publicKey);
 		console.log(keyPair.privateKey);
 		clientKeys = keyPair;
+		return clientKeys;
 	}).catch(function(err){
 		console.error(err);
 	});
 
-	return { clientKeys };
+
 };
 
 // Function to get client's public key
