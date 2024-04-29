@@ -8,6 +8,12 @@ import https from 'https';
 import fs from 'fs';
 import path from 'path';
 import { createECDH } from 'crypto';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename); // for some reason this is needed to get the current directory
+
 
 const app = express();
 
