@@ -64,7 +64,7 @@ const connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
 	password: 'password',
-	database: 'Agora',
+	database: 'agora',
 });
 
 connection.connect((err) => {
