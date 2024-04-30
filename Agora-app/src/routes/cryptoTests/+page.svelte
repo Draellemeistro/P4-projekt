@@ -50,12 +50,12 @@
 <div>
 	<h2>Write RSA Public key to console </h2>
 	<button on:click={encryptHandler(msg, rsaPublicKey)}>Request RSA Public Key</button>
-	<p>stringy: {encryptedMessage}</p>
+	<p>Encrypted Message: {encryptedMessage}</p>
 </div>
 <div>
 	<h2>test webCrypto</h2>
 	<button on:click={RSACrypto.webCryptoTest}>test web crypto</button>
-	<p>Encrypted Message: {encryptedMessage}</p>
+	<p>Encrypted Message: {WebCryptoResult}</p>
 </div>
 <div>
 	<h2>Initiate ECDH</h2>
