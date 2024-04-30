@@ -32,7 +32,7 @@
 	<h2>test webCrypto</h2>
 	<button on:click={RSACrypto.webCryptoTest}>Encrypt Message</button>
 	<p>Encrypted Message: {encryptedMessage}</p>
-
+</div>
 <div>
 	<h2>Initiate ECDH</h2>
 	<button on:click={initECDH}>Initiate ECDH</button>
