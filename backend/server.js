@@ -80,7 +80,7 @@ connection.connect((err) => {
 app.use(express.static(path.join(__dirname, '../Agora-app/build')));
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../Agora-app/build/index.html'));
-	console.log('Static file server is running'); // Add this line
+	//console.log('Static file server is running'); // Add this line
 });
 
 const serverLocal = https.createServer(credentials, app).listen(3030, () => console.log('HTTPs Server started'));
@@ -192,6 +192,7 @@ app.get('/request-public-ecdh-key', (req, res) => {
 app.get('/rsa-public-key', (req, res) => {
 	const publicKeyString = serverRSAKeyPair.exportKey('pkcs1-public-pem');
 	console.log(publicKeyString);
+	console.log('inside rsa-public-key');
 	res.json(publicKeyString);
 } );
 
