@@ -71,7 +71,7 @@ app.get('*', (req, res) => {
 });
 
 https.createServer(credentials, app).listen(3030);
-app.listen(3030, () => console.log('HTTPs Server started'));
+//app.listen(3030, () => console.log('HTTPs Server started'));
 
 //Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
