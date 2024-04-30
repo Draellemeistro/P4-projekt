@@ -194,7 +194,7 @@ app.get('/rsa-public-key', (req, res) => {
 	const publicKeyString = serverRSAKeyPair.exportKey('pkcs1-public-pem');
 	console.log(publicKeyString);
 	console.log('inside rsa-public-key');
-	res.send('this is the public key');
+	res.json(publicKeyString);
 } );
 
 // not relevant yet, might not be needed.
