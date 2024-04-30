@@ -9,7 +9,7 @@
 	let clientECDHPKeyPair;
 	let sharedSecret;
 	onMount(async () => {
-		const response = await apiCalls.getECDHPublicKey();
+		const response = await apiCalls.askForServerECDHPublicKey();
 		clientECDHPKeyPair = await ECDHCrypto.initECDH()
 		sharedSecret = await ECDHCrypto.computeSharedSecret(response.data.publicKey, clientECDHPKeyPair);
 		ECDHPublicKey = response.data.publicKey;

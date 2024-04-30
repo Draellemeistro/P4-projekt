@@ -41,6 +41,15 @@ export const sendBallotToServer = (ballot) => {
 	});
 };
 
+export const askForServerECDHPublicKey = () => {
+	return fetch(`http://${serverIP}:${serverPort}/request-public-ecdh-key`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
+};
+
 export const sendBlindedForSigning = (blindedMessage) => {
 	return fetch(`http://${serverIP}:${serverPort}/sign-blinded-msg`, {
 		method: 'POST',
