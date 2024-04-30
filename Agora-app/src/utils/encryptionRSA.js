@@ -16,7 +16,7 @@ const RSACrypto = {
 	},
 	encrypt: function encryptWithPublicKey(message, publicKey) {
 		const encrypt = new JSEncrypt();
-		encrypt.setPublicKey(publicKey.);
+		encrypt.setPublicKey(publicKey);
 		return encrypt.encrypt(message);
 	},
 	decrypt: function decryptWithPrivateKey(encryptedMessage, privateKey) {
