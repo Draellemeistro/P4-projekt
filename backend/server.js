@@ -55,7 +55,7 @@ serverRSAKeyPair.importKey(serverPrivateRSAKey, 'pkcs1-private-pem');
 // Create a credentials object
 app.use(express.json());
 app.use(cors({
-	origin: 'http://192.168.0.113:3030/', // Update with your frontend URL
+	origin: 'https://192.168.0.113:3030/', // Update with your frontend URL
 	methods: ['GET', 'POST'],
 	allowedHeaders: ['Content-Type'],
 }));
@@ -191,7 +191,7 @@ app.post('/fetch-candidates', (req, res) => {
 
 
 app.get('/request-public-ecdh-key', (req, res) => {
-	res.send(serverPublicKeyECDH);
+	res.json(serverPublicKeyECDH);
 }	);
 app.get('/rsa-public-key', (req, res) => {
 	res.send(serverPublicRSAKey);
