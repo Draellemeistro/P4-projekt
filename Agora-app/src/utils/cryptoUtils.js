@@ -12,7 +12,8 @@ const { getPublicKey, computeSharedSecret, requestServerPublicKeyECDH, encryptMe
 //  ----- ECDH -----
 // Generate client's keys
 // Function to send encrypted ballot to server
-
+const serverIP = '192.168.0.113';
+const 	serverPort = '3030';
 
 const cryptoUtils = {
 	arrayBufferToString: function(buffer) {
@@ -123,7 +124,7 @@ const cryptoUtils = {
 
 const messageEncryption= {
 	sendEncryptedBallot: async function(encryptedBallot, clientPublicKeyBase64,EncryptedVoter) {
-		const response = await axios.post('http://20.79.40.89:80/insert-ballot', {
+		const response = await axios.post(`https://${serverIP}:${serverPort}/insert-ballot`, {
 			ballot: encryptedBallot,
 			voter: EncryptedVoter,
 			pubKeyECDH: clientPublicKeyBase64// Assuming you're using the client's public key as the RSA key
