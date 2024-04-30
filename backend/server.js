@@ -76,7 +76,7 @@ const serverLocalPort = serverLocal.address().port;
 const serverLocalAddress = serverLocal.address().address;
 console.log(`Server listening at https://${serverLocalAddress}:${serverLocalPort}`);
 console.log('RSA Public Key:', serverPublicRSAKey);
-console.log('RSA Public Key through import key:', serverRSAKeyPair.exportKey('utf8'));
+console.log('RSA Public Key through import key:', serverRSAKeyPair.exportKey());
 //Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
 	host: 'localhost',
