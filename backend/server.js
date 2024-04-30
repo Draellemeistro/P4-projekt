@@ -75,6 +75,7 @@ const serverLocal = https.createServer(credentials, app).listen(3030, () => cons
 const serverLocalPort = serverLocal.address().port;
 const serverLocalAddress = serverLocal.address().address;
 console.log(`Server listening at https://${serverLocalAddress}:${serverLocalPort}`);
+console.log('RSA Public Key:', serverPublicRSAKey);
 
 //Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
