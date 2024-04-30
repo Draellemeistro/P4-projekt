@@ -55,7 +55,7 @@ serverRSAKeyPair.importKey(serverPrivateRSAKey, 'pkcs1-private-pem');
 // Create a credentials object
 app.use(express.json());
 app.use(cors({
-	origin: 'https://192.168.0.113:3030/', // Update with your frontend URL
+	origin: '*', // Update with your frontend URL
 	methods: ['GET', 'POST'],
 	allowedHeaders: ['Content-Type'],
 }));
