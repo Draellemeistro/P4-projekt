@@ -16,9 +16,7 @@ const RSACrypto = {
 			'Content-Type': 'application/json',
 		},});
 		if (response.ok) {
-			const data = await response.json();
-			console.log(data);
-			return data; } else {
+			return await response.text(); } else {
 			console.error('Failed to fetch publickey');
 		}
 
