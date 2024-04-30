@@ -1,7 +1,10 @@
 import crypto from 'crypto';
-
+import fs from 'fs';
 
 const RSACrypto = {
+	write: function writeToFile(filename, data) {
+		fs.writeFileSync(filename, data);
+	},
 	request: async function requestPublicKey() {
 		const serverIP = '192.168.0.113';
 		const 	serverPort = '3030';

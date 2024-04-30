@@ -14,11 +14,19 @@
 	// eslint-disable-next-line no-unused-vars
 	let encryptedMessage;
 	let WebCryptoResult;
+	let stringified;
+	function consoleLog(rsaPublicKey) {
+		console.log(rsaPublicKey);
+		stringified = JSON.stringify(rsaPublicKey);
+		console.log(stringified);
+		return stringified;
+	}
 
 	onMount(async () => {
 		rsaPublicKey = await RSACrypto.request();
 		ecdhKeys = await initECDH();
 		WebCryptoResult = await RSACrypto.webCryptoTest();
+		stringified = JSON.stringify(WebCryptoResult);
 	});
 </script>
 
@@ -27,7 +35,11 @@
 	<button on:click={RSACrypto.request}>Request RSA Public Key</button>
 	<p>RSA Public Key: {rsaPublicKey}</p>
 </div>
-
+<div>
+	<h2>Write RSA Public key to console </h2>
+	<button on:click={consoleLog}>Request RSA Public Key</button>
+	<p>stringy: {stringified}</p>
+</div>
 <div>
 	<h2>test webCrypto</h2>
 	<button on:click={RSACrypto.webCryptoTest}>test web crypto</button>
