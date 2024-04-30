@@ -194,10 +194,10 @@ app.post('/request-public-ecdh-key', (req, res) => {
 }	);
 app.post('/rsa-public-key', (req, res) => {
 	console.log('Accessed /rsa-public-key endpoint');
-	const publicKeyString = serverRSAKeyPair.keyPair.exportKey('jwk', 'public');
+	//const publicKeyString = serverRSAKeyPair.keyPair.exportKey('jwk', 'public');
 	console.log(publicKeyString);
 	console.log('inside rsa-public-key');
-	res.send('publicKeyString');
+	res.JSON(serverPublicRSAKey);
 } );
 
 // not relevant yet, might not be needed.
