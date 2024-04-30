@@ -2,7 +2,7 @@ const serverIP = '130.225.39.205';
 const serverPort = '3000';
 import crypto from 'crypto';
 export const fetchEmail = (personId, voteId) => {
-	return fetch(`http://${serverIP}:${serverPort}/get-email`, {
+	return fetch(`https://${serverIP}:${serverPort}/get-email`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -12,7 +12,7 @@ export const fetchEmail = (personId, voteId) => {
 };
 
 export const verify2FA = (twoFactorCode, personId, voteId) => {
-	return fetch(`http://${serverIP}:${serverPort}/verify-2fa`, {
+	return fetch(`https://${serverIP}:${serverPort}/verify-2fa`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ export const verify2FA = (twoFactorCode, personId, voteId) => {
 };
 
 export const getCandidatesFromServer = () => {
-	return fetch(`http://${serverIP}:${serverPort}/fetch-candidates`, {
+	return fetch(`https://${serverIP}:${serverPort}/fetch-candidates`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ export const getCandidatesFromServer = () => {
 
 export const sendBallotToServer = (ballot) => {
 	const clientPubKeyECDH = 'test';
-	return fetch(`http://${serverIP}:${serverPort}/insert-ballot`, {
+	return fetch(`https://${serverIP}:${serverPort}/insert-ballot`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -42,7 +42,7 @@ export const sendBallotToServer = (ballot) => {
 };
 
 export const askForServerECDHPublicKey = () => {
-	return fetch(`http://${serverIP}:${serverPort}/request-public-ecdh-key`, {
+	return fetch(`https://${serverIP}:${serverPort}/request-public-ecdh-key`, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json'
@@ -51,7 +51,7 @@ export const askForServerECDHPublicKey = () => {
 };
 
 export const sendBlindedForSigning = (blindedMessage) => {
-	return fetch(`http://${serverIP}:${serverPort}/sign-blinded-msg`, {
+	return fetch(`https://${serverIP}:${serverPort}/sign-blinded-msg`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -61,7 +61,7 @@ export const sendBlindedForSigning = (blindedMessage) => {
 };
 
 export const askForDecryptToCheck = (encryptedBallot) => {
-	return fetch(`http://${serverIP}:${serverPort}/decrypt-RSA-message-Test'`, {
+	return fetch(`https://${serverIP}:${serverPort}/decrypt-RSA-message-Test'`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -73,7 +73,7 @@ export const askForDecryptToCheck = (encryptedBallot) => {
 export const sendBallotToServerAndCheckHash = (ballot) => {
 	const clientPubKeyECDH = 'test';
 	const ballotHash = crypto.createHash('sha256').update(JSON.stringify(ballot)).digest('hex');
-	const serverBallotHash = fetch(`http://${serverIP}:${serverPort}/insert-ballot-and-return-hash`, {
+	const serverBallotHash = fetch(`https://${serverIP}:${serverPort}/insert-ballot-and-return-hash`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -83,7 +83,7 @@ export const sendBallotToServerAndCheckHash = (ballot) => {
 	if (ballotHash === serverBallotHash) {
 		return true;
 	} else {
-		fetch(`http://${serverIP}:${serverPort}/mark-ballot-as-faulty`, {
+		fetch(`https://${serverIP}:${serverPort}/mark-ballot-as-faulty`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
