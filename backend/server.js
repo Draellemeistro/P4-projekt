@@ -197,7 +197,8 @@ app.post('/rsa-public-key', (req, res) => {
 	//const publicKeyString = serverRSAKeyPair.keyPair.exportKey('jwk', 'public');
 	console.log('inside rsa-public-key');
 	console.log(serverPublicRSAKey);
-	res.json(serverPublicRSAKey);
+	let stringServerPublicRSAKey = serverPublicRSAKey.toString();
+	res.json(stringServerPublicRSAKey);
 } );
 
 // not relevant yet, might not be needed.
