@@ -70,8 +70,11 @@ app.get('*', (req, res) => {
 	console.log('Static file server is running'); // Add this line
 });
 
-https.createServer(credentials, app).listen(3030);
+const serverLocal = https.createServer(credentials, app).listen(3030, () => console.log('HTTPs Server started'));
 //app.listen(3030, () => console.log('HTTPs Server started'));
+const serverLocalPort = serverLocal.address().port;
+const serverLocalAddress = serverLocal.address().address;
+console.log(`Server listening at https://${serverLocalAddress}:${serverLocalPort}`);
 
 //Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
