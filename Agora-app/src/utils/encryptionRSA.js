@@ -19,7 +19,7 @@ const RSACrypto = {
 			const data = await response.json();
 			console.log(data);
 			return data; } else {
-			console.error('Failed to fetch candidates');
+			console.error('Failed to fetch publickey');
 		}
 
 		//sessionStorage.setItem('serverPublicKeyRSA', response.data);
