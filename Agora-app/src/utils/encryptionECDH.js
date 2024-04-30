@@ -34,7 +34,7 @@ export const computeSharedSecret = (client, serverpubkeyBase64string) => {
 
 // Function to send client's public key and receive server's public key
 export const requestServerPublicKeyECDH = () => {
-	const response = axios.get('http://130.225.39.205:3366/request-public-ecdh-key');
+	const response = axios.get('http://130.225.39.205:3030/request-public-ecdh-key');
 	sessionStorage.setItem('serverPublicKeyECDH', response.data);
 	return response.data;
 }
@@ -53,6 +53,19 @@ export const performECDHAndEncryptBallot = async (ballot,client, clientKeys) => 
 	const sharedSecret = computeSharedSecret(serverPublicKeyBase64);
 	return encryptMessageECDH(ballot, sharedSecret);
 }
+export const verifyTestSharedSecret = (clientSharedSecret, clientPublicKeyBase64) => {
+	return fetch('http://130.225.39.205:3030/check-shared-secret', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			sharedSecret: clientSharedSecret,
+			clientPublicKey: clientPublicKeyBase64
+		})
+	}).then(response => response.json());
+}
+
 export const performTestECDHAndEncryptBallot = (ballot) => {
 	// eslint-disable-next-line no-unused-vars
 	const {client, clientKeys}= initECDH();

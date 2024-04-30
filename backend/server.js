@@ -216,6 +216,17 @@ app.post('/present-ecdh-key', async (req, res) => {
 	});
 });
 
+app.post('/check-shared-secret', async (req, res) => {
+	const clientSharedSecret = req.body.clientSharedSecret;
+	const publicKey = req.body.clientPublicKeyBase64;
+	const sharedSecret = serverECDH.computeSecret(clientPublicKeyBase64);
+	if (clientSharedSecret === sharedSecret) {
+		res.json({ message: 'Shared secret matches' });
+	} else {
+		res.json({ message: 'Shared secret does not match' });
+	}
+});
+
 // TODO Database needs to have a table called encrypted_ballot_box with the following columns:
 // 		enc_ballot (TEXT), enc_voter (TEXT), pubKeyECDH (TEXT) 		maybe more columns
 app.post('/insert-ballot', (req, res) => {
