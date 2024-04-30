@@ -50,6 +50,7 @@ const serverECDH = createECDH('secp521r1');
 const serverRSAKeyPair = new NodeRSA();
 serverRSAKeyPair.importKey(serverPublicRSAKey, 'pkcs1-public-pem');
 serverRSAKeyPair.importKey(serverPrivateRSAKey, 'pkcs1-private-pem');
+serverRSAKeyPair.extractable = true;
 
 
 // Create a credentials object
