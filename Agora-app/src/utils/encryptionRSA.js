@@ -21,6 +21,7 @@ const RSACrypto = {
 			return false;
 		}
 		if (typeof publicKey !== 'string' || publicKey.length === 0) {
+			console.log(publicKey);
 			console.error('Invalid public key. Please provide a non-empty string.');
 			return false;
 		}
