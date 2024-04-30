@@ -6,7 +6,7 @@
 	let rsaPublicKey;
 	let encryptedMessage;
 	let decryptedMessage;
-
+	let testMessage;
 	askForDecryptToCheck();
 
 	onMount(async () => {
@@ -14,7 +14,7 @@
 		rsaPublicKey = await RSACrypto.request();
 
 		// Create a test message
-		const testMessage = "This is a test message";
+		testMessage = "This is a test message";
 
 		// Encrypt the test message with the public key
 		encryptedMessage = RSACrypto.encrypt(testMessage, rsaPublicKey);
@@ -30,6 +30,10 @@
 <div>
 	<h2>RSA Public Key</h2>
 	<p>{rsaPublicKey}</p>
+</div>
+<div>
+	<h2>test Message</h2>
+	<p>{testMessage}</p>
 </div>
 
 <div>
