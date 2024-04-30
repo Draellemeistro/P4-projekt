@@ -183,7 +183,7 @@ app.post('/verify-2fa', async (req, res) => {
 	}
 });
 
-app.post('/fetch-candidates', (req, res) => {
+app.get('/fetch-candidates', (req, res) => {
 	connection.query('SELECT candidate, party FROM Agora.ballot', (err, results) => {
 		if (err) throw err;
 		else {
@@ -198,8 +198,8 @@ app.get('/request-public-ecdh-key', (req, res) => {
 	res.json(serverPublicKeyECDH);
 }	);
 app.get('/rsa-public-key', (req, res) => {
-
-	res.json.stringify(serverPublicRSAKey);
+	const publicKeyString = serverRSAKeyPair.exportKey('pkcs1-public-pem');
+	res.json(publicKeyString);
 } );
 
 // not relevant yet, might not be needed.
