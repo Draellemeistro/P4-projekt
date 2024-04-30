@@ -36,9 +36,11 @@ app.use(cors({}));
 
 let otpStore = {};
 
-//const privateKey = fs.readFileSync('./key.pem', 'utf8');
-//const certificate = fs.readFileSync('./cert.pem', 'utf8');
+const privateKey = fs.readFileSync('./key.pem', 'utf8');
+const certificate = fs.readFileSync('./cert.pem', 'utf8');
 
+
+///app.listen(80, () => console.log('HTTP Server started'));
 
 const serverPublicKeyECDH = fs.readFileSync(__dirname + '/serverPublicKeyECDH.pem', 'utf8');
 const serverPrivateKeyECDH = fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem', 'utf8');
@@ -53,11 +55,23 @@ serverRSAKeyPair.importKey(serverPrivateRSAKey, 'pkcs1-private-pem');
 // Create a credentials object
 app.use(express.json());
 app.use(cors({
-	origin: 'http://192.168.0.113:3000/', // Update with your frontend URL
+	origin: 'http://192.168.0.113:80/', // Update with your frontend URL
 	methods: ['GET', 'POST'],
 	allowedHeaders: ['Content-Type'],
 }));
+const credentials = {
+	key: privateKey,
+	cert: certificate,
+	secureProtocol: 'TLSv1_2_method' // Use TLS 1.2
+};
+app.use(express.static(path.join(__dirname, '../Agora-app/build')));
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname, '../Agora-app/build/index.html'));
+	console.log('Static file server is running'); // Add this line
+});
 
+https.createServer(credentials, app).listen(80);
+app.listen(80, () => console.log('HTTPs Server started'));
 
 //Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
@@ -72,14 +86,15 @@ connection.connect((err) => {
 	console.log('Connected to MySQL');
 });
 
-app.use(express.static(path.join(__dirname, '../Agora-app/build')));
-app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname, '../Agora-app/build/index.html'));
-	console.log('Static file server is running'); // Add this line
-});
+//
+//app.use(express.static(path.join(__dirname, '../Agora-app/build')));
+//app.get('*', (req, res) => {
+//	res.sendFile(path.join(__dirname, '../Agora-app/build/index.html'));
+//	console.log('Static file server is running'); // Add this line
+//});
 
 //https.createServer(credentials, app).listen(443);
-app.listen(3000, () => console.log('HTTP Server started'));
+//app.listen(3000, () => console.log('HTTP Server started'));
 
 
 //TODO Still returning email maybe error codes
@@ -279,4 +294,4 @@ app.post('/decrypt-RSA-message-Test', async (req, res) => {
 const encryptedMessage = req.body.encryptedMessage;
 	const decryptedMessage = serverRSAKeyPair.decrypt(encryptedMessage, 'utf8');
 	res.json(decryptedMessage);
-}
+});
