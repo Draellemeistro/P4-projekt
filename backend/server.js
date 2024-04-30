@@ -199,6 +199,7 @@ app.get('/request-public-ecdh-key', (req, res) => {
 }	);
 app.get('/rsa-public-key', (req, res) => {
 	const publicKeyString = serverRSAKeyPair.exportKey('pkcs1-public-pem');
+	console.log(publicKeyString);
 	res.json(publicKeyString);
 } );
 
