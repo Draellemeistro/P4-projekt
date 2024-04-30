@@ -10,10 +10,20 @@ const RSACrypto = {
 	request: async function requestPublicKey() {
 		const serverIP = '192.168.0.113';
 		const 	serverPort = '3030';
-		const response = await fetch(`https://${serverIP}:${serverPort}/rsa-public-key`);
-		//sessionStorage.setItem('serverPublicKeyRSA', response.data);
+		const response = await fetch(`https://${serverIP}:${serverPort}/rsa-public-key`, {
+			method: 'POST',
+			headers: {
+			'Content-Type': 'application/json',
+		},});
 		console.log(response.data);
+		console.log(response);
+		console.log(response.status);
+		console.log(response.statusText);
+		console.log(response.headers);
+		console.log('still inside the api call');
 		return response.data;
+		//sessionStorage.setItem('serverPublicKeyRSA', response.data);
+
 	},
 	encrypt: function encryptWithPublicKey(message, publicKey) {
 		// Check if the message and publicKey are valid
