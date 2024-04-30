@@ -55,7 +55,7 @@ serverRSAKeyPair.importKey(serverPrivateRSAKey, 'pkcs1-private-pem');
 // Create a credentials object
 app.use(express.json());
 app.use(cors({
-	origin: 'http://192.168.0.113/', // Update with your frontend URL
+	origin: 'http://192.168.0.113:3030/', // Update with your frontend URL
 	methods: ['GET', 'POST'],
 	allowedHeaders: ['Content-Type'],
 }));
@@ -70,8 +70,8 @@ app.get('*', (req, res) => {
 	console.log('Static file server is running'); // Add this line
 });
 
-https.createServer(credentials, app).listen(3000);
-app.listen(3000, () => console.log('HTTPs Server started'));
+https.createServer(credentials, app).listen(3030);
+app.listen(3030, () => console.log('HTTPs Server started'));
 
 //Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
