@@ -10,7 +10,7 @@ const RSACrypto = {
 	request: async function requestPublicKey() {
 		const serverIP = '192.168.0.113';
 		const 	serverPort = '3030';
-		const response = await fetch(`https://${serverIP}:${serverPort}/rsa-public-key`, {
+		const response =  fetch(`https://${serverIP}:${serverPort}/rsa-public-key`, {
 			method: 'GET',
 			headers: {
 			'Content-Type': 'application/json',
@@ -18,7 +18,8 @@ const RSACrypto = {
 		if (response.ok) {
 			const data = await response.json();
 			console.log(data);
-			return data;
+			return data; } else {
+			console.error('Failed to fetch candidates');
 		}
 
 		//sessionStorage.setItem('serverPublicKeyRSA', response.data);
