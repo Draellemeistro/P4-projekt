@@ -29,8 +29,11 @@
 	}
 
 	onMount(async () => {
-		rsaPublicKey = RSACrypto.request().then((res) => {
+		rsaPublicKey = await RSACrypto.request().then((res) => {
+
 			console.log(res);
+			console.log(JSON.stringify(res));
+			console.log('hallelujah');
 			return res;
 		});
 		ecdhKeys = await initECDH();
