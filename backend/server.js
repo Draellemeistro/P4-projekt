@@ -197,7 +197,8 @@ app.get('/request-public-ecdh-key', (req, res) => {
 	res.json(serverPublicKeyECDH);
 }	);
 app.get('/rsa-public-key', (req, res) => {
-	res.send(serverPublicRSAKey);
+
+	res.json.stringify(serverPublicRSAKey);
 } );
 
 // not relevant yet, might not be needed.
