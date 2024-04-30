@@ -1,5 +1,5 @@
 const serverIP = '130.225.39.205';
-const serverPort = '80';
+const serverPort = '3000';
 import crypto from 'crypto';
 export const fetchEmail = (personId, voteId) => {
 	return fetch(`http://${serverIP}:${serverPort}/get-email`, {
