@@ -13,7 +13,8 @@ const RSACrypto = {
 		return response.data;
 	},
 	encrypt: function encryptWithPublicKey(message, publicKey) {
-		const buffer = Buffer.from(message, 'utf8');
+		let buffer;
+		buffer = Buffer.from(message, 'utf8');
 		const encrypted = crypto.publicEncrypt(publicKey, buffer);
 		return encrypted.toString('base64');
 	},
