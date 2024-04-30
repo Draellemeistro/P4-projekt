@@ -66,6 +66,9 @@ const credentials = {
 	secureProtocol: 'TLSv1_2_method' // Use TLS 1.2
 };
 
+const serverLocal = https.createServer(credentials, app).listen(3030, () => console.log('HTTPs Server started'));
+
+
 //Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
 	host: 'localhost',
@@ -81,10 +84,9 @@ connection.connect((err) => {
 app.use(express.static(path.join(__dirname, '../Agora-app/build')));
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../Agora-app/build/index.html'));
-	//console.log('Static file server is running'); // Add this line
+	console.log('Static file server is running'); // Add this line
 });
 
-const serverLocal = https.createServer(credentials, app).listen(3030, () => console.log('HTTPs Server started'));
 //app.listen(3030, () => console.log('HTTPs Server started'));
 const serverLocalPort = serverLocal.address().port;
 const serverLocalAddress = serverLocal.address().address;
