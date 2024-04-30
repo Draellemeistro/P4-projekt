@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
-	import RSACrypto from '../../utils/encryptionRSA.js';
-	import { askForDecryptToCheck } from '../../utils/apiService.js';
+	import RSACrypto from '../../../utils/encryptionRSA.js';
+	import { askForDecryptToCheck } from '../../../utils/apiService.js';
 
 	let rsaPublicKey;
 	let encryptedMessage;
