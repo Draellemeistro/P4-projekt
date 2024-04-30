@@ -1,4 +1,4 @@
-import fs from 'fs';
+//import fs from 'fs';
 import axios from 'axios';
 import crypto from 'crypto';
 
@@ -66,15 +66,15 @@ export const verifyTestSharedSecret = (clientSharedSecret, clientPublicKeyBase64
 	}).then(response => response.json());
 }
 
-export const performTestECDHAndEncryptBallot = (ballot) => {
-	// eslint-disable-next-line no-unused-vars
-	const {client, clientKeys}= initECDH();
-	//const clientPublicKeyBase64 = getPublicKey(clientKeys);
-	const serverPublicKeyECDH = fs.readFileSync('./serverPublicKeyECDH.pem', 'utf8');
-	const serverPublicKeyBase64 = serverPublicKeyECDH.toString();
-	const sharedSecret = computeSharedSecret(client, serverPublicKeyBase64);
-	return encryptMessageECDH(ballot, sharedSecret);
-}
-let ballot = 'Alice';
-let {encrypted_ballot, sharedSecret} = performTestECDHAndEncryptBallot(ballot);
-console.log(encrypted_ballot, sharedSecret);
+//export const performTestECDHAndEncryptBallot = (ballot) => {
+//	// eslint-disable-next-line no-unused-vars
+//	const {client, clientKeys}= initECDH();
+//	//const clientPublicKeyBase64 = getPublicKey(clientKeys);
+//	const serverPublicKeyECDH = fs.readFileSync('./serverPublicKeyECDH.pem', 'utf8');
+//	const serverPublicKeyBase64 = serverPublicKeyECDH.toString();
+//	const sharedSecret = computeSharedSecret(client, serverPublicKeyBase64);
+//	return encryptMessageECDH(ballot, sharedSecret);
+//}
+//let ballot = 'Alice';
+//let {encrypted_ballot, sharedSecret} = performTestECDHAndEncryptBallot(ballot);
+//console.log(encrypted_ballot, sharedSecret);
