@@ -29,13 +29,10 @@
 	}
 
 	onMount(async () => {
-		rsaPublicKey = await RSACrypto.request().then((res) => {
-
-			console.log(res);
-			console.log(JSON.stringify(res));
-			console.log('hallelujah');
-			return res;
-		});
+		rsaPublicKey = await RSACrypto.request()
+		console.log(rsaPublicKey);
+		console.log(JSON.stringify(rsaPublicKey));
+		console.log('hallelujah');
 		ecdhKeys = await initECDH();
 		WebCryptoResult = await RSACrypto.webCryptoTest();
 		encryptedMessage = RSACrypto.encrypt('Hello World', rsaPublicKey);
