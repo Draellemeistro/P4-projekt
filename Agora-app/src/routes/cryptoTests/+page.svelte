@@ -15,17 +15,24 @@
 	let encryptedMessage;
 	let WebCryptoResult;
 	let stringified;
+	let msg = 'Hello World';
 	function consoleLog(rsaPublicKey) {
 		console.log(rsaPublicKey);
 		stringified = JSON.stringify(rsaPublicKey);
 		console.log(stringified);
 		return stringified;
 	}
+	function encryptHandler(msg, rsaPublicKey) {
+		let encrypted = RSACrypto.encrypt(msg, rsaPublicKey)
+		console.log(encrypted);
+		return encrypted;
+	}
 
 	onMount(async () => {
 		rsaPublicKey = await RSACrypto.request();
 		ecdhKeys = await initECDH();
 		WebCryptoResult = await RSACrypto.webCryptoTest();
+		encryptedMessage = RSACrypto.encrypt('Hello World', rsaPublicKey);
 		stringified = JSON.stringify(WebCryptoResult);
 	});
 </script>
@@ -39,6 +46,11 @@
 	<h2>Write RSA Public key to console </h2>
 	<button on:click={consoleLog}>Request RSA Public Key</button>
 	<p>stringy: {stringified}</p>
+</div>
+<div>
+	<h2>Write RSA Public key to console </h2>
+	<button on:click={encryptHandler(msg, rsaPublicKey)}>Request RSA Public Key</button>
+	<p>stringy: {encryptedMessage}</p>
 </div>
 <div>
 	<h2>test webCrypto</h2>
