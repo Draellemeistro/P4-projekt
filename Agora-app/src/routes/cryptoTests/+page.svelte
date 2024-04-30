@@ -29,7 +29,7 @@
 	}
 
 	onMount(async () => {
-		rsaPublicKey = await RSACrypto.request().then((res) => {
+		rsaPublicKey = RSACrypto.request().then((res) => {
 			console.log(res);
 			return res;
 		});
