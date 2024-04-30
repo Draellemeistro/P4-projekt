@@ -1,5 +1,7 @@
 import crypto from 'crypto';
 import fs from 'fs';
+import JSEncrypt from 'jsencrypt';
+
 
 const RSACrypto = {
 	write: function writeToFile(filename, data) {
@@ -13,10 +15,9 @@ const RSACrypto = {
 		return response.data;
 	},
 	encrypt: function encryptWithPublicKey(message, publicKey) {
-		let buffer;
-		buffer = Buffer.from(message, 'utf8');
-		const encrypted = crypto.publicEncrypt(publicKey, buffer);
-		return encrypted.toString('base64');
+		const encrypt = new JSEncrypt();
+		encrypt.setPublicKey(publicKey);
+		return encrypt.encrypt(message);
 	},
 	decrypt: function decryptWithPrivateKey(encryptedMessage, privateKey) {
 		const buffer = Buffer.from(encryptedMessage, 'base64');
