@@ -9,11 +9,17 @@
 	let clientECDHPKeyPair;
 	let sharedSecret;
 	onMount(async () => {
+		console.log('1');
 		const response = await apiCalls.askForServerECDHPublicKey();
-		clientECDHPKeyPair = await ECDHCrypto.initECDH()
+		console.log('2');
+		clientECDHPKeyPair = await ECDHCrypto.initECDH();
+		console.log('3');
 		sharedSecret = await ECDHCrypto.computeSharedSecret(response.data.publicKey, clientECDHPKeyPair);
+		console.log('4');
 		ECDHPublicKey = response.data.publicKey;
+		console.log('5');
 		encryptedMessage = ECDHCrypto.encryptMessageECDH('Hello World', sharedSecret);
+		console.log('6');
 		const responseCheck = ECDHCrypto.verifyTestSharedSecret(sharedSecret, ECDHCrypto.getPublicKey(clientECDHPKeyPair));
 		if (responseCheck) {
 			console.log('Shared Secret is correct');
