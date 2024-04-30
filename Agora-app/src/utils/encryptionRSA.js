@@ -15,9 +15,27 @@ const RSACrypto = {
 		return response.data;
 	},
 	encrypt: function encryptWithPublicKey(message, publicKey) {
+		// Check if the message and publicKey are valid
+		if (typeof message !== 'string' || message.length === 0) {
+			console.error('Invalid message. Please provide a non-empty string.');
+			return false;
+		}
+		if (typeof publicKey !== 'string' || publicKey.length === 0) {
+			console.error('Invalid public key. Please provide a non-empty string.');
+			return false;
+		}
+
 		const encrypt = new JSEncrypt();
 		encrypt.setPublicKey(publicKey);
-		return encrypt.encrypt(message);
+		const encryptedMessage = encrypt.encrypt(message);
+
+		// Check if the encryption was successful
+		if (!encryptedMessage) {
+			console.error('Failed to encrypt the message. Please check your public key and the message.');
+			return false;
+		}
+
+		return encryptedMessage;
 	},
 	decrypt: function decryptWithPrivateKey(encryptedMessage, privateKey) {
 		const buffer = Buffer.from(encryptedMessage, 'base64');
