@@ -64,19 +64,7 @@ const credentials = {
 	cert: certificate,
 	secureProtocol: 'TLSv1_2_method' // Use TLS 1.2
 };
-app.use(express.static(path.join(__dirname, '../Agora-app/build')));
-app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname, '../Agora-app/build/index.html'));
-	console.log('Static file server is running'); // Add this line
-});
 
-const serverLocal = https.createServer(credentials, app).listen(3030, () => console.log('HTTPs Server started'));
-app.listen(3030, () => console.log('HTTPs Server started'));
-const serverLocalPort = serverLocal.address().port;
-const serverLocalAddress = serverLocal.address().address;
-console.log(`Server listening at https://${serverLocalAddress}:${serverLocalPort}`);
-console.log('RSA Public Key:', serverPublicRSAKey);
-console.log('RSA Public Key through import key:', serverRSAKeyPair.exportKey());
 //Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
 	host: 'localhost',
@@ -89,16 +77,20 @@ connection.connect((err) => {
 	if (err) throw err;
 	console.log('Connected to MySQL');
 });
+app.use(express.static(path.join(__dirname, '../Agora-app/build')));
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname, '../Agora-app/build/index.html'));
+	console.log('Static file server is running'); // Add this line
+});
 
-//
-//app.use(express.static(path.join(__dirname, '../Agora-app/build')));
-//app.get('*', (req, res) => {
-//	res.sendFile(path.join(__dirname, '../Agora-app/build/index.html'));
-//	console.log('Static file server is running'); // Add this line
-//});
+const serverLocal = https.createServer(credentials, app).listen(3030, () => console.log('HTTPs Server started'));
+//app.listen(3030, () => console.log('HTTPs Server started'));
+const serverLocalPort = serverLocal.address().port;
+const serverLocalAddress = serverLocal.address().address;
+console.log(`Server listening at https://${serverLocalAddress}:${serverLocalPort}`);
+console.log('RSA Public Key:', serverPublicRSAKey);
+console.log('RSA Public Key through import key:', serverRSAKeyPair.exportKey());
 
-//https.createServer(credentials, app).listen(443);
-//app.listen(3000, () => console.log('HTTP Server started'));
 
 
 //TODO Still returning email maybe error codes
