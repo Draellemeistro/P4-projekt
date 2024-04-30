@@ -30,7 +30,7 @@
 
 <div>
 	<h2>test webCrypto</h2>
-	<button on:click={RSACrypto.webCryptoTest}>Encrypt Message</button>
+	<button on:click={RSACrypto.webCryptoTest}>test web crypto</button>
 	<p>Encrypted Message: {encryptedMessage}</p>
 </div>
 <div>
