@@ -70,7 +70,7 @@ export const performTestECDHAndEncryptBallot = (ballot) => {
 	// eslint-disable-next-line no-unused-vars
 	const {client, clientKeys}= initECDH();
 	//const clientPublicKeyBase64 = getPublicKey(clientKeys);
-	const serverPublicKeyECDH = fs.readFileSync(__dirname + '/serverPublicKeyECDH.pem', 'utf8');
+	const serverPublicKeyECDH = fs.readFileSync('./serverPublicKeyECDH.pem', 'utf8');
 	const serverPublicKeyBase64 = serverPublicKeyECDH.toString();
 	const sharedSecret = computeSharedSecret(client, serverPublicKeyBase64);
 	return encryptMessageECDH(ballot, sharedSecret);
