@@ -82,7 +82,7 @@ connection.connect((err) => {
 	console.log('Connected to MySQL');
 });
 app.use(express.static(path.join(__dirname, '../Agora-app/build')));
-app.get('', (req, res) => {
+app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../Agora-app/build/index.html'));
 	console.log('Static file server is running'); // Add this line
 });
@@ -178,7 +178,7 @@ app.post('/verify-2fa', async (req, res) => {
 	}
 });
 
-app.get('/fetch-candidates', (req, res) => {
+app.post('/fetch-candidates', (req, res) => {
 	connection.query('SELECT candidate, party FROM Agora.ballot', (err, results) => {
 		if (err) throw err;
 		else {
@@ -189,10 +189,10 @@ app.get('/fetch-candidates', (req, res) => {
 } );
 
 
-app.get('/request-public-ecdh-key', (req, res) => {
+app.post('/request-public-ecdh-key', (req, res) => {
 	res.json(serverPublicKeyECDH);
 }	);
-app.get('/rsa-public-key', (req, res) => {
+app.post('/rsa-public-key', (req, res) => {
 	console.log('Accessed /rsa-public-key endpoint');
 	const publicKeyString = serverRSAKeyPair.keyPair.exportKey('jwk', 'public');
 	console.log(publicKeyString);
