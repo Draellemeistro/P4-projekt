@@ -10,7 +10,7 @@ const RSACrypto = {
 	request: async function requestPublicKey() {
 		const serverIP = '192.168.0.113';
 		const 	serverPort = '3030';
-		const response =  fetch(`https://${serverIP}:${serverPort}/rsa-public-key`, {
+		const response =  await fetch(`https://${serverIP}:${serverPort}/rsa-public-key`, {
 			method: 'GET',
 			headers: {
 			'Content-Type': 'application/json',
