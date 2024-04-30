@@ -65,7 +65,7 @@ const credentials = {
 	secureProtocol: 'TLSv1_2_method' // Use TLS 1.2
 };
 app.use(express.static(path.join(__dirname, '../Agora-app/build')));
-app.get('192.168.0.113', (req, res) => {
+app.get('192.168.0.113:3030', (req, res) => {
 	res.sendFile(path.join(__dirname, '../Agora-app/build/index.html'));
 	console.log('Static file server is running'); // Add this line
 });
