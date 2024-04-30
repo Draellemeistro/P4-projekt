@@ -15,18 +15,18 @@ const RSACrypto = {
 			headers: {
 			'Content-Type': 'application/json',
 		},});
-		console.log(response);
-		console.log(response.ok);
-		console.log(response.status);
-		console.log(response.statusText);
-		console.log(response.headers.raw());
-		console.log(response.headers.get('content-type'));
-		console.log(response.body);
-		console.log('on to the next bullshit thing');
 		if (response.ok) {
 			const data = await response.json();
 			console.log(data);
 			return data; } else {
+			console.log(response);
+			console.log(response.ok);
+			console.log(response.status);
+			console.log(response.statusText);
+			console.log(response.headers.raw());
+			console.log(response.headers.get('content-type'));
+			console.log(response.body);
+			console.log('on to the next bullshit thing');
 			console.error('Failed to get public key');
 		}
 
