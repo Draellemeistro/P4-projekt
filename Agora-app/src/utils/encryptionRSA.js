@@ -11,7 +11,8 @@ const RSACrypto = {
 		const serverIP = '192.168.0.113';
 		const 	serverPort = '3030';
 		const response = await fetch(`https://${serverIP}:${serverPort}/rsa-public-key`);
-		sessionStorage.setItem('serverPublicKeyRSA', response.data);
+		//sessionStorage.setItem('serverPublicKeyRSA', response.data);
+		console.log(response.data);
 		return response.data;
 	},
 	encrypt: function encryptWithPublicKey(message, publicKey) {
