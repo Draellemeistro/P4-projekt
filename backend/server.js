@@ -191,7 +191,7 @@ app.get('/request-public-ecdh-key', (req, res) => {
 }	);
 app.get('/rsa-public-key', (req, res) => {
 	console.log('Accessed /rsa-public-key endpoint');
-	const publicKeyString = serverRSAKeyPair.keyPair.exportKey('public');
+	const publicKeyString = serverRSAKeyPair.keyPair.exportKey('public', 'jwk');
 	console.log(publicKeyString);
 	console.log('inside rsa-public-key');
 	res.json(publicKeyString);
