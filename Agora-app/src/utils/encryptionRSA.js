@@ -16,10 +16,10 @@ const RSACrypto = {
 			'Content-Type': 'application/json',
 		},});
 		console.log(response.data);
+		console.log('still inside the api call');
 		console.log(response);
+		console.log('still inside the api call');
 		console.log(response.status);
-		console.log(response.statusText);
-		console.log(response.headers);
 		console.log('still inside the api call');
 		return response.data;
 		//sessionStorage.setItem('serverPublicKeyRSA', response.data);
