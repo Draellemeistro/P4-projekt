@@ -198,7 +198,8 @@ app.post('/rsa-public-key', (req, res) => {
 	console.log('inside rsa-public-key');
 	console.log(serverPublicRSAKey);
 	let stringServerPublicRSAKey = serverPublicRSAKey.toString();
-	res.json.body = (stringServerPublicRSAKey);
+	res.json(serverPublicRSAKey);
+	console.log('RSA Public Key sent');
 } );
 
 // not relevant yet, might not be needed.
