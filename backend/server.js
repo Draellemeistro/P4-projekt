@@ -11,7 +11,10 @@ const blindSignature = require('blind-signatures');
 const NodeRSA = require('node-rsa');
 const serverRSACrypto = require('./utils/RSACryptoUtils.js');const app = express();
 const serverECDHCrypto = require('./utils/ECDHCryptoUtils.js');
-const pem2jwk = require('pem-jwk').pem2jwk;
+
+const pem2jwk = require('pem-jwk').pem2jwk; //to correctly format/encode and transport RSA key
+const { JWK } = require('jose');	//to correctly format/encode and transport ECDH key
+
 
 
 app.use(express.json());
@@ -197,8 +200,9 @@ app.post('/fetch-candidates', (req, res) => {
 
 app.post('/request-public-ecdh-key', (req, res) => {
 	console.log('Accessed /request-public-ecdh-key endpoint');
-	const jwkFormatServerPublicECDHKey = pem2jwk(serverPublicKeyECDHPem);
-	res.json(jwkFormatServerPublicECDHKey);
+	const keyBuffer = Buffer.from(serverPublicKeyECDH, 'base64');
+	const jwk = JWK.asKey(keyBuffer, { alg: 'ECDH-ES', use: 'enc' })
+	res.json(jwk);
 	console.log('ECDH Public Key sent');
 }	);
 app.post('/rsa-public-key', (req, res) => {
