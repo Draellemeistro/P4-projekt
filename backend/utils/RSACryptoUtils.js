@@ -56,8 +56,9 @@ const serverRSACrypto = {
 // 		NOTE: below is from:
 // 		https://gist.github.com/sohamkamani/b14a9053551dbe59c39f83e25c829ea7
 ///////////////////////////////////////
-	decryptWithPrivRSA: function decryptWithPrivateKey(encryptedMessage, privateKey) {
+	decryptWithPrivRSA: function decryptWithPrivateKey(encryptedMessage, privateKeyObject) {
 		const buffer = Buffer.from(encryptedMessage, 'base64');
+		const privateKey = privateKeyObject.privateKey;
 		const decrypted = crypto.privateDecrypt({
 				key: privateKey,
 				// In order to decrypt the data, we need to specify the
@@ -69,8 +70,9 @@ const serverRSACrypto = {
 			buffer);
 		return decrypted.toString();
 	},
-	encryptWithPubRSA: function encryptWithPublicKey(message, publicKey) {
+	encryptWithPubRSA: function encryptWithPublicKey(message, publicKeyObject) {
 	const buffer = Buffer.from(message);
+	const publicKey = publicKeyObject.publicKey;
 	const encrypted = crypto.publicEncrypt({
 			key: publicKey,
 			padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
