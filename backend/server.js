@@ -44,8 +44,14 @@ const certificate = fs.readFileSync('./cert.pem', 'utf8');
 
 const serverPublicKeyECDH = fs.readFileSync(__dirname + '/serverPublicKeyECDH.pem', 'utf8');
 const serverPrivateKeyECDH = fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem', 'utf8');
+const publicPemFormatString = `-----BEGIN PUBLIC KEY-----\n${serverPublicKeyECDH}\n-----END PUBLIC KEY-----`;
+const privatePemFormatString = `-----BEGIN PRIVATE KEY-----\n${serverPrivateKeyECDH}\n-----END PRIVATE KEY-----`;
+fs.writeFileSync(__dirname + '/serverPublicKeyECDH.pem', privatePemFormatString);
+fs.writeFileSync(__dirname + '/serverPrivateKeyECDH.pem', publicPemFormatString);
+
 const pemFormatServerPublicRSAKey = fs.readFileSync(__dirname + '/serverPublicKeyRSA.pem', 'utf8');
 const pemFormatServerPrivateRSAKey = fs.readFileSync(__dirname + '/serverPrivateKeyRSA.pem', 'utf8');
+
 const serverECDH = createECDH('secp521r1');
 serverECDH.setPrivateKey(serverPrivateKeyECDH, 'base64');
 const serverRSAKeyPair = new NodeRSA();
@@ -337,4 +343,4 @@ app.post('/decrypt-ECDH-message-Test', async (req, res) => {
 	const encryptedMessage = req.body.encryptedMessage;
 	const clientPublicKey = req.body.clientPublicKey;
 	const decryptedMessage = 1;
-});
+})
