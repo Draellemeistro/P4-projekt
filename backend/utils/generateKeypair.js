@@ -37,8 +37,8 @@ function generateECDHKeyPair() {
 	// Write the PEM formatted key to a file
 	const publicPemFormatString = `-----BEGIN PUBLIC KEY-----\n${serverPublicKeyBase64}\n-----END PUBLIC KEY-----`;
 const privatePemFormatString = `-----BEGIN PRIVATE KEY-----\n${serverPrivateKeyBase64}\n-----END PRIVATE KEY-----`;
-	fs.writeFileSync('../'+__dirname + '/serverPublicKeyECDH.pem', privatePemFormatString);
-	fs.writeFileSync('../'+__dirname + '/serverPrivateKeyECDH.pem', publicPemFormatString);
+	fs.writeFileSync('../serverPublicKeyECDH.pem', publicPemFormatString);
+	fs.writeFileSync('../serverPrivateKeyECDH.pem', privatePemFormatString);
 
 }
 function generateDSAKeyPair() {
@@ -64,5 +64,5 @@ function generateDSAKeyPair() {
 
 // 				Generate the keypair
 //generateRSAKeyPair();
-//generateECDHKeyPair();
+generateECDHKeyPair();
 //generateDSAKeyPair();

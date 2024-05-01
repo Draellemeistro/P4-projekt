@@ -45,10 +45,10 @@ const certificate = fs.readFileSync('./cert.pem', 'utf8');
 
 const serverPublicKeyECDHPem = fs.readFileSync(__dirname + '/serverPublicKeyECDH.pem', 'utf8');
 const serverPrivateKeyECDHPem = fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem', 'utf8');
+const serverPublicKeyECDH = serverECDHCrypto.removePEM(serverPublicKeyECDHPem);
+const serverPrivateKeyECDH = serverECDHCrypto.removePEM(serverPrivateKeyECDHPem);
 const pemFormatServerPublicRSAKey = fs.readFileSync(__dirname + '/serverPublicKeyRSA.pem', 'utf8');
 const pemFormatServerPrivateRSAKey = fs.readFileSync(__dirname + '/serverPrivateKeyRSA.pem', 'utf8');
-const serverPrivateKeyECDH= serverECDHCrypto.removePEM(serverPrivateKeyECDHPem);
-const serverPublicKeyECDH = serverECDHCrypto.removePEM(serverPublicKeyECDHPem);
 const serverECDH = createECDH('secp521r1');
 serverECDH.setPrivateKey(serverPrivateKeyECDH, 'base64');
 const serverRSAKeyPair = new NodeRSA();
