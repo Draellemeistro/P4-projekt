@@ -16,7 +16,7 @@ const serverRSACrypto = {
 	removePubKeyHeader: function removePubKeyHeader(pemFormatServerPublicRSAKey) {
 		console.log('pemFormatServerPublicRSAKey:', pemFormatServerPublicRSAKey)
 		const pemHeader = "-----BEGIN RSA PUBLIC KEY-----";
-		const pemFooter = "-----END RSA PUBLIC-----";
+		const pemFooter = "-----END RSA PUBLIC KEY-----";
 		let result = pemFormatServerPublicRSAKey.replace(pemHeader, '');
 		result = result.replace(pemFooter, '');
 		result = result.trim();
