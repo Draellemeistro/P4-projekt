@@ -55,7 +55,7 @@ const serverRSACrypto = {
 			},
 			buffer);
 		return decrypted.toString();
-	},
+	},//
 	encryptWithPubRSA: function encryptWithPublicKey(message, publicKeyObject) {
 	const buffer = Buffer.from(message);
 	const publicKey = Buffer.from(publicKeyObject);
