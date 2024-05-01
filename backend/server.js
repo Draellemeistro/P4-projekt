@@ -50,7 +50,7 @@ serverRSAKeyPair.importKey(pemFormatServerPublicRSAKey, 'pkcs1-public-pem');
 serverRSAKeyPair.importKey(pemFormatServerPrivateRSAKey, 'pkcs1-private-pem');
 serverRSAKeyPair.extractable = true;
 const {cryptoRSAPublicKey, cryptoRSAPrivateKey } = serverRSACrypto.importBothKeys(pemFormatServerPublicRSAKey, pemFormatServerPrivateRSAKey);
-serverRSACrypto.RSAUtilsTest(cryptoRSAPublicKey, cryptoRSAPrivateKey);
+serverRSACrypto.RSAUtilsTest(pemFormatServerPublicRSAKey, pemFormatServerPrivateRSAKey);
 
 
 // Create a credentials object

@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const fs = require('fs');
 
 const serverRSACrypto = {
 	removePrivKeyHeader: function removePrivKeyHeader(pemFormatServerPrivateRSAKey) {
@@ -19,7 +20,7 @@ const serverRSACrypto = {
 		return Buffer.from(result);
 	},
 	importPubKey: async function importRSAPublicKey(pemFormatServerPublicRSAKey) {
-		return await crypto.subtle.importKey(
+		const publicKey = await crypto.subtle.importKey(
 			'spki',
 			this.removePubKeyHeader(pemFormatServerPublicRSAKey),
 			{
@@ -29,9 +30,10 @@ const serverRSACrypto = {
 			true,
 			['encrypt']
 		);
+		return publicKey;
 	},
 	importPrivKey: async function importRSAPrivateKey(pemFormatServerPrivateRSAKey) {
-		return await crypto.subtle.importKey(
+		const privateKey = await crypto.subtle.importKey(
 			'pkcs8',
 			this.removePrivKeyHeader(pemFormatServerPrivateRSAKey),
 			{
@@ -41,6 +43,7 @@ const serverRSACrypto = {
 			true,
 			['decrypt']
 		);
+		return privateKey;
 	},
 
 	importBothKeys: function importRSAKeyPair(pemFormatServerPublicRSAKey, pemFormatServerPrivateRSAKey) {
@@ -79,21 +82,45 @@ const serverRSACrypto = {
 	);
 	return encrypted.toString('base64');
 	},
-	RSAUtilsTest: function testImportAndEncryption(serverPublicRSAKey, serverPrivateRSAKey) {
-	const plainMessage = 'Hello, World!';
-	const encrypted = this.encryptWithPubRSA(plainMessage, serverPublicRSAKey);
-	const decrypted = this.decryptWithPrivRSA(encrypted, serverPrivateRSAKey);
-	console.log('Encrypted:', encrypted);
-	console.log('Decrypted:', decrypted);
-	console.log('plaintext:', plainMessage);
-	if (decrypted === plainMessage) {
-	console.log('Success:', decrypted === plainMessage);
-	return true;
-	} else	{
-	console.log('Failure:', decrypted !== plainMessage);
-	return false;
+	RSAUtilsTest: async function testImportAndEncryption(pemFormatServerPrivateRSAKey, pemFormatServerPublicRSAKey) {
+		const plainMessage = 'Hello, World!';
+		const privateKey = await crypto.subtle.importKey(
+			'pkcs8',
+			this.removePrivKeyHeader(pemFormatServerPrivateRSAKey),
+			{
+				name: 'RSA-OAEP',
+				hash: 'SHA-256'
+			},
+			true,
+			['decrypt']
+		);
+		const publicKey = await crypto.subtle.importKey(
+			'spki',
+			this.removePubKeyHeader(pemFormatServerPublicRSAKey),
+			{
+				name: 'RSA-OAEP',
+				hash: 'SHA-256'
+			},
+			true,
+			['encrypt']
+		);
+		const encrypted = this.encryptWithPubRSA(plainMessage, publicKey);
+		const decrypted = this.decryptWithPrivRSA(encrypted, publicKey);
+		console.log('Encrypted:', encrypted);
+		console.log('Decrypted:', decrypted);
+		console.log('plaintext:', plainMessage);
+		if (decrypted === plainMessage) {
+			console.log('Success:', decrypted === plainMessage);
+			return true;
+		} else {
+			console.log('Failure:', decrypted !== plainMessage);
+			return false;
+		}
 	}
-}
 };
 module.exports = serverRSACrypto;
-//testImportAndEncryption();	//this works
+const testPublicRSAKey = fs.readFileSync('../serverPublicKeyRSA.pem', 'utf8');
+const testPrivateRSAKey = fs.readFileSync('../serverPrivateKeyRSA.pem', 'utf8');
+result = this.RSAUtilsTest(testPublicRSAKey, testPrivateRSAKey).then((result) => {
+	console.log(result);
+});
