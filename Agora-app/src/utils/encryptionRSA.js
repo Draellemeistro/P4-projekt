@@ -52,7 +52,7 @@ const RSACrypto = {
 							name: 'RSA-OAEP',
 							hash: 'SHA-256'
 						},
-						false,
+						true,
 						['encrypt']
 					);
 					//export JWK formatted RSA public key and store as string in sessionStorage
@@ -93,7 +93,7 @@ const RSACrypto = {
 								name: 'RSA-OAEP',
 								hash: 'SHA-256'
 							},
-							false,
+							true,
 							['encrypt']
 						);
 					}
