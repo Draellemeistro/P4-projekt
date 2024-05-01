@@ -61,6 +61,7 @@ const serverRSACrypto = {
 		const publicKey = typeof publicKeyObject === 'string' ? publicKeyObject : publicKeyObject.toString();
 		const encrypted = crypto.publicEncrypt({
 				key: publicKey,
+			  format: 'pem',
 				padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
 				oaepHash: "sha256",
 			},
