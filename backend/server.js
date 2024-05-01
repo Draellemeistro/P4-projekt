@@ -42,14 +42,14 @@ const certificate = fs.readFileSync('./cert.pem', 'utf8');
 
 const serverPublicKeyECDH = fs.readFileSync(__dirname + '/serverPublicKeyECDH.pem', 'utf8');
 //const serverPrivateKeyECDH = fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem', 'utf8');
-const serverPublicRSAKey = fs.readFileSync(__dirname + '/serverPublicKeyRSA.pem', 'utf8');
-const serverPrivateRSAKey = fs.readFileSync(__dirname + '/serverPrivateKeyRSA.pem', 'utf8');
+const pemFormatServerPublicRSAKey = fs.readFileSync(__dirname + '/serverPublicKeyRSA.pem', 'utf8');
+const pemFormatServerPrivateRSAKey = fs.readFileSync(__dirname + '/serverPrivateKeyRSA.pem', 'utf8');
 const serverECDH = createECDH('secp521r1');
 const serverRSAKeyPair = new NodeRSA();
 serverRSAKeyPair.importKey(serverPublicRSAKey, 'pkcs1-public-pem');
 serverRSAKeyPair.importKey(serverPrivateRSAKey, 'pkcs1-private-pem');
 serverRSAKeyPair.extractable = true;
-const {cryptoRSAPublicKey, cryptoRSAPrivateKey } = serverRSACrypto.importBothKeys();
+const {cryptoRSAPublicKey, cryptoRSAPrivateKey } = serverRSACrypto.importBothKeys(pemFormatServerPublicRSAKey, pemFormatServerPrivateRSAKey);
 serverRSACrypto.RSAUtilsTest(cryptoRSAPublicKey, cryptoRSAPrivateKey);
 
 
