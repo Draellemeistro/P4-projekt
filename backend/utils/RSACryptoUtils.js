@@ -58,6 +58,7 @@ const serverRSACrypto = {
 	},//
 	encryptWithPubRSA: function encryptWithPublicKey(message, publicKeyObject) {
 		const buffer = Buffer.from(message);
+		console.log('publicKeyObject:', publicKeyObject);
 		const publicKey = typeof publicKeyObject === 'string' ? publicKeyObject : publicKeyObject.toString();
 		const encrypted = crypto.publicEncrypt({
 				key: publicKey,
