@@ -57,16 +57,16 @@ const serverRSACrypto = {
 		return decrypted.toString();
 	},//
 	encryptWithPubRSA: function encryptWithPublicKey(message, publicKeyObject) {
-	const buffer = Buffer.from(message);
-	const publicKey = Buffer.from(publicKeyObject);
-	const encrypted = crypto.publicEncrypt({
-			key: publicKey,
-			padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
-			oaepHash: "sha256",
-		},
-		buffer
-	);
-	return encrypted.toString('base64');
+		const buffer = Buffer.from(message);
+		const publicKey = typeof publicKeyObject === 'string' ? publicKeyObject : publicKeyObject.toString();
+		const encrypted = crypto.publicEncrypt({
+				key: publicKey,
+				padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+				oaepHash: "sha256",
+			},
+			buffer
+		);
+		return encrypted.toString('base64');
 	},
 	RSAUtilsTest:  function testImportAndEncryption(publicKey, privateKey) {
 		const plainMessage = 'Hello, World!';
