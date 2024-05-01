@@ -2,6 +2,7 @@
 
 const ECDHCrypto ={
 	initECDH: async function initECDH(){
+		let keyStringObject;
 		const clientKeyPairECDH = await window.crypto.subtle.generateKey(
 			{
 				name: "ECDH",
@@ -14,12 +15,12 @@ const ECDHCrypto ={
 		const exportedPrivKeyECDH = await window.crypto.subtle.exportKey('jwk', clientKeyPairECDH.privateKey);
 		const keyStringPriv = JSON.stringify(exportedPrivKeyECDH);
 		const keyStringPub = JSON.stringify(exportedPubKeyECDH);
-		console.log('client public key: ', keyStringPub);
+		console.log('client publicsssssssssss key: ', keyStringPub);
 		sessionStorage.setItem('clientPublicKeyECDH', keyStringPub);
 		//probably not secure to store private key in session storage
 		sessionStorage.setItem('clientPrivateKeyECDH', keyStringPriv);
-
-		return { keyStringPub, keyStringPriv };
+		keyStringObject = {keyStringPub, keyStringPriv};
+		return keyStringObject;
 	},
 
 
@@ -38,30 +39,28 @@ const ECDHCrypto ={
 				'Content-Type': 'application/json',
 			},
 		});
-		if (response.ok) {
-			const serverPublicKeyECDHBase64 = await response.json();
-			const serverPublicKeyJwkString = encoder.encode(serverPublicKeyECDHBase64);
-			const serverPublicKeyJwk = JSON.parse(decoder.decode(serverPublicKeyJwkString));
-			console.log('server public key: ', serverPublicKeyJwk);
-			const importedKey = await window.crypto.subtle.importKey(
-				'jwk',
-				serverPublicKeyJwk,
-				{
-					name: 'ECDH',
-					namedCurve: 'P-521'
-				},
-				true,
-				['deriveKey', 'deriveBits']
-			);
-			const exportedServerPubKeyECDH = await window.crypto.subtle.exportKey('jwk', importedKey);
-			const keyString = JSON.stringify(exportedServerPubKeyECDH);
-			console.log('server public key from stringified keystring: ', keyString);
-			sessionStorage.setItem('serverPublicKeyECDH', keyString);
-			return keyString;
-		} else {
-			console.error('Failed to get public key');
-		}
+		const serverPublicKeyECDHBase64 = await response.json();
+		const serverPublicKeyJwkStringUint8Array = encoder.encode(serverPublicKeyECDHBase64);
+		const serverPublicKeyJwkString = decoder.decode(serverPublicKeyJwkStringUint8Array);
+		const serverPublicKeyJwk = JSON.parse(serverPublicKeyJwkString);
+		console.log('server public key: ', serverPublicKeyJwk);
+		const importedKey = await window.crypto.subtle.importKey(
+			'jwk',
+			serverPublicKeyJwk,
+			{
+				name: 'ECDH',
+				namedCurve: 'P-521'
+			},
+			true,
+			['deriveKey', 'deriveBits']
+		);
+		const exportedServerPubKeyECDH = await window.crypto.subtle.exportKey('jwk', importedKey);
+		const keyString = JSON.stringify(exportedServerPubKeyECDH);
+		console.log('server public key from stringified keystring: ', keyString);
+		sessionStorage.setItem('serverPublicKeyECDH', keyString);
+		return keyString;
 	},
+
 // Function to compute shared secret
 	deriveSecret: async function deriveSecretKey(clientPrivateKey, serverPubKeyJwkFormat) {
 		let serverKeyForSecret;
@@ -223,7 +222,7 @@ const ECDHCrypto ={
 		if (keyStringPub === undefined) {
 			console.error('keyStringPub is undefined');
 			const serverPubKeySessionStorage = sessionStorage.getItem('serverPublicKeyECDH');
-			if (serverPubKeySessionStorage === undefined) {
+			if (serverPubKeySessionStorage === undefined || serverPubKeySessionStorage === null) {
 				console.error('serverPubKeySessionStorage is undefined');
 				return;
 			} else {
