@@ -52,7 +52,7 @@ const newServerKeyPairECDH =  serverECDHCrypto.initECDH();
 const pemFormatServerPublicRSAKey = fs.readFileSync(__dirname + '/serverPublicKeyRSA.pem', 'utf8');
 const pemFormatServerPrivateRSAKey = fs.readFileSync(__dirname + '/serverPrivateKeyRSA.pem', 'utf8');
 const serverECDH = createECDH('secp521r1');
-const exportedPrivKeyECDH = await crypto.subtle.exportKey('jwk', newServerKeyPairECDH.privateKey);
+const exportedPrivKeyECDH =  crypto.subtle.exportKey('jwk', newServerKeyPairECDH.privateKey);
 const privateKeyString = JSON.stringify(exportedPrivKeyECDH);
 const privateKeyBuffer = Buffer.from(privateKeyString, 'utf8');
 serverECDH.setPrivateKey(privateKeyBuffer);
