@@ -82,9 +82,9 @@ const serverRSACrypto = {
 	);
 	return encrypted.toString('base64');
 	},
-	RSAUtilsTest: async function testImportAndEncryption(pemFormatServerPrivateRSAKey, pemFormatServerPublicRSAKey) {
+	RSAUtilsTest:  function testImportAndEncryption(pemFormatServerPrivateRSAKey, pemFormatServerPublicRSAKey) {
 		const plainMessage = 'Hello, World!';
-		const privateKey = await crypto.subtle.importKey(
+		const privateKey =  crypto.subtle.importKey(
 			'pkcs8',
 			this.removePrivKeyHeader(pemFormatServerPrivateRSAKey),
 			{
@@ -94,7 +94,7 @@ const serverRSACrypto = {
 			true,
 			['decrypt']
 		);
-		const publicKey = await crypto.subtle.importKey(
+		const publicKey =  crypto.subtle.importKey(
 			'spki',
 			this.removePubKeyHeader(pemFormatServerPublicRSAKey),
 			{
@@ -105,7 +105,7 @@ const serverRSACrypto = {
 			['encrypt']
 		);
 		const encrypted = this.encryptWithPubRSA(plainMessage, publicKey);
-		const decrypted = this.decryptWithPrivRSA(encrypted, publicKey);
+		const decrypted = this.decryptWithPrivRSA(encrypted, privateKey);
 		console.log('Encrypted:', encrypted);
 		console.log('Decrypted:', decrypted);
 		console.log('plaintext:', plainMessage);
