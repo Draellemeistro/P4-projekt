@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import RSACrypto from '../../../utils/encryptionRSA.js';
 	import { askForDecryptToCheck } from '../../../utils/apiService.js';
+	import { initECDH } from '../../../utils/encryptionECDH.js';
 
 	let rsaPublicKey;
 	let encryptedMessage;
@@ -21,7 +22,7 @@
 
 		// Decrypt the encrypted message with the private key
 		// Note: You need to have the private key to decrypt the message
-		decryptedMessage = askForDecryptToCheck(testMessage, encryptedMessage);
+		decryptedMessage = await askForDecryptToCheck(testMessage, encryptedMessage);
 		console.log(decryptedMessage);
 		console.log(testMessage);
 	});
@@ -43,5 +44,7 @@
 
 <div>
 	<h2>Decrypted Message</h2>
+	<button on:click={askForDecryptToCheck(testMessage, encryptedMessage)}>ask server to decrypt</button>
+	<p>decrypted msg from server: {decryptedMessage}</p>
 	<p>{decryptedMessage}</p>
 </div>
