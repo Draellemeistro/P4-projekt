@@ -82,7 +82,8 @@ const RSACrypto = {
 					console.error('Failed to encrypt the message. Please check your public key and the message.');
 					return false;
 				}
-				return encryptedMessage.toString('base64');
+				const decoder = new TextDecoder();
+				return btoa(decoder.decode(encryptedMessage));
 			}
 		,
 			webCryptoTest: function webCryptoTest() {
