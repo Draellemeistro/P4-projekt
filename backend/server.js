@@ -49,13 +49,17 @@ const certificate = fs.readFileSync('./cert.pem', 'utf8');
 //const serverPrivateKeyECDHPem = fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem', 'utf8');
 //const serverPublicKeyECDH = serverECDHCrypto.removePEM(serverPublicKeyECDHPem);
 //const serverPrivateKeyECDH = serverECDHCrypto.removePEM(serverPrivateKeyECDHPem);
+//makeECDHKeys().then(ECDHKeysStrings => {
+//	fs.writeFileSync('serverPublicKeyECDH.json', ECDHKeysStrings.publicKeyString);
+//	fs.writeFileSync('serverPrivateKeyECDH.json', ECDHKeysStrings.privateKeyString);
+//});
 const pemFormatServerPublicRSAKey = fs.readFileSync(__dirname + '/serverPublicKeyRSA.pem', 'utf8');
 const pemFormatServerPrivateRSAKey = fs.readFileSync(__dirname + '/serverPrivateKeyRSA.pem', 'utf8');
 
-makeECDHKeys().then(ECDHKeysStrings => {
-	fs.writeFileSync('serverPublicKeyECDH.json', ECDHKeysStrings.publicKeyString);
-	fs.writeFileSync('serverPrivateKeyECDH.json', ECDHKeysStrings.privateKeyString);
-});
+const JWKserverPubECDH = fs.readFileSync(__dirname + '/serverPublicKeyECDH.json', 'utf8');
+const JWKserverPrivECDH = 	fs.readFileSync(__dirname + '/serverPrivateKeyECDH.json', 'utf8')
+const JWKserverPubECDHObject = JSON.parse(JWKserverPubECDH);
+const JWKserverPrivECDHObject = JSON.parse(JWKserverPrivECDH);
 const serverRSAKeyPair = new NodeRSA();
 serverRSAKeyPair.importKey(pemFormatServerPublicRSAKey, 'pkcs1-public-pem');
 serverRSAKeyPair.importKey(pemFormatServerPrivateRSAKey, 'pkcs1-private-pem');
