@@ -7,7 +7,7 @@ const serverECDHCrypto = {
 		const newServerKeyPairECDH = await crypto.subtle.generateKey(
 			{
 				name: "ECDH",
-				namedCurve: "P-521"
+				namedCurve: "secp521r1"
 			},
 			true,
 			["deriveKey", "deriveBits"]
