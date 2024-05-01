@@ -9,8 +9,8 @@ const serverRSACrypto = {
 // 		https://gist.github.com/sohamkamani/b14a9053551dbe59c39f83e25c829ea7
 ///////////////////////////////////////
 	decryptWithPrivRSA: function decryptWithPrivateKey(encryptedMessage, privateKeyObject) {
-		const buffer = Buffer.from(encryptedMessage, 'base64');
-		const privateKey = Buffer.from(privateKeyObject);
+		const buffer = encryptedMessage instanceof Buffer ? encryptedMessage : Buffer.from(encryptedMessage, 'base64');
+		const privateKey = typeof privateKeyObject === 'string' ? privateKeyObject : privateKeyObject.toString();
 		const decrypted = crypto.privateDecrypt({
 				key: privateKey,
 				// In order to decrypt the data, we need to specify the
