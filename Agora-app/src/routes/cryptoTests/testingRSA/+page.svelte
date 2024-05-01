@@ -21,7 +21,7 @@
 
 		// Decrypt the encrypted message with the private key
 		// Note: You need to have the private key to decrypt the message
-		decryptedMessage = await askForDecryptToCheck(testMessage, encryptedMessage);
+		decryptedMessage = await RSACrypto.askForDecryption(testMessage, encryptedMessage);
 	});
 </script>
 
@@ -41,7 +41,7 @@
 
 <div>
 	<h2>Decrypted Message</h2>
-	<button on:click={askForDecryptToCheck(testMessage, encryptedMessage)}>ask server to decrypt</button>
+	<button on:click={RSACrypto.askForDecryption(testMessage, encryptedMessage)}>ask server to decrypt</button>
 	<p>decrypted msg from server: {decryptedMessage}</p>
 	<p>{decryptedMessage}</p>
 </div>
