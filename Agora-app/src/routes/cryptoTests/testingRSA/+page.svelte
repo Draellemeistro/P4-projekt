@@ -21,7 +21,7 @@
 
 		// Decrypt the encrypted message with the private key
 		// Note: You need to have the private key to decrypt the message
-		decryptedMessage = askForDecryptToCheck(encryptedMessage);
+		decryptedMessage = askForDecryptToCheck(testMessage, encryptedMessage);
 		console.log(decryptedMessage);
 		console.log(testMessage);
 	});

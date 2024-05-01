@@ -195,9 +195,7 @@ app.post('/request-public-ecdh-key', (req, res) => {
 app.post('/rsa-public-key', (req, res) => {
 	console.log('Accessed /rsa-public-key endpoint');
 	//const publicKeyString = serverRSAKeyPair.keyPair.exportKey('jwk', 'public');
-	console.log('inside rsa-public-key');
-	console.log(serverPublicRSAKey);
-	let stringServerPublicRSAKey = serverPublicRSAKey.toString();
+	//let stringServerPublicRSAKey = serverPublicRSAKey.toString();
 	res.json(serverPublicRSAKey);
 	console.log('RSA Public Key sent');
 } );
@@ -307,7 +305,13 @@ app.post('/verify-signed-blinded-msg', async (req, res) => {
 }); //TODO check if this is correct
 
 app.post('/decrypt-RSA-message-Test', async (req, res) => {
-const encryptedMessage = req.body.encryptedMessage;
+	const plainTextMessage = req.body.plainTextMessage;
+	const encryptedMessage = req.body.encryptedMessage;
 	const decryptedMessage = serverRSAKeyPair.decrypt(encryptedMessage, 'utf8');
+	if (plainTextMessage === decryptedMessage) {
+		console.log('RSA works!');
+	} else {
+		console.log('RSA does not work!');
+	}
 	res.json(decryptedMessage);
 });
