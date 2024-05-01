@@ -1,4 +1,6 @@
 import crypto from 'crypto';
+// eslint-disable-next-line no-unused-vars
+import { c } from 'vite/dist/node/types.d-aGj9QkWt.js';
 //import JSEncrypt from 'jsencrypt';
 
 
@@ -19,6 +21,13 @@ const RSACrypto = {
 			} else {
 				const data = await response.json();
 				console.log(data);
+				if (data === plainTextMessage) {
+					console.log('Decryption successful');
+				} else {
+					console.log('received: ', data, 'expected: ', plainTextMessage);
+					console.log('problem might be in the formatting/encoding of the message');
+					console.error('Decryption failed');
+				}
 				return data;
 			}
 	} catch (error) {
@@ -83,7 +92,6 @@ const RSACrypto = {
 				return decrypted.toString('utf8');
 			}
 		,
-
 			webCryptoTest: function webCryptoTest() {
 				// Check if the Web Cryptography API is available
 				if (window.crypto && window.crypto.subtle) {

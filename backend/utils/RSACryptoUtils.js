@@ -19,8 +19,8 @@ const serverRSACrypto = {
 		return result.trim();
 	},
 	importBothKeys: function importRSAKeyPair() {
-		const serverPublicRSAKey = importRSAPublicKey();
-		const serverPrivateRSAKey = importRSAPrivateKey();
+		const serverPublicRSAKey = this.importPubKey();
+		const serverPrivateRSAKey = this.importPrivKey();
 		return { serverPublicRSAKey, serverPrivateRSAKey };
 	},
 ///////////////////////////////////////
@@ -51,16 +51,20 @@ const serverRSACrypto = {
 	);
 	return encrypted.toString('base64');
 	},
-	RSAUtilsTest: function testImportAndEncryption() {
-	const { serverPublicRSAKey, serverPrivateRSAKey } = importRSAKeyPair();
+	RSAUtilsTest: function testImportAndEncryption(serverPublicRSAKey, serverPrivateRSAKey) {
 	const plainMessage = 'Hello, World!';
-	const encrypted = encryptWithPublicKey(plainMessage, serverPublicRSAKey);
-	const decrypted = decryptWithPrivateKey(encrypted, serverPrivateRSAKey);
+	const encrypted = this.encryptWithPubRSA(plainMessage, serverPublicRSAKey);
+	const decrypted = this.decryptWithPrivRSA(encrypted, serverPrivateRSAKey);
 	console.log('Encrypted:', encrypted);
 	console.log('Decrypted:', decrypted);
 	console.log('plaintext:', plainMessage);
+	if (decrypted === plainMessage) {
 	console.log('Success:', decrypted === plainMessage);
-	//this works
+	return true;
+	} else	{
+	console.log('Failure:', decrypted !== plainMessage);
+	return false;
+	}
 }
 };
 module.exports = serverRSACrypto;

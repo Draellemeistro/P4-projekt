@@ -41,7 +41,7 @@ const certificate = fs.readFileSync('./cert.pem', 'utf8');
 ///app.listen(80, () => console.log('HTTP Server started'));
 
 const serverPublicKeyECDH = fs.readFileSync(__dirname + '/serverPublicKeyECDH.pem', 'utf8');
-const serverPrivateKeyECDH = fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem', 'utf8');
+//const serverPrivateKeyECDH = fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem', 'utf8');
 const serverPublicRSAKey = fs.readFileSync(__dirname + '/serverPublicKeyRSA.pem', 'utf8');
 const serverPrivateRSAKey = fs.readFileSync(__dirname + '/serverPrivateKeyRSA.pem', 'utf8');
 const serverECDH = createECDH('secp521r1');
@@ -50,7 +50,7 @@ serverRSAKeyPair.importKey(serverPublicRSAKey, 'pkcs1-public-pem');
 serverRSAKeyPair.importKey(serverPrivateRSAKey, 'pkcs1-private-pem');
 serverRSAKeyPair.extractable = true;
 const {cryptoRSAPublicKey, cryptoRSAPrivateKey } = serverRSACrypto.importBothKeys();
-
+serverRSACrypto.RSAUtilsTest(cryptoRSAPublicKey, cryptoRSAPrivateKey);
 
 
 // Create a credentials object
