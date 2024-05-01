@@ -58,9 +58,9 @@ const pemFormatServerPrivateRSAKey = fs.readFileSync(__dirname + '/serverPrivate
 
 const JWKserverPubECDH = fs.readFileSync(__dirname + '/serverPublicKeyECDH.json', 'utf8');
 const JWKserverPrivECDH = 	fs.readFileSync(__dirname + '/serverPrivateKeyECDH.json', 'utf8')
-const JWKserverPubECDHObject = JSON.parse(JWKserverPubECDH);
-const JWKserverPrivECDHObject = JSON.parse(JWKserverPrivECDH);
-const serverRSAKeyPair = new NodeRSA();
+const JWKserverPubECDHObject = JSON.parse(JWKserverPubECDH);//TODO maybe delete
+const JWKserverPrivECDHObject = JSON.parse(JWKserverPrivECDH); //TODO maybe delete
+const serverRSAKeyPair = new NodeRSA();	//TODO maybe delete
 serverRSAKeyPair.importKey(pemFormatServerPublicRSAKey, 'pkcs1-public-pem');
 serverRSAKeyPair.importKey(pemFormatServerPrivateRSAKey, 'pkcs1-private-pem');
 serverRSAKeyPair.extractable = true;
