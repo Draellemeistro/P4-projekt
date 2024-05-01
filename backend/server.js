@@ -51,12 +51,10 @@ const certificate = fs.readFileSync('./cert.pem', 'utf8');
 //const serverPrivateKeyECDH = serverECDHCrypto.removePEM(serverPrivateKeyECDHPem);
 const pemFormatServerPublicRSAKey = fs.readFileSync(__dirname + '/serverPublicKeyRSA.pem', 'utf8');
 const pemFormatServerPrivateRSAKey = fs.readFileSync(__dirname + '/serverPrivateKeyRSA.pem', 'utf8');
-const serverECDH = createECDH('secp521r1');
-makeECDHKeys().then(keyReturn => {
-		const keys = keyReturn;
-		const privateKeyBuffer = Buffer.from(keys.privateKeyString, 'utf8');
-		serverECDH.setPrivateKey(privateKeyBuffer);
-		return keys;
+
+makeECDHKeys().then(ECDHKeysStrings => {
+	fs.writeFileSync('serverPublicKeyECDH.json', ECDHKeysStrings.publicKeyString);
+	fs.writeFileSync('serverPrivateKeyECDH.json', ECDHKeysStrings.privateKeyString);
 });
 const serverRSAKeyPair = new NodeRSA();
 serverRSAKeyPair.importKey(pemFormatServerPublicRSAKey, 'pkcs1-public-pem');
@@ -64,7 +62,6 @@ serverRSAKeyPair.importKey(pemFormatServerPrivateRSAKey, 'pkcs1-private-pem');
 serverRSAKeyPair.extractable = true;
 // this should work, but with sending and receiving? idk
 serverRSACrypto.RSAUtilsTest(pemFormatServerPublicRSAKey, pemFormatServerPrivateRSAKey);
-
 
 // Create a credentials object
 app.use(express.json());
@@ -203,12 +200,12 @@ app.post('/fetch-candidates', (req, res) => {
 
 
 app.post('/request-public-ecdh-key', (req, res) => {
-	console.log('Accessed /request-public-ecdh-key endpoint');
+	console.log('Accessed /request-public-ecdh-key endpoint');		//TODO mfix
 	const serverPublicKeyJwk = {
 		kty: 'EC',
 		crv: 'P-521',
-		x: serverPublicKeyECDH, // The x coordinate of the public key
-		y: serverPublicKeyECDH, // The y coordinate of the public key
+		x: 1, // The x coordinate of the public key
+		y: 1, // The y coordinate of the public key
 		ext: true,
 		key_ops: ['deriveKey', 'deriveBits'],
 		alg: 'ECDH-ES',
