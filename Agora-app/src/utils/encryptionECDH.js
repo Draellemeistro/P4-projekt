@@ -27,6 +27,8 @@ const ECDHCrypto ={
 
 // Function to send client's public key and receive server's public key
 	requestServerECDH: async function requestServerPublicKeyECDH(){
+		const encoder = new TextEncoder();
+		const decoder = new TextDecoder();
 		const serverIP = '192.168.0.113';
 		const serverPort = '3030';
 		//
@@ -38,7 +40,8 @@ const ECDHCrypto ={
 		});
 		if (response.ok) {
 			const serverPublicKeyECDHBase64 = await response.json();
-			const serverPublicKeyJwk = JSON.parse(atob(serverPublicKeyECDHBase64));
+			const serverPublicKeyJwkString = encoder.encode(serverPublicKeyECDHBase64);
+			const serverPublicKeyJwk = JSON.parse(decoder.decode(serverPublicKeyJwkString));
 			console.log('server public key: ', serverPublicKeyJwk);
 			const importedKey = await window.crypto.subtle.importKey(
 				'jwk',
