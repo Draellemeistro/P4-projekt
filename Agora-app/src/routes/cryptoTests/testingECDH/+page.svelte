@@ -19,6 +19,7 @@
 		const{a , b} = await ECDHCrypto.initECDH();
 		clientKeyStringPub = a;
 		clientKeyStringPriv = b;
+		console.log('client key pub: ' + a);
 		if (await ECDHCrypto.tempSendEDCHKey(clientKeyStringPub))
 			console.log('client key sent');
 		else console.log('client key not sent');
