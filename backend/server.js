@@ -54,8 +54,8 @@ const cryptoRSAPrivateKey = serverRSACrypto.removePrivKeyHeader(pemFormatServerP
 console.log('Public Key:', cryptoRSAPublicKey);
 console.log('Private Key:', cryptoRSAPrivateKey);
 const testText = 'Hello, World!';
-const encryptedTestText = serverRSACrypto.encryptWithPubRSA(testText, cryptoRSAPublicKey);
-const decryptedTestText = serverRSACrypto.decryptWithPrivRSA(encryptedTestText, cryptoRSAPrivateKey);
+const encryptedTestText = serverRSACrypto.encryptWithPubRSA(testText, pemFormatServerPublicRSAKey);
+const decryptedTestText = serverRSACrypto.decryptWithPrivRSA(encryptedTestText, pemFormatServerPrivateRSAKey);
 
 
 // Create a credentials object
