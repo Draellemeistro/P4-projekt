@@ -70,9 +70,8 @@ const serverRSACrypto = {
 			buffer);
 		return decrypted.toString();
 	},
-	encryptWithPubRSA: function encryptWithPublicKey(message, publicKeyObject) {
+	encryptWithPubRSA: function encryptWithPublicKey(message, publicKey) {
 	const buffer = Buffer.from(message);
-	const publicKey = publicKeyObject.publicKey;
 	const encrypted = crypto.publicEncrypt({
 			key: publicKey,
 			padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
