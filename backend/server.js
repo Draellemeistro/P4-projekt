@@ -305,6 +305,7 @@ app.post('/verify-signed-blinded-msg', async (req, res) => {
 }); //TODO check if this is correct
 
 app.post('/decrypt-RSA-message-Test', async (req, res) => {
+	console.log('Accessed /decrypt-RSA-message-Test endpoint');
 	const plainTextMessage = req.body.plainTextMessage;
 	const encryptedMessage = req.body.encryptedMessage;
 	const decryptedMessage = serverRSAKeyPair.decrypt(encryptedMessage, 'utf8');
