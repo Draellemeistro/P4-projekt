@@ -228,6 +228,7 @@ const ECDHCrypto ={
 				return;
 			} else {
 				keyStringPubToUse = serverPubKeySessionStorage;
+				console.log('server public key from session storage: ', keyStringPubToUse);
 			}
 		} else	{
 			keyStringPubToUse = keyStringPub;
