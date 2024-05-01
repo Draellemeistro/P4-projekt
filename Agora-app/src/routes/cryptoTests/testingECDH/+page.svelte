@@ -20,13 +20,16 @@
 		clientKeyStringPub = BothKeys.keyStringPub;
 		clientKeyStringPriv = BothKeys.keyStringPriv;
 		console.log('client key pub: ' + BothKeys.keyStringPub);
-		if (await ECDHCrypto.tempSendEDCHKey(clientKeyStringPub))
+		if (await ECDHCrypto.tempSendEDCHKey(BothKeys.keyStringPub)) {
 			console.log('client key sent');
-		else console.log('client key not sent');
+		}
+		else{
+			console.log('client key not sent');
+		}
 		console.log('2');
 		serverKeystringPub = await ECDHCrypto.requestServerECDH();
 		console.log('3');
-		sharedSecret = await ECDHCrypto.deriveSecret(clientKeyStringPriv, serverKeystringPub);
+		sharedSecret = await ECDHCrypto.deriveSecret(BothKeys.keyStringPriv, serverKeystringPub);
 		console.log('4');
 		console.log('5');
 		const{c , d} = await ECDHCrypto.encryptECDH(plainText, sharedSecret);
