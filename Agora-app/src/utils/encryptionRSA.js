@@ -46,27 +46,13 @@ const RSACrypto = {
 				if (response.ok) {
 					const data = await response.json();
 					console.log(data);
-					const pemHeader = "-----BEGIN PUBLIC KEY-----";
-					const pemFooter = "-----END PUBLIC-----";
-					let result = data.replace(pemHeader, '');
-					result = result.replace(pemFooter, '');
-					result = result.trim();
-					return await crypto.subtle.importKey(
-						'spki',
-						Buffer.from(result, 'base64'),
-						{
-							name: 'RSA-OAEP',
-							hash: 'SHA-256'
-						},
-						true,
-						['encrypt']
-					);
-
+					const publicKeyRSA = typeof data === 'string' ? data : data.toString();
+					sessionStorage.setItem('serverPublicKeyRSA', publicKeyRSA);
+					return publicKeyRSA;
 				} else {
 					console.error('Failed to get public key');
 				}
-
-				//sessionStorage.setItem('serverPublicKeyRSA', response.data);
+				//sessionStorage.setItem('serverPublicKeyRSA', publicKeyRSA);
 
 			}
 		,
@@ -82,7 +68,7 @@ const RSACrypto = {
 					return false;
 				}
 				// Encrypt the message
-				const buffer = Buffer.from(message, 'base64');
+				const buffer = Buffer.from(message);
 				const encryptedMessage = crypto.publicEncrypt({
 						key: publicKey,
 						padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
@@ -96,12 +82,6 @@ const RSACrypto = {
 					return false;
 				}
 				return encryptedMessage.toString('base64');
-			}
-		,
-			decrypt: function decryptWithPrivateKey(encryptedMessage, privateKey) {
-				const buffer = Buffer.from(encryptedMessage);
-				const decrypted = crypto.privateDecrypt(privateKey, buffer);
-				return decrypted.toString('base64');
 			}
 		,
 			webCryptoTest: function webCryptoTest() {
