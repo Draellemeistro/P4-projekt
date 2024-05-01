@@ -37,8 +37,7 @@ const ECDHCrypto ={
 			},
 		});
 		if (response.ok) {
-			const data = await response.json();
-			const serverPublicKeyECDHBase64 = data.serverPublicKey;
+			const serverPublicKeyECDHBase64 = await response.json();
 			const serverPublicKeyJwk = JSON.parse(atob(serverPublicKeyECDHBase64));
 			const importedKey = await window.crypto.subtle.importKey(
 				'jwk',
