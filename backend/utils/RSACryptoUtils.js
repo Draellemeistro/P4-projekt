@@ -8,7 +8,7 @@ const serverRSACrypto = {
 		let result = pemFormatServerPrivateRSAKey.replace(pemHeader, '');
 		result = result.replace(pemFooter, '');
 		result = result.trim();
-		return Buffer.from(result);
+		return result
 	},
 
 	removePubKeyHeader: function removePubKeyHeader(pemFormatServerPublicRSAKey) {
@@ -17,7 +17,7 @@ const serverRSACrypto = {
 		let result = pemFormatServerPublicRSAKey.replace(pemHeader, '');
 		result = result.replace(pemFooter, '');
 		result = result.trim();
-		return Buffer.from(result);
+		return result
 	},
 
 
