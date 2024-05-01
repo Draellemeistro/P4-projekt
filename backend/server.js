@@ -44,7 +44,7 @@ const privateKey = fs.readFileSync('./key.pem', 'utf8');
 const certificate = fs.readFileSync('./cert.pem', 'utf8');
 
 
-const newServerKeyPairECDH = await serverECDHCrypto.initECDH();
+const newServerKeyPairECDH =  serverECDHCrypto.initECDH();
 //const serverPublicKeyECDHPem = fs.readFileSync(__dirname + '/serverPublicKeyECDH.pem', 'utf8');
 //const serverPrivateKeyECDHPem = fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem', 'utf8');
 //const serverPublicKeyECDH = serverECDHCrypto.removePEM(serverPublicKeyECDHPem);
