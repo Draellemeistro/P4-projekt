@@ -7,14 +7,16 @@ const serverRSACrypto = {
 		const pemFooter = "-----END PRIVATE KEY-----";
 		let result = pemFormatServerPrivateRSAKey.replace(pemHeader, '');
 		result = result.replace(pemFooter, '');
-		return result.trim();
+		result = result.trim();
+		return	crypto.subtle.importKey( 'pkcs8', Buffer.from(result, 'base64'), { name: 'RSA-OAEP', hash: 'SHA-256' }, true, ['decrypt']);
 	},
 	importPubKey: function importRSAPublicKey(pemFormatServerPublicRSAKey) {
 		const pemHeader = "-----BEGIN PUBLIC KEY-----";
 		const pemFooter = "-----END PUBLIC-----";
 		let result = pemFormatServerPublicRSAKey.replace(pemHeader, '');
 		result = result.replace(pemFooter, '');
-		return result.trim();
+		result = result.trim();
+		return	crypto.subtle.importKey( 'spki', Buffer.from(result, 'base64'), { name: 'RSA-OAEP', hash: 'SHA-256' }, true, ['encrypt']);
 	},
 	importBothKeys: function importRSAKeyPair(pemFormatServerPublicRSAKey, pemFormatServerPrivateRSAKey) {
 		const serverPublicRSAKey = this.importPubKey(pemFormatServerPublicRSAKey);

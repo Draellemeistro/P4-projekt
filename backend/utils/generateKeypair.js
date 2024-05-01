@@ -2,6 +2,7 @@
  * This module will generate a public and private keypair and save to current directory
  * See https://github.com/zachgoll/express-jwt-authentication-starter for use in creating JWT's using jsonwebtoken and passport.js
  * Make sure to save the private key elsewhere after generated!
+ * https://nodejs.org/docs/latest/api/webcrypto.html#class-cryptokey
  */
 const crypto = require('crypto');
 const fs = require('fs');
