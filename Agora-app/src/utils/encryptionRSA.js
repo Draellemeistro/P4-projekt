@@ -57,6 +57,7 @@ const RSACrypto = {
 			}
 		,
 			encrypt: async function encryptWithPublicKey(message, publicKey) {
+				const encoder = new TextEncoder();
 				// Check if the message and publicKey are valid
 				if (typeof message !== 'string' || message.length === 0) {
 					console.error('Invalid message. Please provide a non-empty string.');
@@ -65,6 +66,14 @@ const RSACrypto = {
 				if (typeof publicKey !== 'string' || publicKey.length === 0) {
 					console.log(publicKey);
 					console.error('Invalid public key. Please provide a non-empty string.');
+					return false;
+				}
+				const base64Regex = /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/;
+				if (!base64Regex.test(publicKey)) {
+					console.error('Invalid public key. The public key is not a valid base64 string.');
+					console.log('publicKey: ', publicKey);
+					let publicKeyEncoded = encoder.encode(publicKey);
+					console.log('publicKeyEncoded: ', publicKeyEncoded);
 					return false;
 				}
 				// Convert the publicKey to a format that the Web Cryptography API can use
@@ -84,7 +93,7 @@ const RSACrypto = {
 					['encrypt']
 				);
 				// Encrypt the message
-				const encoder = new TextEncoder();
+
 				const data = encoder.encode(message);
 				const encryptedMessage = await window.crypto.subtle.encrypt(
 					{
