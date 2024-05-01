@@ -58,11 +58,12 @@ const serverRSACrypto = {
 	},//
 	encryptWithPubRSA: function encryptWithPublicKey(message, publicKeyObject) {
 		const buffer = Buffer.from(message);
+		console.log('1\n2\n3\n4\n5\n6');
 		console.log('publicKeyObject:', publicKeyObject);
+		console.log('1\n2\n3\n4\n5\n6');
 		const publicKey = typeof publicKeyObject === 'string' ? publicKeyObject : publicKeyObject.toString();
 		const encrypted = crypto.publicEncrypt({
 				key: publicKey,
-			  format: 'pem',
 				padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
 				oaepHash: "sha256",
 			},
