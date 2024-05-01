@@ -20,17 +20,17 @@ const RSACrypto = {
 				console.error('Server responded with status', response.status);
 			} else {
 				const data = await response.json();
-				console.log(data);
+				console.log('received: ', data, 'expected: ', plainTextMessage);
 				if (data === plainTextMessage) {
 					console.log('Decryption successful');
 				} else {
-					console.log('received: ', data, 'expected: ', plainTextMessage);
 					console.log('problem might be in the formatting/encoding of the message');
 					console.error('Decryption failed');
 				}
 				return data;
 			}
 	} catch (error) {
+			console.log('problem might be in the fetch request or related to async/await syntax');
 			console.error('Failed to fetch', error);
 		}
 	},

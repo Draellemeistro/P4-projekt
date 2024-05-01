@@ -38,6 +38,7 @@
 		"@sveltejs/adapter-static": "^3.0.1",
 		"blind-signatures": "^1.0.7",
 		"express": "^4.19.2",
+		"jsencrypt": "^3.3.2",
 		"mysql2": "^3.9.4",
 		"nodemailer": "^6.9.13",
 		"svelte-routing": "^2.12.0"
