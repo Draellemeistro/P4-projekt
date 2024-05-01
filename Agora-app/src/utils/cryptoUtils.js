@@ -1,14 +1,14 @@
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey#rsa_key_pair_generation
  */
+// eslint-disable-next-line no-unused-vars
 import crypto from 'crypto';
 import axios from 'axios'; // You'll need to install axios using npm install axios
+// eslint-disable-next-line no-unused-vars
 import RSACrypto from './encryptionRSA.js';
 // eslint-disable-next-line no-unused-vars
-const client = crypto.createECDH('secp521r1');
-const clientKeys = client.generateKeys();
 // eslint-disable-next-line no-unused-vars
-const { getPublicKey, computeSharedSecret, requestServerPublicKeyECDH, encryptMessageECDH, performECDHAndEncryptBallot } = require('./encryptionECDH');
+const ECDHCrypto = require('./encryptionECDH');
 //  ----- ECDH -----
 // Generate client's keys
 // Function to send encrypted ballot to server
@@ -122,8 +122,9 @@ const cryptoUtils = {
 
 };
 
+// eslint-disable-next-line no-unused-vars
 const messageEncryption= {
-	sendEncryptedBallot: async function(encryptedBallot, clientPublicKeyBase64,EncryptedVoter) {
+	sendEncryptedBallot: async function(encryptedBallot, clientPublicKeyBase64, EncryptedVoter) {
 		const response = await axios.post(`https://${serverIP}:${serverPort}/insert-ballot`, {
 			ballot: encryptedBallot,
 			voter: EncryptedVoter,
@@ -136,29 +137,29 @@ const messageEncryption= {
 
 		return response.data;
 	},
-
-	encryptWithRSAThenECDH: async function(ballot, voter) {
-		await RSACrypto.request();
-		const publicKey = sessionStorage.getItem('serverPublicKeyRSA');
-		let encryptedBallotLayerOne = RSACrypto.encrypt(ballot, publicKey);
-		await requestServerPublicKeyECDH();
-		const sharedSecret = computeSharedSecret();
-		let encryptedBallotLayerTwo = encryptMessageECDH(encryptedBallotLayerOne, sharedSecret);
-		let encryptedVoter = encryptMessageECDH(voter, sharedSecret);
-		return await this.sendEncryptedBallot(encryptedBallotLayerTwo, getPublicKey(clientKeys), encryptedVoter);
-	},
-
-	encryptWithECDHThenRSA: async function(ballot, voter) {
-		await requestServerPublicKeyECDH();
-		const sharedSecret = computeSharedSecret();
-		let encryptedBallotLayerOne = encryptMessageECDH(ballot, sharedSecret);
-		await RSACrypto.request();
-		const publicKey = sessionStorage.getItem('serverPublicKeyRSA');
-		let encryptedBallotLayerTwo = RSACrypto.encrypt(encryptedBallotLayerOne, publicKey);
-		let encryptedVoter = RSACrypto.encrypt(voter, publicKey);
-		return await this.sendEncryptedBallot(encryptedBallotLayerTwo, getPublicKey(clientKeys), encryptedVoter);
-	},
 };
 
+//	encryptWithRSAThenECDH: async function(ballot, voter) {
+//		await RSACrypto.request();
+//		const publicKey = sessionStorage.getItem('serverPublicKeyRSA');
+//		let encryptedBallotLayerOne = RSACrypto.encrypt(ballot, publicKey);
+//		await requestServerPublicKeyECDH();
+//		const sharedSecret = deriveSecretKey();
+//		let encryptedBallotLayerTwo = encryptMessageECDH(encryptedBallotLayerOne, sharedSecret);
+//		let encryptedVoter = encryptMessageECDH(voter, sharedSecret);
+//		return await this.sendEncryptedBallot(encryptedBallotLayerTwo, getPublicKey(clientKeys), encryptedVoter);
+//	},
+//
+//	encryptWithECDHThenRSA: async function(ballot, voter) {
+//		await requestServerPublicKeyECDH();
+//		const sharedSecret = deriveSecretKey();
+//		let encryptedBallotLayerOne = encryptMessageECDH(ballot, sharedSecret);
+//		await RSACrypto.request();
+//		const publicKey = sessionStorage.getItem('serverPublicKeyRSA');
+//		let encryptedBallotLayerTwo = RSACrypto.encrypt(encryptedBallotLayerOne, publicKey);
+//		let encryptedVoter = RSACrypto.encrypt(voter, publicKey);
+//		return await this.sendEncryptedBallot(encryptedBallotLayerTwo, getPublicKey(clientKeys), encryptedVoter);
+//	},
+//};
+
 export default cryptoUtils;
-export { messageEncryption };

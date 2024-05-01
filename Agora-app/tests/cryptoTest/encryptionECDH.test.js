@@ -1,5 +1,5 @@
 // Test for encryptionECDH.js
-const { getPublicKey, computeSharedSecret, requestServerPublicKeyECDH, encryptMessageECDH, performECDHAndEncryptBallot } = require('../../src/utils/encryptionECDH.js');
+const { getPublicKey, deriveSecretKey, requestServerPublicKeyECDH, encryptMessageECDH, performECDHAndEncryptBallot } = require('../../src/utils/encryptionECDH.js');
 describe('encryptionECDH', () => {
 	test('getPublicKey returns a public key', () => {
 		const publicKey = getPublicKey();
@@ -8,7 +8,7 @@ describe('encryptionECDH', () => {
 	});
 
 	test('computeSharedSecret returns a shared secret', () => {
-		const sharedSecret = computeSharedSecret();
+		const sharedSecret = deriveSecretKey();
 		expect(typeof sharedSecret).toBe('string'); // if shared secret is a string
 		// Add more assertions based on what you expect from computeSharedSecret
 	});

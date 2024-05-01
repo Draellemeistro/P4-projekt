@@ -63,8 +63,6 @@ const RSACrypto = {
 				} else {
 					console.error('Failed to get public key');
 				}
-				//sessionStorage.setItem('serverPublicKeyRSA', publicKeyRSA);
-
 			}
 		,
 			encrypt: async function encryptWithPublicKey(message, publicKey) {
