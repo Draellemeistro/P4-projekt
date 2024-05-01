@@ -9,7 +9,7 @@ const path = require('path');
 const { createECDH } = require('node:crypto');
 const blindSignature = require('blind-signatures');
 const NodeRSA = require('node-rsa');
-
+const cryptoUtils = require('./utils/generateKeypair.js');
 
 const app = express();
 
@@ -51,6 +51,8 @@ const serverRSAKeyPair = new NodeRSA();
 serverRSAKeyPair.importKey(serverPublicRSAKey, 'pkcs1-public-pem');
 serverRSAKeyPair.importKey(serverPrivateRSAKey, 'pkcs1-private-pem');
 serverRSAKeyPair.extractable = true;
+const {cryptoRSAPublicKey, cryptoRSAPrivateKey } = cryptoUtils.importRSAKeyPair();
+
 
 
 // Create a credentials object
@@ -308,12 +310,11 @@ app.post('/decrypt-RSA-message-Test', async (req, res) => {
 	console.log('Accessed /decrypt-RSA-message-Test endpoint');
 	const plainTextMessage = req.body.plainTextMessage;
 	const encryptedMessage = req.body.encryptedMessage;
-	const decryptedMessage = crypto.privateDecrypt(serverPrivateRSAKey, Buffer.from(encryptedMessage, 'base64'));
-	const decrytpedMessageString = decryptedMessage.toString();
-	if (plainTextMessage === decrytpedMessageString) {
+	const decryptedMessage = cryptoUtils.decryptWithPrivateKey(encryptedMessage, cryptoRSAPrivateKey);
+	if (plainTextMessage === decryptedMessage) {
 		console.log('RSA works!');
 	} else {
 		console.log('RSA does not work!');
 	}
-	res.json(decrytpedMessageString);
+	res.json(decryptedMessage);
 });

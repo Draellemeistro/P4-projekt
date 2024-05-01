@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import JSEncrypt from 'jsencrypt';
+//import JSEncrypt from 'jsencrypt';
 
 
 const RSACrypto = {
@@ -37,7 +37,11 @@ const RSACrypto = {
 				if (response.ok) {
 					const data = await response.json();
 					console.log(data);
-					return data;
+					const pemHeader = "-----BEGIN PUBLIC KEY-----";
+					const pemFooter = "-----END PUBLIC-----";
+					let result = data.replace(pemHeader, '');
+					result = result.replace(pemFooter, '');
+					return result.trim();
 				} else {
 					console.error('Failed to get public key');
 				}
@@ -57,18 +61,20 @@ const RSACrypto = {
 					console.error('Invalid public key. Please provide a non-empty string.');
 					return false;
 				}
-
-				const encrypt = new JSEncrypt();
-				encrypt.setPublicKey(publicKey);
-				const encryptedMessage = encrypt.encrypt(message);
-
+				const buffer = Buffer.from(message);
+				const encryptedMessage = crypto.publicEncrypt({
+						key: publicKey,
+						padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+						oaepHash: "sha256",
+					},
+					buffer
+				);
 				// Check if the encryption was successful
 				if (!encryptedMessage) {
 					console.error('Failed to encrypt the message. Please check your public key and the message.');
 					return false;
 				}
-
-				return encryptedMessage;
+				return encryptedMessage.toString('base64');
 			}
 		,
 			decrypt: function decryptWithPrivateKey(encryptedMessage, privateKey) {
