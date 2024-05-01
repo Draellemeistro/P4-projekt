@@ -1,9 +1,8 @@
 <script>
 	import { onMount } from 'svelte';
 	import RSACrypto from '../../utils/encryptionRSA.js';
-	import {
-		initECDH,
-	} from '../../utils/encryptionECDH.js';
+	import ECDHCrypto from '../../utils/encryptionECDH.js';
+
 	// eslint-disable-next-line no-unused-vars
 
 
@@ -33,7 +32,7 @@
 		console.log(rsaPublicKey);
 		console.log(JSON.stringify(rsaPublicKey));
 		console.log('hallelujah');
-		ecdhKeys = await initECDH();
+		ecdhKeys = await ECDHCrypto.initECDH();
 		WebCryptoResult = await RSACrypto.webCryptoTest();
 		encryptedMessage = RSACrypto.encrypt('Hello World', rsaPublicKey);
 		stringified = JSON.stringify(WebCryptoResult);
@@ -62,6 +61,6 @@
 </div>
 <div>
 	<h2>Initiate ECDH</h2>
-	<button on:click={initECDH}>Initiate ECDH</button>
+	<button on:click={ECDHCrypto.initECDH}>Initiate ECDH</button>
 	<p>ECDH Keys: {ecdhKeys}</p>
 </div>
