@@ -45,15 +45,21 @@ const RSACrypto = {
 				});
 				if (response.ok) {
 					const data = await response.json();
-					console.log(data);
-					const publicKeyRSAPemFormat = typeof data === 'string' ? data : data.toString();
-					const pemHeader = "-----BEGIN RSA PUBLIC KEY-----";
-					const pemFooter = "-----END RSA PUBLIC KEY-----";
-					let result = publicKeyRSAPemFormat.replace(pemHeader, '');
-					result = result.replace(pemFooter, '');
-					const publicKeyRSA = result.trim();
-					sessionStorage.setItem('serverPublicKeyRSA', publicKeyRSA);
-					return publicKeyRSA;
+					const importedKey = await window.crypto.subtle.importKey(
+						'jwk',
+						data,
+						{
+							name: 'RSA-OAEP',
+							hash: 'SHA-256'
+						},
+						false,
+						['encrypt']
+					);
+					//export JWK formatted RSA public key and store as string in sessionStorage
+					const exportedKey = await window.crypto.subtle.exportKey('jwk', importedKey);
+					const keyString = JSON.stringify(exportedKey);
+					sessionStorage.setItem('serverPublicKeyRSA', keyString);
+					return importedKey;
 				} else {
 					console.error('Failed to get public key');
 				}
@@ -68,46 +74,40 @@ const RSACrypto = {
 					console.error('Invalid message. Please provide a non-empty string.');
 					return false;
 				}
-				if (typeof publicKey !== 'string' || publicKey.length === 0) {
-					console.log(publicKey);
-					console.error('Invalid public key. Please provide a non-empty string.');
-					return false;
-				}
-				const base64Regex = /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/;
-				if (!base64Regex.test(publicKey)) {
-					console.error('Invalid public key. The public key is not a valid base64 string.');
-					console.log('publicKey: ', publicKey);
-					let publicKeyEncoded = encoder.encode(publicKey);
-					console.log('publicKeyEncoded: ', publicKeyEncoded);
-					return false;
-				}
-				// Convert the publicKey to a format that the Web Cryptography API can use
-				const binaryString = atob(publicKey);
-				const len = binaryString.length;
-				const bytes = new Uint8Array(len);
-				for (let i = 0; i < len; i++) {
-					bytes[i] = binaryString.charCodeAt(i);
-				}				const importedKey = await window.crypto.subtle.importKey(
-					'spki',
-					bytes,
-					{
-						name: 'RSA-OAEP',
-						hash: 'SHA-256'
-					},
-					false,
-					['encrypt']
-				);
-				// Encrypt the message
 
-				const data = encoder.encode(message);
+				if (typeof publicKey !== 'string' || publicKey.length === 0) {
+					console.error('Invalid public key. checking sessionStorage for public key');
+					const keyString = sessionStorage.getItem('serverPublicKeyRSA');
+					if (!keyString) {
+						console.error('!--No public key found in sessionStorage.--!\n' +
+							'!--Please make sure the key is stored correctly.--!');
+						console.log('publicKey: ', publicKey);
+						console.log('keyString', keyString);
+						return false;
+					} else {
+						const jwkKey = JSON.parse(keyString);
+						publicKey = await window.crypto.subtle.importKey(
+							'jwk',
+							jwkKey,
+							{
+								name: 'RSA-OAEP',
+								hash: 'SHA-256'
+							},
+							false,
+							['encrypt']
+						);
+					}
+				}
+				const encryptionData = encoder.encode(message);
 				const encryptedMessage = await window.crypto.subtle.encrypt(
 					{
 						name: 'RSA-OAEP'
 					},
-					importedKey,
-					data
+					publicKey,
+					encryptionData
 				);
-				// Convert the encrypted message to base64
+
+				// Convert encryptedMessage to base64
 				const encryptedMessageArray = new Uint8Array(encryptedMessage);
 				const encryptedMessageString = Array.from(encryptedMessageArray).map(b => String.fromCharCode(b)).join('');
 				return btoa(encryptedMessageString);

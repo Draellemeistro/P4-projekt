@@ -10,6 +10,8 @@ const { createECDH } = require('node:crypto');
 const blindSignature = require('blind-signatures');
 const NodeRSA = require('node-rsa');
 const serverRSACrypto = require('./utils/RSACryptoUtils.js');const app = express();
+const pem2jwk = require('pem-jwk').pem2jwk;
+
 
 app.use(express.json());
 
@@ -195,9 +197,8 @@ app.post('/request-public-ecdh-key', (req, res) => {
 }	);
 app.post('/rsa-public-key', (req, res) => {
 	console.log('Accessed /rsa-public-key endpoint');
-	//const publicKeyString = serverRSAKeyPair.keyPair.exportKey('jwk', 'public');
-	//let stringServerPublicRSAKey = serverPublicRSAKey.toString();
-	res.json(pemFormatServerPublicRSAKey);
+	const jwkFormatServerPublicRSAKey = pem2jwk(pemFormatServerPublicRSAKey);
+	res.json(jwkFormatServerPublicRSAKey);
 	console.log('RSA Public Key sent');
 } );
 
