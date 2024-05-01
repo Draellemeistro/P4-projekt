@@ -56,7 +56,13 @@ console.log('Private Key:', cryptoRSAPrivateKey);
 const testText = 'Hello, World!';
 const encryptedTestText = serverRSACrypto.encryptWithPubRSA(testText, pemFormatServerPublicRSAKey);
 const decryptedTestText = serverRSACrypto.decryptWithPrivRSA(encryptedTestText, pemFormatServerPrivateRSAKey);
-
+console.log('Encrypted:', encryptedTestText);
+console.log('Decrypted:', decryptedTestText);
+if (decryptedTestText === testText) {
+	console.log('RSA works!');
+} else	{
+	console.log('RSA does not work!');
+}
 
 // Create a credentials object
 app.use(express.json());

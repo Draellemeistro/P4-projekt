@@ -2,41 +2,7 @@ const crypto = require('crypto');
 //const fs = require('fs');
 
 const serverRSACrypto = {
-	removePrivKeyHeader: function removePrivKeyHeader(pemFormatServerPrivateRSAKey) {
-		console.log('pemFormatServerPrivateRSAKey:', pemFormatServerPrivateRSAKey)
-		const pemHeader = "-----BEGIN RSA PRIVATE KEY-----";
-		const pemFooter = "-----END RSA PRIVATE KEY-----";
-		let result = pemFormatServerPrivateRSAKey.replace(pemHeader, '');
-		result = result.replace(pemFooter, '');
-		result = result.trim();
-		console.log('private key result:', result);
-		return result
-	},
 
-	removePubKeyHeader: function removePubKeyHeader(pemFormatServerPublicRSAKey) {
-		console.log('pemFormatServerPublicRSAKey:', pemFormatServerPublicRSAKey)
-		const pemHeader = "-----BEGIN RSA PUBLIC KEY-----";
-		const pemFooter = "-----END RSA PUBLIC KEY-----";
-		let result = pemFormatServerPublicRSAKey.replace(pemHeader, '');
-		result = result.replace(pemFooter, '');
-		result = result.trim();
-		console.log('public key result:', result);
-		return result
-	},
-
-
-	importBothKeys: function importRSAKeyPair(pemFormatServerPublicRSAKey, pemFormatServerPrivateRSAKey) {
-		console.log('\n\n\n\n\n');
-		console.log('pemFormatServerPublicRSAKey:', pemFormatServerPublicRSAKey);
-		console.log('lige over se');
-		console.log('\n\n\n\n\n');
-		const serverPublicRSAKey = serverRSACrypto.removePubKeyHeader(pemFormatServerPublicRSAKey);
-		const serverPrivateRSAKey = serverRSACrypto.removePrivKeyHeader(pemFormatServerPrivateRSAKey);
-		console.log('importBothKeys output:', serverPublicRSAKey, serverPrivateRSAKey);
-		console.log('1\n2\n3\n4\n5\n6');
-
-		return { serverPublicRSAKey, serverPrivateRSAKey };
-	},
 
 ///////////////////////////////////////
 // 		NOTE: below is from:
@@ -58,9 +24,6 @@ const serverRSACrypto = {
 	},//
 	encryptWithPubRSA: function encryptWithPublicKey(message, publicKeyObject) {
 		const buffer = Buffer.from(message);
-		console.log('1\n2\n3\n4\n5\n6');
-		console.log('publicKeyObject:', publicKeyObject);
-		console.log('1\n2\n3\n4\n5\n6');
 		const publicKey = typeof publicKeyObject === 'string' ? publicKeyObject : publicKeyObject.toString();
 		const encrypted = crypto.publicEncrypt({
 				key: publicKey,
