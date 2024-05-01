@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte';
 	import RSACrypto from '../../../utils/encryptionRSA.js';
 	import { askForDecryptToCheck } from '../../../utils/apiService.js';
-	import { initECDH } from '../../../utils/encryptionECDH.js';
 
 	let rsaPublicKey;
 	let encryptedMessage;
