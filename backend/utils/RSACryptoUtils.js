@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const serverRSACrypto = {
 	importPrivKey: function importRSAPrivateKey() {
-		const pemFormatServerPrivateRSAKey = fs.readFileSync('../serverPrivateKeyRSA.pem', 'utf8');
+		const pemFormatServerPrivateRSAKey = fs.readFileSync('./serverPrivateKeyRSA.pem', 'utf8');
 		const pemHeader = "-----BEGIN PRIVATE KEY-----";
 		const pemFooter = "-----END PRIVATE KEY-----";
 		let result = pemFormatServerPrivateRSAKey.replace(pemHeader, '');
@@ -11,7 +11,7 @@ const serverRSACrypto = {
 		return result.trim();
 	},
 	importPubKey: function importRSAPublicKey() {
-		const pemFormatServerPublicRSAKey = fs.readFileSync('../serverPublicKeyRSA.pem', 'utf8');
+		const pemFormatServerPublicRSAKey = fs.readFileSync('./serverPublicKeyRSA.pem', 'utf8');
 		const pemHeader = "-----BEGIN PUBLIC KEY-----";
 		const pemFooter = "-----END PUBLIC-----";
 		let result = pemFormatServerPublicRSAKey.replace(pemHeader, '');
