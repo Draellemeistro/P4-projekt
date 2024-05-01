@@ -3,20 +3,24 @@ const crypto = require('crypto');
 
 const serverRSACrypto = {
 	removePrivKeyHeader: function removePrivKeyHeader(pemFormatServerPrivateRSAKey) {
+		console.log('pemFormatServerPrivateRSAKey:', pemFormatServerPrivateRSAKey)
 		const pemHeader = "-----BEGIN PRIVATE KEY-----";
 		const pemFooter = "-----END PRIVATE KEY-----";
 		let result = pemFormatServerPrivateRSAKey.replace(pemHeader, '');
 		result = result.replace(pemFooter, '');
 		result = result.trim();
+		console.log('private key result:', result);
 		return result
 	},
 
 	removePubKeyHeader: function removePubKeyHeader(pemFormatServerPublicRSAKey) {
+		console.log('pemFormatServerPublicRSAKey:', pemFormatServerPublicRSAKey)
 		const pemHeader = "-----BEGIN PUBLIC KEY-----";
 		const pemFooter = "-----END PUBLIC-----";
 		let result = pemFormatServerPublicRSAKey.replace(pemHeader, '');
 		result = result.replace(pemFooter, '');
 		result = result.trim();
+		console.log('public key result:', result);
 		return result
 	},
 
