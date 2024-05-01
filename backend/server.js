@@ -201,7 +201,7 @@ app.post('/fetch-candidates', (req, res) => {
 app.post('/request-public-ecdh-key', (req, res) => {
 	console.log('Accessed /request-public-ecdh-key endpoint');
 	const keyBuffer = Buffer.from(serverPublicKeyECDH, 'base64');
-	const jwk = JWK.asKey(keyBuffer, { alg: 'ECDH-ES', use: 'enc' })
+	const jwk = JWK.asKey(keyBuffer, { alg: 'ECDH', use: 'enc' })
 	res.json(jwk);
 	console.log('ECDH Public Key sent');
 }	);
