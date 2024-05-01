@@ -56,7 +56,7 @@ function generateDSAKeyPair() {
 	fs.writeFileSync(__dirname + '/serverPrivateKeyDSA.pem', keyPair.privateKey);
 }
 
-export function importRSAPrivateKey() {
+function importRSAPrivateKey() {
 	const pemFormatServerPrivateRSAKey = fs.readFileSync('../serverPrivateKeyRSA.pem', 'utf8');
 	const pemHeader = "-----BEGIN PRIVATE KEY-----";
 	const pemFooter = "-----END PRIVATE KEY-----";
@@ -64,7 +64,7 @@ export function importRSAPrivateKey() {
 	result = result.replace(pemFooter, '');
 	return result.trim();
 }
-export function importRSAPublicKey() {
+function importRSAPublicKey() {
 	const pemFormatServerPublicRSAKey = fs.readFileSync('../serverPublicKeyRSA.pem', 'utf8');
 	const pemHeader = "-----BEGIN PUBLIC KEY-----";
 	const pemFooter = "-----END PUBLIC-----";
@@ -72,7 +72,7 @@ export function importRSAPublicKey() {
 	result = result.replace(pemFooter, '');
 	return result.trim();
 }
-export function importRSAKeyPair() {
+function importRSAKeyPair() {
 	const serverPublicRSAKey = importRSAPublicKey();
 	const serverPrivateRSAKey = importRSAPrivateKey();
 	return { serverPublicRSAKey, serverPrivateRSAKey };
@@ -82,7 +82,7 @@ export function importRSAKeyPair() {
 // 		NOTE: below is from:
 // 		https://gist.github.com/sohamkamani/b14a9053551dbe59c39f83e25c829ea7
 ///////////////////////////////////////
-export function decryptWithPrivateKey(encryptedMessage, privateKey) {
+function decryptWithPrivateKey(encryptedMessage, privateKey) {
 	const buffer = Buffer.from(encryptedMessage, 'base64');
 	const decrypted = crypto.privateDecrypt({
 			key: privateKey,
@@ -95,7 +95,7 @@ export function decryptWithPrivateKey(encryptedMessage, privateKey) {
 		buffer);
 	return decrypted.toString();
 }
-export function encryptWithPublicKey(message, publicKey) {
+function encryptWithPublicKey(message, publicKey) {
 	const buffer = Buffer.from(message);
 	const encrypted = crypto.publicEncrypt({
 			key: publicKey,
