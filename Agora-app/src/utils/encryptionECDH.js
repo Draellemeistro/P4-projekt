@@ -211,6 +211,25 @@ const ECDHCrypto ={
 			}
 		}
 	},
+	tempSendEDCHKey: async function sendECDHKeyToServer(keyStringPub) {
+		const response = await fetch('https://130.225.39.205:3030/temp-ecdh-key-from-client', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				clientPublicKey: keyStringPub
+			})
+		});
+		if (response.ok) {
+			console.log('server received public key');
+			return 1;
+		} else {
+			console.error('Failed to send public key');
+			return 0;
+		}
+	},
+
 // Function to perform ECDH key exchange, encrypt ballot, and send it to server
 	// eslint-disable-next-line no-undef
 	encryptBallotECDH_NOTIMPLEMENTED: async function performECDHAndEncryptBallot(ballot,client, clientKeys) {

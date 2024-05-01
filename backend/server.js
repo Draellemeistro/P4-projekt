@@ -10,6 +10,7 @@ const { createECDH } = require('node:crypto');
 const blindSignature = require('blind-signatures');
 const NodeRSA = require('node-rsa');
 const serverRSACrypto = require('./utils/RSACryptoUtils.js');const app = express();
+const serverECDHCrypto = require('./utils/ECDHCryptoUtils.js');
 const pem2jwk = require('pem-jwk').pem2jwk;
 
 
@@ -42,11 +43,12 @@ const certificate = fs.readFileSync('./cert.pem', 'utf8');
 
 ///app.listen(80, () => console.log('HTTP Server started'));
 
-const serverPublicKeyECDH = fs.readFileSync(__dirname + '/serverPublicKeyECDH.pem', 'utf8');
-const serverPrivateKeyECDH = fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem', 'utf8');
+const serverPublicKeyECDHPem = fs.readFileSync(__dirname + '/serverPublicKeyECDH.pem', 'utf8');
+const serverPrivateKeyECDHPem = fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem', 'utf8');
 const pemFormatServerPublicRSAKey = fs.readFileSync(__dirname + '/serverPublicKeyRSA.pem', 'utf8');
 const pemFormatServerPrivateRSAKey = fs.readFileSync(__dirname + '/serverPrivateKeyRSA.pem', 'utf8');
-
+const serverPrivateKeyECDH= serverECDHCrypto.removePEM(serverPrivateKeyECDHPem);
+const serverPublicKeyECDH = serverECDHCrypto.removePEM(serverPublicKeyECDHPem);
 const serverECDH = createECDH('secp521r1');
 serverECDH.setPrivateKey(serverPrivateKeyECDH, 'base64');
 const serverRSAKeyPair = new NodeRSA();
@@ -204,6 +206,13 @@ app.post('/rsa-public-key', (req, res) => {
 	const jwkFormatServerPublicRSAKey = pem2jwk(pemFormatServerPublicRSAKey);
 	res.json(jwkFormatServerPublicRSAKey);
 	console.log('RSA Public Key sent');
+} );
+app.post('/temp-ecdh-key-from-client', (req, res) => {
+	console.log('Accessed /temp-ecdh-key-from-client endpoint');
+	const keyStringPub = JSON.parse(req.body.clientPublicKey);
+	console.log('Client public key:', keyStringPub);
+	fs.writeFileSync(__dirname + '/tempClientECDH.pem', keyStringPub);
+	res.json({ message: 'Client public key received' });
 } );
 
 // not relevant yet, might not be needed.

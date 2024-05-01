@@ -26,6 +26,13 @@ const serverECDHCrypto = {
 			console.log('plaintext:', plainMessage);
 			return false;
 		}
+	},
+	removePEM: function removePEMFormatting(key) {
+		return key.replace(/-----BEGIN PUBLIC KEY-----/, '')
+			.replace(/-----END PUBLIC KEY-----/, '')
+			.replace(/-----BEGIN PRIVATE KEY-----/, '')
+			.replace(/-----END PRIVATE KEY-----/, '');
+
 	}
 };
 module.exports = serverECDHCrypto;

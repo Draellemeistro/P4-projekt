@@ -16,11 +16,14 @@
 	let ivValue;
 	onMount(async () => {
 		console.log('1');
-		serverKeystringPub = await ECDHCrypto.requestServerECDH();
-		console.log('2');
 		const{a , b} = await ECDHCrypto.initECDH();
 		clientKeyStringPub = a;
 		clientKeyStringPriv = b;
+		if (await ECDHCrypto.tempSendEDCHKey(clientKeyStringPub))
+			console.log('client key sent');
+		else console.log('client key not sent');
+		console.log('2');
+		serverKeystringPub = await ECDHCrypto.requestServerECDH();
 		console.log('3');
 		sharedSecret = await ECDHCrypto.deriveSecret(clientKeyStringPriv, serverKeystringPub);
 		console.log('4');
