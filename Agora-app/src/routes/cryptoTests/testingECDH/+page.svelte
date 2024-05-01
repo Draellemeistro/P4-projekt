@@ -1,37 +1,40 @@
 <script>
 	import { onMount } from 'svelte';
-	import * as ECDHCrypto from '../../../utils/encryptionECDH.js';
-	import * as apiCalls from '../../../utils/apiService.js';
+	import ECDHCrypto from '../../../utils/encryptionECDH.js';
 
-	let ECDHPublicKey;
+	let serverKeystringPub;
+	const plainText = 'Hello World';
 	let encryptedMessage;
 	let decryptedMessage;
-	let clientECDHPKeyPair;
+	// eslint-disable-next-line no-unused-vars
+	let clientKeyStringPub;
+	let clientKeyStringPriv;
 	let sharedSecret;
+	// eslint-disable-next-line no-unused-vars
+	let ivValue;
 	onMount(async () => {
 		console.log('1');
-		const response = await apiCalls.askForServerECDHPublicKey();
+		serverKeystringPub = await ECDHCrypto.requestServerECDH();
 		console.log('2');
-		clientECDHPKeyPair = await ECDHCrypto.initECDH();
+		const{a , b} = await ECDHCrypto.initECDH();
+		clientKeyStringPub = a;
+		clientKeyStringPriv = b;
 		console.log('3');
-		sharedSecret = await ECDHCrypto.computeSharedSecret(response.data.publicKey, clientECDHPKeyPair);
+		sharedSecret = await ECDHCrypto.deriveSecret(clientKeyStringPriv, serverKeystringPub);
 		console.log('4');
-		ECDHPublicKey = response.data.publicKey;
 		console.log('5');
-		encryptedMessage = ECDHCrypto.encryptMessageECDH('Hello World', sharedSecret);
+		const{c , d} = ECDHCrypto.encryptECDH(plainText, sharedSecret);
+		encryptedMessage = c;
+		ivValue = d;
 		console.log('6');
-		const responseCheck = ECDHCrypto.verifyTestSharedSecret(sharedSecret, ECDHCrypto.getPublicKey(clientECDHPKeyPair));
-		if (responseCheck) {
-			console.log('Shared Secret is correct');
-		}
 	} );
 
 </script>
 
 
 <div>
-	<h2>ECDH Public Key</h2>
-	<p>{ECDHPublicKey}</p>
+	<h2>server ECDH Public Key</h2>
+	<p>{serverKeystringPub}</p>
 </div>
 
 <div>
