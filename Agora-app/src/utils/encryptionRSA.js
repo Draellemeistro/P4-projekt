@@ -68,7 +68,8 @@ const RSACrypto = {
 					return false;
 				}
 				// Encrypt the message
-				const buffer = Buffer.from(message);
+				const encoder = new TextEncoder();
+				const buffer = encoder.encode(message);
 				const encryptedMessage = crypto.publicEncrypt({
 						key: publicKey,
 						padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
