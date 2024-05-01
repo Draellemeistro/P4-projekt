@@ -185,18 +185,31 @@ const ECDHCrypto ={
 		);
 		return {encryptedMessage, ivValue};
 	},
-
-	verifySharedSecretTest_NOTIMPLEMENTED: async function verifyTestSharedSecret(clientSharedSecret, clientPublicKeyBase64) {
-		return fetch('https://130.225.39.205:3030/check-shared-secret', {
+	verifySharedSecretTest: async function verifyTestSharedSecret(keyStringSharedSecret, keyStringPub) {
+		const response = await fetch('https://130.225.39.205:3030/check-shared-secret', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				sharedSecret: clientSharedSecret,
-				clientPublicKey: clientPublicKeyBase64
+				sharedSecret: keyStringSharedSecret,
+				clientPublicKey: keyStringPub
 			})
-		}).then(response => response.json());
+		}); if (response.status !== 200) {
+			console.error('Failed to send encrypted ballot');
+		} if (response.ok) {
+			console.log('server received shared secret and public key');
+			if (response.data === 'true') {
+				console.log('shared secret key is identical on both client and server');
+				return 1;
+			} else if (response.data === 'false') {
+				console.log('shared secret key is not identical on both client and server');
+				return 0;
+			} else {
+				console.log('response.data is not a boolean or some other error occurred');
+				return -1;
+			}
+		}
 	},
 // Function to perform ECDH key exchange, encrypt ballot, and send it to server
 	// eslint-disable-next-line no-undef

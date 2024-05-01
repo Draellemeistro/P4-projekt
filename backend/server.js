@@ -43,15 +43,15 @@ const certificate = fs.readFileSync('./cert.pem', 'utf8');
 ///app.listen(80, () => console.log('HTTP Server started'));
 
 const serverPublicKeyECDH = fs.readFileSync(__dirname + '/serverPublicKeyECDH.pem', 'utf8');
-//const serverPrivateKeyECDH = fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem', 'utf8');
+const serverPrivateKeyECDH = fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem', 'utf8');
 const pemFormatServerPublicRSAKey = fs.readFileSync(__dirname + '/serverPublicKeyRSA.pem', 'utf8');
 const pemFormatServerPrivateRSAKey = fs.readFileSync(__dirname + '/serverPrivateKeyRSA.pem', 'utf8');
 const serverECDH = createECDH('secp521r1');
+serverECDH.setPrivateKey(serverPrivateKeyECDH, 'base64');
 const serverRSAKeyPair = new NodeRSA();
 serverRSAKeyPair.importKey(pemFormatServerPublicRSAKey, 'pkcs1-public-pem');
 serverRSAKeyPair.importKey(pemFormatServerPrivateRSAKey, 'pkcs1-private-pem');
 serverRSAKeyPair.extractable = true;
-
 // this should work, but with sending and receiving? idk
 serverRSACrypto.RSAUtilsTest(pemFormatServerPublicRSAKey, pemFormatServerPrivateRSAKey);
 
@@ -193,7 +193,10 @@ app.post('/fetch-candidates', (req, res) => {
 
 
 app.post('/request-public-ecdh-key', (req, res) => {
-	res.json(serverPublicKeyECDH);
+	console.log('Accessed /request-public-ecdh-key endpoint');
+	const jwkFormatServerPublicECDHKey = pem2jwk(serverPublicKeyECDH);
+	res.json(jwkFormatServerPublicECDHKey);
+	console.log('ECDH Public Key sent');
 }	);
 app.post('/rsa-public-key', (req, res) => {
 	console.log('Accessed /rsa-public-key endpoint');
@@ -203,34 +206,7 @@ app.post('/rsa-public-key', (req, res) => {
 } );
 
 // not relevant yet, might not be needed.
-app.post('/present-ecdh-key', async (req, res) => {
-	//TODO maybe delete. Shared secret can be computed from the client's public key
-	const clientPublicKeyBase64 = req.body.clientPublicKeyBase64;
-	const sharedSecret = serverECDH.computeSecret(clientPublicKeyBase64);
-	//TODO maybe encrypt the shared secret with a symmetric key
-	const personId = req.body.personId;
-//
-	const query = 'INSERT INTO Agora.users.shared_secrets (person_id, shared_secret) VALUES (?, ?)';
-	connection.query(query, [personId, sharedSecret], (err, results) => {
-		if (err) {
-			console.error(err);
-			res.status(500).send('Error inserting data into database');
-		} else {
-			res.json({ message: 'Data inserted successfully', results });
-		}
-	});
-});
 
-app.post('/check-shared-secret', async (req, res) => {
-	const clientSharedSecret = req.body.clientSharedSecret;
-	const publicKey = req.body.clientPublicKeyBase64;
-	const sharedSecret = serverECDH.computeSecret(clientPublicKeyBase64);
-	if (clientSharedSecret === sharedSecret) {
-		res.json({ message: 'Shared secret matches' });
-	} else {
-		res.json({ message: 'Shared secret does not match' });
-	}
-});
 
 // TODO Database needs to have a table called encrypted_ballot_box with the following columns:
 // 		enc_ballot (TEXT), enc_voter (TEXT), pubKeyECDH (TEXT) 		maybe more columns
@@ -317,4 +293,48 @@ app.post('/decrypt-RSA-message-Test', async (req, res) => {
 		console.log('RSA does not work!');
 	}
 	res.json(decryptedMessage);
+});
+app.post('/present-ecdh-key', async (req, res) => {
+	//TODO maybe delete. Shared secret can be computed from the client's public key
+	const clientPublicKeyBase64 = req.body.clientPublicKeyBase64;
+	const sharedSecret = serverECDH.computeSecret(clientPublicKeyBase64);
+	//TODO maybe encrypt the shared secret with a symmetric key
+	const personId = req.body.personId;
+//
+	const query = 'INSERT INTO Agora.users.shared_secrets (person_id, shared_secret) VALUES (?, ?)';
+	connection.query(query, [personId, sharedSecret], (err, results) => {
+		if (err) {
+			console.error(err);
+			res.status(500).send('Error inserting data into database');
+		} else {
+			res.json({ message: 'Data inserted successfully', results });
+		}
+	});
+});
+
+app.post('/check-shared-secret', async (req, res) => {
+	let responseValue;
+	const clientSharedSecret = req.body.sharedSecret;
+	const publicKey = JSON.parse(req.body.clientPublicKey);
+	const sharedSecret = serverECDH.computeSecret(publicKey, 'base64', 'base64');
+	if (clientSharedSecret === sharedSecret) {
+		responseValue = true;
+	} else {
+		if (typeof sharedSecret === 'string' ) {
+			console.log('Shared secret:', sharedSecret);
+			if (typeof clientSharedSecret === 'string') {
+				console.log('Client shared secret:', clientSharedSecret);
+			} else {
+				console.log('Client shared secret is not a string');
+			}
+		} responseValue = false;
+	}
+	res.json(responseValue);
+});
+app.post('/decrypt-ECDH-message-Test', async (req, res) => {
+	console.log('Accessed /decrypt-ECDH-message-Test endpoint');
+	const plainTextMessage = req.body.plainTextMessage;
+	const encryptedMessage = req.body.encryptedMessage;
+	const clientPublicKey = req.body.clientPublicKey;
+	const decryptedMessage = 1;
 });

@@ -59,7 +59,7 @@ const RSACrypto = {
 					const exportedKey = await window.crypto.subtle.exportKey('jwk', importedKey);
 					const keyString = JSON.stringify(exportedKey);
 					sessionStorage.setItem('serverPublicKeyRSA', keyString);
-					return importedKey;
+					return importedKey; // maybe change this to keyString
 				} else {
 					console.error('Failed to get public key');
 				}
