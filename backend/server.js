@@ -46,8 +46,8 @@ const pemFormatServerPublicRSAKey = fs.readFileSync(__dirname + '/serverPublicKe
 const pemFormatServerPrivateRSAKey = fs.readFileSync(__dirname + '/serverPrivateKeyRSA.pem', 'utf8');
 const serverECDH = createECDH('secp521r1');
 const serverRSAKeyPair = new NodeRSA();
-serverRSAKeyPair.importKey(serverPublicRSAKey, 'pkcs1-public-pem');
-serverRSAKeyPair.importKey(serverPrivateRSAKey, 'pkcs1-private-pem');
+serverRSAKeyPair.importKey(pemFormatServerPublicRSAKey, 'pkcs1-public-pem');
+serverRSAKeyPair.importKey(pemFormatServerPrivateRSAKey, 'pkcs1-private-pem');
 serverRSAKeyPair.extractable = true;
 const {cryptoRSAPublicKey, cryptoRSAPrivateKey } = serverRSACrypto.importBothKeys(pemFormatServerPublicRSAKey, pemFormatServerPrivateRSAKey);
 serverRSACrypto.RSAUtilsTest(cryptoRSAPublicKey, cryptoRSAPrivateKey);
