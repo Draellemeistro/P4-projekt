@@ -16,10 +16,10 @@
 	let ivValue;
 	onMount(async () => {
 		console.log('1');
-		const{a , b} = await ECDHCrypto.initECDH();
-		clientKeyStringPub = a;
-		clientKeyStringPriv = b;
-		console.log('client key pub: ' + a);
+		const BothKeys = await ECDHCrypto.initECDH();
+		clientKeyStringPub = BothKeys.keyStringPub;
+		clientKeyStringPriv = BothKeys.keyStringPriv;
+		console.log('client key pub: ' + BothKeys.keyStringPub);
 		if (await ECDHCrypto.tempSendEDCHKey(clientKeyStringPub))
 			console.log('client key sent');
 		else console.log('client key not sent');
