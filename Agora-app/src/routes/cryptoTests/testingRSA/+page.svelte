@@ -17,7 +17,7 @@
 		testMessage = "This is a test message";
 
 		// Encrypt the test message with the public key
-		encryptedMessage = RSACrypto.encrypt(testMessage, rsaPublicKey);
+		encryptedMessage = await RSACrypto.encrypt(testMessage, rsaPublicKey);
 
 		// Decrypt the encrypted message with the private key
 		// Note: You need to have the private key to decrypt the message

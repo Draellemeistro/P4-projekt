@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+//import crypto from 'crypto';
 // eslint-disable-next-line no-unused-vars
 //import { c } from 'vite/dist/node/types.d-aGj9QkWt.js';
 //import JSEncrypt from 'jsencrypt';
@@ -56,7 +56,7 @@ const RSACrypto = {
 
 			}
 		,
-			encrypt: function encryptWithPublicKey(message, publicKey) {
+			encrypt: async function encryptWithPublicKey(message, publicKey) {
 				// Check if the message and publicKey are valid
 				if (typeof message !== 'string' || message.length === 0) {
 					console.error('Invalid message. Please provide a non-empty string.');
@@ -67,23 +67,32 @@ const RSACrypto = {
 					console.error('Invalid public key. Please provide a non-empty string.');
 					return false;
 				}
+				// Convert the publicKey to a format that the Web Cryptography API can use
+				const publicKeyBuffer = new Uint8Array(Buffer.from(publicKey, 'base64'));
+				const importedKey = await window.crypto.subtle.importKey(
+					'spki',
+					publicKeyBuffer,
+					{
+						name: 'RSA-OAEP',
+						hash: 'SHA-256'
+					},
+					false,
+					['encrypt']
+				);
 				// Encrypt the message
 				const encoder = new TextEncoder();
-				const buffer = encoder.encode(message);
-				const encryptedMessage = crypto.publicEncrypt({
-						key: publicKey,
-						padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
-						oaepHash: "sha256",
+				const data = encoder.encode(message);
+				const encryptedMessage = await window.crypto.subtle.encrypt(
+					{
+						name: 'RSA-OAEP'
 					},
-					buffer
+					importedKey,
+					data
 				);
-				// Check if the encryption was successful
-				if (!encryptedMessage) {
-					console.error('Failed to encrypt the message. Please check your public key and the message.');
-					return false;
-				}
-				const decoder = new TextDecoder();
-				return btoa(decoder.decode(encryptedMessage));
+				// Convert the encrypted message to base64
+				const encryptedMessageArray = new Uint8Array(encryptedMessage);
+				const encryptedMessageString = Array.from(encryptedMessageArray).map(b => String.fromCharCode(b)).join('');
+				return btoa(encryptedMessageString);
 			}
 		,
 			webCryptoTest: function webCryptoTest() {
