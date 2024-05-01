@@ -2,7 +2,7 @@ const crypto = require('crypto');
 const fs = require('fs');
 
 const serverRSACrypto = {
-	importPrivKey: function importRSAPrivateKey(pemFormatServerPrivateRSAKey) {
+	removePrivKeyHeader: function removePrivKeyHeader(pemFormatServerPrivateRSAKey) {
 		const pemHeader = "-----BEGIN PRIVATE KEY-----";
 		const pemFooter = "-----END PRIVATE KEY-----";
 		let result = pemFormatServerPrivateRSAKey.replace(pemHeader, '');
@@ -11,13 +11,39 @@ const serverRSACrypto = {
 		return Buffer.from(result);
 	},
 
-	importPubKey: function importRSAPublicKey(pemFormatServerPublicRSAKey) {
+	removePubKeyHeader: function removePubKeyHeader(pemFormatServerPublicRSAKey) {
 		const pemHeader = "-----BEGIN PUBLIC KEY-----";
 		const pemFooter = "-----END PUBLIC-----";
 		let result = pemFormatServerPublicRSAKey.replace(pemHeader, '');
 		result = result.replace(pemFooter, '');
 		result = result.trim();
 		return Buffer.from(result);
+	},
+	importPubKey: function importRSAPublicKey(pemFormatServerPublicRSAKey) {
+		const publicKey = crypto.subtle.importKey(
+			'spki',
+			this.removePubKeyHeader(pemFormatServerPublicRSAKey),
+			{
+				name: 'RSA-OAEP',
+				hash: 'SHA-256'
+			},
+			true,
+			['encrypt']
+		);
+		return publicKey;
+	},
+	importPrivKey: function importRSAPrivateKey(pemFormatServerPrivateRSAKey) {
+		const privateKey = crypto.subtle.importKey(
+			'pkcs8',
+			this.removePrivKeyHeader(pemFormatServerPrivateRSAKey),
+			{
+				name: 'RSA-OAEP',
+				hash: 'SHA-256'
+			},
+			true,
+			['decrypt']
+		);
+		return privateKey;
 	},
 
 	importBothKeys: function importRSAKeyPair(pemFormatServerPublicRSAKey, pemFormatServerPrivateRSAKey) {
