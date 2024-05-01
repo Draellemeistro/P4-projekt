@@ -7,20 +7,25 @@ const serverRSACrypto = {
 		const pemFooter = "-----END PRIVATE KEY-----";
 		let result = pemFormatServerPrivateRSAKey.replace(pemHeader, '');
 		result = result.replace(pemFooter, '');
-		return result.trim();
+		result = result.trim();
+		return Buffer.from(result);
 	},
+
 	importPubKey: function importRSAPublicKey(pemFormatServerPublicRSAKey) {
 		const pemHeader = "-----BEGIN PUBLIC KEY-----";
 		const pemFooter = "-----END PUBLIC-----";
 		let result = pemFormatServerPublicRSAKey.replace(pemHeader, '');
 		result = result.replace(pemFooter, '');
-		return result.trim();
+		result = result.trim();
+		return Buffer.from(result);
 	},
+
 	importBothKeys: function importRSAKeyPair(pemFormatServerPublicRSAKey, pemFormatServerPrivateRSAKey) {
 		const serverPublicRSAKey = this.importPubKey(pemFormatServerPublicRSAKey);
 		const serverPrivateRSAKey = this.importPrivKey(pemFormatServerPrivateRSAKey);
 		return { serverPublicRSAKey, serverPrivateRSAKey };
 	},
+
 ///////////////////////////////////////
 // 		NOTE: below is from:
 // 		https://gist.github.com/sohamkamani/b14a9053551dbe59c39f83e25c829ea7
