@@ -12,10 +12,10 @@ const ECDHCrypto ={
 			["deriveKey", "deriveBits"]
 		);
 		const exportedPubKeyECDH = await window.crypto.subtle.exportKey('jwk', clientKeyPairECDH.publicKey);
+		console.log('client public key as JWK: ', exportedPubKeyECDH);
 		const exportedPrivKeyECDH = await window.crypto.subtle.exportKey('jwk', clientKeyPairECDH.privateKey);
 		const keyStringPriv = JSON.stringify(exportedPrivKeyECDH);
 		const keyStringPub = JSON.stringify(exportedPubKeyECDH);
-		console.log('client publicsssssssssss key: ', keyStringPub);
 		sessionStorage.setItem('clientPublicKeyECDH', keyStringPub);
 		//probably not secure to store private key in session storage
 		sessionStorage.setItem('clientPrivateKeyECDH', keyStringPriv);
