@@ -82,28 +82,10 @@ const serverRSACrypto = {
 	);
 	return encrypted.toString('base64');
 	},
-	RSAUtilsTest:  function testImportAndEncryption(pemFormatServerPrivateRSAKey, pemFormatServerPublicRSAKey) {
+	RSAUtilsTest:  function testImportAndEncryption(publicKey, privateKey) {
 		const plainMessage = 'Hello, World!';
-		const privateKey =  crypto.subtle.importKey(
-			'pkcs8',
-			this.removePrivKeyHeader(pemFormatServerPrivateRSAKey),
-			{
-				name: 'RSA-OAEP',
-				hash: 'SHA-256'
-			},
-			true,
-			['decrypt']
-		);
-		const publicKey =  crypto.subtle.importKey(
-			'spki',
-			this.removePubKeyHeader(pemFormatServerPublicRSAKey),
-			{
-				name: 'RSA-OAEP',
-				hash: 'SHA-256'
-			},
-			true,
-			['encrypt']
-		);
+		console.log('Public Key:', publicKey);
+		console.log('Private Key:', privateKey);
 		const encrypted = this.encryptWithPubRSA(plainMessage, publicKey);
 		const decrypted = this.decryptWithPrivRSA(encrypted, privateKey);
 		console.log('Encrypted:', encrypted);

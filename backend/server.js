@@ -49,8 +49,8 @@ const serverRSAKeyPair = new NodeRSA();
 serverRSAKeyPair.importKey(pemFormatServerPublicRSAKey, 'pkcs1-public-pem');
 serverRSAKeyPair.importKey(pemFormatServerPrivateRSAKey, 'pkcs1-private-pem');
 serverRSAKeyPair.extractable = true;
-const {cryptoRSAPublicKey, cryptoRSAPrivateKey } = serverRSACrypto.importBothKeys(pemFormatServerPublicRSAKey, pemFormatServerPrivateRSAKey);
- serverRSACrypto.RSAUtilsTest(pemFormatServerPublicRSAKey, pemFormatServerPrivateRSAKey);
+const { cryptoRSAPublicKey, cryptoRSAPrivateKey } = serverRSACrypto.importBothKeys(pemFormatServerPublicRSAKey, pemFormatServerPrivateRSAKey);
+ serverRSACrypto.RSAUtilsTest( cryptoRSAPublicKey, cryptoRSAPrivateKey );
 
 
 // Create a credentials object
