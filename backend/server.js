@@ -49,10 +49,10 @@ const serverRSAKeyPair = new NodeRSA();
 serverRSAKeyPair.importKey(pemFormatServerPublicRSAKey, 'pkcs1-public-pem');
 serverRSAKeyPair.importKey(pemFormatServerPrivateRSAKey, 'pkcs1-private-pem');
 serverRSAKeyPair.extractable = true;
-const testText = 'Hello, World!';
-const encryptedTestText = serverRSACrypto.encryptWithPubRSA(testText, pemFormatServerPublicRSAKey);
-const decryptedTestText = serverRSACrypto.decryptWithPrivRSA(encryptedTestText, pemFormatServerPrivateRSAKey);
+
+// this should work, but with sending and receiving? idk
 serverRSACrypto.RSAUtilsTest(pemFormatServerPublicRSAKey, pemFormatServerPrivateRSAKey);
+
 
 // Create a credentials object
 app.use(express.json());

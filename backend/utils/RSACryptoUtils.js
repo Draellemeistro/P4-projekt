@@ -39,8 +39,7 @@ const serverRSACrypto = {
 		const encrypted = serverRSACrypto.encryptWithPubRSA(plainMessage, publicKey);
 		const decrypted = serverRSACrypto.decryptWithPrivRSA(encrypted, privateKey);
 		if (decrypted === plainMessage) {
-			console.log('Success:', decrypted === plainMessage);
-			console.log('RSA works!');
+			console.log('RSA encryption and decryption:\nSuccess:', decrypted === plainMessage);
 			return true;
 		} else {
 			console.log('Failure:', decrypted !== plainMessage);
