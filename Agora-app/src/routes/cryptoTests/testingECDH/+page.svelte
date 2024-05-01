@@ -40,11 +40,14 @@
 
 <div>
 	<h2>server ECDH Public Key</h2>
-	<p>{serverKeystringPub}</p>
+	<button on:click={ECDHCrypto.requestServerECDH()}>Request server ECDH Key</button>
+	<p>server ECDH key: {serverKeystringPub}</p>
 </div>
 
 <div>
 	<h2>client ECDH Public Key</h2>
+	<button on:click={ECDHCrypto.initECDH()}>Generate client ECDH Key</button>
+	<button on:click={ECDHCrypto.tempSendEDCHKey(clientKeyStringPub)}>Send client ECDH Key</button>
 	<p>{clientKeyStringPub}</p>
 </div>
 

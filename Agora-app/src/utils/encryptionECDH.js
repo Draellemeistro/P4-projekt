@@ -212,14 +212,14 @@ const ECDHCrypto ={
 		}
 	},
 	tempSendEDCHKey: async function sendECDHKeyToServer(keyStringPub) {
+		const keyStringParsed = JSON.parse(keyStringPub);
 		const response = await fetch('https://130.225.39.205:3030/temp-ecdh-key-from-client', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({
-				clientPublicKey: keyStringPub
-			})
+			body: JSON.stringify({clientPublicKey: keyStringParsed})
+
 		});
 		if (response.ok) {
 			console.log('server received public key');

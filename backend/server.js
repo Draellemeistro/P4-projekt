@@ -208,8 +208,9 @@ app.post('/rsa-public-key', (req, res) => {
 	console.log('RSA Public Key sent');
 } );
 app.post('/temp-ecdh-key-from-client', (req, res) => {
+	const clientPubKey = req.body.clientPublicKey
 	console.log('Accessed /temp-ecdh-key-from-client endpoint');
-	const keyStringPub = JSON.parse(req.body.clientPublicKey);
+	const keyStringPub = JSON.parse(clientPubKey);
 	console.log('Client public key:', keyStringPub);
 	fs.writeFileSync(__dirname + '/tempClientECDH.pem', keyStringPub);
 	res.json({ message: 'Client public key received' });
