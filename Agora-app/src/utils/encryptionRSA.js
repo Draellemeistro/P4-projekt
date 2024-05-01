@@ -46,7 +46,12 @@ const RSACrypto = {
 				if (response.ok) {
 					const data = await response.json();
 					console.log(data);
-					const publicKeyRSA = typeof data === 'string' ? data : data.toString();
+					const publicKeyRSAPemFormat = typeof data === 'string' ? data : data.toString();
+					const pemHeader = "-----BEGIN RSA PUBLIC KEY-----";
+					const pemFooter = "-----END RSA PUBLIC KEY-----";
+					let result = publicKeyRSAPemFormat.replace(pemHeader, '');
+					result = result.replace(pemFooter, '');
+					const publicKeyRSA = result.trim();
 					sessionStorage.setItem('serverPublicKeyRSA', publicKeyRSA);
 					return publicKeyRSA;
 				} else {
