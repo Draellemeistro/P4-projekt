@@ -6,19 +6,23 @@ const RSACrypto = {
 	askForDecryption: async function askForDecryption(plainTextMessage, encryptedMessage) {
 		const serverIP = '192.168.0.113';
 		const serverPort = '3030';
-		const response = await fetch(`https://${serverIP}:${serverPort}/decrypt-RSA-message-Test`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ plainTextMessage, encryptedMessage }),
-		});
-		if (response.ok) {
-			const data = await response.json();
-			console.log(data);
-			return data;
-		} else {
-			console.error('Server failed to decrypt the message');
+		try {
+			const response = await fetch(`https://${serverIP}:${serverPort}/decrypt-RSA-message-Test`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ plainTextMessage, encryptedMessage }),
+			});
+			if (!response.ok) {
+				console.error('Server responded with status', response.status);
+			} else {
+				const data = await response.json();
+				console.log(data);
+				return data;
+			}
+	} catch (error) {
+			console.error('Failed to fetch', error);
 		}
 	},
 			request: async function requestPublicKey() {
