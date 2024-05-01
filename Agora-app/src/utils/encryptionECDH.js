@@ -39,6 +39,7 @@ const ECDHCrypto ={
 		if (response.ok) {
 			const serverPublicKeyECDHBase64 = await response.json();
 			const serverPublicKeyJwk = JSON.parse(atob(serverPublicKeyECDHBase64));
+			console.log('server public key: ', serverPublicKeyJwk);
 			const importedKey = await window.crypto.subtle.importKey(
 				'jwk',
 				serverPublicKeyJwk,
@@ -51,6 +52,7 @@ const ECDHCrypto ={
 			);
 			const exportedServerPubKeyECDH = await window.crypto.subtle.exportKey('jwk', importedKey);
 			const keyString = JSON.stringify(exportedServerPubKeyECDH);
+			console.log('server public key from stringified keystring: ', keyString);
 			sessionStorage.setItem('serverPublicKeyECDH', keyString);
 			return keyString;
 		} else {
@@ -214,6 +216,11 @@ const ECDHCrypto ={
 		}
 	},
 	tempSendEDCHKey: async function sendECDHKeyToServer(keyStringPub) {
+		if (keyStringPub === undefined) {
+			console.error('keyStringPub is undefined');
+			return;
+		}
+
 		const keyStringParsed = JSON.parse(keyStringPub);
 		const response = await fetch('https://130.225.39.205:3030/temp-ecdh-key-from-client', {
 			method: 'POST',
