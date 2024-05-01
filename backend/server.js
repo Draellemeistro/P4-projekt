@@ -200,7 +200,7 @@ app.post('/fetch-candidates', (req, res) => {
 
 app.post('/request-public-ecdh-key', (req, res) => {
 	console.log('Accessed /request-public-ecdh-key endpoint');
-	res.json(serverPublicKeyECDH);
+	res.json({ serverPublicKey: serverPublicKeyECDH });
 	console.log('ECDH Public Key sent');
 }	);
 app.post('/rsa-public-key', (req, res) => {

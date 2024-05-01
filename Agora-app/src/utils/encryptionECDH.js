@@ -38,9 +38,11 @@ const ECDHCrypto ={
 		});
 		if (response.ok) {
 			const data = await response.json();
+			const serverPublicKeyECDHBase64 = data.serverPublicKey;
+			const serverPublicKeyJwk = JSON.parse(atob(serverPublicKeyECDHBase64));
 			const importedKey = await window.crypto.subtle.importKey(
 				'jwk',
-				data,
+				serverPublicKeyJwk,
 				{
 					name: 'ECDH',
 					namedCurve: 'P-521'
