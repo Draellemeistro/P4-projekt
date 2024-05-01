@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const fs = require('fs');
+//const fs = require('fs');
 
 const serverRSACrypto = {
 	removePrivKeyHeader: function removePrivKeyHeader(pemFormatServerPrivateRSAKey) {
@@ -119,8 +119,8 @@ const serverRSACrypto = {
 	}
 };
 module.exports = serverRSACrypto;
-const testPublicRSAKey = fs.readFileSync('./serverPublicKeyRSA.pem', 'utf8');
-const testPrivateRSAKey = fs.readFileSync('./serverPrivateKeyRSA.pem', 'utf8');
-result = this.RSAUtilsTest(testPublicRSAKey, testPrivateRSAKey).then((result) => {
-	console.log(result);
-});
+//const testPublicRSAKey = fs.readFileSync('./serverPublicKeyRSA.pem', 'utf8');
+//const testPrivateRSAKey = fs.readFileSync('./serverPrivateKeyRSA.pem', 'utf8');
+//result = this.RSAUtilsTest(testPublicRSAKey, testPrivateRSAKey).then((result) => {
+//	console.log(result);
+//});
