@@ -44,7 +44,7 @@ const privateKey = fs.readFileSync('./key.pem', 'utf8');
 const certificate = fs.readFileSync('./cert.pem', 'utf8');
 
 
-const {pubECDHKeyString, privECDHKeyString} =  serverECDHCrypto.initECDH();
+
 //const serverPublicKeyECDHPem = fs.readFileSync(__dirname + '/serverPublicKeyECDH.pem', 'utf8');
 //const serverPrivateKeyECDHPem = fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem', 'utf8');
 //const serverPublicKeyECDH = serverECDHCrypto.removePEM(serverPublicKeyECDHPem);
@@ -52,8 +52,12 @@ const {pubECDHKeyString, privECDHKeyString} =  serverECDHCrypto.initECDH();
 const pemFormatServerPublicRSAKey = fs.readFileSync(__dirname + '/serverPublicKeyRSA.pem', 'utf8');
 const pemFormatServerPrivateRSAKey = fs.readFileSync(__dirname + '/serverPrivateKeyRSA.pem', 'utf8');
 const serverECDH = createECDH('secp521r1');
-const privateKeyBuffer = Buffer.from(privECDHKeyString, 'utf8');
-serverECDH.setPrivateKey(privateKeyBuffer);
+makeECDHKeys().then(keyReturn => {
+		const keys = keyReturn;
+		const privateKeyBuffer = Buffer.from(keys.privateKeyString, 'utf8');
+		serverECDH.setPrivateKey(privateKeyBuffer);
+		return keys;
+});
 const serverRSAKeyPair = new NodeRSA();
 serverRSAKeyPair.importKey(pemFormatServerPublicRSAKey, 'pkcs1-public-pem');
 serverRSAKeyPair.importKey(pemFormatServerPrivateRSAKey, 'pkcs1-private-pem');
@@ -363,3 +367,7 @@ app.post('/decrypt-ECDH-message-Test', async (req, res) => {
 	const clientPublicKey = req.body.clientPublicKey;
 	const decryptedMessage = 1;
 })
+
+async function makeECDHKeys() {
+	return await serverECDHCrypto.initECDH();
+}
