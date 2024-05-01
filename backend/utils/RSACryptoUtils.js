@@ -36,18 +36,15 @@ const serverRSACrypto = {
 	},
 	RSAUtilsTest:  function testImportAndEncryption(publicKey, privateKey) {
 		const plainMessage = 'Hello, World!';
-		console.log('Public Key:', publicKey);
-		console.log('Private Key:', privateKey);
 		const encrypted = serverRSACrypto.encryptWithPubRSA(plainMessage, publicKey);
 		const decrypted = serverRSACrypto.decryptWithPrivRSA(encrypted, privateKey);
-		console.log('Encrypted:', encrypted);
-		console.log('Decrypted:', decrypted);
-		console.log('plaintext:', plainMessage);
 		if (decrypted === plainMessage) {
 			console.log('Success:', decrypted === plainMessage);
 			return true;
 		} else {
 			console.log('Failure:', decrypted !== plainMessage);
+			console.log('Decrypted:', decrypted);
+			console.log('plaintext:', plainMessage);
 			return false;
 		}
 	}

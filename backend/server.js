@@ -52,8 +52,7 @@ serverRSAKeyPair.extractable = true;
 const testText = 'Hello, World!';
 const encryptedTestText = serverRSACrypto.encryptWithPubRSA(testText, pemFormatServerPublicRSAKey);
 const decryptedTestText = serverRSACrypto.decryptWithPrivRSA(encryptedTestText, pemFormatServerPrivateRSAKey);
-console.log('Encrypted:', encryptedTestText);
-console.log('Decrypted:', decryptedTestText);
+serverRSACrypto.RSAUtilsTest(pemFormatServerPublicRSAKey, pemFormatServerPrivateRSAKey);
 if (decryptedTestText === testText) {
 	console.log('RSA works!');
 } else	{
