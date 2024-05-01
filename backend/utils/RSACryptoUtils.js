@@ -19,36 +19,11 @@ const serverRSACrypto = {
 		result = result.trim();
 		return Buffer.from(result);
 	},
-	importPubKey: async function importRSAPublicKey(pemFormatServerPublicRSAKey) {
-		const publicKey = await crypto.subtle.importKey(
-			'spki',
-			this.removePubKeyHeader(pemFormatServerPublicRSAKey),
-			{
-				name: 'RSA-OAEP',
-				hash: 'SHA-256'
-			},
-			true,
-			['encrypt']
-		);
-		return publicKey;
-	},
-	importPrivKey: async function importRSAPrivateKey(pemFormatServerPrivateRSAKey) {
-		const privateKey = await crypto.subtle.importKey(
-			'pkcs8',
-			this.removePrivKeyHeader(pemFormatServerPrivateRSAKey),
-			{
-				name: 'RSA-OAEP',
-				hash: 'SHA-256'
-			},
-			true,
-			['decrypt']
-		);
-		return privateKey;
-	},
+
 
 	importBothKeys: function importRSAKeyPair(pemFormatServerPublicRSAKey, pemFormatServerPrivateRSAKey) {
-		const serverPublicRSAKey = this.importPubKey(pemFormatServerPublicRSAKey);
-		const serverPrivateRSAKey = this.importPrivKey(pemFormatServerPrivateRSAKey);
+		const serverPublicRSAKey = this.removePubKeyHeader(pemFormatServerPublicRSAKey);
+		const serverPrivateRSAKey = this.removePrivKeyHeader(pemFormatServerPrivateRSAKey);
 		return { serverPublicRSAKey, serverPrivateRSAKey };
 	},
 
