@@ -197,7 +197,7 @@ app.post('/fetch-candidates', (req, res) => {
 
 app.post('/request-public-ecdh-key', (req, res) => {
 	console.log('Accessed /request-public-ecdh-key endpoint');
-	const jwkFormatServerPublicECDHKey = pem2jwk(serverPublicKeyECDH);
+	const jwkFormatServerPublicECDHKey = pem2jwk(serverPublicKeyECDHPem);
 	res.json(jwkFormatServerPublicECDHKey);
 	console.log('ECDH Public Key sent');
 }	);
