@@ -44,7 +44,7 @@ const privateKey = fs.readFileSync('./key.pem', 'utf8');
 const certificate = fs.readFileSync('./cert.pem', 'utf8');
 
 
-const newServerKeyPairECDH =  serverECDHCrypto.initECDH();
+const {pubECDHKeyString, privECDHKeyString} =  serverECDHCrypto.initECDH();
 //const serverPublicKeyECDHPem = fs.readFileSync(__dirname + '/serverPublicKeyECDH.pem', 'utf8');
 //const serverPrivateKeyECDHPem = fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem', 'utf8');
 //const serverPublicKeyECDH = serverECDHCrypto.removePEM(serverPublicKeyECDHPem);
@@ -52,9 +52,7 @@ const newServerKeyPairECDH =  serverECDHCrypto.initECDH();
 const pemFormatServerPublicRSAKey = fs.readFileSync(__dirname + '/serverPublicKeyRSA.pem', 'utf8');
 const pemFormatServerPrivateRSAKey = fs.readFileSync(__dirname + '/serverPrivateKeyRSA.pem', 'utf8');
 const serverECDH = createECDH('secp521r1');
-const exportedPrivKeyECDH =  crypto.subtle.exportKey('jwk', newServerKeyPairECDH.privateKey);
-const privateKeyString = JSON.stringify(exportedPrivKeyECDH);
-const privateKeyBuffer = Buffer.from(privateKeyString, 'utf8');
+const privateKeyBuffer = Buffer.from(privECDHKeyString, 'utf8');
 serverECDH.setPrivateKey(privateKeyBuffer);
 const serverRSAKeyPair = new NodeRSA();
 serverRSAKeyPair.importKey(pemFormatServerPublicRSAKey, 'pkcs1-public-pem');

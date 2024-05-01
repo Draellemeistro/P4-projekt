@@ -16,16 +16,13 @@ const serverECDHCrypto = {
 		console.log('client public key as JWK: ', exportedPubKeyECDH);
 		const exportedPrivKeyECDH = await crypto.subtle.exportKey('jwk', newServerKeyPairECDH.privateKey);
 		// Convert the keys to strings
-		let newServerKeyPairECDHStrings;
 		const publicKeyString = JSON.stringify(exportedPubKeyECDH);
 		const privateKeyString = JSON.stringify(exportedPrivKeyECDH);
-		newServerKeyPairECDHStrings = {publicKeyString, privateKeyString};
 		fs.writeFileSync('serverPublicKeyECDH.json', publicKeyString);
 		fs.writeFileSync('serverPrivateKeyECDH.json', privateKeyString);
-		return newServerKeyPairECDHStrings;
+		return {publicKeyString, privateKeyString};
 	},
 	deriveSecret: async function(serverECDH, clientPublicKey) {
-		serverECDH.co
 		return '1';
 	},
 	encryptECDH: async function(plainText, sharedSecretKey) {
