@@ -51,6 +51,8 @@ serverRSAKeyPair.importKey(pemFormatServerPrivateRSAKey, 'pkcs1-private-pem');
 serverRSAKeyPair.extractable = true;
 const cryptoRSAPublicKey = serverRSACrypto.removePubKeyHeader(pemFormatServerPublicRSAKey);
 const cryptoRSAPrivateKey = serverRSACrypto.removePrivKeyHeader(pemFormatServerPrivateRSAKey);
+console.log('Public Key:', cryptoRSAPublicKey);
+console.log('Private Key:', cryptoRSAPrivateKey);
 const testText = 'Hello, World!';
 const encryptedTestText = serverRSACrypto.encryptWithPubRSA(testText, cryptoRSAPublicKey);
 const decryptedTestText = serverRSACrypto.decryptWithPrivRSA(encryptedTestText, cryptoRSAPrivateKey);
@@ -94,8 +96,8 @@ app.get('*', (req, res) => {
 const serverLocalPort = serverLocal.address().port;
 const serverLocalAddress = serverLocal.address().address;
 console.log(`Server listening at https://${serverLocalAddress}:${serverLocalPort}`);
-console.log('RSA Public Key:', serverPublicRSAKey);
-console.log('RSA Public Key through import key:', serverRSAKeyPair.exportKey());
+//console.log('RSA Public Key:', serverPublicRSAKey);
+//console.log('RSA Public Key through import key:', serverRSAKeyPair.exportKey());
 
 
 
