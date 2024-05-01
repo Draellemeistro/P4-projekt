@@ -1,7 +1,27 @@
 const crypto = require('crypto');
-//const fs = require('fs');
+const fs = require('fs');
 
 const serverECDHCrypto = {
+	initECDH: async function initECDH(){
+		let keyStringObject;
+		const newServerKeyPairECDH = await crypto.subtle.generateKey(
+			{
+				name: "ECDH",
+				namedCurve: "P-521"
+			},
+			true,
+			["deriveKey", "deriveBits"]
+		);
+		const exportedPubKeyECDH = await crypto.subtle.exportKey('jwk', newServerKeyPairECDH.publicKey);
+		console.log('client public key as JWK: ', exportedPubKeyECDH);
+		const exportedPrivKeyECDH = await crypto.subtle.exportKey('jwk', newServerKeyPairECDH.privateKey);
+		// Convert the keys to strings
+		const publicKeyString = JSON.stringify(exportedPubKeyECDH);
+		const privateKeyString = JSON.stringify(exportedPrivKeyECDH);
+		fs.writeFileSync('serverPublicKeyECDH.json', publicKeyString);
+		fs.writeFileSync('serverPrivateKeyECDH.json', privateKeyString);
+		return newServerKeyPairECDH;
+	},
 	deriveSecret: async function(serverECDH, clientPublicKey) {
 		serverECDH.co
 		return '1';
