@@ -30,8 +30,8 @@ const serverRSACrypto = {
 		console.log('pemFormatServerPublicRSAKey:', pemFormatServerPublicRSAKey);
 		console.log('lige over se');
 		console.log('\n\n\n\n\n');
-		let serverPublicRSAKey = this.removePubKeyHeader(pemFormatServerPublicRSAKey);
-		let serverPrivateRSAKey = this.removePrivKeyHeader(pemFormatServerPrivateRSAKey);
+		const serverPublicRSAKey = serverRSACrypto.removePubKeyHeader(pemFormatServerPublicRSAKey);
+		const serverPrivateRSAKey = serverRSACrypto.removePrivKeyHeader(pemFormatServerPrivateRSAKey);
 		console.log('importBothKeys output:', serverPublicRSAKey, serverPrivateRSAKey);
 		console.log('1\n2\n3\n4\n5\n6');
 
@@ -71,8 +71,8 @@ const serverRSACrypto = {
 		const plainMessage = 'Hello, World!';
 		console.log('Public Key:', publicKey);
 		console.log('Private Key:', privateKey);
-		const encrypted = this.encryptWithPubRSA(plainMessage, publicKey);
-		const decrypted = this.decryptWithPrivRSA(encrypted, privateKey);
+		const encrypted = serverRSACrypto.encryptWithPubRSA(plainMessage, publicKey);
+		const decrypted = serverRSACrypto.decryptWithPrivRSA(encrypted, privateKey);
 		console.log('Encrypted:', encrypted);
 		console.log('Decrypted:', decrypted);
 		console.log('plaintext:', plainMessage);
