@@ -1,5 +1,4 @@
 const crypto = require('crypto');
-const fs = require('fs');
 
 const serverRSACrypto = {
 	removePrivKeyHeader: function removePrivKeyHeader(pemFormatServerPrivateRSAKey) {
@@ -19,8 +18,8 @@ const serverRSACrypto = {
 		result = result.trim();
 		return Buffer.from(result);
 	},
-	importPubKey: function importRSAPublicKey(pemFormatServerPublicRSAKey) {
-		const publicKey = crypto.subtle.importKey(
+	importPubKey: async function importRSAPublicKey(pemFormatServerPublicRSAKey) {
+		return await crypto.subtle.importKey(
 			'spki',
 			this.removePubKeyHeader(pemFormatServerPublicRSAKey),
 			{
@@ -30,10 +29,9 @@ const serverRSACrypto = {
 			true,
 			['encrypt']
 		);
-		return publicKey;
 	},
-	importPrivKey: function importRSAPrivateKey(pemFormatServerPrivateRSAKey) {
-		const privateKey = crypto.subtle.importKey(
+	importPrivKey: async function importRSAPrivateKey(pemFormatServerPrivateRSAKey) {
+		return await crypto.subtle.importKey(
 			'pkcs8',
 			this.removePrivKeyHeader(pemFormatServerPrivateRSAKey),
 			{
@@ -43,7 +41,6 @@ const serverRSACrypto = {
 			true,
 			['decrypt']
 		);
-		return privateKey;
 	},
 
 	importBothKeys: function importRSAKeyPair(pemFormatServerPublicRSAKey, pemFormatServerPrivateRSAKey) {
