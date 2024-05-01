@@ -40,7 +40,7 @@ const serverRSACrypto = {
 	},
 	encryptWithPubRSA: function encryptWithPublicKey(message, publicKey) {
 	const buffer = Buffer.from(message);
-	const pubKeyBuffer = Buffer.from(publicKey, 'base64');
+	const pubKeyBuffer = Buffer.from(publicKey);
 	const encrypted = crypto.publicEncrypt({
 			key: pubKeyBuffer,
 			padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
