@@ -309,7 +309,7 @@ app.post('/decrypt-RSA-message-Test', async (req, res) => {
 	console.log('Accessed /decrypt-RSA-message-Test endpoint');
 	const plainTextMessage = req.body.plainTextMessage;
 	const encryptedMessage = req.body.encryptedMessage;
-	const decryptedMessage = serverRSACrypto.decryptWithPrivRSA(encryptedMessage, cryptoRSAPrivateKey);
+	const decryptedMessage = serverRSACrypto.decryptWithPrivRSA(encryptedMessage, pemFormatServerPrivateRSAKey);
 	if (plainTextMessage === decryptedMessage) {
 		console.log('RSA works!');
 	} else {
