@@ -26,8 +26,15 @@ const serverRSACrypto = {
 
 
 	importBothKeys: function importRSAKeyPair(pemFormatServerPublicRSAKey, pemFormatServerPrivateRSAKey) {
+		console.log('\n\n\n\n\n');
+		console.log('pemFormatServerPublicRSAKey:', pemFormatServerPublicRSAKey);
+		console.log('lige over se');
+		console.log('\n\n\n\n\n');
 		const serverPublicRSAKey = this.removePubKeyHeader(pemFormatServerPublicRSAKey);
 		const serverPrivateRSAKey = this.removePrivKeyHeader(pemFormatServerPrivateRSAKey);
+		console.log('importBothKeys output:', serverPublicRSAKey, serverPrivateRSAKey);
+		console.log('1\n2\n3\n4\n5\n6');
+
 		return { serverPublicRSAKey, serverPrivateRSAKey };
 	},
 
