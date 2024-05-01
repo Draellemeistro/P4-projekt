@@ -68,10 +68,14 @@ const RSACrypto = {
 					return false;
 				}
 				// Convert the publicKey to a format that the Web Cryptography API can use
-				const publicKeyBuffer = new Uint8Array(Buffer.from(publicKey, 'base64'));
-				const importedKey = await window.crypto.subtle.importKey(
+				const binaryString = atob(publicKey);
+				const len = binaryString.length;
+				const bytes = new Uint8Array(len);
+				for (let i = 0; i < len; i++) {
+					bytes[i] = binaryString.charCodeAt(i);
+				}				const importedKey = await window.crypto.subtle.importKey(
 					'spki',
-					publicKeyBuffer,
+					bytes,
 					{
 						name: 'RSA-OAEP',
 						hash: 'SHA-256'
