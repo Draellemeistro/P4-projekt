@@ -277,6 +277,9 @@ const ECDHCrypto ={
 		return keyStringPubToUse;
 	},
 	tempSendEDCHKey: async function sendECDHKeyToServer(keyStringPubToUse) {
+		console.log('keyStringPubToUse: ', keyStringPubToUse);
+		console.log('keyStringPubToUse type: ', typeof keyStringPubToUse);
+		console.log('sending public key to server');
 		const response = await fetch('https://130.225.39.205:3030/temp-ecdh-key-from-client', {
 			method: 'POST',
 			headers: {
