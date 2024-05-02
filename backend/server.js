@@ -357,19 +357,42 @@ app.post('/check-shared-secret', async (req, res) => {
 	const clientSharedSecret = JSON.parse(req.body.sharedSecret);
 	const clientPublicKeyJWK = JSON.parse(req.body.clientPublicKey);
 	const JWKserverPrivECDH = JSON.parse(stringJWKServerPrivECDH);
-	const serverSharedSecret = await crypto.subtle.deriveKey(
-		{
-			name: "ECDH",
-			public: clientPublicKeyJWK,
-		},
-		JWKserverPrivECDH,
-		{
-			name: "AES-GCM",
-			length: "256"
-		},
-		true,
-		["encrypt", "decrypt"],
-	);
+	try {
+		const serverSharedSecret = await crypto.subtle.deriveKey(
+			{
+				name: "ECDH",
+				public: clientPublicKeyJWK,
+			},
+			JWKserverPrivECDH,
+			{
+				name: "AES-GCM",
+				length: "256"
+			},
+			true,
+			["encrypt", "decrypt"],
+		);
+	} catch (err) {
+		console.error('propably need to import keys, printing error and attempting that', err);
+		try {
+			console.log('Server private key D:', JWKserverPrivECDH.d);
+			const serverPrivateKeyECDH = await crypto.subtle.importKey('jwk', JWKserverPrivECDH, { name: 'ECDH', namedCurve: 'P-521' }, true, ['deriveKey', 'deriveBits']);
+			const clientPublicKeyECDH = await crypto.subtle.importKey('jwk', clientPublicKeyJWK, { name: 'ECDH', namedCurve: 'P-521' }, true, ['deriveKey', 'deriveBits']);
+			const serverSharedSecret = await crypto.subtle.deriveKey(
+				{
+					name: "ECDH",
+					public: clientPublicKeyECDH,
+				},
+				serverPrivateKeyECDH,
+				{
+					name: "AES-GCM",
+					length: 256
+				},
+				true,
+				["encrypt", "decrypt"],
+			);
+		} catch (err) { console.error('Error:', err); }
+		responseValue = false;
+	}
 	const exportedServerSharedSecret = await crypto.subtle.exportKey('jwk', serverSharedSecret);
 	const stringServerSharedSecret = JSON.stringify(exportedServerSharedSecret);
 	if (clientSharedSecret === stringServerSharedSecret) {

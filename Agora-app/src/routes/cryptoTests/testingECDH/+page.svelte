@@ -36,7 +36,8 @@
 		sharedSecret = await ECDHCrypto.deriveSecret(clientKeyStringPriv, serverKeystringPub);
 		counter++;
 		console.log('step ', counter, ' finished'); //4
-		sharedSecretCheck = ECDHCrypto.verifySharedSecretTest(sharedSecret);
+		console.log('\n\n\nsharedSecret: ', sharedSecret, "\n\n\n");
+		sharedSecretCheck = ECDHCrypto.verifySharedSecretTest(sharedSecret, clientKeyStringPub);
 		counter++;
 		console.log('step ', counter, ' finished'); //5
 		const{c , d} = await ECDHCrypto.encryptECDH(plainText, sharedSecret);
