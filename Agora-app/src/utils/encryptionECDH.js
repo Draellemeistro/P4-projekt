@@ -150,6 +150,7 @@ const ECDHCrypto ={
 			console.log('clientPrivateKey is not a string. Trying to use it anyway');
 			clientKeyForSecret = clientPrivateKeyString;
 		}
+		console.log('attempting to import client private key');
 		const clientKeyForSecretJWK = await window.crypto.subtle.importKey(
 			'jwk',
 			clientKeyForSecret,
@@ -160,10 +161,12 @@ const ECDHCrypto ={
 			true,
 			['deriveKey', 'deriveBits']
 		);
+		console.log('it worked! client private key imported');
 
 		//fix and validate the JWK if needed
 		serverKeyForSecret = this.fixAndValidateJWK(serverKeyForSecret);
 
+		console.log('attempting to derive shared secret key');
 		const sharedSecretKey = await window.crypto.subtle.deriveKey(
 			{
 				name: "ECDH",
@@ -304,7 +307,7 @@ const ECDHCrypto ={
 		if (response.ok) {
 			console.log('server fetched public key from client');
 			const data = await response.json();
-			if (data.responseValue === 'true') {
+			if (data.success === 1 || data.success === '1') {
 				console.log('received public key string has actual value');
 				if (data.returnKey === keyStringPubToUse) {
 					console.log('The server received the correct public key');
