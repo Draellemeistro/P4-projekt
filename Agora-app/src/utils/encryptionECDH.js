@@ -41,8 +41,18 @@ const ECDHCrypto ={
 			},
 		});
 		const serverPublicKeyECDHString = await response.json();
-		const serverPublicKeyJwk = JSON.parse(serverPublicKeyECDHString);
-		console.log('server public key: ', serverPublicKeyJwk);
+		const serverPublicKeyParsed = JSON.parse(serverPublicKeyECDHString);
+		const serverPublicKeyJwk = await window.crypto.subtle.importKey(
+			'jwk',
+			serverPublicKeyParsed,
+			{
+				name: 'AES-GCM',
+				length: 256
+			},
+			true,
+			['encrypt', 'decrypt']
+		);
+		console.log('server public key as JWK: ', serverPublicKeyJwk);
 		const keyString = JSON.stringify(serverPublicKeyJwk); //probably redundant, but just to be sure
 		console.log('server public key from stringified keystring: ', keyString);
 		sessionStorage.setItem('serverPublicKeyECDH', keyString);
