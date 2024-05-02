@@ -156,7 +156,7 @@ const ECDHCrypto ={
 			y: clientKeyForSecret.y,
 			d: clientKeyForSecret.d,
 			ext: true,
-			key_ops: ["deriveKey"]
+			key_ops: []
 		};
 		const jwkServer = {
 			kty: serverKeyForSecret.kty,
