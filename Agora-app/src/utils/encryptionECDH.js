@@ -136,6 +136,10 @@ const ECDHCrypto ={
 		}
 	},
 // Function to compute shared secret
+	/////////////
+	//	SOMEHOW DOESN'T WORK WITH CHROME, BUT FIREFOX WORKS???????
+	// 	FUCK THIS SHIT.
+	//////////////
 	deriveSecret: async function deriveSecretKey(clientPrivateKeyString, serverPubKeyString) {
 		let serverKeyForSecret;
 		let clientKeyForSecret;
@@ -254,6 +258,10 @@ const ECDHCrypto ={
 		sessionStorage.setItem('sharedSecretECDH', sharedSecretString);
 		return sharedSecretString;
 	},
+
+
+
+
 	encryptECDH: async function encryptMessageECDH(message, sharedSecret) {
 		const encoder = new TextEncoder();
 		let SharedSecretForEncryption	// Check if the message and publicKey are valid
