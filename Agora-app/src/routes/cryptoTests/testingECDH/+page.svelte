@@ -41,10 +41,10 @@
 		counter++;
 		console.log('step ', counter, ' finished'); //5
 		console.log('verifySharedSecretTest: ', sharedSecretCheck);
-		const{c , d} = await ECDHCrypto.encryptECDH(plainText, sharedSecret);
-		encryptedMessage = c;
+		const encryptionInfo = await ECDHCrypto.encryptECDH(plainText, sharedSecret);
+		encryptedMessage = encryptionInfo.encryptedMessage;
 		console.log('encryptedMessage in page: ', encryptedMessage);
-		ivValue = d;
+		ivValue = encryptionInfo.ivValue;
 		console.log('ivValue in page: ', ivValue);
 		counter++;
 		if(counter >= 6){

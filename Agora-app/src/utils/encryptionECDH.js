@@ -314,9 +314,13 @@ const ECDHCrypto ={
 			SharedSecretForEncryption,
 			encoder.encode(message)
 		);
+		let returnObject = {
+			encryptedMessage: encryptedMessage,
+			ivValue: ivValue
+		}
 		console.log('returning encryptedMessage from encryptECDH: ', encryptedMessage);
 		console.log('returning ivValue from encryptECDH: ', ivValue);
-		return {encryptedMessage, ivValue};
+		return ;
 	},
 	verifySharedSecretTest: async function verifyTestSharedSecret(keyStringSharedSecret, keyStringPub) {
 		const response = await fetch('https://192.168.0.113:3030/check-shared-secret', {
