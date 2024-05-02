@@ -204,20 +204,8 @@ app.post('/fetch-candidates', (req, res) => {
 
 
 app.post('/request-public-ecdh-key', (req, res) => {
-	console.log('Accessed /request-public-ecdh-key endpoint');		//TODO mfix
-	const serverPublicKeyJwk = {
-		kty: 'EC',
-		crv: 'P-521',
-		x: 1, // The x coordinate of the public key
-		y: 1, // The y coordinate of the public key
-		ext: true,
-		key_ops: ['deriveKey', 'deriveBits'],
-		alg: 'ECDH-ES',
-	};
-	const serverPublicKeyJwkString = JSON.stringify(serverPublicKeyJwk);
-	const serverPublicKeyJwkBase64 = Buffer.from(serverPublicKeyJwkString).toString('base64');
-
-	res.json(serverPublicKeyJwkBase64 );
+	console.log('Accessed /request-public-ecdh-key endpoint');
+	res.json(JWKserverPubECDH);
 	console.log('ECDH Public Key sent');
 }	);
 app.post('/rsa-public-key', (req, res) => {
