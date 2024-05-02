@@ -45,27 +45,36 @@ const certificate = fs.readFileSync('./cert.pem', 'utf8');
 
 
 
-//const serverPublicKeyECDHPem = fs.readFileSync(__dirname + '/serverPublicKeyECDH.pem', 'utf8');
-//const serverPrivateKeyECDHPem = fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem', 'utf8');
+//const serverPublicKeyECDHPem = Buffer.from(fs.readFileSync(__dirname + '/serverPublicKeyECDH.pem',{encoding: 'utf-8'}), 'base64');	// TODO test if this works
+//const serverPrivateKeyECDHPem = Buffer.from(fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem',{encoding: 'utf-8'}), 'base64'); // TODO test if this works
 //const serverPublicKeyECDH = serverECDHCrypto.removePEM(serverPublicKeyECDHPem);
 //const serverPrivateKeyECDH = serverECDHCrypto.removePEM(serverPrivateKeyECDHPem);
 //makeECDHKeys().then(ECDHKeysStrings => {
 //	fs.writeFileSync('serverPublicKeyECDH.json', ECDHKeysStrings.publicKeyString);
 //	fs.writeFileSync('serverPrivateKeyECDH.json', ECDHKeysStrings.privateKeyString);
 //});
+
+////////////// for RSA asymmetric encryption  //////////////
+//read the RSA keys from the files (works)
 const pemFormatServerPublicRSAKey = fs.readFileSync(__dirname + '/serverPublicKeyRSA.pem', 'utf8');
 const pemFormatServerPrivateRSAKey = fs.readFileSync(__dirname + '/serverPrivateKeyRSA.pem', 'utf8');
-
-const JWKserverPubECDH = fs.readFileSync(__dirname + '/serverPublicKeyECDH.json', 'utf8');
-const JWKserverPrivECDH = 	fs.readFileSync(__dirname + '/serverPrivateKeyECDH.json', 'utf8')
-const JWKserverPubECDHObject = JSON.parse(JWKserverPubECDH);//TODO maybe delete
-const JWKserverPrivECDHObject = JSON.parse(JWKserverPrivECDH); //TODO maybe delete
+// Using NodeRSA to import the keys (should work, but need to check)
 const serverRSAKeyPair = new NodeRSA();	//TODO maybe delete
 serverRSAKeyPair.importKey(pemFormatServerPublicRSAKey, 'pkcs1-public-pem');
 serverRSAKeyPair.importKey(pemFormatServerPrivateRSAKey, 'pkcs1-private-pem');
 serverRSAKeyPair.extractable = true;
 // this should work, but with sending and receiving? idk
 serverRSACrypto.RSAUtilsTest(pemFormatServerPublicRSAKey, pemFormatServerPrivateRSAKey);
+
+////////////// for ECDH key exchange //////////////
+// read the ECDH keys from a single file (needs testing)
+const keyPairECDHTest = Buffer.from(fs.readFileSync(__dirname + '/keyECDHTest.pem', 'utf8'));
+// read the ECDH keys from the files (should work, but needs more testing)
+const stringJWKServerPubKeyECDH = fs.readFileSync(__dirname + '/serverPublicKeyECDH.json', 'utf8');
+const stringJWKServerPrivECDH = 	fs.readFileSync(__dirname + '/serverPrivateKeyECDH.json', 'utf8');
+
+////////////// for RSA blind signing //////////////
+// TODO: check which RSA key is used for blind signing
 
 // Create a credentials object
 app.use(express.json());
@@ -205,7 +214,7 @@ app.post('/fetch-candidates', (req, res) => {
 
 app.post('/request-public-ecdh-key', (req, res) => {
 	console.log('Accessed /request-public-ecdh-key endpoint');
-	res.json(JWKserverPubECDH);
+	res.json(stringJWKServerPubKeyECDH);
 	console.log('ECDH Public Key sent');
 }	);
 app.post('/rsa-public-key', (req, res) => {
@@ -332,22 +341,43 @@ app.post('/present-ecdh-key', async (req, res) => {
 
 app.post('/check-shared-secret', async (req, res) => {
 	let responseValue;
-	const clientSharedSecret = req.body.sharedSecret;
-	const publicKey = JSON.parse(req.body.clientPublicKey);
-	const sharedSecret = serverECDH.computeSecret(publicKey, 'base64', 'base64');
-	if (clientSharedSecret === sharedSecret) {
+
+	// Parse the keys from JSON strings back into objects
+	const clientSharedSecret = JSON.parse(req.body.sharedSecret);
+	const clientPublicKeyJWK = JSON.parse(req.body.clientPublicKey);
+	const JWKserverPrivECDH = JSON.parse(stringJWKServerPrivECDH);
+	const serverSharedSecret = await crypto.subtle.deriveKey(
+		{
+			name: "ECDH",
+			public: clientPublicKeyJWK,
+		},
+		JWKserverPrivECDH,
+		{
+			name: "AES-GCM",
+			length: "256"
+		},
+		true,
+		["encrypt", "decrypt"],
+	);
+	const exportedServerSharedSecret = await crypto.subtle.exportKey('jwk', serverSharedSecret);
+	const stringServerSharedSecret = JSON.stringify(exportedServerSharedSecret);
+	if (clientSharedSecret === stringServerSharedSecret) {
 		responseValue = true;
 	} else {
-		if (typeof sharedSecret === 'string' ) {
-			console.log('Shared secret:', sharedSecret);
+		if (typeof stringServerSharedSecret === 'string' ) {
+			console.log('Server shared secret:', stringServerSharedSecret);
 			if (typeof clientSharedSecret === 'string') {
 				console.log('Client shared secret:', clientSharedSecret);
 			} else {
 				console.log('Client shared secret is not a string');
 			}
-		} responseValue = false;
-	}
-	res.json(responseValue);
+		} else {
+				console.log('Server shared secret is not a string');
+			}
+		responseValue = false;
+		}
+
+	res.json({responseValue, stringServerSharedSecret});
 });
 app.post('/decrypt-ECDH-message-Test', async (req, res) => {
 	console.log('Accessed /decrypt-ECDH-message-Test endpoint');

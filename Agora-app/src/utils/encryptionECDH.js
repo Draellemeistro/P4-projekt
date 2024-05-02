@@ -182,7 +182,7 @@ const ECDHCrypto ={
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({
+			body: ({
 				sharedSecret: keyStringSharedSecret,
 				clientPublicKey: keyStringPub
 			})
@@ -190,15 +190,19 @@ const ECDHCrypto ={
 			console.error('Failed to send encrypted ballot');
 		} if (response.ok) {
 			console.log('server received shared secret and public key');
-			if (response.data === 'true') {
+			if (response.data.responseValue === 'true') {
 				console.log('shared secret key is identical on both client and server');
-				return 1;
-			} else if (response.data === 'false') {
+			} else if (response.data.responseValue === 'false') {
 				console.log('shared secret key is not identical on both client and server');
 				return 0;
 			} else {
 				console.log('response.data is not a boolean or some other error occurred');
 				return -1;
+			}
+			const serverSharedSecret = response.data.serverSharedSecret;
+			if (serverSharedSecret === keyStringSharedSecret) {
+				console.log('server shared secret is identical to client shared secret');
+				return 1;
 			}
 		}
 	},

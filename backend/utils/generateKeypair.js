@@ -35,11 +35,13 @@ function generateECDHKeyPair() {
 	const serverPublicKeyBase64 = serverECDH.getPublicKey().toString('base64');
 	const serverPrivateKeyBase64 = serverECDH.getPrivateKey().toString('base64');
 	// Write the PEM formatted key to a file
-	const publicPemFormatString = `-----BEGIN PUBLIC KEY-----\n${serverPublicKeyBase64}\n-----END PUBLIC KEY-----`;
-const privatePemFormatString = `-----BEGIN PRIVATE KEY-----\n${serverPrivateKeyBase64}\n-----END PRIVATE KEY-----`;
-	fs.writeFileSync('../serverPublicKeyECDH.pem', publicPemFormatString);
-	fs.writeFileSync('../serverPrivateKeyECDH.pem', privatePemFormatString);
+	fs.writeFileSync('../serverPublicKeyECDH.pem', serverPublicKeyBase64, {encoding: 'utf-8'});
+	fs.writeFileSync('../serverPrivateKeyECDH.pem', serverPrivateKeyBase64, {encoding: 'utf-8'});
 
+}
+function generateECDHKeyPairSingleFile() {
+	const serverECDH = createECDH('secp521r1');
+	fs.writeFileSync('../' + '/keyECDHTest.pem', serverECDH.generateKeys().toString('base64'), {encoding: 'utf-8'}); //added encoding
 }
 function generateDSAKeyPair() {
 	const keyPairDSA = crypto.generateKeyPairSync('dsa', {
@@ -64,5 +66,6 @@ function generateDSAKeyPair() {
 
 // 				Generate the keypair
 //generateRSAKeyPair();
-generateECDHKeyPair();
+//generateECDHKeyPair();
 //generateDSAKeyPair();
+generateECDHKeyPairSingleFile();
