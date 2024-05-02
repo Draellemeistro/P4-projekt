@@ -42,6 +42,8 @@ const ECDHCrypto ={
 		});
 		const serverPublicKeyECDHString = await response.json();
 		const serverPublicKeyParsed = JSON.parse(serverPublicKeyECDHString);
+		console.log('server public key as string: ', serverPublicKeyECDHString);
+		console.log('server public key parsed: ', serverPublicKeyParsed);
 		const serverPublicKeyJwk = await window.crypto.subtle.importKey(
 			'jwk',
 			serverPublicKeyParsed,
