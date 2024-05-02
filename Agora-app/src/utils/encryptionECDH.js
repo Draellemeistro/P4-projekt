@@ -46,8 +46,8 @@ const ECDHCrypto ={
 			'jwk',
 			serverPublicKeyParsed,
 			{
-				name: 'AES-GCM',
-				length: 256
+				name: 'ECDH',
+				namedCurve: 'P-521'
 			},
 			true,
 			['encrypt', 'decrypt']
