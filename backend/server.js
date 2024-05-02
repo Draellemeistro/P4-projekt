@@ -365,30 +365,39 @@ app.post('/check-shared-secret', async (req, res) => {
 	if(typeof clientSharedSecret === 'string') {
 		 clientSharedSecret = JSON.parse(clientSharedSecret);
 	}
-	clientPublicKeyJWK = serverECDHCrypto.fixAndValidateJWK(clientPublicKeyJWK);
-	JWKserverPrivECDH = serverECDHCrypto.fixAndValidateJWK(JWKserverPrivECDH);
-	console.log('Server private key D:', JWKserverPrivECDH.d);
+	const jwkServer = {
+		ext: true,
+		kty: JWKserverPrivECDH.kty,
+		d: JWKserverPrivECDH.d,
+		crv:JWKserverPrivECDH.crv,
+		x: JWKserverPrivECDH.x,
+		y: JWKserverPrivECDH.y
+	};
+
+	const serverPrivateKeyECDH = await crypto.subtle.importKey('jwk', JWKserverPrivECDH, { name: 'ECDH', namedCurve: 'P-521' }, true, ['deriveKey', 'deriveBits']);
+	const clientPublicKeyECDH = await crypto.subtle.importKey('jwk', clientPublicKeyJWK, { name: 'ECDH', namedCurve: 'P-521' }, true, ['deriveKey', 'deriveBits']);
 	try {
 		console.log('attempting to derive key: 1');
-		const serverSharedSecret = await crypto.subtle.deriveKey(
+
+		serverSharedSecret = await crypto.subtle.deriveKey(
 			{
 				name: "ECDH",
-				public: clientPublicKeyJWK,
+				public: clientPublicKeyECDH,
 			},
-			JWKserverPrivECDH,
+			serverPrivateKeyECDH,
 			{
 				name: "AES-GCM",
-				length: "256"
+				length: 256
 			},
 			true,
 			["encrypt", "decrypt"],
 		);
 	} catch (error) {
+		console.log('Trying again with no key_ops: 2');
 		try {
-			console.log('attempting to derive key: 2');
 			const serverPrivateKeyECDH = await crypto.subtle.importKey('jwk', JWKserverPrivECDH, { name: 'ECDH', namedCurve: 'P-521' }, true, ['deriveKey', 'deriveBits']);
 			const clientPublicKeyECDH = await crypto.subtle.importKey('jwk', clientPublicKeyJWK, { name: 'ECDH', namedCurve: 'P-521' }, true, ['deriveKey', 'deriveBits']);
-			serverSharedSecret = await crypto.subtle.deriveKey(
+			serverSharedSecret = await window.crypto.subtle.deriveKey(
 				{
 					name: "ECDH",
 					public: clientPublicKeyECDH,
@@ -396,35 +405,15 @@ app.post('/check-shared-secret', async (req, res) => {
 				serverPrivateKeyECDH,
 				{
 					name: "AES-GCM",
-					length: 256
+					length: "256"
 				},
 				true,
-				["encrypt", "decrypt"],
+				[],
 			);
 		} catch (error) {
-			console.log('Trying again with no key_ops: 3');
-			try {
-				const serverPrivateKeyECDH = await crypto.subtle.importKey('jwk', JWKserverPrivECDH, { name: 'ECDH', namedCurve: 'P-521' }, true, ['deriveKey', 'deriveBits']);
-				const clientPublicKeyECDH = await crypto.subtle.importKey('jwk', clientPublicKeyJWK, { name: 'ECDH', namedCurve: 'P-521' }, true, ['deriveKey', 'deriveBits']);
-				sharedSecretKey = await window.crypto.subtle.deriveKey(
-					{
-						name: "ECDH",
-						public: clientPublicKeyECDH,
-					},
-					serverPrivateKeyECDH,
-					{
-						name: "AES-GCM",
-						length: "256"
-					},
-					true,
-					[],
-				);
-			} catch (error) {
-				console.error('3: third attempt failed:', error);
-			}
-			console.error('2: second attempt failed:', error);
+			console.error('2: third attempt failed:', error);
 		}
-		console.error('1: first attempt failed:', error);
+		console.error('1: second attempt failed:', error);
 	}
 
 	console.log('Server shared secret:', serverSharedSecret);
