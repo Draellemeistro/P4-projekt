@@ -103,6 +103,98 @@ const serverECDHCrypto = {
 			return jwk;
 		}
 		},
+	convertBase64ToArrBuffer: function convertBase64ToArrayBuffer(base64String) {
+		let binaryString = Buffer.from(base64String, 'base64').toString('binary');
+		let arrayBuffer = new Uint8Array(binaryString.length);
+		for (let i = 0; i < binaryString.length; i++) {
+			arrayBuffer[i] = binaryString.charCodeAt(i);
+		} return arrayBuffer;
+	},
+	decryptArrBuffECDH: async function decryptArrBuffWithSecretECDHKey(encryptedMessage, IvValue, sharedSecretKeyString) {
+		const buffer = encryptedMessage instanceof Buffer ? encryptedMessage : Buffer.from(encryptedMessage, 'base64');
+		let sharedSecretKey = JSON.parse(sharedSecretKeyString);
+		const decrypted = await crypto.subtle.decrypt(
+			{
+				name: 'AES-GCM',
+				iv: IvValue
+			},
+			sharedSecretKey,
+			buffer
+		);
+		return decrypted.toString();
+	},
+	handleEncryptedMessage: async function handleEncryptedMessage(encryptedMessage, IvValue, sharedSecretKey) {
+		const encryptedMsgArrBuff = this.convertBase64ToArrBuffer(encryptedMessage);
+		//
+		// TODO: Implement server fetching client public key from DB and deriving shared secret key
+		//
+		return await serverECDHCrypto.decryptArrBuffECDH(encryptedMsgArrBuff, IvValue, sharedSecretKey);
+	},
+	deriveSharedSecret:
+		async function deriveSharedSecret(serverPrivateKeyString, clientPublicKeyString) {
+			let responseValue;
+			let serverSharedSecret;
+
+			// Parse the keys from JSON strings back into objects
+			let clientPublicKeyJWK = JSON.parse(clientPublicKeyString);
+			let JWKserverPrivECDH = JSON.parse(serverPrivateKeyString);
+
+			const jwkServer = {
+				ext: true,
+				kty: JWKserverPrivECDH.kty,
+				d: JWKserverPrivECDH.d,
+				crv:JWKserverPrivECDH.crv,
+				x: JWKserverPrivECDH.x,
+				y: JWKserverPrivECDH.y
+			};
+			clientPublicKeyJWK.key_ops = ['deriveBits'];
+			console.log('Client public key:', clientPublicKeyJWK);
+			const serverPrivateKeyECDH = await crypto.subtle.importKey('jwk', jwkServer, { name: 'ECDH', namedCurve: 'P-521' }, true, ['deriveKey', 'deriveBits']);
+			const clientPublicKeyECDH = await crypto.subtle.importKey('jwk', clientPublicKeyJWK, { name: 'ECDH', namedCurve: 'P-521' }, true, []);
+			try {
+				console.log('attempting to derive key: 1');
+
+				serverSharedSecret = await crypto.subtle.deriveKey(
+					{
+						name: "ECDH",
+						public: clientPublicKeyECDH,
+					},
+					serverPrivateKeyECDH,
+					{
+						name: "AES-GCM",
+						length: 256
+					},
+					true,
+					["encrypt", "decrypt"],
+				);
+			} catch (error) {
+				console.log('Trying again with no key_ops: 2');
+				try {
+					const serverPrivateKeyECDH = await crypto.subtle.importKey('jwk', JWKserverPrivECDH, { name: 'ECDH', namedCurve: 'P-521' }, true, ['deriveKey', 'deriveBits']);
+					const clientPublicKeyECDH = await crypto.subtle.importKey('jwk', clientPublicKeyJWK, { name: 'ECDH', namedCurve: 'P-521' }, true, ['deriveKey', 'deriveBits']);
+					serverSharedSecret = await window.crypto.subtle.deriveKey(
+						{
+							name: "ECDH",
+							public: clientPublicKeyECDH,
+						},
+						serverPrivateKeyECDH,
+						{
+							name: "AES-GCM",
+							length: "256"
+						},
+						true,
+						[],
+					);
+				} catch (error) {
+					console.error('2: third attempt failed:', error);
+				}
+				console.error('1: second attempt failed:', error);
+			}
+
+			console.log('Server shared secret:', serverSharedSecret);
+			const exportedServerSharedSecret = await crypto.subtle.exportKey('jwk', serverSharedSecret);
+			return JSON.stringify(exportedServerSharedSecret);
+		},
 
 
 	removePEM: function removePEMFormatting(key) {

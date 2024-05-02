@@ -460,9 +460,17 @@ app.post('/decrypt-ECDH-message-Test', async (req, res) => {
 	const plainTextMessage = req.body.plainTextMessage;
 	const encryptedMessage = req.body.encryptedMessage;
 	const clientPublicKey = req.body.clientPublicKey;
-	const decryptedMessage = 1;
-})
-
-async function makeECDHKeys() {
-	return await serverECDHCrypto.initECDH();
-}
+	const IvValue = req.body.IvValue;
+	let responseValue;
+	let decryptedMessage;
+	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientPublicKey);
+	decryptedMessage = await serverECDHCrypto.decryptECDH(encryptedMessage, IvValue, sharedSecret);
+	if (plainTextMessage === decryptedMessage) {
+		console.log('ECDH works!');
+		responseValue = true;
+	} else {
+		console.log('ECDH didnt work: ', decryptedMessage, '\nexpected: ', plainTextMessage);
+		responseValue = false;
+	}
+	res.json({success: responseValue});
+});

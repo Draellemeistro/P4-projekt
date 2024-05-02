@@ -466,15 +466,41 @@ const ECDHCrypto ={
 
 		return jwk;
 	},
-
+	convertArrBuffToBase64: function convertArrayBufferToBase64(arrayBuffer) {
+		let uint8Array = new Uint8Array(arrayBuffer);
+		return btoa(String.fromCharCode.apply(null, uint8Array));
+	},
 // Function to perform ECDH key exchange, encrypt ballot, and send it to server
 	// eslint-disable-next-line no-undef
-	encryptBallotECDH_NOTIMPLEMENTED: async function performECDHAndEncryptBallot(ballot,client, clientKeys) {
-		//TODO: implement this function
+	SendEncryptedMsgTest: async function performECDHAndEncryptBallot(plainTextMessage,encryptedMessage, clientPublicKey, ivValue) {
+		const response = await fetch('https://192.168.0.113:3030/decrypt-ECDH-message-Test', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					plainTextMessage: plainTextMessage,
+					encryptedMessage: encryptedMessage,
+					clientPublicKey: clientPublicKey,
+					IvValue: ivValue
+				})
+			});
+		if (response.ok) {
+			const data = await response.json();
+			console.log('received: ', data, 'expected: ', plainTextMessage);
+			if (data === plainTextMessage) {
+				console.log('Decryption successful');
+			} else {
+				console.log('problem might be in the formatting/encoding of the message');
+				console.error('Decryption failed');
+			}
+			return data;
+		} else {
+			console.error('Failed to fetch', response);
+			return response;
+		}
 
-		// eslint-disable-next-line no-unused-vars
-		let {a , b, c} = {ballot, client, clientKeys};
-		return console.log('performECDHAndEncryptBallot... when this function is implemented');
+
 	},
 	agreeSharedSecret_NOTIMPLEMENTED: async function agreeSharedSecretKey() {
 		//TODO: implement this function
