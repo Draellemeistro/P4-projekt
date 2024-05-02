@@ -376,7 +376,7 @@ app.post('/check-shared-secret', async (req, res) => {
 	clientPublicKeyJWK.key_ops = ['deriveBits'];
 	console.log('Client public key:', clientPublicKeyJWK);
 	const serverPrivateKeyECDH = await crypto.subtle.importKey('jwk', jwkServer, { name: 'ECDH', namedCurve: 'P-521' }, true, ['deriveKey', 'deriveBits']);
-	const clientPublicKeyECDH = await crypto.subtle.importKey('jwk', clientPublicKeyJWK, { name: 'ECDH', namedCurve: 'P-521' }, true, [ 'deriveBits']);
+	const clientPublicKeyECDH = await crypto.subtle.importKey('jwk', clientPublicKeyJWK, { name: 'ECDH', namedCurve: 'P-521' }, true, []);
 	try {
 		console.log('attempting to derive key: 1');
 
