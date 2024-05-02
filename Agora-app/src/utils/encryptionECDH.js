@@ -44,6 +44,7 @@ const ECDHCrypto ={
 		const serverPublicKeyParsed = JSON.parse(serverPublicKeyECDHString);
 		console.log('server public key as string: ', serverPublicKeyECDHString);
 		console.log('server public key parsed: ', serverPublicKeyParsed);
+		serverPublicKeyParsed.key_ops = ["deriveKey", "deriveBits", "encrypt", "decrypt"];
 		const serverPublicKeyJwk = await window.crypto.subtle.importKey(
 			'jwk',
 			serverPublicKeyParsed,
@@ -52,7 +53,7 @@ const ECDHCrypto ={
 				namedCurve: 'P-521'
 			},
 			true,
-			['deriveKey', 'deriveBits']
+			['deriveKey', 'deriveBits', 'encrypt', 'decrypt']
 		);
 		console.log('server public key as JWK: ', serverPublicKeyJwk);
 		const keyString = JSON.stringify(serverPublicKeyJwk); //probably redundant, but just to be sure
