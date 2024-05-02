@@ -99,6 +99,7 @@ const ECDHCrypto ={
 
 			);
 		} catch (error) {
+			console.log('its the fucking [deriveKey, deriveBits] part that fucks this up!!!!')
 			try {
 				serverPublicKeyJwk = await window.crypto.subtle.importKey(
 					'jwk',
@@ -108,8 +109,8 @@ const ECDHCrypto ={
 						namedCurve: 'P-521',
 					},
 					true,
-					["deriveKey", "deriveBits"],
-				);} catch (error) {
+					[],
+				)} catch (error) {
 				console.error('Failed to import FIXED server public key: ', error);
 				try {
 
@@ -131,10 +132,18 @@ const ECDHCrypto ={
 
 
 		console.log('server public key as JWK: ', serverPublicKeyJwk);
+		let keyTestExport = await window.crypto.subtle.exportKey('jwk',serverPublicKeyJwk)
+		console.log('test exports here:')
+		console.log(keyTestExport.crv);
+		console.log(keyTestExport.ext);
+		console.log(keyTestExport.key_ops);
+		console.log(keyTestExport.kty);
+		console.log(keyTestExport.x);
+		console.log(keyTestExport.y);
 		const keyString = JSON.stringify(serverPublicKeyJwk); //probably redundant, but just to be sure
 		console.log('server public key from stringified keystring: ', keyString);
 		sessionStorage.setItem('serverPublicKeyECDH', keyString);
-		return keyString;
+		return
 	},
 
 // Function to compute shared secret
