@@ -149,7 +149,7 @@ const ECDHCrypto ={
 			console.log('clientPrivateKey is not a string. Trying to use it anyway');
 			clientKeyForSecret = clientPrivateKeyString;
 		}
-		const jwk = {
+		const jwkClient = {
 			kty: clientKeyForSecret.kty,
 			crv:clientKeyForSecret.crv,
 			x: clientKeyForSecret.x,
@@ -158,21 +158,29 @@ const ECDHCrypto ={
 			ext: true,
 			key_ops: ["deriveKey"]
 		};
+		const jwkServer = {
+			kty: serverKeyForSecret.kty,
+			crv: serverKeyForSecret.crv,
+			x: serverKeyForSecret.x,
+			y: serverKeyForSecret.y,
+			ext: true,
+			key_ops: ["deriveKey"]
+		};
 		console.log('attempting to import client private key:.....');
 		console.log('clientKeyForSecret: ', clientKeyForSecret);
 		const clientKeyForSecretJWK = await window.crypto.subtle.importKey(
 			'jwk',
-			jwk,
+			jwkClient,
 			{
 				name: 'ECDH',
 				namedCurve: 'P-521',
 			},
 			true,
-			[]
+			["deriveKey"]
 		); console.log('attempting to import client private key: success');
 		const serverKeyForSecretJWK = await window.crypto.subtle.importKey(
 			'jwk',
-			serverKeyForSecret,
+			jwkServer,
 			{
 				name: 'ECDH',
 				namedCurve: 'P-521',
