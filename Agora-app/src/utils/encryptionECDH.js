@@ -149,11 +149,29 @@ const ECDHCrypto ={
 			console.log('clientPrivateKey is not a string. Trying to use it anyway');
 			clientKeyForSecret = clientPrivateKeyString;
 		}
+		const jwkClient = {
+			ext: true,
+			kty: clientKeyForSecret.kty,
+			d: clientKeyForSecret.d,
+			crv:clientKeyForSecret.crv,
+			x: clientKeyForSecret.x,
+			key_ops: ["deriveKey", "deriveBits"],
+			y: clientKeyForSecret.y
+		};
+		// eslint-disable-next-line no-unused-vars
+		const jwkServer = {
+			kty: serverKeyForSecret.kty,
+			crv: serverKeyForSecret.crv,
+			x: serverKeyForSecret.x,
+			y: serverKeyForSecret.y,
+			ext: true,
+			key_ops: ["deriveKey"]
+		};
 		console.log('attempting to import client private key:.....');
 		console.log('clientKeyForSecret: ', clientKeyForSecret);
 		const clientKeyForSecretJWK = await window.crypto.subtle.importKey(
 			'jwk',
-			clientKeyForSecret,
+			jwkClient,
 			{
 				name: 'ECDH',
 				namedCurve: 'P-521',
@@ -169,7 +187,7 @@ const ECDHCrypto ={
 				namedCurve: 'P-521',
 			},
 			true,
-			[]
+			["deriveKey", "deriveBits"]
 		);
 		//serverKeyForSecretJWK.usages = ['deriveKey'];
 		//fix and validate the JWK if needed
@@ -186,7 +204,7 @@ const ECDHCrypto ={
 					name: "ECDH",
 					public: serverKeyForSecret,
 				},
-				clientKeyForSecret,
+				jwkClient,
 				{
 					name: "AES-GCM",
 					length: "256"
