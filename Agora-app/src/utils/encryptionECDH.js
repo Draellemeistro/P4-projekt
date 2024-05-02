@@ -27,7 +27,13 @@ const ECDHCrypto ={
 	},
 
 
-
+	encodeXYPropertiesJWK: function base64urlEncode(str) {
+		let base64 = btoa(str);
+		base64 = base64.replace('+', '-');
+		base64 = base64.replace('/', '_');
+		base64 = base64.replace(/=+$/, '');
+		return base64;
+	},
 
 // Function to send client's public key and receive server's public key
 	requestServerECDH: async function requestServerPublicKeyECDH(){
@@ -45,6 +51,8 @@ const ECDHCrypto ={
 		console.log('server public key as string: ', serverPublicKeyECDHString);
 		console.log('server public key parsed: ', serverPublicKeyParsed);
 		serverPublicKeyParsed.key_ops = ["deriveKey", "deriveBits"];
+		serverPublicKeyParsed.x = this.requestServerECDH(serverPublicKeyParsed.x);
+		serverPublicKeyParsed.y = this.requestServerECDH(serverPublicKeyParsed.y);
 		const serverPublicKeyJwk = await window.crypto.subtle.importKey(
 			'jwk',
 			serverPublicKeyParsed,
