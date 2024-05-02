@@ -284,6 +284,10 @@ const ECDHCrypto ={
 			},
 			body: ({clientPublicKey: keyStringPubToUse})
 		});
+		if (response.status !== 200) {
+			console.log('info: ', response, 'status: ', response.status, 'ok: ', response.ok, 'statusText: ', response.statusText);
+			console.error('Failed to send public key');
+		}
 		console.log('client key sent');
 		if (response.ok) {
 			console.log('server fetched public key from client');

@@ -228,9 +228,10 @@ app.post('/rsa-public-key', (req, res) => {
 	console.log('RSA Public Key sent');
 } );
 app.post('/temp-ecdh-key-from-client', (req, res) => {
-	let responseValue;
+
 	console.log('Accessed /temp-ecdh-key-from-client endpoint');
 	const clientPubKey = req.body.clientPublicKey;
+	let responseValue;
 	if (clientPubKey.length === 0) {
 		console.log('Client public key string is empty');
 		responseValue = 0;
