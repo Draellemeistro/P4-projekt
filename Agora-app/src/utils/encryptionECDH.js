@@ -121,18 +121,17 @@ const ECDHCrypto ={
 				}
 			}
 		} else {
-				console.log('Key variable is a valid keystring');
-				if (keyStringImported === clientKeyStringSessionStorage) {
-					console.log('the key corresponds to the client public key from storage');
-				} else if (keyStringImported === serverPubKeySessionStorage) {
-					console.log('the key corresponds to the server public key from storage');
-				}	else	{
-					console.log('the key does not correspond to either client public key or server public key in storage.\nCAREFUL!!!');
-				}
-				return 1;
+			console.log('Key variable is a valid keystring');
+			if (keyStringImported === clientKeyStringSessionStorage) {
+				console.log('the key corresponds to the client public key from storage');
+			} else if (keyStringImported === serverPubKeySessionStorage) {
+				console.log('the key corresponds to the server public key from storage');
+			} else {
+				console.log('the key does not correspond to either client public key or server public key in storage.\nCAREFUL!!!');
 			}
-		},
-
+			return 1;
+		}
+	},
 // Function to compute shared secret
 	deriveSecret: async function deriveSecretKey(clientPrivateKeyString, serverPubKeyString) {
 		let serverKeyForSecret;
@@ -175,8 +174,9 @@ const ECDHCrypto ={
 		//fix and validate the JWK if needed
 		//clientKeyForSecret = this.fixAndValidateJWK(clientKeyForSecret);
 		if(typeof this.fixAndValidateJWK(serverKeyForSecret) === 'string') {
-		clientKeyForSecret = clientKeyForSecretJWK;
-		serverKeyForSecret = serverKeyForSecretJWK;
+			clientKeyForSecret = clientKeyForSecretJWK;
+			serverKeyForSecret = serverKeyForSecretJWK;
+		}
 		let sharedSecretKey;
 		console.log('attempting to derive shared secret key. param1 is serverkey, param2 is clientkey');
 		try {
@@ -193,8 +193,7 @@ const ECDHCrypto ={
 				true,
 				["encrypt", "decrypt"],
 			);
-		}
-		catch (error) {
+		} catch (error) {
 			console.log('first attempt failed. Trying again with no key_ops');
 			try {
 				sharedSecretKey = await window.crypto.subtle.deriveKey(
@@ -210,8 +209,7 @@ const ECDHCrypto ={
 					true,
 					[],
 				);
-			}
-			catch (error) {
+			} catch (error) {
 				console.log('second attempt failed. Trying again with deriveBits instead of deriveKey');
 				try {
 					sharedSecretKey = await window.crypto.subtle.deriveBits(
@@ -222,20 +220,19 @@ const ECDHCrypto ={
 						clientKeyForSecret,
 						256
 					);
+				} catch (error)  {
+					console.error('3: all three attempts at deriveKey failed: ', error);
 				}
-				catch (error) {
-					console.error('all three attempts at deriveKey failed: ', error);
-				}
+				console.error('2: Failed to derive shared secret key: ', error);
 			}
-			console.error('Failed to derive shared secret key: ', error);
+			console.error('1: initial attempt failed: ', error);
 		}
 		console.log('shared secret key: ', sharedSecretKey);
 		const exportedSharedSecretKey = await window.crypto.subtle.exportKey('jwk', sharedSecretKey);
 		const sharedSecretString = JSON.stringify(exportedSharedSecretKey);
 		sessionStorage.setItem('sharedSecretECDH', sharedSecretString);
 		return sharedSecretString;
-		}
-		},
+	},
 	encryptECDH: async function encryptMessageECDH(message, sharedSecret) {
 		const encoder = new TextEncoder();
 		let SharedSecretForEncryption	// Check if the message and publicKey are valid
