@@ -60,7 +60,7 @@ const ECDHCrypto ={
 					namedCurve: 'P-521',
 				},
 				true,
-				["deriveKey", "deriveBits"],
+				["deriveKey"],
 
 			);
 		} catch (error) {
