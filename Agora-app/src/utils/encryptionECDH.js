@@ -161,26 +161,59 @@ const ECDHCrypto ={
 			true,
 			[]
 		);
-		console.log('it worked! client private key imported');
-
 		//fix and validate the JWK if needed
-		clientKeyForSecret = this.fixAndValidateJWK(clientKeyForSecret);
-		serverKeyForSecret = this.fixAndValidateJWK(serverKeyForSecret);
-
-		console.log('attempting to derive shared secret key');
-		const sharedSecretKey = await window.crypto.subtle.deriveKey(
-			{
-				name: "ECDH",
-				public: serverKeyForSecret,
-			},
-			clientKeyForSecret,
-			{
-				name: "AES-GCM",
-				length: "256"
-			},
-			true,
-			["encrypt", "decrypt"],
-		);
+		//clientKeyForSecret = this.fixAndValidateJWK(clientKeyForSecret);
+		//serverKeyForSecret = this.fixAndValidateJWK(serverKeyForSecret);
+		clientKeyForSecret = clientKeyForSecretJWK;
+		let sharedSecretKey;
+		console.log('attempting to derive shared secret key. param1 is serverkey, param2 is clientkey');
+		try {
+			sharedSecretKey = await window.crypto.subtle.deriveKey(
+				{
+					name: "ECDH",
+					public: serverKeyForSecret,
+				},
+				clientKeyForSecret,
+				{
+					name: "AES-GCM",
+					length: "256"
+				},
+				true,
+				["encrypt", "decrypt"],
+			);
+		} catch (error) {
+			console.log('first attempt failed. Trying again with no key_ops');
+			try {
+				sharedSecretKey = await window.crypto.subtle.deriveKey(
+					{
+						name: "ECDH",
+						public: serverKeyForSecret,
+					},
+					clientKeyForSecret,
+					{
+						name: "AES-GCM",
+						length: "256"
+					},
+					true,
+					[],
+				);
+			} catch (error) {
+				console.log('second attempt failed. Trying again with deriveBits instead of deriveKey');
+				try {
+					sharedSecretKey = await window.crypto.subtle.deriveBits(
+						{
+							name: "ECDH",
+							public: serverKeyForSecret,
+						},
+						clientKeyForSecret,
+						256
+					);
+				} catch (error) {
+					console.error('all three attempts at deriveKey failed: ', error);
+				}
+				console.error('Failed to derive shared secret key: ', error);
+			}
+		}
 		console.log('shared secret key: ', sharedSecretKey);
 		const exportedSharedSecretKey = await window.crypto.subtle.exportKey('jwk', sharedSecretKey);
 		const sharedSecretString = JSON.stringify(exportedSharedSecretKey);
