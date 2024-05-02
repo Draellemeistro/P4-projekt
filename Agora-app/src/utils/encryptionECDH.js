@@ -46,8 +46,21 @@ const ECDHCrypto ={
 				'Content-Type': 'application/json',
 			},
 		});
-		const serverPublicKeyECDHString = await response.json();
+		if (!response.ok) {
+			console.error('Failed to fetch server public key');
+		}
+		const data = await response.json();
+		const serverPublicKeyECDHString = data.serverPubECDKey;
+		const serverPublicKeyECDHStringFixed = data.fixedVersion;
+		if(serverPublicKeyECDHStringFixed === serverPublicKeyECDHString) {
+			console.log('server public key is the same as the fixed version');
+		} else {
+			console.log('server public key is different from the fixed version');
+			console.log('serverPublicKeyECDHString: ', serverPublicKeyECDHString);
+			console.log('serverPublicKeyECDHStringFixed: ', serverPublicKeyECDHStringFixed);
+		}
 		const serverPublicKeyParsed = JSON.parse(serverPublicKeyECDHString);
+		const serverPublicKeyFixedParsed = JSON.parse(serverPublicKeyECDHStringFixed);
 		console.log('server public key as string: ', serverPublicKeyECDHString);
 		console.log('server public key parsed: ', serverPublicKeyParsed);
 		let serverPublicKeyJwk;
@@ -64,8 +77,22 @@ const ECDHCrypto ={
 
 			);
 		} catch (error) {
-			console.error('Failed to import server public key, error: ', error);
+			try {
+				serverPublicKeyJwk = await window.crypto.subtle.importKey(
+					'jwk',
+					serverPublicKeyFixedParsed,
+					{
+						name: 'ECDH',
+						namedCurve: 'P-521',
+					},
+					true,
+					["deriveKey"],
+				);} catch (error) {
+				console.error('Failed to import FIXED server public key: ', error);
+			}
+			console.error('Failed to import server public key: ', error);
 		}
+
 
 		console.log('server public key as JWK: ', serverPublicKeyJwk);
 		const keyString = JSON.stringify(serverPublicKeyJwk); //probably redundant, but just to be sure

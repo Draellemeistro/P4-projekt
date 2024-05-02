@@ -218,7 +218,7 @@ app.post('/fetch-candidates', (req, res) => {
 app.post('/request-public-ecdh-key', (req, res) => {
 	console.log('Accessed /request-public-ecdh-key endpoint');
 	const fixedJWKServerPubKeyECDH = JSON.stringify(serverECDHCrypto.fixAndValidateJWK(stringJWKServerPubKeyECDH));
-	res.json(fixedJWKServerPubKeyECDH);
+	res.json({serverPubECDKey: stringJWKServerPubKeyECDH, fixedVersion: fixedJWKServerPubKeyECDH});
 	console.log('ECDH Public Key sent');
 }	);
 app.post('/rsa-public-key', (req, res) => {
