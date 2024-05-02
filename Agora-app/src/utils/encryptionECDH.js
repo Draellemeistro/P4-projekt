@@ -317,7 +317,7 @@ const ECDHCrypto ={
 		return {encryptedMessage, ivValue};
 	},
 	verifySharedSecretTest: async function verifyTestSharedSecret(keyStringSharedSecret, keyStringPub) {
-		const response = await fetch('https://130.225.39.205:3030/check-shared-secret', {
+		const response = await fetch('https://192.168.0.113:3030/check-shared-secret', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
