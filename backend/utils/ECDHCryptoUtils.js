@@ -62,42 +62,49 @@ const serverECDHCrypto = {
 			if (!jwk.ext) {
 				jwk.ext = true;
 			}
-			const validProperties = ['crv', 'ext', 'key_ops', 'kty', 'x', 'y'];
-			const isValid = validProperties.every(prop => prop in jwk);
-			if (!isValid) {
-				throw new Error('Invalid JWK format');
+			if (jwk.d === undefined) {
+				const validProperties = ['crv', 'ext', 'key_ops', 'kty', 'x', 'y'];
+				const isValid = validProperties.every(prop => prop in jwk);
+				if (!isValid) {
+					throw new Error('Invalid JWK format');
+				}
+			} else {
+				console.log('JWK is most likely private, dL: ', jwk.d);
 			}
 			return jwk;
-		}
+		} else {
+			jwk = jwkToValidate;
+			// Insert key_ops into the JWK
+			if (!jwk.key_ops) {
+				jwk.key_ops = [];
+			}
 
-		jwk = jwkToValidate;
-		// Insert key_ops into the JWK
-		if (!jwk.key_ops) {
-			jwk.key_ops = [];
-		}
+			// Add "deriveKey" and "deriveBits" to key_ops if they're not already present
+			if (!jwk.key_ops.includes("deriveKey")) {
+				jwk.key_ops.push("deriveKey");
+			}
+			if (!jwk.key_ops.includes("deriveBits")) {
+				jwk.key_ops.push("deriveBits");
+			}
+			if (!jwk.ext) {
+				jwk.ext = true;
+			}
+			// Define the properties that a valid JWK should have
+			if (jwk.d === undefined) {
+				const validProperties = ['crv', 'ext', 'key_ops', 'kty', 'x', 'y'];
+				const isValid = validProperties.every(prop => prop in jwk);
+				if (!isValid) {
+					throw new Error('Invalid JWK format');
+				}
+			} else {
+				console.log('JWK is most likely private, dL: ', jwk.d);
+			}
 
-		// Add "deriveKey" and "deriveBits" to key_ops if they're not already present
-		if (!jwk.key_ops.includes("deriveKey")) {
-			jwk.key_ops.push("deriveKey");
+			return jwk;
 		}
-		if (!jwk.key_ops.includes("deriveBits")) {
-			jwk.key_ops.push("deriveBits");
-		}
-		if (!jwk.ext) {
-			jwk.ext = true;
-		}
-		// Define the properties that a valid JWK should have
-		const validProperties = ['crv', 'ext', 'key_ops', 'kty', 'x', 'y'];
+		},
 
-		// Check if the JWK has all the valid properties
-		const isValid = validProperties.every(prop => prop in jwk);
 
-		if (!isValid) {
-			throw new Error('Invalid JWK format');
-		}
-
-		return jwk;
-	},
 	removePEM: function removePEMFormatting(key) {
 		return key.replace(/-----BEGIN PUBLIC KEY-----/, '')
 			.replace(/-----END PUBLIC KEY-----/, '')
