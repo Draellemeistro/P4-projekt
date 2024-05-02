@@ -146,7 +146,7 @@ const ECDHCrypto ={
 		}
 		if(typeof clientPrivateKeyString === 'string') {
 			clientKeyForSecret = JSON.parse(clientPrivateKeyString);
-			} else {
+		} else {
 			console.log('clientPrivateKey is not a string. Trying to use it anyway');
 			clientKeyForSecret = clientPrivateKeyString;
 		}
@@ -174,7 +174,7 @@ const ECDHCrypto ={
 
 		//fix and validate the JWK if needed
 		//clientKeyForSecret = this.fixAndValidateJWK(clientKeyForSecret);
-		//serverKeyForSecret = this.fixAndValidateJWK(serverKeyForSecret);
+		if(typeof this.fixAndValidateJWK(serverKeyForSecret) === 'string') {
 		clientKeyForSecret = clientKeyForSecretJWK;
 		serverKeyForSecret = serverKeyForSecretJWK;
 		let sharedSecretKey;
@@ -193,7 +193,8 @@ const ECDHCrypto ={
 				true,
 				["encrypt", "decrypt"],
 			);
-		} catch (error) {
+		}
+		catch (error) {
 			console.log('first attempt failed. Trying again with no key_ops');
 			try {
 				sharedSecretKey = await window.crypto.subtle.deriveKey(
@@ -209,7 +210,8 @@ const ECDHCrypto ={
 					true,
 					[],
 				);
-			} catch (error) {
+			}
+			catch (error) {
 				console.log('second attempt failed. Trying again with deriveBits instead of deriveKey');
 				try {
 					sharedSecretKey = await window.crypto.subtle.deriveBits(
@@ -220,18 +222,20 @@ const ECDHCrypto ={
 						clientKeyForSecret,
 						256
 					);
-				} catch (error) {
+				}
+				catch (error) {
 					console.error('all three attempts at deriveKey failed: ', error);
 				}
-				console.error('Failed to derive shared secret key: ', error);
 			}
+			console.error('Failed to derive shared secret key: ', error);
 		}
 		console.log('shared secret key: ', sharedSecretKey);
 		const exportedSharedSecretKey = await window.crypto.subtle.exportKey('jwk', sharedSecretKey);
 		const sharedSecretString = JSON.stringify(exportedSharedSecretKey);
 		sessionStorage.setItem('sharedSecretECDH', sharedSecretString);
 		return sharedSecretString;
-	},
+		}
+		},
 	encryptECDH: async function encryptMessageECDH(message, sharedSecret) {
 		const encoder = new TextEncoder();
 		let SharedSecretForEncryption	// Check if the message and publicKey are valid
@@ -371,7 +375,7 @@ const ECDHCrypto ={
 			return 'failed: fetch failed';
 		}
 	},
-	fixAndValidateJWK: function insertKeyOpsAndValidate(jwkToValidate) {
+	fixAndValidateJWK: function insertKeyOpsAndValidate(jwkToValidate, isPrivateKey = false) {
 		let jwk;
 		if (typeof jwkToValidate === 'string') {
 		jwk = JSON.parse(jwkToValidate);
@@ -387,11 +391,21 @@ const ECDHCrypto ={
 			if (!jwk.ext) {
 				jwk.ext = true;
 			}
-			const validProperties = ['crv', 'ext', 'key_ops', 'kty', 'x', 'y'];
-			const isValid = validProperties.every(prop => prop in jwk);
-			if (!isValid) {
-				throw new Error('Invalid JWK format');
-			}
+			if (isPrivateKey === true) {
+				const validProperties = ['crv', 'ext', 'key_ops', 'kty', 'x', 'y'];
+				const isValid = validProperties.every(prop => prop in jwk);
+				if (!isValid) {
+					throw new Error('Invalid JWK format');
+				}
+			} else {
+					const validProperties = ['crv',"d", 'ext', 'key_ops', 'kty', 'x', 'y'];
+					const isValid = validProperties.every(prop => prop in jwk);
+					if (!isValid) {
+						throw new Error('Invalid JWK format');
+					}
+				}
+
+
 			return jwk;
 		}
 
