@@ -173,11 +173,8 @@ const ECDHCrypto ={
 
 		//fix and validate the JWK if needed
 		//clientKeyForSecret = this.fixAndValidateJWK(clientKeyForSecret);
-		if(typeof this.fixAndValidateJWK(serverKeyForSecret) === 'string') {
-			console.log('uuuuhhhhhhhh...');
-			clientKeyForSecret = clientKeyForSecretJWK;
-			serverKeyForSecret = serverKeyForSecretJWK;
-		}
+		clientKeyForSecret = clientKeyForSecretJWK;
+		serverKeyForSecret = serverKeyForSecretJWK;
 		let sharedSecretKey;
 		console.log('attempting to derive shared secret key. param1 is serverkey, param2 is clientkey');
 		try {
