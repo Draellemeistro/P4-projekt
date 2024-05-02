@@ -95,7 +95,7 @@ const ECDHCrypto ={
 					namedCurve: 'P-521',
 				},
 				true,
-				["deriveKey"],
+				["deriveKey", "deriveBits"],
 
 			);
 		} catch (error) {
@@ -108,7 +108,7 @@ const ECDHCrypto ={
 						namedCurve: 'P-521',
 					},
 					true,
-					["deriveKey"],
+					["deriveKey", "deriveBits"],
 				);} catch (error) {
 				console.error('Failed to import FIXED server public key: ', error);
 			}
