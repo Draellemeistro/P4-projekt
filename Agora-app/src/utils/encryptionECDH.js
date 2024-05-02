@@ -16,6 +16,15 @@ const ECDHCrypto ={
 		const fixedPubKey = this.fixAndValidateJWK(exportedPubKeyECDH);
 		const exportedPrivKeyECDH = await window.crypto.subtle.exportKey('jwk', clientKeyPairECDH.privateKey);
 		console.log('client secret key as JWK: ', exportedPrivKeyECDH);
+		console.log('the different fields:')
+		console.log('crv: ', exportedPrivKeyECDH.crv);
+		console.log('ext: ', exportedPrivKeyECDH.ext);
+		console.log('key_ops: ', exportedPrivKeyECDH.key_ops);
+		console.log('kty: ', exportedPrivKeyECDH.kty);
+		console.log('x: ', exportedPrivKeyECDH.x);
+		console.log('y: ', exportedPrivKeyECDH.y);
+
+		// Convert the keys to strings
 		const keyStringPriv = JSON.stringify(exportedPrivKeyECDH);
 		const keyStringPub = JSON.stringify(fixedPubKey);
 		sessionStorage.setItem('clientPublicKeyECDH', keyStringPub);
