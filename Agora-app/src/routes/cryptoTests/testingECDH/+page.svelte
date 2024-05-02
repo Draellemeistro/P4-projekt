@@ -17,12 +17,13 @@
 	// ECDHCrypto.fixAndValidateJWK();
 	onMount(async () => {
 		console.log('1');
-		serverKeystringPub = await ECDHCrypto.requestServerECDH();
-		console.log('serverKeyString as JWK: ' + JSON.parse(serverKeystringPub));
-		console.log('2');
 		const BothKeys = await ECDHCrypto.initECDH();
 		clientKeyStringPub = ECDHCrypto.fixAndValidateJWK(BothKeys.keyStringPub);
 		clientKeyStringPriv = ECDHCrypto.fixAndValidateJWK(BothKeys.keyStringPriv);
+		console.log('2');
+		serverKeystringPub = await ECDHCrypto.requestServerECDH();
+		console.log('serverKeyString as JWK: ' + JSON.parse(serverKeystringPub));
+
 		console.log('3');
 		sharedSecret = await ECDHCrypto.deriveSecret(clientKeyStringPub, serverKeystringPub);
 		console.log('4');
