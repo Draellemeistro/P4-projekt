@@ -312,18 +312,18 @@ const ECDHCrypto ={
 				console.log('received public key string has actual value');
 				if (data.returnKey === keyStringPubToUse) {
 					console.log('The server received the correct public key');
-					return 1;
+					return 'Success!';
 				} else {
 					console.error('server received incorrect public key');
-					return 0;
+					return 'failed: incorrect key';
 				}
 			} else {
 				console.error('server received public key string with no value');
-				return 0;
+				return 'failed: no value';
 			}
 		} else {
 			console.error('Failed to send public key');
-			return 0;
+			return 'failed: fetch failed';
 		}
 	},
 	fixAndValidateJWK: function insertKeyOpsAndValidate(jwkToValidate) {
