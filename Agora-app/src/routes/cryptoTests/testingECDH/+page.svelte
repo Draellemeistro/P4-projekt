@@ -22,10 +22,10 @@
 		clientKeyStringPub = BothKeys.keyStringPub;
 		clientKeyStringPriv = BothKeys.keyStringPriv;
 		console.log('client key pub: ' + BothKeys.keyStringPub);
-		if (await ECDHCrypto.tempSendEDCHKey(BothKeys.keyStringPub)) {
+		let sendKeySuccess = await ECDHCrypto.tempSendEDCHKey(ECDHCrypto.decideClientECDHString(BothKeys.keyStringPub));
+		if (sendKeySuccess) {
 			console.log('sending ECDH key to server: success');
-		}
-		else{
+		} else {
 			console.log('sending ECDH key to server: failure');
 		}
 		console.log('3');

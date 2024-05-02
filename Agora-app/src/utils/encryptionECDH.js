@@ -206,22 +206,25 @@ const ECDHCrypto ={
 			}
 		}
 	},
-	tempSendEDCHKey: async function sendECDHKeyToServer(keyStringPub) {
+	decideClientECDHString: function decideECDHString(clientKeyStringPub) {
 		let keyStringPubToUse;
-		if (keyStringPub === undefined) {
+		if (clientKeyStringPub === undefined) {
 			console.error('keyStringPub is undefined');
-			const serverPubKeySessionStorage = sessionStorage.getItem('serverPublicKeyECDH');
-			if (serverPubKeySessionStorage === undefined || serverPubKeySessionStorage === null) {
-				console.error('serverPubKeySessionStorage is undefined');
-				return;
+			const clientPubKeySessionStorage = sessionStorage.getItem('clientPublicKeyECDH');
+			if (clientPubKeySessionStorage === undefined || clientPubKeySessionStorage === null) {
+				console.error('clientPubKeySessionStorage is undefined');
+				return 0;
 			} else {
-				keyStringPubToUse = serverPubKeySessionStorage;
+				keyStringPubToUse = clientPubKeySessionStorage;
 				console.log('server public key from session storage: ', keyStringPubToUse);
 			}
 		} else	{
-			keyStringPubToUse = keyStringPub;
+			keyStringPubToUse = clientKeyStringPub;
+			console.log('server public key from function parameter: ', keyStringPubToUse);
 		}
-
+		return keyStringPubToUse;
+	},
+	tempSendEDCHKey: async function sendECDHKeyToServer(keyStringPubToUse) {
 		const response = await fetch('https://130.225.39.205:3030/temp-ecdh-key-from-client', {
 			method: 'POST',
 			headers: {
