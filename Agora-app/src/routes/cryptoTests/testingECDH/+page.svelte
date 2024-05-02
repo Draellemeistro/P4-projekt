@@ -18,6 +18,7 @@
 	onMount(async () => {
 		console.log('1');
 		serverKeystringPub = await ECDHCrypto.requestServerECDH();
+		console.log('serverKeyString as JWK: ' + JSON.parse(serverKeystringPub));
 		console.log('2');
 		const BothKeys = await ECDHCrypto.initECDH();
 		clientKeyStringPub = ECDHCrypto.fixAndValidateJWK(BothKeys.keyStringPub);
