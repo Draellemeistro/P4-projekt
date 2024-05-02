@@ -174,6 +174,7 @@ const ECDHCrypto ={
 		//fix and validate the JWK if needed
 		//clientKeyForSecret = this.fixAndValidateJWK(clientKeyForSecret);
 		if(typeof this.fixAndValidateJWK(serverKeyForSecret) === 'string') {
+			console.log('uuuuhhhhhhhh...');
 			clientKeyForSecret = clientKeyForSecretJWK;
 			serverKeyForSecret = serverKeyForSecretJWK;
 		}
