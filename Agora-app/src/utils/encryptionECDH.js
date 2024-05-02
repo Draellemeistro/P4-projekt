@@ -280,7 +280,7 @@ const ECDHCrypto ={
 		console.log('keyStringPubToUse: ', keyStringPubToUse);
 		console.log('keyStringPubToUse type: ', typeof keyStringPubToUse);
 		console.log('sending public key to server');
-		const response = await fetch('https://130.225.39.205:3030/temp-ecdh-key-from-client', {
+		const response = await fetch('https://192.168.0.113:3030/temp-ecdh-key-from-client', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
