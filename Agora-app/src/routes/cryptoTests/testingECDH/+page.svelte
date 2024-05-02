@@ -16,12 +16,9 @@
 	let ivValue;
 	onMount(async () => {
 		console.log('1');
-		serverKeystringPub = await ECDHCrypto.requestServerECDH();
-		console.log('2');
+
 		const BothKeys = await ECDHCrypto.initECDH();
-		clientKeyStringPub = BothKeys.keyStringPub;
-		clientKeyStringPriv = BothKeys.keyStringPriv;
-		console.log('client key pub: ' + BothKeys.keyStringPub);
+		console.log('2');
 		let sendKeySuccess = await ECDHCrypto.tempSendEDCHKey(ECDHCrypto.decideClientECDHString(BothKeys.keyStringPub));
 		if (sendKeySuccess) {
 			console.log('sending ECDH key to server: success');
@@ -29,8 +26,20 @@
 			console.log('sending ECDH key to server: failure');
 		}
 		console.log('3');
-		sharedSecret = await ECDHCrypto.deriveSecret(BothKeys.keyStringPriv, serverKeystringPub);
+		serverKeystringPub = await ECDHCrypto.requestServerECDH();
+		clientKeyStringPub = BothKeys.keyStringPub;
+		clientKeyStringPriv = BothKeys.keyStringPriv;
+		if (clientKeyStringPub === BothKeys.keyStringPub) {
+			console.log('client public key returned from initECDH is the same as the one stored in the object');
+		} else {
+			console.log('client public key returned from initECDH is not the same as the one stored in the object');
+		} if (clientKeyStringPub === sessionStorage.getItem('clientPublicKeyECDH') || BothKeys.keyStringPub === sessionStorage.getItem('clientPublicKeyECDH')) {
+			console.log('client public key in storage is the same as the one stored in the object or the one returned from initECDH');
+		} else {
+			console.log('error: client public key in storage is NOT the same as the one stored in the object or the one returned from initECDH');
+		}
 		console.log('4');
+		sharedSecret = await ECDHCrypto.deriveSecret(BothKeys.keyStringPriv, serverKeystringPub);
 		console.log('5');
 		const{c , d} = await ECDHCrypto.encryptECDH(plainText, sharedSecret);
 		encryptedMessage = c;
