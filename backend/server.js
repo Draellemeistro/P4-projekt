@@ -49,7 +49,10 @@ const certificate = fs.readFileSync('./cert.pem', 'utf8');
 //const serverPrivateKeyECDHPem = Buffer.from(fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem',{encoding: 'utf-8'}), 'base64'); // TODO test if this works
 //const serverPublicKeyECDH = serverECDHCrypto.removePEM(serverPublicKeyECDHPem);
 //const serverPrivateKeyECDH = serverECDHCrypto.removePEM(serverPrivateKeyECDHPem);
-//makeECDHKeys().then(ECDHKeysStrings => {
+serverECDHCrypto.initECDH().then(ECDHKeysStrings => {
+	console.log(ECDHKeysStrings);
+});
+// .then(ECDHKeysStrings => {
 //	fs.writeFileSync('serverPublicKeyECDH.json', ECDHKeysStrings.publicKeyString);
 //	fs.writeFileSync('serverPrivateKeyECDH.json', ECDHKeysStrings.privateKeyString);
 //});
@@ -214,13 +217,7 @@ app.post('/fetch-candidates', (req, res) => {
 
 app.post('/request-public-ecdh-key', (req, res) => {
 	console.log('Accessed /request-public-ecdh-key endpoint');
-	let parsedServerPublicKeyECDH = JSON.parse(stringJWKServerPubKeyECDH);
-	crypto.subtle.importKey('jwk', parsedServerPublicKeyECDH, { name: 'ECDH', namedCurve: 'P-256' }, true, ['deriveKey']).then((key) => {
-		res.json(stringJWKServerPubKeyECDH);
-		console.log('key to send ECDH: ', key);
-	}).catch((err) => {
-		console.error(err);
-	});
+	res.json(stringJWKServerPubKeyECDH);
 	console.log('ECDH Public Key sent');
 }	);
 app.post('/rsa-public-key', (req, res) => {
