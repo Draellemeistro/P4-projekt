@@ -330,10 +330,11 @@ const ECDHCrypto ={
 			console.error('Failed to send encrypted ballot');
 		} if (response.ok) {
 			console.log('server received shared secret and public key');
-			if (response.success === true || response.success === 'true') {
+			const data = await response.json();
+			if (data.success === true || data.success === 'true') {
 				console.log('shared secret key is identical on both client and server');
 				return 'success';
-			} else if (response.success === false || response.success === 'false') {
+			} else if (data.success === false || data.success === 'false') {
 				console.log('shared secret key is not identical on both client and server');
 				return 'failed';
 			} else {

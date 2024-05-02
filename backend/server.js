@@ -438,18 +438,18 @@ app.post('/check-shared-secret', async (req, res) => {
 	}
 	if(aesKeyServer.k === aesKeyClient.k) {
 		console.log('Shared secret is identical to eachother\nEYOOOOOO!!');
-		responseValue = 1;
+		responseValue = true;
 	} else {
 		if (typeof clientSharedSecret !== 'string') {
 			console.log('Client shared secret is getting converted to a string');
 			clientSharedSecretString = JSON.stringify(clientSharedSecret);
 			if (clientSharedSecret === stringServerSharedSecret) {
 				console.log('Shared secret is identical to eachother\nEYOOOOOO!!');
-				responseValue = 1;
+				responseValue = true;
 			} else {
 				console.log('Server shared secret:', stringServerSharedSecret);
 				console.log('Client shared secret:', clientSharedSecret);
-				responseValue = 0;
+				responseValue = false;
 			}
 		}
 	}
