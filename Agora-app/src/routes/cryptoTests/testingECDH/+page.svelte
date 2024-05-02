@@ -40,6 +40,7 @@
 		sharedSecretCheck = ECDHCrypto.verifySharedSecretTest(sharedSecret, clientKeyStringPub);
 		counter++;
 		console.log('step ', counter, ' finished'); //5
+		console.log('verifySharedSecretTest: ', sharedSecretCheck);
 		const{c , d} = await ECDHCrypto.encryptECDH(plainText, sharedSecret);
 		encryptedMessage = c;
 		ivValue = d;
