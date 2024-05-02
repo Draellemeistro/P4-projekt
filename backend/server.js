@@ -228,7 +228,6 @@ app.post('/rsa-public-key', (req, res) => {
 	console.log('RSA Public Key sent');
 } );
 app.post('/temp-ecdh-key-from-client', (req, res) => {
-
 	console.log('Accessed /temp-ecdh-key-from-client endpoint');
 	const clientPubKey = req.body.clientPublicKey;
 	let responseValue;

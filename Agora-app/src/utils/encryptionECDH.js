@@ -282,7 +282,7 @@ const ECDHCrypto ={
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: ({clientPublicKey: keyStringPubToUse})
+			body: JSON.stringify({clientPublicKey: keyStringPubToUse})
 		});
 		if (response.status !== 200) {
 			console.log('info: ', response, 'status: ', response.status, 'ok: ', response.ok, 'statusText: ', response.statusText);

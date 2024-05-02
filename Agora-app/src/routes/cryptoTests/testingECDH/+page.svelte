@@ -26,19 +26,19 @@
 		clientKeyStringPub = BothKeys.keyStringPub
 		clientKeyStringPriv = BothKeys.keyStringPriv;
 		counter++;
-		console.log('step ', counter, ' finished');
+		console.log('step ', counter, ' finished'); //1
 		serverKeystringPub = await ECDHCrypto.requestServerECDH();
 		counter++;
-		console.log('step ', counter, ' finished');
+		console.log('step ', counter, ' finished'); //2
 		sendKeyCheck = await ECDHCrypto.tempSendEDCHKey(clientKeyStringPub);
 		counter++;
-		console.log('step ', counter, ' finished');
+		console.log('step ', counter, ' finished'); //3
 		sharedSecret = await ECDHCrypto.deriveSecret(clientKeyStringPub, serverKeystringPub);
 		counter++;
-		console.log('step ', counter, ' finished');
+		console.log('step ', counter, ' finished'); //4
 		sharedSecretCheck = ECDHCrypto.verifySharedSecretTest(sharedSecret);
 		counter++;
-		console.log('step ', counter, ' finished');
+		console.log('step ', counter, ' finished'); //5
 		const{c , d} = await ECDHCrypto.encryptECDH(plainText, sharedSecret);
 		encryptedMessage = c;
 		ivValue = d;
