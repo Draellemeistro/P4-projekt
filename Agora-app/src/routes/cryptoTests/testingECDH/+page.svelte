@@ -43,7 +43,9 @@
 		console.log('verifySharedSecretTest: ', sharedSecretCheck);
 		const{c , d} = await ECDHCrypto.encryptECDH(plainText, sharedSecret);
 		encryptedMessage = c;
+		console.log('encryptedMessage in page: ', encryptedMessage);
 		ivValue = d;
+		console.log('ivValue in page: ', ivValue);
 		counter++;
 		if(counter >= 6){
 			console.log('OnMount should have finished successfully');
