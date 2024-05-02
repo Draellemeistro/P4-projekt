@@ -61,19 +61,25 @@ const ECDHCrypto ={
 		Ybase64 = Ybase64.replace(/=+$/, '');
 		serverPublicKeyParsed.x = Xbase64;
 		serverPublicKeyParsed.y = Ybase64;
-		const serverPublicKeyJwk = await window.crypto.subtle.importKey(
-			'jwk',
-			serverPublicKeyParsed,
-			{
-				name: 'ECDH',
-				namedCurve: 'P-521',
-				x: Xbase64,
-				y: Ybase64,
-			},
-			true,
-			['deriveKey', 'deriveBits'],
+		let serverPublicKeyJwk;
+		try{
+			serverPublicKeyJwk = await window.crypto.subtle.importKey(
+				'jwk',
+				serverPublicKeyParsed,
+				{
+					name: 'ECDH',
+					namedCurve: 'P-521',
+					x: Xbase64,
+					y: Ybase64,
+				},
+				true,
+				['deriveKey', 'deriveBits'],
 
-		);
+			);
+		} catch (error) {
+			console.error('Failed to import server public key, error: ', error);
+		}
+
 		console.log('server public key as JWK: ', serverPublicKeyJwk);
 		const keyString = JSON.stringify(serverPublicKeyJwk); //probably redundant, but just to be sure
 		console.log('server public key from stringified keystring: ', keyString);
