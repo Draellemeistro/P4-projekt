@@ -51,8 +51,8 @@ const ECDHCrypto ={
 		console.log('server public key as string: ', serverPublicKeyECDHString);
 		console.log('server public key parsed: ', serverPublicKeyParsed);
 		serverPublicKeyParsed.key_ops = ["deriveKey", "deriveBits"];
-		serverPublicKeyParsed.x = this.requestServerECDH(serverPublicKeyParsed.x);
-		serverPublicKeyParsed.y = this.requestServerECDH(serverPublicKeyParsed.y);
+		serverPublicKeyParsed.x = this.encodeXYPropertiesJWK(serverPublicKeyParsed.x);
+		serverPublicKeyParsed.y = this.encodeXYPropertiesJWK(serverPublicKeyParsed.y);
 		const serverPublicKeyJwk = await window.crypto.subtle.importKey(
 			'jwk',
 			serverPublicKeyParsed,
