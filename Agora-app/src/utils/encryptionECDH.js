@@ -314,6 +314,8 @@ const ECDHCrypto ={
 			SharedSecretForEncryption,
 			encoder.encode(message)
 		);
+		console.log('returning encryptedMessage from encryptECDH: ', encryptedMessage);
+		console.log('returning ivValue from encryptECDH: ', ivValue);
 		return {encryptedMessage, ivValue};
 	},
 	verifySharedSecretTest: async function verifyTestSharedSecret(keyStringSharedSecret, keyStringPub) {
