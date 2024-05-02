@@ -149,28 +149,11 @@ const ECDHCrypto ={
 			console.log('clientPrivateKey is not a string. Trying to use it anyway');
 			clientKeyForSecret = clientPrivateKeyString;
 		}
-		const jwkClient = {
-			kty: clientKeyForSecret.kty,
-			crv:clientKeyForSecret.crv,
-			x: clientKeyForSecret.x,
-			y: clientKeyForSecret.y,
-			d: clientKeyForSecret.d,
-			ext: true,
-			key_ops: []
-		};
-		const jwkServer = {
-			kty: serverKeyForSecret.kty,
-			crv: serverKeyForSecret.crv,
-			x: serverKeyForSecret.x,
-			y: serverKeyForSecret.y,
-			ext: true,
-			key_ops: []
-		};
 		console.log('attempting to import client private key:.....');
 		console.log('clientKeyForSecret: ', clientKeyForSecret);
 		const clientKeyForSecretJWK = await window.crypto.subtle.importKey(
 			'jwk',
-			jwkClient,
+			clientKeyForSecret,
 			{
 				name: 'ECDH',
 				namedCurve: 'P-521',
@@ -180,7 +163,7 @@ const ECDHCrypto ={
 		); console.log('attempting to import client private key: success');
 		const serverKeyForSecretJWK = await window.crypto.subtle.importKey(
 			'jwk',
-			jwkServer,
+			serverKeyForSecret,
 			{
 				name: 'ECDH',
 				namedCurve: 'P-521',
@@ -209,7 +192,7 @@ const ECDHCrypto ={
 					length: "256"
 				},
 				true,
-				[],
+				["encrypt", "decrypt"],
 			);
 		} catch (error) {
 			console.log('first attempt failed. Trying again with no key_ops');
