@@ -424,6 +424,7 @@ app.post('/check-shared-secret', async (req, res) => {
 		clientSharedSecret = JSON.stringify(clientSharedSecret);
 	}
 	if (clientSharedSecret === stringServerSharedSecret) {
+		console.log('Shared secret is identical to eachother\nEYOOOOOO!!');
 		responseValue = true;
 	} else {
 		if (typeof stringServerSharedSecret === 'string' ) {
