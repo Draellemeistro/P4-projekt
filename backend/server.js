@@ -49,9 +49,9 @@ const certificate = fs.readFileSync('./cert.pem', 'utf8');
 //const serverPrivateKeyECDHPem = Buffer.from(fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem',{encoding: 'utf-8'}), 'base64'); // TODO test if this works
 //const serverPublicKeyECDH = serverECDHCrypto.removePEM(serverPublicKeyECDHPem);
 //const serverPrivateKeyECDH = serverECDHCrypto.removePEM(serverPrivateKeyECDHPem);
-serverECDHCrypto.initECDH().then(ECDHKeysStrings => {
-	console.log(ECDHKeysStrings);
-});
+//serverECDHCrypto.initECDH().then(ECDHKeysStrings => {
+//	console.log(ECDHKeysStrings);
+//});
 // .then(ECDHKeysStrings => {
 //	fs.writeFileSync('serverPublicKeyECDH.json', ECDHKeysStrings.publicKeyString);
 //	fs.writeFileSync('serverPrivateKeyECDH.json', ECDHKeysStrings.privateKeyString);
