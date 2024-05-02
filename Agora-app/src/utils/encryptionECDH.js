@@ -52,7 +52,7 @@ const ECDHCrypto ={
 				namedCurve: 'P-521'
 			},
 			true,
-			['encrypt', 'decrypt']
+			['deriveKey', 'deriveBits']
 		);
 		console.log('server public key as JWK: ', serverPublicKeyJwk);
 		const keyString = JSON.stringify(serverPublicKeyJwk); //probably redundant, but just to be sure
