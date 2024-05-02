@@ -333,7 +333,7 @@ const ECDHCrypto ={
 			const data = await response.json();
 			if (data.success === true || data.success === 'true') {
 				console.log('shared secret key is identical on both client and server');
-				return 'success';
+				return 'success!';
 			} else if (data.success === false || data.success === 'false') {
 				console.log('shared secret key is not identical on both client and server');
 				return 'failed';

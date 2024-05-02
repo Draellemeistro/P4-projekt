@@ -37,7 +37,7 @@
 		counter++;
 		console.log('step ', counter, ' finished'); //4
 		console.log('\n\n\nsharedSecret: ', sharedSecret, "\n\n\n");
-		sharedSecretCheck = ECDHCrypto.verifySharedSecretTest(sharedSecret, clientKeyStringPub);
+		sharedSecretCheck = await ECDHCrypto.verifySharedSecretTest(sharedSecret, clientKeyStringPub);
 		counter++;
 		console.log('step ', counter, ' finished'); //5
 		console.log('verifySharedSecretTest: ', sharedSecretCheck);
