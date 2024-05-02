@@ -111,6 +111,20 @@ const ECDHCrypto ={
 					["deriveKey", "deriveBits"],
 				);} catch (error) {
 				console.error('Failed to import FIXED server public key: ', error);
+				try {
+
+					serverPublicKeyJwk = await window.crypto.subtle.importKey(
+						'jwk',
+						JSON.parse(sessionStorage.getItem('clientPublicKeyECDH')),
+						{
+							name: 'ECDH',
+							namedCurve: 'P-521',
+						},
+						true,
+						["deriveKey", "deriveBits"],
+					);} catch (error) {
+					console.error('Failed to import the clients own key...\nWTF\nWTF\nWTF\nWTF\nWTF: ', error);
+				}
 			}
 			console.error('Failed to import server public key: ', error);
 		}
