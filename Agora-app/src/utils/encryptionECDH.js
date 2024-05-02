@@ -23,15 +23,18 @@ const ECDHCrypto ={
 		console.log('kty: ', exportedPrivKeyECDH.kty);
 		console.log('x: ', exportedPrivKeyECDH.x);
 		console.log('y: ', exportedPrivKeyECDH.y);
+		console.log('ddddddddd: ', exportedPrivKeyECDH.d);
+
 
 		// Convert the keys to strings
 		const keyStringPriv = JSON.stringify(exportedPrivKeyECDH);
 		const keyStringPub = JSON.stringify(fixedPubKey);
+		console.log('keyStringPriv: ', keyStringPriv);
 		sessionStorage.setItem('clientPublicKeyECDH', keyStringPub);
 		//probably not secure to store private key in session storage
 		sessionStorage.setItem('clientPrivateKeyECDH', keyStringPriv);
 		keyStringObject = {keyStringPub, keyStringPriv};
-		console.log('keyStringObject: ', keyStringObject);
+
 		return keyStringObject;
 	},
 // Function to send client's public key and receive server's public key
