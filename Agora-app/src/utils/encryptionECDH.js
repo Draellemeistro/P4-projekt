@@ -153,7 +153,6 @@ const ECDHCrypto ={
 
 		//fix and validate the JWK if needed
 		serverKeyForSecret = this.fixAndValidateJWK(serverKeyForSecret);
-		clientKeyForSecret = this.fixAndValidateJWK(clientKeyForSecret);
 
 		const sharedSecretKey = await window.crypto.subtle.deriveKey(
 			{
