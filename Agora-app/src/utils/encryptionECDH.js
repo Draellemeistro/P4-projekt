@@ -330,19 +330,15 @@ const ECDHCrypto ={
 			console.error('Failed to send encrypted ballot');
 		} if (response.ok) {
 			console.log('server received shared secret and public key');
-			if (response.data.responseValue === 'true') {
+			if (response.data.success === true || response.data.success === 'true') {
 				console.log('shared secret key is identical on both client and server');
-			} else if (response.data.responseValue === 'false') {
+				return 'success';
+			} else if (response.data.success === false || response.data.success === 'false') {
 				console.log('shared secret key is not identical on both client and server');
-				return 0;
+				return 'failed';
 			} else {
 				console.log('response.data is not a boolean or some other error occurred');
-				return -1;
-			}
-			const serverSharedSecret = response.data.serverSharedSecret;
-			if (serverSharedSecret === keyStringSharedSecret) {
-				console.log('server shared secret is identical to client shared secret');
-				return 1;
+				return 'error';
 			}
 		}
 	},
