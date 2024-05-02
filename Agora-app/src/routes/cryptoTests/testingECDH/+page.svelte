@@ -17,14 +17,15 @@
 	// ECDHCrypto.fixAndValidateJWK();
 	onMount(async () => {
 		console.log('1');
-
-		const BothKeys = await ECDHCrypto.initECDH();
-		console.log('2');
-		await ECDHCrypto.tempSendEDCHKey(ECDHCrypto.decideClientECDHString(BothKeys.keyStringPub));
-		console.log('3');
 		serverKeystringPub = await ECDHCrypto.requestServerECDH();
+		console.log('2');
+		const BothKeys = await ECDHCrypto.initECDH();
 		clientKeyStringPub = BothKeys.keyStringPub;
 		clientKeyStringPriv = BothKeys.keyStringPriv;
+		console.log('3');
+		sharedSecret = await ECDHCrypto.deriveSecret(BothKeys.keyStringPriv, serverKeystringPub);
+		console.log('4');
+
 		//if (clientKeyStringPub === BothKeys.keyStringPub) {
 		//	console.log('client public key returned from initECDH is the same as the one stored in the object');
 		//} else {
@@ -34,14 +35,16 @@
 		//} else {
 		//	console.log('error: client public key in storage is NOT the same as the one stored in the object or the one returned from initECDH');
 		//}
-		console.log('4');
-		sharedSecret = await ECDHCrypto.deriveSecret(BothKeys.keyStringPriv, serverKeystringPub);
+
 		console.log('5');
+		await ECDHCrypto.tempSendEDCHKey(ECDHCrypto.decideClientECDHString(BothKeys.keyStringPub));
+		console.log('6');
 		const{c , d} = await ECDHCrypto.encryptECDH(plainText, sharedSecret);
 		encryptedMessage = c;
 		ivValue = d;
-		console.log('6');
+		console.log('7');
 		sharedSecretCheck = ECDHCrypto.verifySharedSecretTest(sharedSecret);
+		console.log('8: OnMount finished');
 	} );
 
 </script>
