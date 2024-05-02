@@ -51,8 +51,16 @@ const ECDHCrypto ={
 		console.log('server public key as string: ', serverPublicKeyECDHString);
 		console.log('server public key parsed: ', serverPublicKeyParsed);
 		serverPublicKeyParsed.key_ops = ["deriveKey", "deriveBits"];
-		serverPublicKeyParsed.x = this.encodeXYPropertiesJWK(serverPublicKeyParsed.x);
-		serverPublicKeyParsed.y = this.encodeXYPropertiesJWK(serverPublicKeyParsed.y);
+		let Xbase64 = btoa(serverPublicKeyParsed.x);
+		Xbase64 = Xbase64.replace('+', '-');
+		Xbase64 = Xbase64.replace('/', '_');
+		Xbase64 = Xbase64.replace(/=+$/, '');
+		let Ybase64 = btoa(serverPublicKeyParsed.y);
+		Ybase64 = Ybase64.replace('+', '-');
+		Ybase64 = Ybase64.replace('/', '_');
+		Ybase64 = Ybase64.replace(/=+$/, '');
+		serverPublicKeyParsed.x = Xbase64;
+		serverPublicKeyParsed.y = Ybase64;
 		const serverPublicKeyJwk = await window.crypto.subtle.importKey(
 			'jwk',
 			serverPublicKeyParsed,
