@@ -150,6 +150,16 @@ const ECDHCrypto ={
 			console.log('clientPrivateKey is not a string. Trying to use it anyway');
 			clientKeyForSecret = clientPrivateKeyString;
 		}
+		const clientKeyForSecretJWK = await window.crypto.subtle.importKey(
+			'jwk',
+			clientKeyForSecret,
+			{
+				name: 'ECDH',
+				namedCurve: 'P-521',
+			},
+			true,
+			['deriveKey', 'deriveBits']
+		);
 
 		//fix and validate the JWK if needed
 		serverKeyForSecret = this.fixAndValidateJWK(serverKeyForSecret);
