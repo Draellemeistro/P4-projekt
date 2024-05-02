@@ -30,7 +30,7 @@
 		serverKeystringPub = await ECDHCrypto.requestServerECDH();
 		counter++;
 		console.log('step ', counter, ' finished');
-		sendKeyCheck = await ECDHCrypto.tempSendEDCHKey(ECDHCrypto.decideClientECDHString(BothKeys.keyStringPub));
+		sendKeyCheck = await ECDHCrypto.tempSendEDCHKey(clientKeyStringPub);
 		counter++;
 		console.log('step ', counter, ' finished');
 		sharedSecret = await ECDHCrypto.deriveSecret(clientKeyStringPub, serverKeystringPub);
