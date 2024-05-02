@@ -322,7 +322,7 @@ const ECDHCrypto ={
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: ({
+			body: JSON.stringify({
 				sharedSecret: keyStringSharedSecret,
 				clientPublicKey: keyStringPub
 			})
