@@ -429,6 +429,7 @@ app.post('/check-shared-secret', async (req, res) => {
 				console.log('Client shared secret:', clientSharedSecret);
 			} else {
 				console.log('Client shared secret is not a string');
+				console.log('Client shared secret:', clientSharedSecret);
 			}
 		} else {
 				console.log('Server shared secret is not a string');
