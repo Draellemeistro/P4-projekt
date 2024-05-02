@@ -170,11 +170,14 @@ const ECDHCrypto ={
 			true,
 			[]
 		);
-
+		clientKeyForSecretJWK.usages = ['deriveKey'];
+		serverKeyForSecretJWK.usages = ['deriveKey'];
 		//fix and validate the JWK if needed
 		//clientKeyForSecret = this.fixAndValidateJWK(clientKeyForSecret);
 		clientKeyForSecret = clientKeyForSecretJWK;
 		serverKeyForSecret = serverKeyForSecretJWK;
+		console.log('clientKeyForSecret: ', clientKeyForSecret);
+		//console.log('serverKeyForSecret: ', serverKeyForSecret);
 		let sharedSecretKey;
 		console.log('attempting to derive shared secret key. param1 is serverkey, param2 is clientkey');
 		try {
