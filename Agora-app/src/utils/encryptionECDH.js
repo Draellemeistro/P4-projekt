@@ -155,7 +155,6 @@ const ECDHCrypto ={
 			d: clientKeyForSecret.d,
 			crv:clientKeyForSecret.crv,
 			x: clientKeyForSecret.x,
-			key_ops: ["deriveKey", "deriveBits"],
 			y: clientKeyForSecret.y
 		};
 		// eslint-disable-next-line no-unused-vars
@@ -165,7 +164,7 @@ const ECDHCrypto ={
 			x: serverKeyForSecret.x,
 			y: serverKeyForSecret.y,
 			ext: true,
-			key_ops: ["deriveKey"]
+			key_ops: ["deriveKey", 'deriveKey']
 		};
 		console.log('attempting to import client private key:.....');
 		console.log('clientKeyForSecret: ', clientKeyForSecret);
