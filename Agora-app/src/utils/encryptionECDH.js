@@ -164,7 +164,7 @@ const ECDHCrypto ={
 			x: serverKeyForSecret.x,
 			y: serverKeyForSecret.y,
 			ext: true,
-			key_ops: ["deriveKey"]
+			key_ops: []
 		};
 		console.log('attempting to import client private key:.....');
 		console.log('clientKeyForSecret: ', clientKeyForSecret);
@@ -176,7 +176,7 @@ const ECDHCrypto ={
 				namedCurve: 'P-521',
 			},
 			true,
-			["deriveKey"]
+			[]
 		); console.log('attempting to import client private key: success');
 		const serverKeyForSecretJWK = await window.crypto.subtle.importKey(
 			'jwk',
@@ -209,7 +209,7 @@ const ECDHCrypto ={
 					length: "256"
 				},
 				true,
-				["encrypt", "decrypt"],
+				[],
 			);
 		} catch (error) {
 			console.log('first attempt failed. Trying again with no key_ops');
