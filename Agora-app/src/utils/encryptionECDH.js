@@ -222,18 +222,30 @@ const ECDHCrypto ={
 			keyStringPubToUse = keyStringPub;
 		}
 
-		const keyStringParsed = JSON.parse(keyStringPubToUse);
 		const response = await fetch('https://130.225.39.205:3030/temp-ecdh-key-from-client', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({clientPublicKey: keyStringParsed})
-
+			body: ({clientPublicKey: keyStringPubToUse})
 		});
+		console.log('client key sent');
 		if (response.ok) {
-			console.log('server received public key');
-			return 1;
+			console.log('server fetched public key from client');
+			const data = await response.json();
+			if (data.responseValue === 'true') {
+				console.log('received public key string has actual value');
+				if (data.returnKey === keyStringPubToUse) {
+					console.log('The server received the correct public key');
+					return 1;
+				} else {
+					console.error('server received incorrect public key');
+					return 0;
+				}
+			} else {
+				console.error('server received public key string with no value');
+				return 0;
+			}
 		} else {
 			console.error('Failed to send public key');
 			return 0;
