@@ -157,6 +157,7 @@ const ECDHCrypto ={
 			x: clientKeyForSecret.x,
 			y: clientKeyForSecret.y
 		};
+		console.log('clientKeyForSecret D: ', clientKeyForSecret.d,);
 		// eslint-disable-next-line no-unused-vars
 		const jwkServer = {
 			kty: serverKeyForSecret.kty,
