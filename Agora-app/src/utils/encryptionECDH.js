@@ -161,10 +161,22 @@ const ECDHCrypto ={
 			true,
 			[]
 		);
+		const serverKeyForSecretJWK = await window.crypto.subtle.importKey(
+			'jwk',
+			serverKeyForSecret,
+			{
+				name: 'ECDH',
+				namedCurve: 'P-521',
+			},
+			true,
+			[]
+		);
+
 		//fix and validate the JWK if needed
 		//clientKeyForSecret = this.fixAndValidateJWK(clientKeyForSecret);
 		//serverKeyForSecret = this.fixAndValidateJWK(serverKeyForSecret);
 		clientKeyForSecret = clientKeyForSecretJWK;
+		serverKeyForSecret = serverKeyForSecretJWK;
 		let sharedSecretKey;
 		console.log('attempting to derive shared secret key. param1 is serverkey, param2 is clientkey');
 		try {
