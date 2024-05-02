@@ -453,7 +453,7 @@ app.post('/check-shared-secret', async (req, res) => {
 			}
 		}
 	}
-	res.json({responseValue, stringServerSharedSecret});
+	res.json({success: responseValue});
 });
 app.post('/decrypt-ECDH-message-Test', async (req, res) => {
 	console.log('Accessed /decrypt-ECDH-message-Test endpoint');
