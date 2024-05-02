@@ -78,12 +78,6 @@ const ECDHCrypto ={
 			x: serverPublicKeyParsed.x,
 			y: serverPublicKeyParsed.y,
 		};
-		console.log(serverPublicKeyParsed.crv); // Outputs: P-521
-		console.log(serverPublicKeyParsed.ext); // Outputs: true
-		console.log(serverPublicKeyParsed.key_ops); // Outputs: ["deriveKey", "deriveBits"]
-		console.log(serverPublicKeyParsed.kty); // Outputs: EC
-		console.log(serverPublicKeyParsed.x); // Outputs: AdYvvEQwZXZdXR4iDr2c3SibRnME4aZd2zvXWsYsomd3k7FYBzvvXlj9dYOKISNY-3Fy9OxSzXatd9Y3jtCslgny
-		console.log(serverPublicKeyParsed.y); // Outputs: AeEO7TDgQIOhoTobohPLWL4vGePOMMSvPJ3V0DzVLxGNQAlhXbTZ4Wz_Y4EX604iDjC_1EhxlSyk121_UhsuLPP8
 
 		let serverPublicKeyJwk;
 		try{
@@ -112,98 +106,66 @@ const ECDHCrypto ={
 					[],
 				)} catch (error) {
 				console.error('Failed to import FIXED server public key: ', error);
-				try {
-
-					serverPublicKeyJwk = await window.crypto.subtle.importKey(
-						'jwk',
-						JSON.parse(sessionStorage.getItem('clientPublicKeyECDH')),
-						{
-							name: 'ECDH',
-							namedCurve: 'P-521',
-						},
-						true,
-						[],
-					);} catch (error) {
-					console.error('Failed to import the clients own key...\nWTF\nWTF\nWTF\nWTF\nWTF: ', error);
 				}
-			}
 			console.error('Failed to import server public key: ', error);
 		}
-
-
-		console.log('server public key as JWK: ', serverPublicKeyJwk);
 		let keyTestExport = await window.crypto.subtle.exportKey('jwk',serverPublicKeyJwk)
-		console.log('test exports here:')
-		console.log(keyTestExport.crv);
-		console.log(keyTestExport.ext);
-		console.log(keyTestExport.key_ops);
-		console.log(keyTestExport.kty);
-		console.log(keyTestExport.x);
-		console.log(keyTestExport.y);
-		const keyString = JSON.stringify(serverPublicKeyJwk); //probably redundant, but just to be sure
-		console.log('server public key from stringified keystring: ', keyString);
+		keyTestExport = this.fixAndValidateJWK(keyTestExport)
+		const keyString = JSON.stringify(keyTestExport); //probably redundant, but just to be sure
+		console.log('server public key from stringified EXPORTkeystring: ', keyString);
 		sessionStorage.setItem('serverPublicKeyECDH', keyString);
-		return
+		return keyString;
 	},
+	compareKeyWithStorage: function(key) {
+		const keyStringImported = key;
+		const serverPubKeySessionStorage = sessionStorage.getItem('serverPublicKeyECDH');
+		const clientKeyStringSessionStorage = sessionStorage.getItem('clientPublicKeyECDH')
+		if (!keyStringImported) {
+			console.error('invalid Key passed to function');
+			if (keyStringImported === clientKeyStringSessionStorage) {
+				console.log('Key variable is the same as the one stored in session storage: CLIENT');
+			} else {
+				if (keyStringImported === clientKeyStringSessionStorage) {
+					console.log('Key variable is the same as the one stored in session storage: SERVER');
+				} else {
+					console.log('Maybe use the corresponding key in SessionStorage instead.');
+				}
+			}
+		} else {
+				console.log('Key variable is a valid keystring');
+				if (keyStringImported === clientKeyStringSessionStorage) {
+					console.log('the key corresponds to the client public key from storage');
+				} else if (keyStringImported === serverPubKeySessionStorage) {
+					console.log('the key corresponds to the server public key from storage');
+				}	else	{
+					console.log('the key does not correspond to either client public key or server public key in storage.\nCAREFUL!!!');
+				}
+				return 1;
+			}
+		},
 
 // Function to compute shared secret
-	deriveSecret: async function deriveSecretKey(clientPrivateKey, serverPubKeyJwkFormat) {
+	deriveSecret: async function deriveSecretKey(clientPrivateKeyString, serverPubKeyString) {
 		let serverKeyForSecret;
 		let clientKeyForSecret;
-		const keyStringImported = JSON.parse(serverPubKeyJwkFormat);
-		const serverPubKeySessionStorage = sessionStorage.getItem('serverPublicKeyECDH');
-		const keyStringSessionStorage = JSON.parse(serverPubKeySessionStorage);
-		if (!keyStringImported) {
-			console.error('invalid server public key passed to function');
-			if (keyStringImported === keyStringSessionStorage) {
-				console.log('server public key variable is the same as the one stored in session storage');
-			} else {
-				console.log('server public key variable is different from the one stored in session storage');
-				console.log('keyStringImported: ', keyStringImported);
-				console.log('1\n2\n3\n4\n5\n6');
-				console.log('keyStringSessionStorage: ', keyStringSessionStorage);
-			}
-		} else if (keyStringImported === keyStringSessionStorage) {
-			serverKeyForSecret = keyStringSessionStorage;
-			console.log('server public key variable is the same as the one stored in session storage');
-		} else if (!keyStringSessionStorage) {
-			serverKeyForSecret = keyStringImported;
-			console.log('server public key variable is different from the one stored in session storage');
-			console.log('keyStringImported: ', keyStringImported);
-			console.log('1\n2\n3\n4\n5\n6');
-			console.log('keyStringSessionStorage: ', keyStringSessionStorage);
+
+		if (!this.compareKeyWithStorage(serverPubKeyString)) {
+			console.log('invalid server public key STRING passed to function. Trying to use it anyway');
+			serverKeyForSecret = serverPubKeyString;
 		} else {
-			console.log('how the hell did we get here?? serverKeyForSecret');
-			serverKeyForSecret = keyStringSessionStorage;
+			serverKeyForSecret = JSON.parse(serverPubKeyString);
+		}
+		if(typeof clientPrivateKeyString === 'string') {
+			clientKeyForSecret = JSON.parse(clientPrivateKeyString);
+			} else {
+			console.log('clientPrivateKey is not a string. Trying to use it anyway');
+			clientKeyForSecret = clientPrivateKeyString;
 		}
 
+		//fix and validate the JWK if needed
+		serverKeyForSecret = this.fixAndValidateJWK(serverKeyForSecret);
+		clientKeyForSecret = this.fixAndValidateJWK(clientKeyForSecret);
 
-		const clientKeyStringImported = JSON.parse(clientPrivateKey);
-		const clientKeySessionStorage = sessionStorage.getItem('clientPrivateKeyECDH');
-		const clientKeyStringSessionStorage = JSON.parse(clientKeySessionStorage);
-		if (!clientKeyStringImported) {
-			console.error('invalid client private key passed to function');
-			if (clientKeyStringImported === clientKeyStringSessionStorage) {
-				console.log('client private key variable is the same as the one stored in session storage');
-			} else {
-				console.log('client private key variable is different from the one stored in session storage');
-				console.log('clientKeyStringImported: ', clientKeyStringImported);
-				console.log('1\n2\n3\n4\n5\n6');
-				console.log('clientKeyStringSessionStorage: ', clientKeyStringSessionStorage);
-			}
-		} else if (clientKeyStringImported === clientKeyStringSessionStorage) {
-			clientKeyForSecret = clientKeyStringSessionStorage;
-			console.log('client private key variable is the same as the one stored in session storage');
-		} else if (!clientKeyStringSessionStorage) {
-			clientKeyForSecret = clientKeyStringImported;
-			console.log('client private key variable is different from the one stored in session storage');
-			console.log('clientKeyStringImported: ', clientKeyStringImported);
-			console.log('1\n2\n3\n4\n5\n6');
-			console.log('clientKeyStringSessionStorage: ', clientKeyStringSessionStorage);
-		} else {
-			console.log('how the hell did we get here?? clientKeyForSecret');
-			clientKeyForSecret = clientKeyStringSessionStorage;
-		}
 		const sharedSecretKey = await window.crypto.subtle.deriveKey(
 			{
 				name: "ECDH",
@@ -217,6 +179,7 @@ const ECDHCrypto ={
 			true,
 			["encrypt", "decrypt"],
 		);
+		console.log('shared secret key: ', sharedSecretKey);
 		const exportedSharedSecretKey = await window.crypto.subtle.exportKey('jwk', sharedSecretKey);
 		const sharedSecretString = JSON.stringify(exportedSharedSecretKey);
 		sessionStorage.setItem('sharedSecretECDH', sharedSecretString);
