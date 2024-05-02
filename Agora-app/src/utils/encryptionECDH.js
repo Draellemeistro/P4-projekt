@@ -159,11 +159,12 @@ const ECDHCrypto ={
 				namedCurve: 'P-521',
 			},
 			true,
-			['deriveKey', 'deriveBits']
+			[]
 		);
 		console.log('it worked! client private key imported');
 
 		//fix and validate the JWK if needed
+		clientKeyForSecret = this.fixAndValidateJWK(clientKeyForSecret);
 		serverKeyForSecret = this.fixAndValidateJWK(serverKeyForSecret);
 
 		console.log('attempting to derive shared secret key');
@@ -172,7 +173,7 @@ const ECDHCrypto ={
 				name: "ECDH",
 				public: serverKeyForSecret,
 			},
-			clientKeyForSecretJWK,
+			clientKeyForSecret,
 			{
 				name: "AES-GCM",
 				length: "256"
