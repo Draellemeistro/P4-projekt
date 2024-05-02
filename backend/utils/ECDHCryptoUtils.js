@@ -10,7 +10,7 @@ const serverECDHCrypto = {
 				namedCurve: "P-521"
 			},
 			true,
-			["deriveKey"]
+			["deriveKey", "deriveBits"]
 		);
 		const exportedPubKeyECDH = await crypto.subtle.exportKey('jwk', newServerKeyPairECDH.publicKey);
 		console.log('client public key as JWK: ', exportedPubKeyECDH);
