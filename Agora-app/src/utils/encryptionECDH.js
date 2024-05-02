@@ -40,18 +40,7 @@ const ECDHCrypto ={
 		const serverPublicKeyECDHString = await response.json();
 		const serverPublicKeyJwk = JSON.parse(serverPublicKeyECDHString);
 		console.log('server public key: ', serverPublicKeyJwk);
-		const importedKey = await window.crypto.subtle.importKey(
-			'jwk',
-			serverPublicKeyJwk,
-			{
-				name: 'ECDH',
-				namedCurve: 'P-521'
-			},
-			true,
-			['deriveKey', 'deriveBits']
-		);
-		const exportedServerPubKeyECDH = await window.crypto.subtle.exportKey('jwk', importedKey);
-		const keyString = JSON.stringify(exportedServerPubKeyECDH);
+		const keyString = JSON.stringify(serverPublicKeyJwk); //probably redundant, but just to be sure
 		console.log('server public key from stringified keystring: ', keyString);
 		sessionStorage.setItem('serverPublicKeyECDH', keyString);
 		return keyString;
