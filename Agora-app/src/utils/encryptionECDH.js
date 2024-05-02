@@ -158,7 +158,7 @@ const ECDHCrypto ={
 				namedCurve: 'P-521',
 			},
 			true,
-			[]
+			['deriveKey']
 		);
 		const serverKeyForSecretJWK = await window.crypto.subtle.importKey(
 			'jwk',
@@ -170,8 +170,7 @@ const ECDHCrypto ={
 			true,
 			[]
 		);
-		clientKeyForSecretJWK.usages = ['deriveKey'];
-		serverKeyForSecretJWK.usages = ['deriveKey'];
+		//serverKeyForSecretJWK.usages = ['deriveKey'];
 		//fix and validate the JWK if needed
 		//clientKeyForSecret = this.fixAndValidateJWK(clientKeyForSecret);
 		clientKeyForSecret = clientKeyForSecretJWK;
