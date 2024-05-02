@@ -61,13 +61,26 @@ const ECDHCrypto ={
 		}
 		const serverPublicKeyParsed = JSON.parse(serverPublicKeyECDHString);
 		const serverPublicKeyFixedParsed = JSON.parse(serverPublicKeyECDHStringFixed);
-		console.log('server public key as string: ', serverPublicKeyECDHString);
-		console.log('server public key parsed: ', serverPublicKeyParsed);
+		const JWKToPassOn = {
+			crv: serverPublicKeyParsed.crv,
+			ext: serverPublicKeyParsed.ext,
+			key_ops: serverPublicKeyParsed.key_ops,
+			kty: serverPublicKeyParsed.kty,
+			x: serverPublicKeyParsed.x,
+			y: serverPublicKeyParsed.y,
+		};
+		console.log(serverPublicKeyParsed.crv); // Outputs: P-521
+		console.log(serverPublicKeyParsed.ext); // Outputs: true
+		console.log(serverPublicKeyParsed.key_ops); // Outputs: ["deriveKey", "deriveBits"]
+		console.log(serverPublicKeyParsed.kty); // Outputs: EC
+		console.log(serverPublicKeyParsed.x); // Outputs: AdYvvEQwZXZdXR4iDr2c3SibRnME4aZd2zvXWsYsomd3k7FYBzvvXlj9dYOKISNY-3Fy9OxSzXatd9Y3jtCslgny
+		console.log(serverPublicKeyParsed.y); // Outputs: AeEO7TDgQIOhoTobohPLWL4vGePOMMSvPJ3V0DzVLxGNQAlhXbTZ4Wz_Y4EX604iDjC_1EhxlSyk121_UhsuLPP8
+
 		let serverPublicKeyJwk;
 		try{
 			serverPublicKeyJwk = await window.crypto.subtle.importKey(
 				'jwk',
-				serverPublicKeyParsed,
+				JWKToPassOn,
 				{
 					name: 'ECDH',
 					namedCurve: 'P-521',
