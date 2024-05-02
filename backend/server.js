@@ -421,6 +421,7 @@ app.post('/check-shared-secret', async (req, res) => {
 	const exportedServerSharedSecret = await crypto.subtle.exportKey('jwk', serverSharedSecret);
 	const stringServerSharedSecret = JSON.stringify(exportedServerSharedSecret);
 	if (typeof clientSharedSecret !== 'string') {
+		console.log('Client shared secret is getting converted to a string');
 		clientSharedSecret = JSON.stringify(clientSharedSecret);
 	}
 	if (clientSharedSecret === stringServerSharedSecret) {
@@ -429,6 +430,7 @@ app.post('/check-shared-secret', async (req, res) => {
 	} else {
 		if (typeof stringServerSharedSecret === 'string' ) {
 			console.log('Server shared secret:', stringServerSharedSecret);
+			console.log('Client shared secret:', clientSharedSecret);
 			} else {
 				console.log('Server shared secret is not a string... uuuhhh... here\n:', stringServerSharedSecret, '\n\n and here:\n', clientSharedSecret);
 			}
