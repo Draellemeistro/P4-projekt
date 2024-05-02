@@ -351,13 +351,23 @@ app.post('/present-ecdh-key', async (req, res) => {
 });
 
 app.post('/check-shared-secret', async (req, res) => {
-	let responseValue;
 	console.log('Accessed /check-shared-secret endpoint');
+	let responseValue;
+	let clientPublicKeyJWK = req.body.clientPublicKey;
+	let clientSharedSecret = req.body.sharedSecret;
+	let JWKserverPrivECDH = JSON.parse(stringJWKServerPrivECDH);
+	let serverSharedSecret;
+
 	// Parse the keys from JSON strings back into objects
-	const clientSharedSecret = JSON.parse(req.body.sharedSecret);
-	const clientPublicKeyJWK = JSON.parse(req.body.clientPublicKey);
-	const JWKserverPrivECDH = JSON.parse(stringJWKServerPrivECDH);
+	if(typeof clientPublicKeyJWK === 'string') {
+		 clientPublicKeyJWK = JSON.parse(clientPublicKeyJWK);
+	}
+	if(typeof clientSharedSecret === 'string') {
+		 clientSharedSecret = JSON.parse(clientSharedSecret);
+	}
+	console.log('Server private key D:', JWKserverPrivECDH.d);
 	try {
+		console.log('attempting to derive key: attempt 1');
 		const serverSharedSecret = await crypto.subtle.deriveKey(
 			{
 				name: "ECDH",
@@ -374,10 +384,11 @@ app.post('/check-shared-secret', async (req, res) => {
 	} catch (err) {
 		console.error('propably need to import keys, printing error and attempting that', err);
 		try {
+			console.log('attempting to derive key: attempt 2');
 			console.log('Server private key D:', JWKserverPrivECDH.d);
 			const serverPrivateKeyECDH = await crypto.subtle.importKey('jwk', JWKserverPrivECDH, { name: 'ECDH', namedCurve: 'P-521' }, true, ['deriveKey', 'deriveBits']);
 			const clientPublicKeyECDH = await crypto.subtle.importKey('jwk', clientPublicKeyJWK, { name: 'ECDH', namedCurve: 'P-521' }, true, ['deriveKey', 'deriveBits']);
-			const serverSharedSecret = await crypto.subtle.deriveKey(
+			serverSharedSecret = await crypto.subtle.deriveKey(
 				{
 					name: "ECDH",
 					public: clientPublicKeyECDH,
@@ -393,6 +404,7 @@ app.post('/check-shared-secret', async (req, res) => {
 		} catch (err) { console.error('Error:', err); }
 		responseValue = false;
 	}
+	console.log('Server shared secret:', serverSharedSecret);
 	const exportedServerSharedSecret = await crypto.subtle.exportKey('jwk', serverSharedSecret);
 	const stringServerSharedSecret = JSON.stringify(exportedServerSharedSecret);
 	if (clientSharedSecret === stringServerSharedSecret) {
