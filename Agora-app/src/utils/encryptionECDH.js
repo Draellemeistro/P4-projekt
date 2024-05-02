@@ -121,6 +121,7 @@ const ECDHCrypto ={
 							namedCurve: 'P-521',
 						},
 						true,
+						[],
 					);} catch (error) {
 					console.error('Failed to import the clients own key...\nWTF\nWTF\nWTF\nWTF\nWTF: ', error);
 				}
