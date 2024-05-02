@@ -150,6 +150,7 @@ const ECDHCrypto ={
 			clientKeyForSecret = clientPrivateKeyString;
 		}
 		console.log('attempting to import client private key');
+		console.log('clientKeyForSecret: ', clientKeyForSecret);
 		const clientKeyForSecretJWK = await window.crypto.subtle.importKey(
 			'jwk',
 			clientKeyForSecret,
