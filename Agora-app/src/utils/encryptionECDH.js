@@ -66,10 +66,13 @@ const ECDHCrypto ={
 			serverPublicKeyParsed,
 			{
 				name: 'ECDH',
-				namedCurve: 'P-521'
+				namedCurve: 'P-521',
+				x: Xbase64,
+				y: Ybase64,
 			},
 			true,
-			['deriveKey', 'deriveBits']
+			['deriveKey', 'deriveBits'],
+
 		);
 		console.log('server public key as JWK: ', serverPublicKeyJwk);
 		const keyString = JSON.stringify(serverPublicKeyJwk); //probably redundant, but just to be sure
