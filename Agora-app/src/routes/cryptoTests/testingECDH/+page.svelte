@@ -20,10 +20,10 @@
 		serverKeystringPub = await ECDHCrypto.requestServerECDH();
 		console.log('2');
 		const BothKeys = await ECDHCrypto.initECDH();
-		clientKeyStringPub = BothKeys.keyStringPub;
-		clientKeyStringPriv = BothKeys.keyStringPriv;
+		clientKeyStringPub = ECDHCrypto.fixAndValidateJWK(BothKeys.keyStringPub);
+		clientKeyStringPriv = ECDHCrypto.fixAndValidateJWK(BothKeys.keyStringPriv);
 		console.log('3');
-		sharedSecret = await ECDHCrypto.deriveSecret(BothKeys.keyStringPriv, serverKeystringPub);
+		sharedSecret = await ECDHCrypto.deriveSecret(clientKeyStringPub, serverKeystringPub);
 		console.log('4');
 
 		//if (clientKeyStringPub === BothKeys.keyStringPub) {
