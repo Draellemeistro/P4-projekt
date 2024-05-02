@@ -156,7 +156,7 @@ const ECDHCrypto ={
 			y: clientKeyForSecret.y,
 			d: clientKeyForSecret.d,
 			ext: true,
-			key_ops: ["deriveKey", "deriveBits"]
+			key_ops: ["deriveKey"]
 		};
 		console.log('attempting to import client private key:.....');
 		console.log('clientKeyForSecret: ', clientKeyForSecret);
