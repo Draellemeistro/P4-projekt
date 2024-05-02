@@ -352,7 +352,7 @@ app.post('/present-ecdh-key', async (req, res) => {
 
 app.post('/check-shared-secret', async (req, res) => {
 	let responseValue;
-
+	console.log('Accessed /check-shared-secret endpoint');
 	// Parse the keys from JSON strings back into objects
 	const clientSharedSecret = JSON.parse(req.body.sharedSecret);
 	const clientPublicKeyJWK = JSON.parse(req.body.clientPublicKey);
