@@ -34,16 +34,6 @@ const ECDHCrypto ={
 		console.log('keyStringObject: ', keyStringObject);
 		return keyStringObject;
 	},
-
-
-	encodeXYPropertiesJWK: function base64urlEncode(str) {
-		let base64 = btoa(str);
-		base64 = base64.replace('+', '-');
-		base64 = base64.replace('/', '_');
-		base64 = base64.replace(/=+$/, '');
-		return base64;
-	},
-
 // Function to send client's public key and receive server's public key
 	requestServerECDH: async function requestServerPublicKeyECDH(){
 		const serverIP = '192.168.0.113';
@@ -69,7 +59,6 @@ const ECDHCrypto ={
 			console.log('serverPublicKeyECDHStringFixed: ', serverPublicKeyECDHStringFixed);
 		}
 		const serverPublicKeyParsed = JSON.parse(serverPublicKeyECDHString);
-		const serverPublicKeyFixedParsed = JSON.parse(serverPublicKeyECDHStringFixed);
 		const JWKToPassOn = {
 			crv: serverPublicKeyParsed.crv,
 			ext: serverPublicKeyParsed.ext,
@@ -97,7 +86,7 @@ const ECDHCrypto ={
 			try {
 				serverPublicKeyJwk = await window.crypto.subtle.importKey(
 					'jwk',
-					serverPublicKeyFixedParsed,
+					JWKToPassOn,
 					{
 						name: 'ECDH',
 						namedCurve: 'P-521',
