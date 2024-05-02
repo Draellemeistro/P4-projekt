@@ -365,6 +365,7 @@ app.post('/check-shared-secret', async (req, res) => {
 	if(typeof clientSharedSecret === 'string') {
 		 clientSharedSecret = JSON.parse(clientSharedSecret);
 	}
+	clientPublicKeyJWK = serverECDHCrypto.fixAndValidateJWK(clientPublicKeyJWK);
 	JWKserverPrivECDH = serverECDHCrypto.fixAndValidateJWK(JWKserverPrivECDH);
 	console.log('Server private key D:', JWKserverPrivECDH.d);
 	try {
