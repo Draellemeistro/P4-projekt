@@ -420,23 +420,39 @@ app.post('/check-shared-secret', async (req, res) => {
 	console.log('Server shared secret:', serverSharedSecret);
 	const exportedServerSharedSecret = await crypto.subtle.exportKey('jwk', serverSharedSecret);
 	const stringServerSharedSecret = JSON.stringify(exportedServerSharedSecret);
-	if (typeof clientSharedSecret !== 'string') {
-		console.log('Client shared secret is getting converted to a string');
-		clientSharedSecret = JSON.stringify(clientSharedSecret);
+	let clientSharedSecretString;
+	// COMPARISON: exportedServerSharedSecret vs clientSharedSecret
+	let aesKeyServer = {
+		key_ops: exportedServerSharedSecret.key_ops,
+		ext: exportedServerSharedSecret.ext,
+		kty: exportedServerSharedSecret.kty,
+		k: exportedServerSharedSecret.k,
+		alg: exportedServerSharedSecret.alg,
 	}
-	if (clientSharedSecret === stringServerSharedSecret) {
+	let aesKeyClient = {
+		key_ops: clientSharedSecret.key_ops,
+		ext: clientSharedSecret.ext,
+		kty: clientSharedSecret.kty,
+		k: clientSharedSecret.k,
+		alg: clientSharedSecret.alg,
+	}
+	if(aesKeyServer.k === aesKeyClient.k) {
 		console.log('Shared secret is identical to eachother\nEYOOOOOO!!');
 		responseValue = true;
 	} else {
-		if (typeof stringServerSharedSecret === 'string' ) {
-			console.log('Server shared secret:', stringServerSharedSecret);
-			console.log('Client shared secret:', clientSharedSecret);
+		if (typeof clientSharedSecret !== 'string') {
+			console.log('Client shared secret is getting converted to a string');
+			clientSharedSecretString = JSON.stringify(clientSharedSecret);
+			if (clientSharedSecret === stringServerSharedSecret) {
+				console.log('Shared secret is identical to eachother\nEYOOOOOO!!');
+				responseValue = true;
 			} else {
-				console.log('Server shared secret is not a string... uuuhhh... here\n:', stringServerSharedSecret, '\n\n and here:\n', clientSharedSecret);
+				console.log('Server shared secret:', stringServerSharedSecret);
+				console.log('Client shared secret:', clientSharedSecret);
+				responseValue = false;
 			}
-		responseValue = false;
 		}
-
+	}
 	res.json({responseValue, stringServerSharedSecret});
 });
 app.post('/decrypt-ECDH-message-Test', async (req, res) => {
