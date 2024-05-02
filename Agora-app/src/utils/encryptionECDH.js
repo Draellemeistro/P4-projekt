@@ -320,7 +320,7 @@ const ECDHCrypto ={
 		}
 		console.log('returning encryptedMessage from encryptECDH: ', encryptedMessage);
 		console.log('returning ivValue from encryptECDH: ', ivValue);
-		return ;
+		return returnObject;
 	},
 	verifySharedSecretTest: async function verifyTestSharedSecret(keyStringSharedSecret, keyStringPub) {
 		const response = await fetch('https://192.168.0.113:3030/check-shared-secret', {
