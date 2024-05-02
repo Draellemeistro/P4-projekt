@@ -169,7 +169,7 @@ const ECDHCrypto ={
 				name: "ECDH",
 				public: serverKeyForSecret,
 			},
-			clientKeyForSecret,
+			clientKeyForSecretJWK,
 			{
 				name: "AES-GCM",
 				length: "256"
