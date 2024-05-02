@@ -185,7 +185,7 @@ const ECDHCrypto ={
 				namedCurve: 'P-521',
 			},
 			true,
-			[]
+			["deriveKey", 'deriveKey']
 		);
 		//serverKeyForSecretJWK.usages = ['deriveKey'];
 		//fix and validate the JWK if needed
