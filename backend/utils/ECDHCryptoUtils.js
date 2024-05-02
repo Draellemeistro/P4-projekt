@@ -46,6 +46,58 @@ const serverECDHCrypto = {
 			return false;
 		}
 	},
+	fixAndValidateJWK: function insertKeyOpsAndValidate(jwkToValidate) {
+		let jwk;
+		if (typeof jwkToValidate === 'string') {
+			jwk = JSON.parse(jwkToValidate);
+			if (!jwk.key_ops) {
+				jwk.key_ops = [];
+			}
+			if (!jwk.key_ops.includes('deriveKey')) {
+				jwk.key_ops.push('deriveKey');
+			}
+			if (!jwk.key_ops.includes('deriveBits')) {
+				jwk.key_ops.push('deriveBits');
+			}
+			if (!jwk.ext) {
+				jwk.ext = true;
+			}
+			const validProperties = ['crv', 'ext', 'key_ops', 'kty', 'x', 'y'];
+			const isValid = validProperties.every(prop => prop in jwk);
+			if (!isValid) {
+				throw new Error('Invalid JWK format');
+			}
+			return jwk;
+		}
+
+		jwk = jwkToValidate;
+		// Insert key_ops into the JWK
+		if (!jwk.key_ops) {
+			jwk.key_ops = [];
+		}
+
+		// Add "deriveKey" and "deriveBits" to key_ops if they're not already present
+		if (!jwk.key_ops.includes("deriveKey")) {
+			jwk.key_ops.push("deriveKey");
+		}
+		if (!jwk.key_ops.includes("deriveBits")) {
+			jwk.key_ops.push("deriveBits");
+		}
+		if (!jwk.ext) {
+			jwk.ext = true;
+		}
+		// Define the properties that a valid JWK should have
+		const validProperties = ['crv', 'ext', 'key_ops', 'kty', 'x', 'y'];
+
+		// Check if the JWK has all the valid properties
+		const isValid = validProperties.every(prop => prop in jwk);
+
+		if (!isValid) {
+			throw new Error('Invalid JWK format');
+		}
+
+		return jwk;
+	},
 	removePEM: function removePEMFormatting(key) {
 		return key.replace(/-----BEGIN PUBLIC KEY-----/, '')
 			.replace(/-----END PUBLIC KEY-----/, '')
