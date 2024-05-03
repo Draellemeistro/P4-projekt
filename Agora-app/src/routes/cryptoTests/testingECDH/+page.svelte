@@ -45,7 +45,10 @@
 
 		counter++;
 		console.log('step ', counter, ' finished'); //6
-		decryptedcheck = await ECDHCrypto.SendEncryptedMsgTest(encryptedMessage, sharedSecret, ivValue);
+		decryptedcheck = await ECDHCrypto.SendEncryptedMsgTest(plainText, encryptedMessage, clientKeyStringPub, ivValue);
+		console.log('decryptedcheck', decryptedcheck);
+		counter++;
+		console.log('step ', counter, ' finished'); //7
 		if(counter >= 7){
 			console.log('OnMount should have finished successfully');
 		}
