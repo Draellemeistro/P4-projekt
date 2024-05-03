@@ -473,18 +473,21 @@ const ECDHCrypto ={
 // Function to perform ECDH key exchange, encrypt ballot, and send it to server
 	// eslint-disable-next-line no-undef
 	SendEncryptedMsgTest: async function performECDHAndEncryptBallot(plainTextMessage,encryptedMessage, clientPublicKey, ivValue) {
+		let msgForServer = JSON.stringify({
+			plainTextMessage: plainTextMessage,
+			encryptedMessage: encryptedMessage,
+			clientPublicKey: clientPublicKey,
+			IvValue: ivValue
+		});
+		console.log('msgForServer: ', msgForServer);
+
 		const response = await fetch('https://192.168.0.113:3030/decrypt-ECDH-message-Test', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({
-					plainTextMessage: plainTextMessage,
-					encryptedMessage: encryptedMessage,
-					clientPublicKey: clientPublicKey,
-					IvValue: ivValue
-				})
-			});
+				body: msgForServer
+		});
 		if (response.ok) {
 			const data = await response.json();
 			console.log('received: ', data, 'expected: ', plainTextMessage);
