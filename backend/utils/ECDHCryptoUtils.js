@@ -128,8 +128,8 @@ const serverECDHCrypto = {
 		console.log('decrypted.toString:', decrypted.toString());
 		console.log('decrypted:', decrypted);
 		console.log('decrypted type:', typeof decrypted, '\n\ndecryptedString type:', typeof decrypted.toString());
-		// this.convertArrBuffToBase64(decrypted);
-		return decrypted.toString();
+
+		return this.convertArrBuffToBase64(decrypted);
 	},
 	convertArrBuffToBase64: function convertArrayBufferToBase64(arrayBuffer) {
 		let uint8Array = new Uint8Array(arrayBuffer);
