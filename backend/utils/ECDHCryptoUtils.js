@@ -118,12 +118,11 @@ const serverECDHCrypto = {
 			if(!(encryptedMessage instanceof Buffer)) {
 				console.log('encryptedMessage is not a buffer');
 				console.log('encryptedMessage type:', typeof encryptedMessage);
-				messageBuffer = Buffer.from(encryptedMessage, 'base64');
+				messageBuffer = Buffer.from(Object.values(encryptedMessage));
+				console.log('messageBuffer:', messageBuffer);
 			}
 
-
 		let sharedSecretKey = await crypto.subtle.importKey('jwk', JSON.parse(sharedSecretKeyString), { name: 'AES-GCM', length: 256 }, true, ['decrypt']);
-
 		const decrypted = await crypto.subtle.decrypt(
 			{
 				name: 'AES-GCM',
