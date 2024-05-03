@@ -58,9 +58,10 @@ export const askForDecryptToCheck = (encryptedBallot) => {
 };
 
 
-  ///////////////////////
- //	New or modified		//
-///////////////////////
+  ///////////////////////////////////
+ //	New and/or not implemented		//
+///////////////////////////////////
+
 export const sendBallotToServerAndCheckHash = (ballot) => {
 	const clientPubKeyECDH = 'test';
 	const ballotHash = crypto.createHash('sha256').update(JSON.stringify(ballot)).digest('hex');
@@ -85,7 +86,7 @@ export const sendBallotToServerAndCheckHash = (ballot) => {
 	}
 };
 
-export const RSARequest = () => {
+export const fetchKeyRSA = () => {
 	return fetch(`https://${serverIP}:${serverPort}/rsa-public-key`, {
 		method: 'POST',
 		headers: {
@@ -102,5 +103,47 @@ export const RSADecryptionTest = (plainTextMessage, encryptedMessage) => {
 		},
 		body: JSON.stringify({ plainTextMessage, encryptedMessage }),
 	});
-
 };
+
+export const fetchKeyECDH = () => {
+	return fetch(`https://${serverIP}:${serverPort}/ecdh-public-key`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	});
+};
+
+export const checkSharedSecret = (keyStringSharedSecret, keyStringPub) => {
+	return fetch(`https://${serverIP}:${serverPort}/check-shared-secret`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			sharedSecret: keyStringSharedSecret,
+			clientPublicKey: keyStringPub
+		})
+	});
+};
+
+export const messageDecryptTestECDH = (msgForServer) => {
+	// msgForServer is a stringified object containing several properties, one of which is the encrypted message.
+	return fetch(`https://${serverIP}:${serverPort}/decrypt-ECDH-message-Test`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: msgForServer
+	});
+};
+
+export const tempPostKeyECDH = (keyStringPubToUse) => {
+	return fetch(`https://${serverIP}:${serverPort}/temp-ecdh-key-from-client`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({clientPublicKey: keyStringPubToUse})
+	});
+}

@@ -12,18 +12,8 @@ const ECDHCrypto ={
 			["deriveKey", "deriveBits"]
 		);
 		const exportedPubKeyECDH = await window.crypto.subtle.exportKey('jwk', clientKeyPairECDH.publicKey);
-		console.log('client public key as JWK: ', exportedPubKeyECDH);
 		const fixedPubKey = this.fixAndValidateJWK(exportedPubKeyECDH);
 		const exportedPrivKeyECDH = await window.crypto.subtle.exportKey('jwk', clientKeyPairECDH.privateKey);
-		console.log('client secret key as JWK: ', exportedPrivKeyECDH);
-		console.log('the different fields:')
-		console.log('crv: ', exportedPrivKeyECDH.crv);
-		console.log('ext: ', exportedPrivKeyECDH.ext);
-		console.log('key_ops: ', exportedPrivKeyECDH.key_ops);
-		console.log('kty: ', exportedPrivKeyECDH.kty);
-		console.log('x: ', exportedPrivKeyECDH.x);
-		console.log('y: ', exportedPrivKeyECDH.y);
-		console.log('ddddddddd: ', exportedPrivKeyECDH.d);
 
 
 		// Convert the keys to strings
@@ -39,8 +29,8 @@ const ECDHCrypto ={
 	},
 // Function to send client's public key and receive server's public key
 	requestServerECDH: async function requestServerPublicKeyECDH(){
-		const serverIP = '192.168.0.113';
-		const serverPort = '3030';
+		const serverIP = '192.168.0.113'; // TAG: DOAPIService.
+		const serverPort = '3030';				//fetchKeyECDH()
 		//
 		const response = await fetch(`https://${serverIP}:${serverPort}/request-public-ecdh-key`, {
 			method: 'POST',
@@ -165,14 +155,6 @@ const ECDHCrypto ={
 			y: clientKeyForSecret.y
 		};
 		console.log('clientKeyForSecret D: ', clientKeyForSecret.d,);
-		// eslint-disable-next-line no-unused-vars
-		const jwkServer = {
-			kty: serverKeyForSecret.kty,
-			crv: serverKeyForSecret.crv,
-			x: serverKeyForSecret.x,
-			y: serverKeyForSecret.y,
-			ext: true,
-		};
 		console.log('attempting to import client private key:.....');
 		console.log('clientKeyForSecret: ', clientKeyForSecret);
 		const clientKeyForSecretJWK = await window.crypto.subtle.importKey(
@@ -324,8 +306,11 @@ const ECDHCrypto ={
 		console.log('returning ivValue from encryptECDH: ', ivValue);
 		return returnObject;
 	},
+
 	verifySharedSecretTest: async function verifyTestSharedSecret(keyStringSharedSecret, keyStringPub) {
-		const response = await fetch('https://192.168.0.113:3030/check-shared-secret', {
+		const serverIP = '192.168.0.113';// TAG: DOAPIService
+		const serverPort = '3030';				//checkSharedSecret(keyStringSharedSecret, keyStringPub)
+		const response = await fetch(`https://${serverIP}:${serverPort}/check-shared-secret`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -351,29 +336,15 @@ const ECDHCrypto ={
 			}
 		}
 	},
-	decideClientECDHString: function decideECDHString(clientKeyStringPub) {
-		let keyStringPubToUse;
-		if (clientKeyStringPub === undefined) {
-			console.error('keyStringPub is undefined');
-			const clientPubKeySessionStorage = sessionStorage.getItem('clientPublicKeyECDH');
-			if (clientPubKeySessionStorage === undefined || clientPubKeySessionStorage === null) {
-				console.error('clientPubKeySessionStorage is undefined');
-				return 0;
-			} else {
-				keyStringPubToUse = clientPubKeySessionStorage;
-				console.log('server public key from session storage: ', keyStringPubToUse);
-			}
-		} else	{
-			keyStringPubToUse = clientKeyStringPub;
-			console.log('server public key from function parameter: ', keyStringPubToUse);
-		}
-		return keyStringPubToUse;
-	},
+
+
 	tempSendEDCHKey: async function sendECDHKeyToServer(keyStringPubToUse) {
 		console.log('keyStringPubToUse: ', keyStringPubToUse);
 		console.log('keyStringPubToUse type: ', typeof keyStringPubToUse);
 		console.log('sending public key to server');
-		const response = await fetch('https://192.168.0.113:3030/temp-ecdh-key-from-client', {
+		const serverIP = '192.168.0.113'; // TAG: DOAPIService
+		const serverPort = '3030';			//tempPostKeyECDH(keyStringPubToUse)
+		const response = await fetch(`https://${serverIP}:${serverPort}/temp-ecdh-key-from-client`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -491,7 +462,9 @@ const ECDHCrypto ={
 			IvValue: ivValue
 		});
 		//console.log('msgForServer: ', msgForServer);
-		const response = await fetch('https://192.168.0.113:3030/decrypt-ECDH-message-Test', {
+		const serverIP = '192.168.0.113'; // TAG: DOAPIService
+		const serverPort = '3030'; // messageDecryptTestECDH(msgForServer)
+		const response = await fetch(`https://${serverIP}:${serverPort}/decrypt-ECDH-message-Test`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
