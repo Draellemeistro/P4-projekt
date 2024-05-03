@@ -104,6 +104,7 @@ const serverECDHCrypto = {
 		}
 		},
 	convertBase64ToArrBuffer: function convertBase64ToArrayBuffer(base64String) {
+		console.log('base64String:', base64String);
 		let binaryString = Buffer.from(base64String, 'base64').toString('binary');
 		let arrayBuffer = new Uint8Array(binaryString.length);
 		for (let i = 0; i < binaryString.length; i++) {
