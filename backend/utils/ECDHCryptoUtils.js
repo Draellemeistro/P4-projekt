@@ -137,10 +137,8 @@ const serverECDHCrypto = {
 		console.log('encryptedMessage:', encryptedMessage);
 
 		const encryptedMsgArrBuff = this.convertBase64ToArrBuffer(encryptedMessage);
-		console.log(typeof IvValue);
-		console.log('IvValue:', IvValue);
-		console.log('ivValue parsed:', JSON.parse(IvValue));
-		let IvValueArrBuff = Buffer.from(IvValue, 'base64');
+
+		let IvValueArrBuff = Buffer.from(Object.values(IvValue));
 		//
 		// TODO: Implement server fetching client public key from DB and deriving shared secret key
 		//
