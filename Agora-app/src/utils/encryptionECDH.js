@@ -481,6 +481,7 @@ const ECDHCrypto ={
 // Function to perform ECDH key exchange, encrypt ballot, and send it to server
 	// eslint-disable-next-line no-undef
 	SendEncryptedMsgTest: async function performECDHAndEncryptBallot(plainTextMessage,encryptedMessage, clientPublicKey, ivValue) {
+		console.log('encryptedMessage: ', encryptedMessage);
 		let msgForServer = JSON.stringify({
 			plainTextMessage: plainTextMessage,
 			encryptedMessage: encryptedMessage,
