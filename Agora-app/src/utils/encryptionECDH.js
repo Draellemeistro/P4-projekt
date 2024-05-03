@@ -499,13 +499,8 @@ const ECDHCrypto ={
 				body: msgForServer
 		});
 		if (response.ok) {
-
 			const data = await response.json();
-
-			if (data === plainTextMessage) {
-				console.log('Decryption successful');
-				return ('1Decryption successful! Received decryption: ' + data.decryptedMessage);
-			}else if (JSON.stringify(plainTextMessage) === JSON.stringify(data.decryptedMessage)) {
+			if (JSON.stringify(plainTextMessage) === JSON.stringify(data.decryptedMessage)) {
 				console.log('Decryption successful');
 				return ('2Decryption successful! Received decryption: ' +  JSON.stringify(data.decryptedMessage));
 			} else if (data.decryptedMessage === plainTextMessage) {
