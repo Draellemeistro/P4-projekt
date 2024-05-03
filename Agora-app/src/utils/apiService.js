@@ -10,7 +10,6 @@ export const fetchEmail = (personId, voteId) => {
 		body: JSON.stringify({ personId, voteId }),
 	});
 };
-
 export const verify2FA = (twoFactorCode, personId, voteId) => {
 	return fetch(`https://${serverIP}:${serverPort}/verify-2fa`, {
 		method: 'POST',
@@ -20,7 +19,6 @@ export const verify2FA = (twoFactorCode, personId, voteId) => {
 		body: JSON.stringify({ twoFactorCode, personId, voteId }),
 	});
 };
-
 export const getCandidatesFromServer = () => {
 	return fetch(`https://${serverIP}:${serverPort}/fetch-candidates`, {
 		method: 'POST',
@@ -29,7 +27,6 @@ export const getCandidatesFromServer = () => {
 		},
 	});
 };
-
 export const sendBallotToServer = (ballot) => {
 	const clientPubKeyECDH = 'test';
 	return fetch(`https://${serverIP}:${serverPort}/insert-ballot`, {
@@ -40,16 +37,6 @@ export const sendBallotToServer = (ballot) => {
 		body: JSON.stringify({ clientPubKeyECDH, ballot })
 	});
 };
-
-export const askForServerECDHPublicKey = () => {
-	return fetch(`https://${serverIP}:${serverPort}/request-public-ecdh-key`, {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	});
-};
-
 export const sendBlindedForSigning = (blindedMessage) => {
 	return fetch(`https://${serverIP}:${serverPort}/sign-blinded-msg`, {
 		method: 'POST',
@@ -68,8 +55,12 @@ export const askForDecryptToCheck = (encryptedBallot) => {
 		},
 		body: JSON.stringify({ encryptedBallot })
 	});
-}
+};
 
+
+  ///////////////////////
+ //	New or modified		//
+///////////////////////
 export const sendBallotToServerAndCheckHash = (ballot) => {
 	const clientPubKeyECDH = 'test';
 	const ballotHash = crypto.createHash('sha256').update(JSON.stringify(ballot)).digest('hex');
@@ -92,4 +83,24 @@ export const sendBallotToServerAndCheckHash = (ballot) => {
 		});
 		return false;
 	}
+};
+
+export const RSARequest = () => {
+	return fetch(`https://${serverIP}:${serverPort}/rsa-public-key`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	});
+};
+
+export const RSADecryptionTest = (plainTextMessage, encryptedMessage) => {
+	return fetch(`https://${serverIP}:${serverPort}/decrypt-RSA-message-Test`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({ plainTextMessage, encryptedMessage }),
+	});
+
 };

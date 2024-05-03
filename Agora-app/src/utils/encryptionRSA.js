@@ -3,70 +3,66 @@
 //import { c } from 'vite/dist/node/types.d-aGj9QkWt.js';
 //import JSEncrypt from 'jsencrypt';
 
-
+// This file contains methods for RSA encryption and importing the public key from the server:
+// - requestPublicKey: fetches the RSA public key from the server and stores it in sessionStorage
+// - keyImportTemplateRSA: imports the RSA public key from the server
+// - askForDecryptionTest: sends a test message to the server for decryption
+// - encrypt: encrypts a message with the RSA public key
+// - webCryptoTest: generates a RSA-PSS key pair (not implemented yet. Might not be needed.)
 const RSACrypto = {
-	askForDecryption: async function askForDecryption(plainTextMessage, encryptedMessage) {
-		const serverIP = '192.168.0.113';
-		const serverPort = '3030';
-		try {
-			const response = await fetch(`https://${serverIP}:${serverPort}/decrypt-RSA-message-Test`, {
+
+		// Request the RSA public key from the server, make key object of it and
+		// returns a CryptoKey object and stores a string copy of it in sessionStorage
+		request: async function requestPublicKey() {
+			//TODO: RSARequest i apiService.js, men tør ikke fjerne den her endnu.
+			const serverIP = '192.168.0.113';
+			const serverPort = '3030';
+			const response = await fetch(`https://${serverIP}:${serverPort}/rsa-public-key`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ plainTextMessage, encryptedMessage }),
 			});
-			if (!response.ok) {
-				console.error('Server responded with status', response.status);
-			} else {
+			if (response.ok) {
 				const data = await response.json();
-				console.log('received: ', data, 'expected: ', plainTextMessage);
-				if (data === plainTextMessage) {
-					console.log('Decryption successful');
-				} else {
-					console.log('problem might be in the formatting/encoding of the message');
-					console.error('Decryption failed');
-				}
-				return data;
-			}
-	} catch (error) {
-			console.log('problem might be in the fetch request or related to async/await syntax');
-			console.error('Failed to fetch', error);
-		}
-	},
-			request: async function requestPublicKey() {
-				const serverIP = '192.168.0.113';
-				const serverPort = '3030';
-				const response = await fetch(`https://${serverIP}:${serverPort}/rsa-public-key`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
+				//import RSA public key TODO: check if this can be handled by keyImportTemplateRSA.
+				const importedKey = await window.crypto.subtle.importKey(
+					'jwk',
+					data,
+					{
+						name: 'RSA-OAEP',
+						hash: 'SHA-256'
 					},
-				});
-				if (response.ok) {
-					const data = await response.json();
-					const importedKey = await window.crypto.subtle.importKey(
-						'jwk',
-						data,
-						{
-							name: 'RSA-OAEP',
-							hash: 'SHA-256'
-						},
-						true,
-						['encrypt']
-					);
-					//export JWK formatted RSA public key and store as string in sessionStorage
-					const exportedKey = await window.crypto.subtle.exportKey('jwk', importedKey);
-					const keyString = JSON.stringify(exportedKey);
-					sessionStorage.setItem('serverPublicKeyRSA', keyString);
-					return importedKey; // maybe change this to keyString
-				} else {
-					console.error('Failed to get public key');
-				}
+					true,
+					['encrypt']
+				);
+				//export JWK formatted RSA public key for later use TODO: maybe not necessary to import and export key yet
+				const exportedKey = await window.crypto.subtle.exportKey('jwk', importedKey);
+				const keyString = JSON.stringify(exportedKey);
+				sessionStorage.setItem('serverPublicKeyRSA', keyString);
+				return exportedKey; // maybe change this to keyString
+			} else {
+				console.error('Failed to get public key');
 			}
-		,
+		},
+
+		// Avoids errors from fat-fingering by using a template for the key import
+		keyImportTemplateRSA: async function keyImportTemplateRSA(keyString) {
+			return window.crypto.subtle.importKey(
+				'jwk',
+				keyString,
+				{
+					name: 'RSA-OAEP',
+					hash: 'SHA-256'
+				},
+				true,
+				['encrypt']
+			);
+		},
+
+
 			encrypt: async function encryptWithPublicKey(message, publicKey) {
-				const encoder = new TextEncoder();
+				const encoder = new TextEncoder(); // Used to encode the message to an ArrayBuffer for encryption
 				// Check if the message and publicKey are valid
 				if (typeof message !== 'string' || message.length === 0) {
 					console.error('Invalid message. Please provide a non-empty string.');
@@ -74,16 +70,14 @@ const RSACrypto = {
 				}
 
 				if (typeof publicKey !== 'string' || publicKey.length === 0) {
-					console.error('Invalid public key. checking sessionStorage for public key');
+					console.error('No or Invalid public key provided: ', typeof publicKey);
 					const keyString = sessionStorage.getItem('serverPublicKeyRSA');
 					if (!keyString) {
-						console.error('!--No public key found in sessionStorage.--!\n' +
-							'!--Please make sure the key is stored correctly.--!');
-						console.log('publicKey: ', publicKey);
-						console.log('keyString', keyString);
+						console.error('Neither provided key: ',typeof publicKey,' nor stored key: ',keyString ,' is valid. Please provide a valid public key');
 						return false;
 					} else {
 						const jwkKey = JSON.parse(keyString);
+						//import RSA public key TODO: check if this can be handled by keyImportTemplateRSA.
 						publicKey = await window.crypto.subtle.importKey(
 							'jwk',
 							jwkKey,
@@ -105,13 +99,45 @@ const RSACrypto = {
 					encryptionData
 				);
 
-				// Convert encryptedMessage to base64
+				// Convert encryptedMessage to base64 and return it as a string
 				const encryptedMessageArray = new Uint8Array(encryptedMessage);
 				const encryptedMessageString = Array.from(encryptedMessageArray).map(b => String.fromCharCode(b)).join('');
 				return btoa(encryptedMessageString);
+			},
+
+
+		//TODO: RSADecryptionTest i apiService.js, men tør ikke fjerne den her endnu.
+		askForDecryption: async function askForDecryption(plainTextMessage, encryptedMessage) {
+			const serverIP = '192.168.0.113';
+			const serverPort = '3030';
+			try {
+				const response = await fetch(`https://${serverIP}:${serverPort}/decrypt-RSA-message-Test`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ plainTextMessage, encryptedMessage }),
+				});
+				if (response.ok) {
+					const data = await response.json();
+					if (data === plainTextMessage) {
+						return data;
+					} else {
+						console.log('problem ');
+						console.error('Decryption failed: might be in the formatting/encoding of the message.\nresponse:', data);
+						return data;
+					}
+				} else {
+					console.error('Server responded with status', response.status);
+				}
+			} catch (error) {
+				console.error('Failed to fetch. might be in the fetch request or related to async/await syntax: ', error);
 			}
-		,
-			webCryptoTest: function webCryptoTest() {
+		},
+
+
+		// Method is probably not needed, but kept for reference.
+		webCryptoTest: function webCryptoTest() {
 				// Check if the Web Cryptography API is available
 				if (window.crypto && window.crypto.subtle) {
 					// Generate a RSA-PSS key pair
