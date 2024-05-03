@@ -479,7 +479,10 @@ const ECDHCrypto ={
 			clientPublicKey: clientPublicKey,
 			IvValue: ivValue
 		});
-		console.log('msgForServer: ', msgForServer);
+		//console.log('msgForServer: ', msgForServer);
+		console.log('function received this encrypted message: ', encryptedMessage);
+		console.log('stringify of encrypted message: ', JSON.stringify(encryptedMessage));
+		console.log('sending this encrypted message: ', msgForServer.encryptedMessage);
 
 		const response = await fetch('https://192.168.0.113:3030/decrypt-ECDH-message-Test', {
 				method: 'POST',
