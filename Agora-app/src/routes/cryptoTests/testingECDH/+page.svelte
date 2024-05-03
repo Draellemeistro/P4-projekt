@@ -17,7 +17,7 @@
 	//6
 	const plainText = 'Hello World';
 	let encryptedMessage;
-	let decryptedMessage = 'Server Decryption not Implemented';
+	let decryptedcheck = 'Server Decryption not Implemented';
 
 	let ivValue;
 	onMount(async () => {
@@ -36,18 +36,17 @@
 		sharedSecret = await ECDHCrypto.deriveSecret(clientKeyStringPriv, serverKeystringPub);
 		counter++;
 		console.log('step ', counter, ' finished'); //4
-		console.log('\n\n\nsharedSecret: ', sharedSecret, "\n\n\n");
 		sharedSecretCheck = await ECDHCrypto.verifySharedSecretTest(sharedSecret, clientKeyStringPub);
 		counter++;
 		console.log('step ', counter, ' finished'); //5
-		console.log('verifySharedSecretTest: ', sharedSecretCheck);
 		const encryptionInfo = await ECDHCrypto.encryptECDH(plainText, sharedSecret);
 		encryptedMessage = encryptionInfo.encryptedMessage;
-		console.log('encryptedMessage in page: ', encryptedMessage);
 		ivValue = encryptionInfo.ivValue;
-		console.log('ivValue in page: ', ivValue);
+
 		counter++;
-		if(counter >= 6){
+		console.log('step ', counter, ' finished'); //6
+		decryptedcheck = await ECDHCrypto.SendEncryptedMsgTest(encryptedMessage, sharedSecret, ivValue);
+		if(counter >= 7){
 			console.log('OnMount should have finished successfully');
 		}
 	} );
@@ -91,5 +90,5 @@
 
 <div>
 	<h2>7: Server decryption</h2>
-	<p>{decryptedMessage}</p>
+	<p>{decryptedcheck}</p>
 </div>

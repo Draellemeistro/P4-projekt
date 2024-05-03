@@ -490,14 +490,18 @@ const ECDHCrypto ={
 			console.log('received: ', data, 'expected: ', plainTextMessage);
 			if (data === plainTextMessage) {
 				console.log('Decryption successful');
+				return data;
+			}else if (JSON.stringify(plainTextMessage) === JSON.stringify(data)) {
+				console.log('Decryption successful');
+				return JSON.stringify(data);
 			} else {
 				console.log('problem might be in the formatting/encoding of the message');
 				console.error('Decryption failed');
+				return 'error: failed to decrypt correctly';
 			}
-			return data;
 		} else {
 			console.error('Failed to fetch', response);
-			return response;
+			return 'error: failed to fetch';
 		}
 
 
