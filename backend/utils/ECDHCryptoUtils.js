@@ -125,6 +125,7 @@ const serverECDHCrypto = {
 		return decrypted.toString();
 	},
 	handleEncryptedMessage: async function handleEncryptedMessage(encryptedMessage, IvValue, sharedSecretKey) {
+		console.log('encryptedMessage:', encryptedMessage);
 		const encryptedMsgArrBuff = this.convertBase64ToArrBuffer(encryptedMessage);
 		//
 		// TODO: Implement server fetching client public key from DB and deriving shared secret key
