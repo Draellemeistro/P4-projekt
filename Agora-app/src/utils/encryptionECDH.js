@@ -315,7 +315,7 @@ const ECDHCrypto ={
 			encoder.encode(message)
 		);
 		let returnObject = {
-			encryptedMessage: encryptedMessage,
+			encryptedMessage: this.convertArrBuffToBase64(encryptedMessage),
 			ivValue: ivValue
 		}
 		console.log('returning encryptedMessage from encryptECDH: ', encryptedMessage);
@@ -481,10 +481,9 @@ const ECDHCrypto ={
 // Function to perform ECDH key exchange, encrypt ballot, and send it to server
 	// eslint-disable-next-line no-undef
 	SendEncryptedMsgTest: async function performECDHAndEncryptBallot(plainTextMessage,encryptedMessage, clientPublicKey, ivValue) {
-		let encryptedMessageBase64 = this.convertArrBuffToBase64(encryptedMessage);
 		let msgForServer = JSON.stringify({
 			plainTextMessage: plainTextMessage,
-			encryptedMessage: encryptedMessageBase64,
+			encryptedMessage: encryptedMessage,
 			clientPublicKey: clientPublicKey,
 			IvValue: ivValue
 		});
