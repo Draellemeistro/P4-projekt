@@ -109,7 +109,9 @@ const serverECDHCrypto = {
 		let arrayBuffer = new Uint8Array(binaryString.length);
 		for (let i = 0; i < binaryString.length; i++) {
 			arrayBuffer[i] = binaryString.charCodeAt(i);
-		} return arrayBuffer;
+		}
+		console.log('arrayBuffer:', arrayBuffer);
+		return arrayBuffer;
 	},
 	decryptArrBuffECDH: async function decryptArrBuffWithSecretECDHKey(encryptedMessage, IvValue, sharedSecretKeyString) {
 		const buffer = encryptedMessage instanceof Buffer ? encryptedMessage : Buffer.from(encryptedMessage, 'base64');
