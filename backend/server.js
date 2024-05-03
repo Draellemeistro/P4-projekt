@@ -466,7 +466,7 @@ app.post('/decrypt-ECDH-message-Test', async (req, res) => {
 	let decryptedMessage;
 	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientPublicKey);
 	console.log('Shared secret:', sharedSecret);
-	decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encryptedMessage, IvValueArrBuff, sharedSecret);
+	decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encryptedMessage, IvValueFromClient, sharedSecret);
 	if (plainTextMessage === decryptedMessage) {
 		console.log('ECDH works!');
 		responseValue = true;
