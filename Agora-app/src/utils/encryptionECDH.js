@@ -467,12 +467,7 @@ const ECDHCrypto ={
 		return jwk;
 	},
 	convertBase64ToArrayBuffer: function convertBase64ToArrayBuffer(base64String) {
-		const binaryString = window.atob(base64String);
-		const bytes = new Uint8Array(binaryString.length);
-		for (let i = 0; i < binaryString.length; i++) {
-			bytes[i] = binaryString.charCodeAt(i);
-		}
-		return bytes.buffer;
+		return Buffer.from(base64String, 'base64');
 	},
 	convertArrBuffToBase64: function convertArrayBufferToBase64(arrayBuffer) {
 		let uint8Array = new Uint8Array(arrayBuffer);
