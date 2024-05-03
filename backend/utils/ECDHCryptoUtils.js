@@ -117,6 +117,7 @@ const serverECDHCrypto = {
 		let messageBuffer; //const buffer = encryptedMessage instanceof Buffer ? encryptedMessage : Buffer.from(encryptedMessage, 'base64');
 			if(!(encryptedMessage instanceof Buffer)) {
 				console.log('encryptedMessage is not a buffer');
+				console.log('encryptedMessage type:', typeof encryptedMessage);
 				messageBuffer = Buffer.from(encryptedMessage, 'base64');
 			}
 
