@@ -504,13 +504,13 @@ const ECDHCrypto ={
 
 			if (data === plainTextMessage) {
 				console.log('Decryption successful');
-				return data.decryptedMessage;
+				return ('1Decryption successful! Received decryption: ' + data.decryptedMessage);
 			}else if (JSON.stringify(plainTextMessage) === JSON.stringify(data.decryptedMessage)) {
 				console.log('Decryption successful');
-				return JSON.stringify(data.decryptedMessage);
+				return ('2Decryption successful! Received decryption: ' +  JSON.stringify(data.decryptedMessage));
 			} else if (data.decryptedMessage === plainTextMessage) {
 				console.log('Decryption successful');
-				return data.decryptedMessage;
+				return ('2Decryption successful! Received decryption: ' + data.decryptedMessage);
 			}
 			else {
 				//	res.json({success: responseValue, encryptedMessage: encryptedMessage,
