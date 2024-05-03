@@ -125,15 +125,22 @@ const serverECDHCrypto = {
 			sharedSecretKey,
 			buffer
 		);
+		console.log('decrypted:', decrypted.toString());
+		// this.convertArrBuffToBase64(decrypted);
 		return decrypted.toString();
+	},
+	convertArrBuffToBase64: function convertArrayBufferToBase64(arrayBuffer) {
+		let uint8Array = new Uint8Array(arrayBuffer);
+		return Buffer.from(uint8Array).toString('base64');
 	},
 	handleEncryptedMessage: async function handleEncryptedMessage(encryptedMessage, IvValue, sharedSecretKey) {
 		console.log('encryptedMessage:', encryptedMessage);
 		const encryptedMsgArrBuff = this.convertBase64ToArrBuffer(encryptedMessage);
+		let IvValueArrBuff = this.convertBase64ToArrBuffer(IvValue);
 		//
 		// TODO: Implement server fetching client public key from DB and deriving shared secret key
 		//
-		return await serverECDHCrypto.decryptArrBuffECDH(encryptedMsgArrBuff, IvValue, sharedSecretKey);
+		return await this.decryptArrBuffECDH(encryptedMsgArrBuff, IvValueArrBuff, sharedSecretKey);
 	},
 	deriveSharedSecret:
 		async function deriveSharedSecret(serverPrivateKeyString, clientPublicKeyString) {
