@@ -115,7 +115,8 @@ const serverECDHCrypto = {
 	},
 	decryptArrBuffECDH: async function decryptArrBuffWithSecretECDHKey(encryptedMessage, IvValue, sharedSecretKeyString) {
 		const buffer = encryptedMessage instanceof Buffer ? encryptedMessage : Buffer.from(encryptedMessage, 'base64');
-		let sharedSecretKey = JSON.parse(sharedSecretKeyString);
+		let sharedSecretKey = await crypto.subtle.importKey('jwk', JSON.parse(sharedSecretKeyString), { name: 'AES-GCM', length: 256 }, true, ['decrypt']);
+
 		const decrypted = await crypto.subtle.decrypt(
 			{
 				name: 'AES-GCM',
