@@ -506,9 +506,9 @@ const ECDHCrypto ={
 			}else if (JSON.stringify(plainTextMessage) === JSON.stringify(data.decryptedMessage)) {
 				console.log('Decryption successful');
 				return JSON.stringify(data.decryptedMessage);
-			} else if (JSON.parse(data.decryptedMessage) === plainTextMessage) {
+			} else if (data.decryptedMessage === plainTextMessage) {
 				console.log('Decryption successful');
-				return JSON.parse(data.decryptedMessage);
+				return data.decryptedMessage;
 			}
 			else {
 				//	res.json({success: responseValue, encryptedMessage: encryptedMessage,
