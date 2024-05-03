@@ -471,8 +471,8 @@ app.post('/decrypt-ECDH-message-Test', async (req, res) => {
 		console.log('ECDH works!');
 		responseValue = true;
 	} else {
-		console.log('ECDH didnt work: ', decryptedMessage, '\nexpected: ', plainTextMessage);
+		console.log('ECDH didnt work: ','\nexpected: ', plainTextMessage,'\nreceived: ', decryptedMessage);
 		responseValue = false;
 	}
-	res.json({success: responseValue});
+	res.json({success: responseValue, encryptedMessage: encryptedMessage, decryptedMessage: decryptedMessage, IvValueFromClient: IvValueFromClient, serverSharedSecret: sharedSecret});
 });

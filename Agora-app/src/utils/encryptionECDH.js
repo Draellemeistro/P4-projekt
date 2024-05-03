@@ -497,18 +497,26 @@ const ECDHCrypto ={
 				body: msgForServer
 		});
 		if (response.ok) {
+
 			const data = await response.json();
-			console.log('received: ', data, 'expected: ', plainTextMessage);
+
 			if (data === plainTextMessage) {
 				console.log('Decryption successful');
-				return data;
-			}else if (JSON.stringify(plainTextMessage) === JSON.stringify(data)) {
+				return data.decryptedMessage;
+			}else if (JSON.stringify(plainTextMessage) === JSON.stringify(data.decryptedMessage)) {
 				console.log('Decryption successful');
-				return JSON.stringify(data);
-			} else {
-				console.log('problem might be in the formatting/encoding of the message');
-				console.error('Decryption failed');
-				return 'error: failed to decrypt correctly';
+				return JSON.stringify(data.decryptedMessage);
+			} else if (JSON.parse(data.decryptedMessage) === plainTextMessage) {
+				console.log('Decryption successful');
+				return JSON.parse(data.decryptedMessage);
+			}
+			else {
+				//	res.json({success: responseValue, encryptedMessage: encryptedMessage,
+				//	decryptedMessage: decryptedMessage, IvValueFromClient: IvValueFromClient, serverSharedSecret: sharedSecret});
+				console.log(' lets compare the sent and received data');
+				console.log('UNENCRYPTED STRING\nreceived: ', data.decryptedMessage, 'expected: ', plainTextMessage);
+				console.log('\nENCRYPTED STRING\nreceived: ', data.encryptedMessage, 'expected: ', msgForServer.encryptedMessage);
+				console.log('\nSHARED SECRET\nreceived: ', data.serverSharedSecret, 'expected: ', sessionStorage.getItem('sharedSecretECDH'));
 			}
 		} else {
 			console.error('Failed to fetch', response);
