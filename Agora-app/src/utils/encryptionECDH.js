@@ -314,6 +314,8 @@ const ECDHCrypto ={
 			SharedSecretForEncryption,
 			encoder.encode(message)
 		);
+		let uint8View = new Uint8Array(encryptedMessage);
+		console.log(uint8View);
 		let returnObject = {
 			encryptedMessage: this.convertArrBuffToBase64(encryptedMessage),
 			ivValue: ivValue
