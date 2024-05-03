@@ -515,7 +515,7 @@ const ECDHCrypto ={
 				//	decryptedMessage: decryptedMessage, IvValueFromClient: IvValueFromClient, serverSharedSecret: sharedSecret});
 				console.log(' lets compare the sent and received data');
 				console.log('UNENCRYPTED STRING\nreceived: ', data.decryptedMessage, 'expected: ', plainTextMessage);
-				console.log('\nENCRYPTED STRING\nreceived: ', data.encryptedMessage, 'expected: ', msgForServer.encryptedMessage);
+				console.log('\nENCRYPTED STRING\nreceived: ', data.encryptedMessage, 'expected: ', JSON.stringify(msgForServer.encryptedMessage));
 				console.log('\nSHARED SECRET\nreceived: ', data.serverSharedSecret, 'expected: ', sessionStorage.getItem('sharedSecretECDH'));
 			}
 		} else {
