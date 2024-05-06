@@ -89,8 +89,8 @@ export const fetchKeyRSA = async () => {
 
 
 
-export const fetchKeyECDH = () => {
-	return fetch(`https://${serverIP}:${serverPort}/ecdh-public-key`, {
+export const fetchKeyECDH = async () => {
+	return await fetch(`https://${serverIP}:${serverPort}/request-public-ecdh-key`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

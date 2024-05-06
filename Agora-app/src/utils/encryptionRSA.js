@@ -17,7 +17,6 @@ const RSACrypto = {
 		// Request the RSA public key from the server, make key object of it and
 		// returns a CryptoKey object and stores a string copy of it in sessionStorage
 		request: async function requestPublicKey() {
-			//TODO: RSARequest i apiService.js, men tør ikke fjerne den her endnu.
 			const response = await fetchKeyRSA();
 			if (response.ok) {
 				const data = await response.json();
@@ -87,8 +86,6 @@ const RSACrypto = {
 				return btoa(encryptedMessageString);
 			},
 
-
-		//TODO: RSADecryptionTest i apiService.js, men tør ikke fjerne den her endnu.
 		askForDecryption: async function askForDecryption(plainTextMessage, encryptedMessage) {
 			let responseData;
 			try{

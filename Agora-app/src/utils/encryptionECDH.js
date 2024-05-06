@@ -1,3 +1,4 @@
+import { fetchKeyECDH } from './apiService.js';
 
 
 const ECDHCrypto ={
@@ -27,17 +28,23 @@ const ECDHCrypto ={
 
 		return keyStringObject;
 	},
+	keyImportTemplateECDH: async function keyImportTemplateECDH(keyString) {
+		return await window.crypto.subtle.importKey(
+			'jwk',
+			keyString,
+			{
+				name: 'ECDH',
+				namedCurve: 'P-521',
+			},
+			true,
+			["deriveKey", "deriveBits"],
+
+		);
+	},
 // Function to send client's public key and receive server's public key
 	requestServerECDH: async function requestServerPublicKeyECDH(){
-		const serverIP = '192.168.0.113'; // TAG: DOAPIService.
-		const serverPort = '3030';				//fetchKeyECDH()
-		//
-		const response = await fetch(`https://${serverIP}:${serverPort}/request-public-ecdh-key`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
+
+		const response = await fetchKeyECDH();
 		if (!response.ok) {
 			console.error('Failed to fetch server public key');
 		}
@@ -63,17 +70,7 @@ const ECDHCrypto ={
 
 		let serverPublicKeyJwk;
 		try{
-			serverPublicKeyJwk = await window.crypto.subtle.importKey(
-				'jwk',
-				JWKToPassOn,
-				{
-					name: 'ECDH',
-					namedCurve: 'P-521',
-				},
-				true,
-				["deriveKey", "deriveBits"],
-
-			);
+			serverPublicKeyJwk = await this.keyImportTemplateECDH(JWKToPassOn)
 		} catch (error) {
 			console.log('its the fucking [deriveKey, deriveBits] part that fucks this up!!!!')
 			try {
