@@ -76,15 +76,11 @@ const ECDHCrypto ={
 
 
 	tempSendEDCHKey: async function sendECDHKeyToServer(keyToSend) {
-		let keyStringPub
+		let keyStringPub = keyToSend;
 		if (typeof keyStringPub !== 'string') {
-			keyStringPub = await window.crypto.subtle.exportKey('jwk', keyToSend);
-			keyStringPub = JSON.stringify(keyStringPub);
+			keyStringPub = JSON.stringify(await window.crypto.subtle.exportKey('jwk', keyToSend));
 		}
-		else {
-			 keyStringPub = keyToSend;
-		}
-		console.log('sending key to server: ', keyStringPub);
+
 		const response = await tempPostKeyECDH(keyStringPub);
 		if (response.status !== 200) {
 			console.error('Failed to send public key: ', response.status);
@@ -146,8 +142,9 @@ const ECDHCrypto ={
 				x: clientKeyForSecretParsed.x,
 				y: clientKeyForSecretParsed.y
 			};
+			clientKeyForSecret = await this.keyImportTemplateECDH(jwkClient);
 		}
-		clientKeyForSecret = await this.keyImportTemplateECDH(jwkClient);
+
 
 
 
@@ -177,9 +174,7 @@ const ECDHCrypto ={
 
 
 	encryptECDH: async function encryptMessageECDH(message, sharedSecret) {
-		const encoder = new TextEncoder();
-		let SharedSecretForEncryption;
-		// Check if the message and publicKey are valid
+		const encoder = new TextEncoder();// Check if the message and publicKey are valid
 		if (typeof message !== 'string' || message.length === 0) {
 			console.error('Invalid message. Please provide a non-empty string.');
 			return false;
@@ -194,7 +189,7 @@ const ECDHCrypto ={
 				name: 'AES-GCM',
 				iv: ivValue,
 			},
-			SharedSecretForEncryption,
+			sharedSecret,
 			encoder.encode(message)
 		);
 		return {
@@ -205,9 +200,11 @@ const ECDHCrypto ={
 
 
 
-	verifySharedSecretTest: async function verifyTestSharedSecret(sharedSecret, keyStringPub) {
+	verifySharedSecretTest: async function verifyTestSharedSecret(sharedSecret, clientPubKey) {
+		let sharedSecretJWK = await window.crypto.subtle.exportKey('jwk', sharedSecret);
+		let clientPubKeyJWK = await window.crypto.subtle.exportKey('jwk', clientPubKey);
 
-		const response = await checkSharedSecretTest(JSON.stringify(sharedSecret), keyStringPub);
+		const response = await checkSharedSecretTest(JSON.stringify(sharedSecretJWK), JSON.stringify(clientPubKeyJWK));
 		if (response.status !== 200) {
 			console.error('Failed to send shared secret');
 		} if (response.ok) {
@@ -224,11 +221,11 @@ const ECDHCrypto ={
 
 
 
-	SendEncryptedMsgTest: async function serverDecryptionTest(plainTextMessage, encryptedMessage, clientPublicKey, ivValue) {
+	SendEncryptedMsgTest: async function serverDecryptionTest(plainTextMessage, encryptedMessage, clientPubKey, ivValue) {
 		let msgForServer = JSON.stringify({
 			plainTextMessage: plainTextMessage,
 			encryptedMessage: encryptedMessage,
-			clientPublicKey: clientPublicKey,
+			clientPublicKey: await window.crypto.subtle.exportKey('jwk', clientPubKey),
 			IvValue: ivValue
 		});
 		const response = await messageDecryptTestECDH(msgForServer);
