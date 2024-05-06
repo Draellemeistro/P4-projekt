@@ -145,9 +145,6 @@ const ECDHCrypto ={
 			clientKeyForSecret = await this.keyImportTemplateECDH(jwkClient);
 		}
 
-
-
-
 		try {
 			return await window.crypto.subtle.deriveKey(
 				{
@@ -201,10 +198,13 @@ const ECDHCrypto ={
 
 
 	verifySharedSecretTest: async function verifyTestSharedSecret(sharedSecret, clientPubKey) {
-		let sharedSecretJWK = await window.crypto.subtle.exportKey('jwk', sharedSecret);
-		let clientPubKeyJWK = await window.crypto.subtle.exportKey('jwk', clientPubKey);
+		let sharedSecretJWK = JSON.stringify(await window.crypto.subtle.exportKey('jwk', sharedSecret));
+		let clientPubKeyJWK = JSON.stringify(await window.crypto.subtle.exportKey('jwk', clientPubKey));
 
-		const response = await checkSharedSecretTest(JSON.stringify(sharedSecretJWK), JSON.stringify(clientPubKeyJWK));
+		console.log('sharedSecret: ', sharedSecretJWK);
+		console.log('clientPubKey: ', clientPubKeyJWK);
+
+		const response = await checkSharedSecretTest(sharedSecretJWK, clientPubKeyJWK);
 		if (response.status !== 200) {
 			console.error('Failed to send shared secret');
 		} if (response.ok) {
