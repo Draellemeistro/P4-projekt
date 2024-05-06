@@ -39,11 +39,13 @@
 	onMount(async () => {
 		console.log(counter);
 		const BothKeys = await ECDHCrypto.initECDH();
-		clientKeyPub = BothKeys.keyStringPub
+		clientKeyPub = BothKeys.keyStringPub;
 		clientKeyPriv = BothKeys.keyStringPriv;
 		const cryptoKeypairVersion = await ECDHCrypto.initECDH();
 		console.log('type of cryptoKeypairVersion: ', typeof cryptoKeypairVersion);
 		console.log('cryptoKeypairVersion: ', cryptoKeypairVersion);
+		console.log('cryptoKeypairVersion.keyStringPub: ', clientKeyPub);
+		console.log('cryptoKeypairVersion.keyStringPub: ', JSON.stringify(clientKeyPub));
 		counter++;
 		console.log('step ', counter, ' finished'); //1
 		serverKeyPub = await ECDHCrypto.requestServerECDH();

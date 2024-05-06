@@ -62,7 +62,7 @@ const ECDHCrypto ={
 				serverPublicKeyJwk = await this.keyImportTemplateECDH(JWKToPassOn, true)
 			} catch (error) {
 				console.error('Failed to import FIXED server public key: ', error);
-				}
+			}
 			console.error('Failed to import server public key: ', error);
 		}
 		let keyTestExport = await window.crypto.subtle.exportKey('jwk',serverPublicKeyJwk)
