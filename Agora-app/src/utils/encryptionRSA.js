@@ -40,6 +40,7 @@ const RSACrypto = {
 
 		// Avoids errors from fat-fingering by using a template for the key import
 		keyImportTemplateRSA: async function keyImportTemplateRSA(keyString) {
+			console.log('keyString:', keyString);
 			return  window.crypto.subtle.importKey(
 				'jwk',
 				keyString,
