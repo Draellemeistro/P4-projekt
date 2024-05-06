@@ -289,34 +289,62 @@ const ECDHCrypto ={
 		let jwk;
 		if (typeof jwkToValidate === 'string') {
 			jwk = JSON.parse(jwkToValidate);
-			return insertKeyOpsAndValidate(jwk, isPrivateKey);
+			if (!jwk.key_ops) {
+				jwk.key_ops = [];
+			}
+			if (!jwk.key_ops.includes('deriveKey')) {
+				jwk.key_ops.push('deriveKey');
+			}
+			if (!jwk.key_ops.includes('deriveBits')) {
+				jwk.key_ops.push('deriveBits');
+			}
+			if (!jwk.ext) {
+				jwk.ext = true;
+			}
+			if (isPrivateKey === true) {
+				const validProperties = ['crv', 'ext', 'key_ops', 'kty', 'x', 'y'];
+				const isValid = validProperties.every(prop => prop in jwk);
+				if (!isValid) {
+					throw new Error('Invalid JWK format');
+				}
+			} else {
+				const validProperties = ['crv',"d", 'ext', 'key_ops', 'kty', 'x', 'y'];
+				const isValid = validProperties.every(prop => prop in jwk);
+				if (!isValid) {
+					throw new Error('Invalid JWK format');
+				}
+			}
+
+
+			return jwk;
 		}
+
 		jwk = jwkToValidate;
+		// Insert key_ops into the JWK
 		if (!jwk.key_ops) {
 			jwk.key_ops = [];
 		}
-		if (!jwk.key_ops.includes('deriveKey')) {
-			jwk.key_ops.push('deriveKey');
+
+		// Add "deriveKey" and "deriveBits" to key_ops if they're not already present
+		if (!jwk.key_ops.includes("deriveKey")) {
+			jwk.key_ops.push("deriveKey");
 		}
-		if (!jwk.key_ops.includes('deriveBits')) {
-			jwk.key_ops.push('deriveBits');
+		if (!jwk.key_ops.includes("deriveBits")) {
+			jwk.key_ops.push("deriveBits");
 		}
 		if (!jwk.ext) {
 			jwk.ext = true;
 		}
-		if (isPrivateKey === true) {
-			const validProperties = ['crv', 'ext', 'key_ops', 'kty', 'x', 'y', 'd'];
-			const isValid = validProperties.every(prop => prop in jwk);
-			if (!isValid) {
-				throw new Error('Invalid JWK format');
-			}
-		} else {
-			const validProperties = ['crv',"d", 'ext', 'key_ops', 'kty', 'x', 'y'];
-			const isValid = validProperties.every(prop => prop in jwk);
-			if (!isValid) {
-				throw new Error('Invalid JWK format');
-			}
+		// Define the properties that a valid JWK should have
+		const validProperties = ['crv', 'ext', 'key_ops', 'kty', 'x', 'y'];
+
+		// Check if the JWK has all the valid properties
+		const isValid = validProperties.every(prop => prop in jwk);
+
+		if (!isValid) {
+			throw new Error('Invalid JWK format');
 		}
+
 		return jwk;
 	},
 
