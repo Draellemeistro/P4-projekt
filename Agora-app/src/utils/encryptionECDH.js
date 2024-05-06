@@ -215,10 +215,11 @@ const ECDHCrypto ={
 
 
 	SendEncryptedMsgTest: async function serverDecryptionTest(plainTextMessage, encryptedMessage, clientPubKey, ivValue) {
+		let pubKeyString = JSON.stringify(await window.crypto.subtle.exportKey('jwk', clientPubKey));
 		let msgForServer = JSON.stringify({
 			plainTextMessage: plainTextMessage,
 			encryptedMessage: encryptedMessage,
-			clientPublicKey: await window.crypto.subtle.exportKey('jwk', clientPubKey),
+			clientPublicKey: pubKeyString,
 			IvValue: ivValue
 		});
 		const response = await messageDecryptTestECDH(msgForServer);
