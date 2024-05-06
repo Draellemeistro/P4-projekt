@@ -17,14 +17,9 @@ const ECDHCrypto ={
 		const exportedPubKeyECDH = await window.crypto.subtle.exportKey('jwk', clientKeyPairECDH.publicKey);
 		const fixedPubKey = this.fixAndValidateJWK(exportedPubKeyECDH);
 		const exportedPrivKeyECDH = await window.crypto.subtle.exportKey('jwk', clientKeyPairECDH.privateKey);
-
-
-		// Convert the keys to strings
+		// Convert the keys to strings TODO: maybe not necessary to convert to string, probably better to keep as CryptoKey. Safety?
 		const keyStringPriv = JSON.stringify(exportedPrivKeyECDH);
 		const keyStringPub = JSON.stringify(fixedPubKey);
-		sessionStorage.setItem('clientPublicKeyECDH', keyStringPub);
-		//probably not secure to store private key in session storage
-		sessionStorage.setItem('clientPrivateKeyECDH', keyStringPriv);
 		if (returnString === true) {
 			return { keyStringPub: keyStringPub, keyStringPriv: keyStringPriv};
 		} else {
@@ -65,10 +60,7 @@ const ECDHCrypto ={
 			}
 			console.error('Failed to import server public key: ', error);
 		}
-		let keyTestExport = await window.crypto.subtle.exportKey('jwk',serverPublicKeyJwk)
-		keyTestExport = this.fixAndValidateJWK(keyTestExport)
-		//TODO: remove line below
-		const keyString = JSON.stringify(keyTestExport); //probably redundant, but just to be sure
+		const keyString = JSON.stringify(await this.exportKeyString(serverPublicKeyJwk)); //probably redundant, but just to be sure
 		sessionStorage.setItem('serverPublicKeyECDH', keyString);
 		return serverPublicKeyJwk;
 	},
@@ -78,7 +70,7 @@ const ECDHCrypto ={
 	tempSendEDCHKey: async function sendECDHKeyToServer(keyToSend) {
 		let keyStringPub = keyToSend;
 		if (typeof keyStringPub !== 'string') {
-			keyStringPub = JSON.stringify(await window.crypto.subtle.exportKey('jwk', keyToSend));
+			keyStringPub = await  this.exportKeyString(keyToSend);
 		}
 
 		const response = await tempPostKeyECDH(keyStringPub);
@@ -191,8 +183,8 @@ const ECDHCrypto ={
 
 	verifySharedSecretTest: async function verifyTestSharedSecret(sharedSecret, clientPubKey) {
 		console.log('verifying shared secret');
-		let sharedSecretJWK = JSON.stringify(await window.crypto.subtle.exportKey('jwk', sharedSecret));
-		let clientPubKeyJWK = JSON.stringify(await window.crypto.subtle.exportKey('jwk', clientPubKey));
+		let sharedSecretJWK = await this.exportKeyString(sharedSecret);
+		let clientPubKeyJWK = await this.exportKeyString(clientPubKey);
 
 		console.log('sharedSecret: ', sharedSecretJWK);
 		console.log('clientPubKey: ', clientPubKeyJWK);
@@ -215,7 +207,7 @@ const ECDHCrypto ={
 
 
 	SendEncryptedMsgTest: async function serverDecryptionTest(plainTextMessage, encryptedMessage, clientPubKey, ivValue) {
-		let pubKeyString = JSON.stringify(await window.crypto.subtle.exportKey('jwk', clientPubKey));
+		let pubKeyString = await this.exportKeyString(clientPubKey);
 		let msgForServer = JSON.stringify({
 			plainTextMessage: plainTextMessage,
 			encryptedMessage: encryptedMessage,
@@ -266,25 +258,10 @@ const ECDHCrypto ={
 		}
 	},
 
-
-
-	compareKeyWithStorage: function(key) {
-		const keyStringImported = key;
-		const serverPubKeySessionStorage = sessionStorage.getItem('serverPublicKeyECDH');
-		const clientKeyStringSessionStorage = sessionStorage.getItem('clientPublicKeyECDH')
-		if (!keyStringImported) {
-			//console.error('invalid Key passed to function');
-			return 'invalid';
-		} else {
-			if (keyStringImported === clientKeyStringSessionStorage) {
-				return 'client';
-			} else if (keyStringImported === serverPubKeySessionStorage) {
-				return 'server';
-			} else {
-				return 'neither';
-			}
-		}
+	exportKeyString: async function exportKeyString(keyToExport) {
+		return JSON.stringify(await window.crypto.subtle.exportKey('jwk', keyToExport))
 	},
+
 
 
 
