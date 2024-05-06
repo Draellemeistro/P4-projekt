@@ -113,8 +113,8 @@ const ECDHCrypto ={
 		//	SOMEHOW DOESN'T WORK WITH CHROME, BUT FIREFOX WORKS???????
 		// 	FUCK THIS SHIT.
 		//////////////
-		let serverKeyForSecret;
-		let clientKeyForSecret;
+		let serverKeyForSecret = serverPubKey;
+		let clientKeyForSecret = clientPrivateKey;
 
 		//because of some weird bug, the key_ops and ext properties are not passed on correctly
 		//this is a workaround to fix that
@@ -123,7 +123,7 @@ const ECDHCrypto ={
 		if (typeof serverKeyForSecret === 'string') {
 			serverKeyForSecret = await this.keyImportTemplateECDH(JSON.parse(serverPubKey));
 		}
-		if(typeof clientPrivateKey === 'string') {
+		if(typeof clientKeyForSecret === 'string') {
 			let clientKeyForSecretParsed = JSON.parse(clientPrivateKey);
 			let jwkClient = {
 				ext: true,
