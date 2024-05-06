@@ -50,15 +50,9 @@ const ECDHCrypto ={
 		}
 		const data = await response.json();
 		const serverPublicKeyECDHString = data.serverPubECDKey;
-		const serverPublicKeyECDHStringFixed = data.fixedVersion;
-		if(serverPublicKeyECDHStringFixed === serverPublicKeyECDHString) {
-			console.log('server public key is the same as the fixed version');
-		} else {
-			console.log('server public key is different from the fixed version');
-			console.log('serverPublicKeyECDHString: ', serverPublicKeyECDHString);
-			console.log('serverPublicKeyECDHStringFixed: ', serverPublicKeyECDHStringFixed);
-		}
 		const serverPublicKeyParsed = JSON.parse(serverPublicKeyECDHString);
+		//because of some weird bug, the key_ops and ext properties are not passed on correctly
+		//this is a workaround to fix that
 		const JWKToPassOn = {
 			crv: serverPublicKeyParsed.crv,
 			ext: serverPublicKeyParsed.ext,
@@ -67,13 +61,13 @@ const ECDHCrypto ={
 			x: serverPublicKeyParsed.x,
 			y: serverPublicKeyParsed.y,
 		};
-
 		let serverPublicKeyJwk;
 		try{
+			console.error ('trying to import server public key without key_ops');
 			serverPublicKeyJwk = await this.keyImportTemplateECDH(JWKToPassOn)
 		} catch (error) {
 			console.log('its the fucking [deriveKey, deriveBits] part that fucks this up!!!!')
-			try {
+			try { //TODO: remove this if needed
 				serverPublicKeyJwk = await window.crypto.subtle.importKey(
 					'jwk',
 					JWKToPassOn,
@@ -91,7 +85,7 @@ const ECDHCrypto ={
 		let keyTestExport = await window.crypto.subtle.exportKey('jwk',serverPublicKeyJwk)
 		keyTestExport = this.fixAndValidateJWK(keyTestExport)
 		const keyString = JSON.stringify(keyTestExport); //probably redundant, but just to be sure
-		console.log('server public key from stringified EXPORTkeystring: ', keyString);
+		console.log('server public key from stringified EXPORTkeystring: ', keyString); //TODO: remove
 		sessionStorage.setItem('serverPublicKeyECDH', keyString);
 		return keyString;
 	},
@@ -99,7 +93,7 @@ const ECDHCrypto ={
 		const keyStringImported = key;
 		const serverPubKeySessionStorage = sessionStorage.getItem('serverPublicKeyECDH');
 		const clientKeyStringSessionStorage = sessionStorage.getItem('clientPublicKeyECDH')
-		if (!keyStringImported) {
+		if (!keyStringImported) { //TODO: remove
 			console.error('invalid Key passed to function');
 			if (keyStringImported === clientKeyStringSessionStorage) {
 				console.log('Key variable is the same as the one stored in session storage: CLIENT');
@@ -111,7 +105,7 @@ const ECDHCrypto ={
 				}
 			}
 		} else {
-			console.log('Key variable is a valid keystring');
+			console.log('Key variable is a valid keystring'); //TODO: remove
 			if (keyStringImported === clientKeyStringSessionStorage) {
 				console.log('the key corresponds to the client public key from storage');
 			} else if (keyStringImported === serverPubKeySessionStorage) {
