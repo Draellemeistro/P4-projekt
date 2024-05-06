@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import RSACrypto from '../../utils/encryptionRSA.js';
 	import ECDHCrypto from '../../utils/encryptionECDH.js';
+	import Box from '../Box.svelte';
 
 	// eslint-disable-next-line no-unused-vars
 
@@ -38,7 +39,14 @@
 		stringified = JSON.stringify(WebCryptoResult);
 	});
 </script>
-
+<div>
+	<h2>Test pages</h2>
+	<Box>
+		<input type="button" onclick="location.href='/cryptoTests/testingRSA';" value="RSA test page" />
+		<input type="button" onclick="location.href='/cryptoTests/testingECDH';" value="ECDH test page" />
+		<input type="button" onclick="location.href='/cryptoTests/testingBlindSig';" value="blindSig test page" />
+	</Box>
+</div>
 <div>
 	<h2>Request RSA Public Key</h2>
 	<button on:click={RSACrypto.request}>Request RSA Public Key</button>
