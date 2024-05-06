@@ -115,6 +115,7 @@ const RSACrypto = {
 						return data;
 					}
 				} else {
+				console.error('Error in DecryptTestRSA. response.ok: ', response.ok);
 					console.error('Server responded with status', response.status);
 				}
 		},
