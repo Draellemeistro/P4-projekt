@@ -90,34 +90,19 @@ const RSACrypto = {
 
 		//TODO: RSADecryptionTest i apiService.js, men tør ikke fjerne den her endnu.
 		askForDecryption: async function askForDecryption(plainTextMessage, encryptedMessage) {
-			const serverIP = '192.168.0.113';
-			const serverPort = '3030';
-			let response;
+			let responseData;
 			try{
-				response = await DecryptTestRSA(plainTextMessage, encryptedMessage);
+				responseData = await DecryptTestRSA(plainTextMessage, encryptedMessage);
 			} catch (error) {
-				console.error('Failed to fetch. might be in the fetch request or related to async/await syntax: ', error);
-				response = await fetch(`https://${serverIP}:${serverPort}/decrypt-RSA-message-Test`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({ plainTextMessage, encryptedMessage }),
-				});
+				console.error('Error in askForDecryption: ', error);
 			}
-			if (response.ok) {
-					const data = await response.json();
-					if (data === plainTextMessage) {
-						return data;
-					} else {
-						console.log('problem ');
-						console.error('Decryption failed: might be in the formatting/encoding of the message.\nresponse:', data);
-						return data;
-					}
-				} else {
-				console.error('Error in DecryptTestRSA. response.ok: ', response.ok);
-					console.error('Server responded with status', response.status);
-				}
+			if (responseData === plainTextMessage) {
+				return responseData;
+			} else {
+				console.log('problem ');
+				console.error('Decryption failed: might be in the formatting/encoding of the message.\nresponse:', data);
+				return responseData;
+			}
 		},
 
 
