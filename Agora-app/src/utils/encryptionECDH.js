@@ -28,19 +28,34 @@ const ECDHCrypto ={
 
 		return keyStringObject;
 	},
-	keyImportTemplateECDH: async function keyImportTemplateECDH(keyString) {
-		return await window.crypto.subtle.importKey(
-			'jwk',
-			keyString,
-			{
-				name: 'ECDH',
-				namedCurve: 'P-521',
-			},
-			true,
-			["deriveKey", "deriveBits"],
+	keyImportTemplateECDH: async function keyImportTemplateECDH(keyString,optionalParams = false	) {
 
-		);
+		if (optionalParams === true) {
+			return await window.crypto.subtle.importKey(
+				'jwk',
+				keyString,
+				{
+					name: 'ECDH',
+					namedCurve: 'P-521',
+				},
+				true,
+				[],
+			);
+		} else {
+			return await window.crypto.subtle.importKey(
+				'jwk',
+				keyString,
+				{
+					name: 'ECDH',
+					namedCurve: 'P-521',
+				},
+				true,
+				["deriveKey", "deriveBits"],
+			);
+		}
 	},
+
+
 // Function to send client's public key and receive server's public key
 	requestServerECDH: async function requestServerPublicKeyECDH(){
 
