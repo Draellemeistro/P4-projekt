@@ -68,20 +68,20 @@ const RSACrypto = {
 					if (!keyString) {
 						console.error('Neither provided key: ',typeof publicKey,' nor stored key: ',keyString ,' is valid. Please provide a valid public key');
 						return false;
-					} else {
-						const jwkKey = JSON.parse(keyString);
-						//import RSA public key TODO: check if this can be handled by keyImportTemplateRSA.
-						publicKey = await window.crypto.subtle.importKey(
-							'jwk',
-							jwkKey,
-							{
-								name: 'RSA-OAEP',
-								hash: 'SHA-256'
-							},
-							true,
-							['encrypt']
-						);
 					}
+					} else {
+					const jwkKey = JSON.parse(keyString);
+					//import RSA public key TODO: check if this can be handled by keyImportTemplateRSA.
+					publicKey = await window.crypto.subtle.importKey(
+						'jwk',
+						jwkKey,
+						{
+							name: 'RSA-OAEP',
+							hash: 'SHA-256'
+						},
+						true,
+						['encrypt']
+					);
 				}
 				const encryptionData = encoder.encode(message);
 				const encryptedMessage = await window.crypto.subtle.encrypt(
