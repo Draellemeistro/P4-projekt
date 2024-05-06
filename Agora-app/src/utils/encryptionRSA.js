@@ -56,6 +56,7 @@ const RSACrypto = {
 
 			encrypt: async function encryptWithPublicKey(message, publicKey) {
 				const encoder = new TextEncoder(); // Used to encode the message to an ArrayBuffer for encryption
+				let jwkKey;
 				// Check if the message and publicKey are valid
 				if (typeof message !== 'string' || message.length === 0) {
 					console.error('Invalid message. Please provide a non-empty string.');
@@ -68,21 +69,24 @@ const RSACrypto = {
 					if (!keyString) {
 						console.error('Neither provided key: ',typeof publicKey,' nor stored key: ',keyString ,' is valid. Please provide a valid public key');
 						return false;
-					}
 					} else {
-					const jwkKey = JSON.parse(keyString);
-					//import RSA public key TODO: check if this can be handled by keyImportTemplateRSA.
-					publicKey = await window.crypto.subtle.importKey(
-						'jwk',
-						jwkKey,
-						{
-							name: 'RSA-OAEP',
-							hash: 'SHA-256'
-						},
-						true,
-						['encrypt']
-					);
+						jwkKey = JSON.parse(keyString);
+					}
+				} else {
+					jwkKey = JSON.parse(publicKey);
 				}
+				//import RSA public key TODO: check if this can be handled by keyImportTemplateRSA.
+				publicKey = await window.crypto.subtle.importKey(
+					'jwk',
+					jwkKey,
+					{
+						name: 'RSA-OAEP',
+						hash: 'SHA-256'
+					},
+					true,
+					['encrypt']
+				);
+
 				const encryptionData = encoder.encode(message);
 				const encryptedMessage = await window.crypto.subtle.encrypt(
 					{
