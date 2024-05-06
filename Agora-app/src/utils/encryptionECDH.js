@@ -81,18 +81,10 @@ const ECDHCrypto ={
 			console.error ('trying to import server public key without key_ops');
 			serverPublicKeyJwk = await this.keyImportTemplateECDH(JWKToPassOn)
 		} catch (error) {
-			console.log('its the fucking [deriveKey, deriveBits] part that fucks this up!!!!')
 			try { //TODO: remove this if needed
-				serverPublicKeyJwk = await window.crypto.subtle.importKey(
-					'jwk',
-					JWKToPassOn,
-					{
-						name: 'ECDH',
-						namedCurve: 'P-521',
-					},
-					true,
-					[],
-				)} catch (error) {
+				console.log('its the fucking [deriveKey, deriveBits] part that fucks this up!!!!')
+				serverPublicKeyJwk = await this.keyImportTemplateECDH(JWKToPassOn, true)
+			} catch (error) {
 				console.error('Failed to import FIXED server public key: ', error);
 				}
 			console.error('Failed to import server public key: ', error);
