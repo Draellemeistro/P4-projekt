@@ -98,18 +98,7 @@ export const fetchKeyECDH = async () => {
 	});
 };
 
-export const checkSharedSecret = (keyStringSharedSecret, keyStringPub) => {
-	return fetch(`https://${serverIP}:${serverPort}/check-shared-secret`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			sharedSecret: keyStringSharedSecret,
-			clientPublicKey: keyStringPub
-		})
-	});
-};
+
 
 export const messageDecryptTestECDH = (msgForServer) => {
 	// msgForServer is a stringified object containing several properties, one of which is the encrypted message.
@@ -122,12 +111,3 @@ export const messageDecryptTestECDH = (msgForServer) => {
 	});
 };
 
-export const tempPostKeyECDH = (keyStringPubToUse) => {
-	return fetch(`https://${serverIP}:${serverPort}/temp-ecdh-key-from-client`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({clientPublicKey: keyStringPubToUse})
-	});
-}

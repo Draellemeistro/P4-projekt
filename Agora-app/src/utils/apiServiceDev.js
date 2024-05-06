@@ -19,3 +19,25 @@ export const DecryptTestRSA = async (plainTextMessage, encryptedMessage) => {
 		return response.status;
 	}
 }
+export const checkSharedSecretTest = async (keyStringSharedSecret, keyStringPub) => {
+	return await fetch(`https://${serverIP}:${serverPort}/check-shared-secret-test`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			sharedSecret: keyStringSharedSecret,
+			clientPublicKey: keyStringPub
+		})
+	});
+}
+
+export const tempPostKeyECDH = async (keyStringPubToUse) => {
+	return await fetch(`https://${serverIP}:${serverPort}/client-key-post-test`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({clientPublicKey: keyStringPubToUse})
+	});
+}

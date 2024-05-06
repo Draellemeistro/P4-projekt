@@ -226,19 +226,16 @@ app.post('/rsa-public-key', (req, res) => {
 	res.json(jwkFormatServerPublicRSAKey);
 	console.log('RSA Public Key sent');
 } );
-app.post('/temp-ecdh-key-from-client', (req, res) => {
+app.post('/client-key-post-test', (req, res) => {
 	console.log('Accessed /temp-ecdh-key-from-client endpoint');
 	const clientPubKey = req.body.clientPublicKey;
 	let responseValue;
 	if (clientPubKey.length === 0) {
 		console.log('Client public key string is empty');
 		responseValue = 0;
-	}
-	else {
-		console.log('Client public key string is not empty');
+	}	else {
 		responseValue = 1;
 	}
-	console.log('Client public key string:', clientPubKey);
 	res.json({ success: responseValue, returnKey: clientPubKey });
 } );
 
@@ -349,7 +346,7 @@ app.post('/present-ecdh-key', async (req, res) => {
 	});
 });
 
-app.post('/check-shared-secret', async (req, res) => {
+app.post('/check-shared-secret-test', async (req, res) => {
 	console.log('Accessed /check-shared-secret endpoint');
 	let responseValue;
 	let clientPublicKeyJWK = req.body.clientPublicKey;

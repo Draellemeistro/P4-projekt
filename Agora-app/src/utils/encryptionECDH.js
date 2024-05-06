@@ -1,4 +1,6 @@
 import { fetchKeyECDH } from './apiService.js';
+import { checkSharedSecretTest } from './apiServiceDev.js';
+import { tempPostKeyECDH } from './apiServiceDev.js';
 
 
 const ECDHCrypto ={
@@ -154,7 +156,6 @@ const ECDHCrypto ={
 		console.log('clientKeyForSecret: ', clientKeyForSecret);
 		//console.log('serverKeyForSecret: ', serverKeyForSecret);
 		let sharedSecretKey;
-		console.log('attempting to derive shared secret key. param1 is serverkey, param2 is clientkey');
 		try {
 			sharedSecretKey = await window.crypto.subtle.deriveKey(
 				{
@@ -170,43 +171,11 @@ const ECDHCrypto ={
 				["encrypt", "decrypt"],
 			);
 		} catch (error) {
-			try {
-				console.error('first attempt failed. Trying again with no key_ops'); //TODO: this part. if not used, should be removed
-				sharedSecretKey = await window.crypto.subtle.deriveKey(
-					{
-						name: "ECDH",
-						public: serverKeyForSecret,
-					},
-					clientKeyForSecret,
-					{
-						name: "AES-GCM",
-						length: "256"
-					},
-					true,
-					[],
-				);
-			} catch (error) {
-				try {
-					console.log('second attempt failed. Trying again with deriveBits instead of deriveKey');
-					sharedSecretKey = await window.crypto.subtle.deriveBits(
-						{
-							name: "ECDH",
-							public: serverKeyForSecret,
-						},
-						clientKeyForSecret,
-						256
-					);
-				} catch (error)  {
-					console.error('3: all three attempts at deriveKey failed: ', error);
-				}
-				console.error('2: Failed to derive shared secret key: ', error);
-			}
-			console.error('1: initial attempt failed: ', error);
+			console.error('1: initial attempt failed. Try again with no key_ops, or use derive bits: ', error);
 		}
-		console.log('shared secret key: ', sharedSecretKey);
 		const exportedSharedSecretKey = await window.crypto.subtle.exportKey('jwk', sharedSecretKey);
 		const sharedSecretString = JSON.stringify(exportedSharedSecretKey);
-		sessionStorage.setItem('sharedSecretECDH', sharedSecretString);
+		sessionStorage.setItem('sharedSecretECDH', sharedSecretString); // TODO: non-secure, should be removed
 		return sharedSecretString;
 	},
 
@@ -215,22 +184,21 @@ const ECDHCrypto ={
 
 	encryptECDH: async function encryptMessageECDH(message, sharedSecret) {
 		const encoder = new TextEncoder();
-		let SharedSecretForEncryption	// Check if the message and publicKey are valid
+		let SharedSecretForEncryption;
+		// Check if the message and publicKey are valid
 		if (typeof message !== 'string' || message.length === 0) {
 			console.error('Invalid message. Please provide a non-empty string.');
 			return false;
 		}
 
 		if (typeof sharedSecret !== 'string' || sharedSecret.length === 0) {
-			console.error('Invalid sharedSecret. checking sessionStorage for public key');
-			const keyString = sessionStorage.getItem('sharedSecretECDH');
+			console.error('Invalid sharedSecret. Attempting to re-derive shared secret from sessionStorage.');
+			const keyString = sessionStorage.getItem('sharedSecretECDH'); //TODO: non-secure, should be removed
 			if (!keyString) {
-				console.error('!--No public key found in sessionStorage.--!\n' +
-					'!--Please make sure the key is stored correctly.--!');
-				console.log('publicKey: ', sharedSecret);
-				console.log('keyString', keyString);
+				console.error('No shared secret provided or stored. Please provide a valid shared secret');
 				return false;
 			} else {
+				console.log('using shared secret from session storage for encryption.');
 				const jwkKey = JSON.parse(keyString);
 				SharedSecretForEncryption = await window.crypto.subtle.importKey(
 					'jwk',
@@ -266,41 +234,24 @@ const ECDHCrypto ={
 			encoder.encode(message)
 		);
 		let uint8View = new Uint8Array(encryptedMessage);
-		console.log(uint8View);
-		let returnObject = {
+		console.log('why is this here??', uint8View);
+		return {
 			encryptedMessage: this.convertArrBuffToBase64(encryptedMessage),
 			ivValue: ivValue
-		}
-		console.log('returning encryptedMessage from encryptECDH: ', encryptedMessage);
-		console.log('returning ivValue from encryptECDH: ', ivValue);
-		return returnObject;
+		};
 	},
 
 	verifySharedSecretTest: async function verifyTestSharedSecret(keyStringSharedSecret, keyStringPub) {
-		const serverIP = '192.168.0.113';// TAG: DOAPIService
-		const serverPort = '3030';				//checkSharedSecret(keyStringSharedSecret, keyStringPub)
-		const response = await fetch(`https://${serverIP}:${serverPort}/check-shared-secret`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				sharedSecret: keyStringSharedSecret,
-				clientPublicKey: keyStringPub
-			})
-		}); if (response.status !== 200) {
-			console.error('Failed to send encrypted ballot');
+		const response = await checkSharedSecretTest(keyStringSharedSecret, keyStringPub);
+		if (response.status !== 200) {
+			console.error('Failed to send shared secret');
 		} if (response.ok) {
-			console.log('server received shared secret and public key');
 			const data = await response.json();
 			if (data.success === true || data.success === 'true') {
-				console.log('shared secret key is identical on both client and server');
 				return 'success!';
 			} else if (data.success === false || data.success === 'false') {
-				console.log('shared secret key is not identical on both client and server');
 				return 'failed';
 			} else {
-				console.log('response.data is not a boolean or some other error occurred');
 				return 'error';
 			}
 		}
@@ -311,103 +262,65 @@ const ECDHCrypto ={
 		console.log('keyStringPubToUse: ', keyStringPubToUse);
 		console.log('keyStringPubToUse type: ', typeof keyStringPubToUse);
 		console.log('sending public key to server');
-		const serverIP = '192.168.0.113'; // TAG: DOAPIService
-		const serverPort = '3030';			//tempPostKeyECDH(keyStringPubToUse)
-		const response = await fetch(`https://${serverIP}:${serverPort}/temp-ecdh-key-from-client`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({clientPublicKey: keyStringPubToUse})
-		});
+		const response = await tempPostKeyECDH(keyStringPubToUse);
 		if (response.status !== 200) {
-			console.log('info: ', response, 'status: ', response.status, 'ok: ', response.ok, 'statusText: ', response.statusText);
-			console.error('Failed to send public key');
+			console.error('Failed to send public key: ', response.status);
 		}
-		console.log('client key sent');
 		if (response.ok) {
 			console.log('server fetched public key from client');
 			const data = await response.json();
 			if (data.success === 1 || data.success === '1') {
-				console.log('received public key string has actual value');
 				if (data.returnKey === keyStringPubToUse) {
-					console.log('The server received the correct public key');
 					return 'Success!';
 				} else {
-					console.error('server received incorrect public key');
 					return 'failed: incorrect key';
 				}
 			} else {
-				console.error('server received public key string with no value');
 				return 'failed: no value';
 			}
 		} else {
 			console.error('Failed to send public key');
-			return 'failed: fetch failed';
+			return 'failed: fetch error';
 		}
 	},
+
+
+
+
 	fixAndValidateJWK: function insertKeyOpsAndValidate(jwkToValidate, isPrivateKey = false) {
 		let jwk;
 		if (typeof jwkToValidate === 'string') {
-		jwk = JSON.parse(jwkToValidate);
-			if (!jwk.key_ops) {
-				jwk.key_ops = [];
-			}
-			if (!jwk.key_ops.includes('deriveKey')) {
-				jwk.key_ops.push('deriveKey');
-			}
-			if (!jwk.key_ops.includes('deriveBits')) {
-				jwk.key_ops.push('deriveBits');
-			}
-			if (!jwk.ext) {
-				jwk.ext = true;
-			}
-			if (isPrivateKey === true) {
-				const validProperties = ['crv', 'ext', 'key_ops', 'kty', 'x', 'y'];
-				const isValid = validProperties.every(prop => prop in jwk);
-				if (!isValid) {
-					throw new Error('Invalid JWK format');
-				}
-			} else {
-					const validProperties = ['crv',"d", 'ext', 'key_ops', 'kty', 'x', 'y'];
-					const isValid = validProperties.every(prop => prop in jwk);
-					if (!isValid) {
-						throw new Error('Invalid JWK format');
-					}
-				}
-
-
-			return jwk;
+			jwk = JSON.parse(jwkToValidate);
+			return insertKeyOpsAndValidate(jwk, isPrivateKey);
 		}
-
-		jwk = jwkToValidate;
-	// Insert key_ops into the JWK
 		if (!jwk.key_ops) {
 			jwk.key_ops = [];
 		}
-
-		// Add "deriveKey" and "deriveBits" to key_ops if they're not already present
-		if (!jwk.key_ops.includes("deriveKey")) {
-			jwk.key_ops.push("deriveKey");
+		if (!jwk.key_ops.includes('deriveKey')) {
+			jwk.key_ops.push('deriveKey');
 		}
-		if (!jwk.key_ops.includes("deriveBits")) {
-			jwk.key_ops.push("deriveBits");
+		if (!jwk.key_ops.includes('deriveBits')) {
+			jwk.key_ops.push('deriveBits');
 		}
 		if (!jwk.ext) {
 			jwk.ext = true;
 		}
-			// Define the properties that a valid JWK should have
-		const validProperties = ['crv', 'ext', 'key_ops', 'kty', 'x', 'y'];
-
-		// Check if the JWK has all the valid properties
-		const isValid = validProperties.every(prop => prop in jwk);
-
-		if (!isValid) {
-			throw new Error('Invalid JWK format');
+		if (isPrivateKey === true) {
+			const validProperties = ['crv', 'ext', 'key_ops', 'kty', 'x', 'y', 'd'];
+			const isValid = validProperties.every(prop => prop in jwk);
+			if (!isValid) {
+				throw new Error('Invalid JWK format');
+			}
+		} else {
+			const validProperties = ['crv',"d", 'ext', 'key_ops', 'kty', 'x', 'y'];
+			const isValid = validProperties.every(prop => prop in jwk);
+			if (!isValid) {
+				throw new Error('Invalid JWK format');
+			}
 		}
-
 		return jwk;
 	},
+
 	convertBase64ToArrayBuffer: function convertBase64ToArrayBuffer(base64String) {
 		const binaryString = window.atob(base64String);
 		const bytes = new Uint8Array(binaryString.length);
