@@ -5,7 +5,7 @@
 	let counter = 0;
 	//1
 	let clientKeyStringPub;
-	let clientKeyStringPriv;
+	let clientKeyStringPriv; //TODO: remove this from the frontend
 	//2
 	let serverKeyStringPub;
 	//3

@@ -54,6 +54,25 @@ export const sendBlindedForSigning = (blindedMessage) => {
  //	New and/or not implemented		//
 ///////////////////////////////////
 
+export const fetchKeyRSA = async () => {
+	return await fetch(`https://${serverIP}:${serverPort}/rsa-public-key`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	});
+};
+
+
+export const fetchKeyECDH = async () => {
+	return await fetch(`https://${serverIP}:${serverPort}/request-public-ecdh-key`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	});
+};
+
 export const sendBallotToServerAndCheckHash = (ballot) => {
 	const clientPubKeyECDH = 'test';
 	const ballotHash = crypto.createHash('sha256').update(JSON.stringify(ballot)).digest('hex');
@@ -77,28 +96,6 @@ export const sendBallotToServerAndCheckHash = (ballot) => {
 		return false;
 	}
 };
-
-export const fetchKeyRSA = async () => {
-	return await fetch(`https://${serverIP}:${serverPort}/rsa-public-key`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-	});
-};
-
-
-
-export const fetchKeyECDH = async () => {
-	return await fetch(`https://${serverIP}:${serverPort}/request-public-ecdh-key`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-	});
-};
-
-
 
 
 

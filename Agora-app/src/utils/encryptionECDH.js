@@ -117,6 +117,9 @@ const ECDHCrypto ={
 			console.error('clientPrivateKey is not a string. Trying to use it anyway');
 			clientKeyForSecret = clientPrivateKeyString;
 		}
+
+		//because of some weird bug, the key_ops and ext properties are not passed on correctly
+		//this is a workaround to fix that
 		const jwkClient = {
 			ext: true,
 			kty: clientKeyForSecret.kty,
@@ -165,7 +168,6 @@ const ECDHCrypto ={
 			console.error('Invalid message. Please provide a non-empty string.');
 			return false;
 		}
-
 		if (typeof sharedSecret !== 'string' || sharedSecret.length === 0) {
 			console.error('Invalid sharedSecret. Attempting to re-derive shared secret from sessionStorage.');
 			const keyString = sessionStorage.getItem('sharedSecretECDH'); //TODO: non-secure, should be removed
@@ -208,13 +210,13 @@ const ECDHCrypto ={
 			SharedSecretForEncryption,
 			encoder.encode(message)
 		);
-		let uint8View = new Uint8Array(encryptedMessage);
-		console.log('why is this here??', uint8View);
 		return {
 			encryptedMessage: this.convertArrBuffToBase64(encryptedMessage),
 			ivValue: ivValue
 		};
 	},
+
+
 
 	verifySharedSecretTest: async function verifyTestSharedSecret(keyStringSharedSecret, keyStringPub) {
 		const response = await checkSharedSecretTest(keyStringSharedSecret, keyStringPub);
@@ -299,7 +301,6 @@ const ECDHCrypto ={
 			if (keyStringImported === clientKeyStringSessionStorage) {
 				return 'client';
 			} else if (keyStringImported === serverPubKeySessionStorage) {
-				console.log('the key corresponds to the server public key from storage');
 				return 'server';
 			} else {
 				return 'neither';

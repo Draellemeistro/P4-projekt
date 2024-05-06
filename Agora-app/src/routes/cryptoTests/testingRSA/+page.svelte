@@ -40,7 +40,5 @@
 
 <div>
 	<h2>Decrypted Message</h2>
-	<button on:click={RSACrypto.askForDecryption(testMessage, encryptedMessage)}>ask server to decrypt</button>
-	<p>decrypted msg from server: {decryptedMessage}</p>
 	<p>{decryptedMessage}</p>
 </div>
