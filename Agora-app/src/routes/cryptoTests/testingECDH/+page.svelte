@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import ECDHCrypto from '../../../utils/encryptionECDH.js';
+	import { SendEncryptedMsgTest, verifyTestSharedSecret } from './pageECDH.js';
 
 	/*
 	CryptoKey object provides some level of protection,
@@ -34,7 +35,7 @@
 	const plainText = 'Hello World';
 	let encryptedMessage;
 	let decryptedCheck = 'Server Decryption not Implemented';
-
+	verifyTestSharedSecret(sharedSecret);
 	let ivValue;
 	onMount(async () => {
 		console.log(counter);
@@ -52,7 +53,7 @@
 		sharedSecret = await ECDHCrypto.deriveSecret(clientKeyPriv, serverKeyPub);
 		counter++;
 		console.log('step ', counter, ' finished'); //4
-		sharedSecretCheck = await ECDHCrypto.verifySharedSecretTest(sharedSecret, clientKeyPub);
+		sharedSecretCheck = await verifyTestSharedSecret(sharedSecret, clientKeyPub);
 		counter++;
 		console.log('step ', counter, ' finished'); //5
 		const encryptionInfo = await ECDHCrypto.encryptECDH(plainText, sharedSecret);
@@ -61,7 +62,7 @@
 
 		counter++;
 		console.log('step ', counter, ' finished'); //6
-		decryptedCheck = await ECDHCrypto.SendEncryptedMsgTest(plainText, encryptedMessage, clientKeyPub, ivValue);
+		decryptedCheck = await SendEncryptedMsgTest(plainText, encryptedMessage, clientKeyPub, ivValue);
 		counter++;
 		console.log('step ', counter, ' finished'); //7
 		if(counter >= 7){

@@ -1,5 +1,5 @@
 import { fetchKeyECDH } from './apiService.js';
-import { checkSharedSecretTest, messageDecryptTestECDH, tempPostKeyECDH } from './apiServiceDev.js';
+import { tempPostKeyECDH } from './apiServiceDev.js';
 
 // ECDH encryption module
 // - initECDH: generates a new ECDH key pair
@@ -168,57 +168,6 @@ const ECDHCrypto ={
 			ivValue: ivValue
 		};
 	},
-
-
-
-	verifySharedSecretTest: async function verifyTestSharedSecret(sharedSecret, clientPubKey) {
-		//TODO: remove/move this function
-		let sharedSecretString = await this.exportKeyString(sharedSecret);
-		let clientPubKeyString = await this.exportKeyString(clientPubKey);
-
-		const response = await checkSharedSecretTest(sharedSecretString, clientPubKeyString);
-		if (response.status !== 200) {
-			console.error('Failed to send shared secret');
-		} if (response.ok) {
-			const data = await response.json();
-			if (data.success === true || data.success === 'true') {
-				return 'success!';
-			} else if (data.success === false || data.success === 'false') {
-				return 'failed';
-			} else {
-				return 'error';
-			}
-		}
-	},
-
-
-
-	SendEncryptedMsgTest: async function serverDecryptionTest(plainTextMessage, encryptedMessage, clientPubKey, ivValue) {
-		//TODO: remove/move this function
-		let pubKeyString = await this.exportKeyString(clientPubKey);
-		let msgForServer = JSON.stringify({
-			plainTextMessage: plainTextMessage,
-			encryptedMessage: encryptedMessage,
-			clientPublicKey: pubKeyString,
-			IvValue: ivValue
-		});
-		const response = await messageDecryptTestECDH(msgForServer);
-		if (response.ok) {
-			const data = await response.json();
-			if (JSON.stringify(plainTextMessage) === JSON.stringify(data.decryptedMessage)) {
-				return ('Decryption successful! Received decryption: ' +  JSON.stringify(data.decryptedMessage));
-			} else if (data.decryptedMessage === plainTextMessage) {
-				return ('2 Decryption successful! Received decryption: ' + data.decryptedMessage);
-			} else {
-				return ('Decryption failed. Received: ' + data.decryptedMessage);
-			}
-		} else {
-			console.error('Failed to fetch', response);
-			return 'error: failed to fetch';
-		}
-	},
-
-
 
 	keyImportTemplateECDH: async function keyImportTemplateECDH(keyString,optionalParams = false	) {
 		if (optionalParams === true) {
