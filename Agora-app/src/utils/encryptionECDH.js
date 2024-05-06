@@ -78,11 +78,9 @@ const ECDHCrypto ={
 		};
 		let serverPublicKeyJwk;
 		try{
-			console.error ('trying to import server public key without key_ops');
 			serverPublicKeyJwk = await this.keyImportTemplateECDH(JWKToPassOn)
 		} catch (error) {
-			try { //TODO: remove this if needed
-				console.log('its the fucking [deriveKey, deriveBits] part that fucks this up!!!!')
+			try {
 				serverPublicKeyJwk = await this.keyImportTemplateECDH(JWKToPassOn, true)
 			} catch (error) {
 				console.error('Failed to import FIXED server public key: ', error);
@@ -91,8 +89,8 @@ const ECDHCrypto ={
 		}
 		let keyTestExport = await window.crypto.subtle.exportKey('jwk',serverPublicKeyJwk)
 		keyTestExport = this.fixAndValidateJWK(keyTestExport)
+		//TODO: remove line below
 		const keyString = JSON.stringify(keyTestExport); //probably redundant, but just to be sure
-		console.log('server public key from stringified EXPORTkeystring: ', keyString); //TODO: remove
 		sessionStorage.setItem('serverPublicKeyECDH', keyString);
 		return keyString;
 	},
@@ -100,27 +98,18 @@ const ECDHCrypto ={
 		const keyStringImported = key;
 		const serverPubKeySessionStorage = sessionStorage.getItem('serverPublicKeyECDH');
 		const clientKeyStringSessionStorage = sessionStorage.getItem('clientPublicKeyECDH')
-		if (!keyStringImported) { //TODO: remove
-			console.error('invalid Key passed to function');
-			if (keyStringImported === clientKeyStringSessionStorage) {
-				console.log('Key variable is the same as the one stored in session storage: CLIENT');
+		if (!keyStringImported) {
+			//console.error('invalid Key passed to function');
+			return 'invalid';
 			} else {
-				if (keyStringImported === clientKeyStringSessionStorage) {
-					console.log('Key variable is the same as the one stored in session storage: SERVER');
-				} else {
-					console.log('Maybe use the corresponding key in SessionStorage instead.');
-				}
-			}
-		} else {
-			console.log('Key variable is a valid keystring'); //TODO: remove
 			if (keyStringImported === clientKeyStringSessionStorage) {
-				console.log('the key corresponds to the client public key from storage');
+				return 'client';
 			} else if (keyStringImported === serverPubKeySessionStorage) {
 				console.log('the key corresponds to the server public key from storage');
+				return 'server';
 			} else {
-				console.log('the key does not correspond to either client public key or server public key in storage.\nCAREFUL!!!');
+				return 'neither';
 			}
-			return 1;
 		}
 	},
 // Function to compute shared secret
@@ -132,16 +121,15 @@ const ECDHCrypto ={
 		let serverKeyForSecret;
 		let clientKeyForSecret;
 
-		if (!this.compareKeyWithStorage(serverPubKeyString)) {
-			console.log('invalid server public key STRING passed to function. Trying to use it anyway');
-			serverKeyForSecret = serverPubKeyString;
+		if (this.compareKeyWithStorage(serverPubKeyString) !== 'server') {
+			serverKeyForSecret = sessionStorage.getItem('serverPublicKeyECDH');
 		} else {
 			serverKeyForSecret = JSON.parse(serverPubKeyString);
 		}
 		if(typeof clientPrivateKeyString === 'string') {
 			clientKeyForSecret = JSON.parse(clientPrivateKeyString);
 		} else {
-			console.log('clientPrivateKey is not a string. Trying to use it anyway');
+			console.error('clientPrivateKey is not a string. Trying to use it anyway');
 			clientKeyForSecret = clientPrivateKeyString;
 		}
 		const jwkClient = {
@@ -155,27 +143,10 @@ const ECDHCrypto ={
 		console.log('clientKeyForSecret D: ', clientKeyForSecret.d,);
 		console.log('attempting to import client private key:.....');
 		console.log('clientKeyForSecret: ', clientKeyForSecret);
-		const clientKeyForSecretJWK = await window.crypto.subtle.importKey(
-			'jwk',
-			jwkClient,
-			{
-				name: 'ECDH',
-				namedCurve: 'P-521',
-			},
-			true,
-			["deriveKey", 'deriveKey']
-		); console.log('attempting to import client private key: success');
-		const serverKeyForSecretJWK = await window.crypto.subtle.importKey(
-			'jwk',
-			serverKeyForSecret,
-			{
-				name: 'ECDH',
-				namedCurve: 'P-521',
-			},
-			true,
-			["deriveKey", 'deriveKey']
-		);
-		//serverKeyForSecretJWK.usages = ['deriveKey'];
+		const clientKeyForSecretJWK = await this.keyImportTemplateECDH(jwkClient);
+		const serverKeyForSecretJWK =  await this.keyImportTemplateECDH(serverKeyForSecret);
+
+		//serverKeyForSecretJWK.usages = ['deriveKey']; TODO: check if this is necessary
 		//fix and validate the JWK if needed
 		//clientKeyForSecret = this.fixAndValidateJWK(clientKeyForSecret);
 		clientKeyForSecret = clientKeyForSecretJWK;
@@ -199,8 +170,8 @@ const ECDHCrypto ={
 				["encrypt", "decrypt"],
 			);
 		} catch (error) {
-			console.log('first attempt failed. Trying again with no key_ops');
 			try {
+				console.error('first attempt failed. Trying again with no key_ops'); //TODO: this part. if not used, should be removed
 				sharedSecretKey = await window.crypto.subtle.deriveKey(
 					{
 						name: "ECDH",
@@ -215,8 +186,8 @@ const ECDHCrypto ={
 					[],
 				);
 			} catch (error) {
-				console.log('second attempt failed. Trying again with deriveBits instead of deriveKey');
 				try {
+					console.log('second attempt failed. Trying again with deriveBits instead of deriveKey');
 					sharedSecretKey = await window.crypto.subtle.deriveBits(
 						{
 							name: "ECDH",
