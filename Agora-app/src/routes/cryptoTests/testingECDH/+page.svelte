@@ -2,12 +2,28 @@
 	import { onMount } from 'svelte';
 	import ECDHCrypto from '../../../utils/encryptionECDH.js';
 
+	/*
+	CryptoKey object provides some level of protection,
+	it should be used as part of a larger security strategy that includes:
+	 secure coding practices,
+	 input validation,
+	 output encoding,
+	 and regular security audits.
+
+
+	 !!!!!!!!!!DEN HER LIGE UNDER!!!!!!!!!
+	 actual key data is not directly accessible when you're working with a CryptoKey object.
+	 This means that even if an attacker is able to access the CryptoKey object,
+	 they cannot extract the key data from it unless the extractable attribute is set to true. 
+
+	 */
+
 	let counter = 0;
 	//1
-	let clientKeyStringPub;
-	let clientKeyStringPriv; //TODO: remove this from the frontend
+	let clientKeyPub;
+	let clientKeyPriv; //TODO: remove this from the frontend
 	//2
-	let serverKeyStringPub;
+	let serverKeyPub;
 	//3
 	let sendKeyCheck;
 	//4
@@ -23,23 +39,23 @@
 	onMount(async () => {
 		console.log(counter);
 		const BothKeys = await ECDHCrypto.initECDH();
-		clientKeyStringPub = BothKeys.keyStringPub
-		clientKeyStringPriv = BothKeys.keyStringPriv;
-		const cryptoKeypairVersion = await ECDHCrypto.initECDH(false);
+		clientKeyPub = BothKeys.keyStringPub
+		clientKeyPriv = BothKeys.keyStringPriv;
+		const cryptoKeypairVersion = await ECDHCrypto.initECDH();
 		console.log('type of cryptoKeypairVersion: ', typeof cryptoKeypairVersion);
 		console.log('cryptoKeypairVersion: ', cryptoKeypairVersion);
 		counter++;
 		console.log('step ', counter, ' finished'); //1
-		serverKeyStringPub = await ECDHCrypto.requestServerECDH();
+		serverKeyPub = await ECDHCrypto.requestServerECDH();
 		counter++;
 		console.log('step ', counter, ' finished'); //2
-		sendKeyCheck = await ECDHCrypto.tempSendEDCHKey(clientKeyStringPub);
+		sendKeyCheck = await ECDHCrypto.tempSendEDCHKey(clientKeyPub);
 		counter++;
 		console.log('step ', counter, ' finished'); //3
-		sharedSecret = await ECDHCrypto.deriveSecret(clientKeyStringPriv, serverKeyStringPub);
+		sharedSecret = await ECDHCrypto.deriveSecret(clientKeyPriv, serverKeyPub);
 		counter++;
 		console.log('step ', counter, ' finished'); //4
-		sharedSecretCheck = await ECDHCrypto.verifySharedSecretTest(sharedSecret, clientKeyStringPub);
+		sharedSecretCheck = await ECDHCrypto.verifySharedSecretTest(sharedSecret, clientKeyPub);
 		counter++;
 		console.log('step ', counter, ' finished'); //5
 		const encryptionInfo = await ECDHCrypto.encryptECDH(plainText, sharedSecret);
@@ -48,7 +64,7 @@
 
 		counter++;
 		console.log('step ', counter, ' finished'); //6
-		decryptedCheck = await ECDHCrypto.SendEncryptedMsgTest(plainText, encryptedMessage, clientKeyStringPub, ivValue);
+		decryptedCheck = await ECDHCrypto.SendEncryptedMsgTest(plainText, encryptedMessage, clientKeyPub, ivValue);
 		counter++;
 		console.log('step ', counter, ' finished'); //7
 		if(counter >= 7){
@@ -61,14 +77,14 @@
 
 <div>
 	<h2>1: client ECDH Public Key</h2>
-	<p>{clientKeyStringPub}</p>
+	<p>{clientKeyPub}</p>
 	<h2>1: client ECDH Private Key</h2>
-	<p>{clientKeyStringPriv}</p>
+	<p>{clientKeyPriv}</p>
 </div>
 
 <div>
 	<h2>2: server ECDH Public Key</h2>
-	<p>server ECDH key: {serverKeyStringPub}</p>
+	<p>server ECDH key: {serverKeyPub}</p>
 </div>
 
 <div>

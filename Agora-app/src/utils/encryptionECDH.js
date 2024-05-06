@@ -1,11 +1,10 @@
 import { fetchKeyECDH } from './apiService.js';
-import { checkSharedSecretTest, messageDecryptTestECDH } from './apiServiceDev.js';
-import { tempPostKeyECDH } from './apiServiceDev.js';
+import { checkSharedSecretTest, messageDecryptTestECDH, tempPostKeyECDH } from './apiServiceDev.js';
 
 
 const ECDHCrypto ={
 
-	initECDH: async function initECDH(asString = true){
+	initECDH: async function initECDH(returnString = false){
 		console.log('initializing ECDH');
 		const clientKeyPairECDH = await window.crypto.subtle.generateKey(
 			{
@@ -26,7 +25,7 @@ const ECDHCrypto ={
 		sessionStorage.setItem('clientPublicKeyECDH', keyStringPub);
 		//probably not secure to store private key in session storage
 		sessionStorage.setItem('clientPrivateKeyECDH', keyStringPriv);
-		if (asString === true) {
+		if (returnString === true) {
 			return { keyStringPub: keyStringPub, keyStringPriv: keyStringPriv};
 		} else {
 			return clientKeyPairECDH;
@@ -71,20 +70,24 @@ const ECDHCrypto ={
 		//TODO: remove line below
 		const keyString = JSON.stringify(keyTestExport); //probably redundant, but just to be sure
 		sessionStorage.setItem('serverPublicKeyECDH', keyString);
-		return keyString;
+		return serverPublicKeyJwk;
 	},
 
 
 
-	tempSendEDCHKey: async function sendECDHKeyToServer(keyStringPubToUse) {
-		const response = await tempPostKeyECDH(keyStringPubToUse);
+	tempSendEDCHKey: async function sendECDHKeyToServer(keyToSend) {
+		let keyStringPub = keyToSend;
+		if (typeof keyStringPub !== 'string') {
+			keyStringPub = JSON.stringify(keyToSend);
+		}
+		const response = await tempPostKeyECDH(keyStringPub);
 		if (response.status !== 200) {
 			console.error('Failed to send public key: ', response.status);
 		}
 		if (response.ok) {
 			const data = await response.json();
 			if (data.success === 1 || data.success === '1') {
-				if (data.returnKey === keyStringPubToUse) {
+				if (data.returnKey === keyToSend) {
 					return 'Success!';
 				} else {
 					return 'failed: incorrect key';
@@ -101,7 +104,7 @@ const ECDHCrypto ={
 
 
 // Function to compute shared secret
-	deriveSecret: async function deriveSecretKey(clientPrivateKeyString, serverPubKeyString) {
+	deriveSecret: async function deriveSecretKey(clientPrivateKey, serverPubKey) {
 		/////////////
 		//	SOMEHOW DOESN'T WORK WITH CHROME, BUT FIREFOX WORKS???????
 		// 	FUCK THIS SHIT.
@@ -109,35 +112,40 @@ const ECDHCrypto ={
 		let serverKeyForSecret;
 		let clientKeyForSecret;
 
-		if (this.compareKeyWithStorage(serverPubKeyString) !== 'server') {
-			serverKeyForSecret = sessionStorage.getItem('serverPublicKeyECDH');
-		} else {
-			serverKeyForSecret = JSON.parse(serverPubKeyString);
-		}
-		if(typeof clientPrivateKeyString === 'string') {
-			clientKeyForSecret = JSON.parse(clientPrivateKeyString);
-		} else {
-			console.error('clientPrivateKey is not a string. Trying to use it anyway');
-			clientKeyForSecret = clientPrivateKeyString;
-		}
-
 		//because of some weird bug, the key_ops and ext properties are not passed on correctly
 		//this is a workaround to fix that
-		const jwkClient = {
+		let jwkClient = {
 			ext: true,
 			kty: clientKeyForSecret.kty,
 			d: clientKeyForSecret.d,
-			crv:clientKeyForSecret.crv,
+			crv: clientKeyForSecret.crv,
 			x: clientKeyForSecret.x,
-			y: clientKeyForSecret.y
-		};
-		const clientKeyForSecretJWK = await this.keyImportTemplateECDH(jwkClient);
-		const serverKeyForSecretJWK =  await this.keyImportTemplateECDH(serverKeyForSecret);
-		clientKeyForSecret = clientKeyForSecretJWK;
-		serverKeyForSecret = serverKeyForSecretJWK;
-		let sharedSecretKey;
+			y: clientKeyForSecret.y,
+		}
+
+		if (typeof serverKeyForSecret === 'string') {
+			serverKeyForSecret = await this.keyImportTemplateECDH(JSON.parse(serverPubKey));
+		} else {
+			serverPubKey = sessionStorage.getItem('serverPublicKeyECDH');
+			serverKeyForSecret = await this.keyImportTemplateECDH(JSON.parse(serverPubKey));
+		}
+		if(typeof clientPrivateKey === 'string') {
+			let clientKeyForSecretParsed = JSON.parse(clientPrivateKey);
+			jwkClient = {
+				ext: true,
+				kty: clientKeyForSecretParsed.kty,
+				d: clientKeyForSecretParsed.d,
+				crv:clientKeyForSecretParsed.crv,
+				x: clientKeyForSecretParsed.x,
+				y: clientKeyForSecretParsed.y
+			};
+		}
+		clientKeyForSecret = await this.keyImportTemplateECDH(jwkClient);
+
+
+
 		try {
-			sharedSecretKey = await window.crypto.subtle.deriveKey(
+			return await window.crypto.subtle.deriveKey(
 				{
 					name: "ECDH",
 					public: serverKeyForSecret,
@@ -153,10 +161,8 @@ const ECDHCrypto ={
 		} catch (error) {
 			console.error('1: initial attempt failed. Try again with no key_ops, or use derive bits: ', error);
 		}
-		const exportedSharedSecretKey = await window.crypto.subtle.exportKey('jwk', sharedSecretKey);
-		const sharedSecretString = JSON.stringify(exportedSharedSecretKey);
-		sessionStorage.setItem('sharedSecretECDH', sharedSecretString); // TODO: non-secure, should be removed
-		return sharedSecretString;
+		//const sharedSecretString = JSON.stringify(exportedSharedSecretKey);
+		//sessionStorage.setItem('sharedSecretECDH', sharedSecretString); // TODO: non-secure, should be removed
 	},
 
 
@@ -171,38 +177,9 @@ const ECDHCrypto ={
 			console.error('Invalid message. Please provide a non-empty string.');
 			return false;
 		}
-		if (typeof sharedSecret !== 'string' || sharedSecret.length === 0) {
+		if (typeof sharedSecret === 'string' || sharedSecret.length === 0) {
 			console.error('Invalid sharedSecret. Attempting to re-derive shared secret from sessionStorage.');
-			const keyString = sessionStorage.getItem('sharedSecretECDH'); //TODO: non-secure, should be removed
-			if (!keyString) {
-				console.error('No shared secret provided or stored. Please provide a valid shared secret');
-				return false;
-			} else {
-				console.log('using shared secret from session storage for encryption.');
-				const jwkKey = JSON.parse(keyString);
-				SharedSecretForEncryption = await window.crypto.subtle.importKey(
-					'jwk',
-					jwkKey,
-					{
-						name: 'AES-GCM',
-						length: 256
-					},
-					true,
-					['encrypt', 'decrypt']
-				);
-			}
-		} else {
-			const JwKSharedSecret = JSON.parse(sharedSecret);
-			SharedSecretForEncryption = await window.crypto.subtle.importKey(
-				'jwk',
-				JwKSharedSecret,
-				{
-					name: 'AES-GCM',
-					length: 256
-				},
-				true,
-				['encrypt', 'decrypt']
-			);
+			return 'invalid shared secret';
 		}
 		const ivValue = window.crypto.getRandomValues(new Uint8Array(12)); //needed for decryption
 		const encryptedMessage = await window.crypto.subtle.encrypt(
@@ -221,8 +198,9 @@ const ECDHCrypto ={
 
 
 
-	verifySharedSecretTest: async function verifyTestSharedSecret(keyStringSharedSecret, keyStringPub) {
-		const response = await checkSharedSecretTest(keyStringSharedSecret, keyStringPub);
+	verifySharedSecretTest: async function verifyTestSharedSecret(sharedSecret, keyStringPub) {
+
+		const response = await checkSharedSecretTest(JSON.stringify(sharedSecret), keyStringPub);
 		if (response.status !== 200) {
 			console.error('Failed to send shared secret');
 		} if (response.ok) {
