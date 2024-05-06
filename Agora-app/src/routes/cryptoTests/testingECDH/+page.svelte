@@ -5,7 +5,7 @@
 	let counter = 0;
 	//1
 	let clientKeyStringPub;
-	let clientKeyStringPriv;
+	let clientKeyStringPriv; //TODO: remove this from the frontend
 	//2
 	let serverKeyStringPub;
 	//3
@@ -46,7 +46,6 @@
 		counter++;
 		console.log('step ', counter, ' finished'); //6
 		decryptedCheck = await ECDHCrypto.SendEncryptedMsgTest(plainText, encryptedMessage, clientKeyStringPub, ivValue);
-		console.log('decrypted Check', decryptedCheck);
 		counter++;
 		console.log('step ', counter, ' finished'); //7
 		if(counter >= 7){
