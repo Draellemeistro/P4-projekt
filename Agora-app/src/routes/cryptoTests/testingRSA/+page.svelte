@@ -1,7 +1,8 @@
 <script>
 	import { onMount } from 'svelte';
 	import RSACrypto from '../../../utils/encryptionRSA.js';
-	import { askForDecryptToCheck } from '../../../utils/apiService.js';
+	// eslint-disable-next-line no-unused-vars
+	import { askForDecryptToCheck, fetchKeyRSA } from '../../../utils/apiService.js';
 
 	let rsaPublicKey;
 	let encryptedMessage;
@@ -12,7 +13,7 @@
 	onMount(async () => {
 		// Request the RSA public key
 		rsaPublicKey = await RSACrypto.request();
-
+		//fetchKeyRSA
 		// Create a test message
 		testMessage = "This is a test message";
 
