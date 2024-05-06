@@ -77,7 +77,7 @@ const ECDHCrypto ={
 
 	tempSendEDCHKey: async function sendECDHKeyToServer(keyToSend) {
 		let keyStringPub
-		if (typeof keyStringPub === 'string') {
+		if (typeof keyStringPub !== 'string') {
 			keyStringPub = await window.crypto.subtle.exportKey('jwk', keyToSend);
 			keyStringPub = JSON.stringify(keyStringPub);
 		}
