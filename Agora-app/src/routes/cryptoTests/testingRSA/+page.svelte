@@ -2,13 +2,11 @@
 	import { onMount } from 'svelte';
 	import RSACrypto from '../../../utils/encryptionRSA.js';
 	// eslint-disable-next-line no-unused-vars
-	import { askForDecryptToCheck, fetchKeyRSA } from '../../../utils/apiService.js';
 
 	let rsaPublicKey;
 	let encryptedMessage;
 	let decryptedMessage;
 	let testMessage;
-	askForDecryptToCheck();
 
 	onMount(async () => {
 		// Request the RSA public key

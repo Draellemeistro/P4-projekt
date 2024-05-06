@@ -10,6 +10,7 @@
 // - encrypt: encrypts a message with the RSA public key
 // - webCryptoTest: generates a RSA-PSS key pair (not implemented yet. Might not be needed.)
 import { fetchKeyRSA } from './apiService.js';
+import { DecryptTestRSA } from './apiServiceDev.js';
 
 const RSACrypto = {
 
@@ -97,16 +98,8 @@ const RSACrypto = {
 
 		//TODO: RSADecryptionTest i apiService.js, men tør ikke fjerne den her endnu.
 		askForDecryption: async function askForDecryption(plainTextMessage, encryptedMessage) {
-			const serverIP = '192.168.0.113';
-			const serverPort = '3030';
 			try {
-				const response = await fetch(`https://${serverIP}:${serverPort}/decrypt-RSA-message-Test`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({ plainTextMessage, encryptedMessage }),
-				});
+				const response = await DecryptTestRSA(plainTextMessage, encryptedMessage);
 				if (response.ok) {
 					const data = await response.json();
 					if (data === plainTextMessage) {

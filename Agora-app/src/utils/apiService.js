@@ -47,15 +47,7 @@ export const sendBlindedForSigning = (blindedMessage) => {
 	});
 };
 
-export const askForDecryptToCheck = (encryptedBallot) => {
-	return fetch(`https://${serverIP}:${serverPort}/decrypt-RSA-message-Test'`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ encryptedBallot })
-	});
-};
+
 
 
   ///////////////////////////////////
@@ -95,15 +87,7 @@ export const fetchKeyRSA = async () => {
 	});
 };
 
-export const RSADecryptionTest = (plainTextMessage, encryptedMessage) => {
-	return fetch(`https://${serverIP}:${serverPort}/decrypt-RSA-message-Test`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify({ plainTextMessage, encryptedMessage }),
-	});
-};
+
 
 export const fetchKeyECDH = () => {
 	return fetch(`https://${serverIP}:${serverPort}/ecdh-public-key`, {
