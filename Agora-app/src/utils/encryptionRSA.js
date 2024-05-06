@@ -10,6 +10,7 @@
 // - encrypt: encrypts a message with the RSA public key
 // - webCryptoTest: generates a RSA-PSS key pair (not implemented yet. Might not be needed.)
 import { fetchKeyRSA } from './apiService.js';
+import { DecryptTestRSA } from './apiServiceDev.js';
 
 const RSACrypto = {
 
@@ -18,14 +19,6 @@ const RSACrypto = {
 		request: async function requestPublicKey() {
 			//TODO: RSARequest i apiService.js, men tør ikke fjerne den her endnu.
 			const response = await fetchKeyRSA();
-			//const serverIP = '192.168.0.113';
-			//const serverPort = '3030';
-			//const response = await fetch(`https://${serverIP}:${serverPort}/rsa-public-key`, {
-			//	method: 'POST',
-			//	headers: {
-			//		'Content-Type': 'application/json',
-			//	},
-			//});
 			if (response.ok) {
 				const data = await response.json();
 				const importedKey = await this.keyImportTemplateRSA(data);
@@ -99,15 +92,20 @@ const RSACrypto = {
 		askForDecryption: async function askForDecryption(plainTextMessage, encryptedMessage) {
 			const serverIP = '192.168.0.113';
 			const serverPort = '3030';
-			try {
-				const response = await fetch(`https://${serverIP}:${serverPort}/decrypt-RSA-message-Test`, {
+			let response;
+			try{
+				response = await DecryptTestRSA(plainTextMessage, encryptedMessage);
+			} catch (error) {
+				console.error('Failed to fetch. might be in the fetch request or related to async/await syntax: ', error);
+				response = await fetch(`https://${serverIP}:${serverPort}/decrypt-RSA-message-Test`, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
 					},
 					body: JSON.stringify({ plainTextMessage, encryptedMessage }),
 				});
-				if (response.ok) {
+			}
+			if (response.ok) {
 					const data = await response.json();
 					if (data === plainTextMessage) {
 						return data;
@@ -119,9 +117,6 @@ const RSACrypto = {
 				} else {
 					console.error('Server responded with status', response.status);
 				}
-			} catch (error) {
-				console.error('Failed to fetch. might be in the fetch request or related to async/await syntax: ', error);
-			}
 		},
 
 
