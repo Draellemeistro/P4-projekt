@@ -25,6 +25,9 @@
 		const BothKeys = await ECDHCrypto.initECDH();
 		clientKeyStringPub = BothKeys.keyStringPub
 		clientKeyStringPriv = BothKeys.keyStringPriv;
+		const cryptoKeypairVersion = await ECDHCrypto.initECDH(false);
+		console.log('type of cryptoKeypairVersion: ', typeof cryptoKeypairVersion);
+		console.log('cryptoKeypairVersion: ', cryptoKeypairVersion);
 		counter++;
 		console.log('step ', counter, ' finished'); //1
 		serverKeyStringPub = await ECDHCrypto.requestServerECDH();

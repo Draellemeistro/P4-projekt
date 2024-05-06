@@ -5,7 +5,7 @@ import { tempPostKeyECDH } from './apiServiceDev.js';
 
 const ECDHCrypto ={
 
-	initECDH: async function initECDH(){
+	initECDH: async function initECDH(asString = true){
 		console.log('initializing ECDH');
 		const clientKeyPairECDH = await window.crypto.subtle.generateKey(
 			{
@@ -26,7 +26,11 @@ const ECDHCrypto ={
 		sessionStorage.setItem('clientPublicKeyECDH', keyStringPub);
 		//probably not secure to store private key in session storage
 		sessionStorage.setItem('clientPrivateKeyECDH', keyStringPriv);
-		return { keyStringPub: keyStringPub, keyStringPriv: keyStringPriv};
+		if (asString === true) {
+			return { keyStringPub: keyStringPub, keyStringPriv: keyStringPriv};
+		} else {
+			return clientKeyPairECDH;
+		}
 	},
 
 

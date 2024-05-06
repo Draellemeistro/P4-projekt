@@ -27,14 +27,13 @@ export const getCandidatesFromServer = () => {
 		},
 	});
 };
-export const sendBallotToServer = (ballot) => {
-	const clientPubKeyECDH = 'test';
+export const sendBallotToServer = (ballot, clientPubKeyECDH = 'test', ivValue = 'test') => {
 	return fetch(`https://${serverIP}:${serverPort}/insert-ballot`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({ clientPubKeyECDH, ballot })
+		body: JSON.stringify({ ballot: ballot, clientPubKeyECDH: clientPubKeyECDH, ivValue: ivValue })
 	});
 };
 export const sendBlindedForSigning = (blindedMessage) => {
