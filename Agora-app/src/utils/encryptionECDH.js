@@ -28,9 +28,9 @@ const ECDHCrypto ={
 		if (returnString === true) {
 			return { keyStringPub: keyStringPub, keyStringPriv: keyStringPriv};
 		} else {
-			return clientKeyPairECDH;
+			return { pubKey: clientKeyPairECDH.publicKey, privKey: clientKeyPairECDH.privateKey };
 		}
-	},
+		},
 
 
 
