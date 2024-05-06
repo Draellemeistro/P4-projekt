@@ -7,7 +7,7 @@
 	let clientKeyStringPub;
 	let clientKeyStringPriv;
 	//2
-	let serverKeystringPub;
+	let serverKeyStringPub;
 	//3
 	let sendKeyCheck;
 	//4
@@ -17,7 +17,7 @@
 	//6
 	const plainText = 'Hello World';
 	let encryptedMessage;
-	let decryptedcheck = 'Server Decryption not Implemented';
+	let decryptedCheck = 'Server Decryption not Implemented';
 
 	let ivValue;
 	onMount(async () => {
@@ -27,13 +27,13 @@
 		clientKeyStringPriv = BothKeys.keyStringPriv;
 		counter++;
 		console.log('step ', counter, ' finished'); //1
-		serverKeystringPub = await ECDHCrypto.requestServerECDH();
+		serverKeyStringPub = await ECDHCrypto.requestServerECDH();
 		counter++;
 		console.log('step ', counter, ' finished'); //2
 		sendKeyCheck = await ECDHCrypto.tempSendEDCHKey(clientKeyStringPub);
 		counter++;
 		console.log('step ', counter, ' finished'); //3
-		sharedSecret = await ECDHCrypto.deriveSecret(clientKeyStringPriv, serverKeystringPub);
+		sharedSecret = await ECDHCrypto.deriveSecret(clientKeyStringPriv, serverKeyStringPub);
 		counter++;
 		console.log('step ', counter, ' finished'); //4
 		sharedSecretCheck = await ECDHCrypto.verifySharedSecretTest(sharedSecret, clientKeyStringPub);
@@ -45,8 +45,8 @@
 
 		counter++;
 		console.log('step ', counter, ' finished'); //6
-		decryptedcheck = await ECDHCrypto.SendEncryptedMsgTest(plainText, encryptedMessage, clientKeyStringPub, ivValue);
-		console.log('decryptedcheck', decryptedcheck);
+		decryptedCheck = await ECDHCrypto.SendEncryptedMsgTest(plainText, encryptedMessage, clientKeyStringPub, ivValue);
+		console.log('decrypted Check', decryptedCheck);
 		counter++;
 		console.log('step ', counter, ' finished'); //7
 		if(counter >= 7){
@@ -66,7 +66,7 @@
 
 <div>
 	<h2>2: server ECDH Public Key</h2>
-	<p>server ECDH key: {serverKeystringPub}</p>
+	<p>server ECDH key: {serverKeyStringPub}</p>
 </div>
 
 <div>
@@ -93,5 +93,5 @@
 
 <div>
 	<h2>7: Server decryption</h2>
-	<p>{decryptedcheck}</p>
+	<p>{decryptedCheck}</p>
 </div>
