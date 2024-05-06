@@ -26,10 +26,10 @@ const RSACrypto = {
 			if (response.ok) {
 				const data = await response.json();
 				//import RSA public key TODO: check if this can be handled by keyImportTemplateRSA.
-				const importedKey = this.keyImportTemplateRSA(data);
+				const importedKey = await this.keyImportTemplateRSA(data);
 				console.log('importedKey:', importedKey);
 				//export JWK formatted RSA public key for later use TODO: maybe not necessary to import and export key yet
-				const exportedKey = await window.crypto.subtle.exportKey('jwk', await importedKey);
+				const exportedKey = await window.crypto.subtle.exportKey('jwk', importedKey);
 				const keyString = JSON.stringify(exportedKey);
 				sessionStorage.setItem('serverPublicKeyRSA', keyString);
 				return keyString; // maybe change this to keyString
@@ -76,16 +76,7 @@ const RSACrypto = {
 					jwkKey = JSON.parse(publicKey);
 				}
 				//import RSA public key TODO: check if this can be handled by keyImportTemplateRSA.
-				publicKey = await window.crypto.subtle.importKey(
-					'jwk',
-					jwkKey,
-					{
-						name: 'RSA-OAEP',
-						hash: 'SHA-256'
-					},
-					true,
-					['encrypt']
-				);
+				publicKey = await this.keyImportTemplateRSA(jwkKey);
 
 				const encryptionData = encoder.encode(message);
 				const encryptedMessage = await window.crypto.subtle.encrypt(
