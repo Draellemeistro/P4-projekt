@@ -29,7 +29,7 @@ const RSACrypto = {
 				const importedKey = this.keyImportTemplateRSA(data);
 				console.log('importedKey:', importedKey);
 				//export JWK formatted RSA public key for later use TODO: maybe not necessary to import and export key yet
-				const exportedKey = await window.crypto.subtle.exportKey('jwk', importedKey);
+				const exportedKey = await window.crypto.subtle.exportKey('jwk', await importedKey);
 				const keyString = JSON.stringify(exportedKey);
 				sessionStorage.setItem('serverPublicKeyRSA', keyString);
 				return exportedKey; // maybe change this to keyString
