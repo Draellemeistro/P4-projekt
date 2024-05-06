@@ -1,10 +1,21 @@
 import { fetchKeyECDH } from './apiService.js';
 import { checkSharedSecretTest, messageDecryptTestECDH, tempPostKeyECDH } from './apiServiceDev.js';
 
+// ECDH encryption module
+// - initECDH: generates a new ECDH key pair
+// - requestServerECDH: requests the server's public ECDH key
+// - tempSendEDCHKey: sends the client's public ECDH key to the server
+// - deriveSecret: derives the shared secret from the client's private key and the server's public key
+// - encryptECDH: encrypts a message with the shared secret
+// - verifySharedSecretTest: sends a test message to the server for decryption
+// - SendEncryptedMsgTest: sends an encrypted message to the server for decryption
+// - keyImportTemplateECDH: imports an ECDH key
+// - exportKeyString: exports a key as a string
+// - convertArrBuffToBase64: converts an ArrayBuffer to a base64 string
 
 const ECDHCrypto ={
 
-	initECDH: async function initECDH(returnString = false){
+	initECDH: async function initECDH(){
 		console.log('initializing ECDH');
 		const clientKeyPairECDH = await window.crypto.subtle.generateKey(
 			{
@@ -14,24 +25,14 @@ const ECDHCrypto ={
 			true,
 			["deriveKey", "deriveBits"]
 		);
-		const exportedPubKeyECDH = await window.crypto.subtle.exportKey('jwk', clientKeyPairECDH.publicKey);
-		const fixedPubKey = this.fixAndValidateJWK(exportedPubKeyECDH);
-		const exportedPrivKeyECDH = await window.crypto.subtle.exportKey('jwk', clientKeyPairECDH.privateKey);
-		// Convert the keys to strings TODO: maybe not necessary to convert to string, probably better to keep as CryptoKey. Safety?
-		const keyStringPriv = JSON.stringify(exportedPrivKeyECDH);
-		const keyStringPub = JSON.stringify(fixedPubKey);
-		if (returnString === true) {
-			return { keyStringPub: keyStringPub, keyStringPriv: keyStringPriv};
-		} else {
 			return { pubKey: clientKeyPairECDH.publicKey, privKey: clientKeyPairECDH.privateKey };
-		}
+
 		},
 
 
 
-// Function to send client's public key and receive server's public key
+// Function to request server's public key
 	requestServerECDH: async function requestServerPublicKeyECDH(){
-
 		const response = await fetchKeyECDH();
 		if (!response.ok) {
 			console.error('Failed to fetch server public key');
@@ -60,8 +61,6 @@ const ECDHCrypto ={
 			}
 			console.error('Failed to import server public key: ', error);
 		}
-		const keyString = JSON.stringify(await this.exportKeyString(serverPublicKeyJwk)); //probably redundant, but just to be sure
-		sessionStorage.setItem('serverPublicKeyECDH', keyString);
 		return serverPublicKeyJwk;
 	},
 
@@ -100,7 +99,6 @@ const ECDHCrypto ={
 
 // Function to compute shared secret
 	deriveSecret: async function deriveSecretKey(clientPrivateKey, serverPubKey) {
-		console.log('starting to derive secret.')
 		/////////////
 		//	SOMEHOW DOESN'T WORK WITH CHROME, BUT FIREFOX WORKS???????
 		// 	FUCK THIS SHIT.
@@ -127,8 +125,6 @@ const ECDHCrypto ={
 			};
 			clientKeyForSecret = await this.keyImportTemplateECDH(jwkClient);
 		}
-		console.log('trying to derive secret.')
-
 		try {
 			return await window.crypto.subtle.deriveKey(
 				{
@@ -146,8 +142,6 @@ const ECDHCrypto ={
 		} catch (error) {
 			console.error('1: initial attempt failed. Try again with no key_ops, or use derive bits: ', error);
 		}
-		//const sharedSecretString = JSON.stringify(exportedSharedSecretKey);
-		//sessionStorage.setItem('sharedSecretECDH', sharedSecretString); // TODO: non-secure, should be removed
 	},
 
 
@@ -159,10 +153,6 @@ const ECDHCrypto ={
 		if (typeof message !== 'string' || message.length === 0) {
 			console.error('Invalid message. Please provide a non-empty string.');
 			return false;
-		}
-		if (typeof sharedSecret === 'string' || sharedSecret.length === 0) {
-			console.error('Invalid sharedSecret. Attempting to re-derive shared secret from sessionStorage.');
-			return 'invalid shared secret';
 		}
 		const ivValue = window.crypto.getRandomValues(new Uint8Array(12)); //needed for decryption
 		const encryptedMessage = await window.crypto.subtle.encrypt(
@@ -182,14 +172,11 @@ const ECDHCrypto ={
 
 
 	verifySharedSecretTest: async function verifyTestSharedSecret(sharedSecret, clientPubKey) {
-		console.log('verifying shared secret');
-		let sharedSecretJWK = await this.exportKeyString(sharedSecret);
-		let clientPubKeyJWK = await this.exportKeyString(clientPubKey);
+		//TODO: remove/move this function
+		let sharedSecretString = await this.exportKeyString(sharedSecret);
+		let clientPubKeyString = await this.exportKeyString(clientPubKey);
 
-		console.log('sharedSecret: ', sharedSecretJWK);
-		console.log('clientPubKey: ', clientPubKeyJWK);
-
-		const response = await checkSharedSecretTest(sharedSecretJWK, clientPubKeyJWK);
+		const response = await checkSharedSecretTest(sharedSecretString, clientPubKeyString);
 		if (response.status !== 200) {
 			console.error('Failed to send shared secret');
 		} if (response.ok) {
@@ -207,6 +194,7 @@ const ECDHCrypto ={
 
 
 	SendEncryptedMsgTest: async function serverDecryptionTest(plainTextMessage, encryptedMessage, clientPubKey, ivValue) {
+		//TODO: remove/move this function
 		let pubKeyString = await this.exportKeyString(clientPubKey);
 		let msgForServer = JSON.stringify({
 			plainTextMessage: plainTextMessage,
@@ -259,79 +247,13 @@ const ECDHCrypto ={
 	},
 
 	exportKeyString: async function exportKeyString(keyToExport) {
+		// to send the key, it must be converted to a string. This function does that. CryptoKey -> JWK -> string
 		return JSON.stringify(await window.crypto.subtle.exportKey('jwk', keyToExport))
 	},
 
 
-
-
-	fixAndValidateJWK: function insertKeyOpsAndValidate(jwkToValidate, isPrivateKey = false) {
-		//TODO clean this function up. It's a mess, but without it, the keys don't work.
-		let jwk;
-		if (typeof jwkToValidate === 'string') {
-			jwk = JSON.parse(jwkToValidate);
-			if (!jwk.key_ops) {
-				jwk.key_ops = [];
-			}
-			if (!jwk.key_ops.includes('deriveKey')) {
-				jwk.key_ops.push('deriveKey');
-			}
-			if (!jwk.key_ops.includes('deriveBits')) {
-				jwk.key_ops.push('deriveBits');
-			}
-			if (!jwk.ext) {
-				jwk.ext = true;
-			}
-			if (isPrivateKey === true) {
-				const validProperties = ['crv', 'ext', 'key_ops', 'kty', 'x', 'y'];
-				const isValid = validProperties.every(prop => prop in jwk);
-				if (!isValid) {
-					throw new Error('Invalid JWK format');
-				}
-			} else {
-				const validProperties = ['crv',"d", 'ext', 'key_ops', 'kty', 'x', 'y'];
-				const isValid = validProperties.every(prop => prop in jwk);
-				if (!isValid) {
-					throw new Error('Invalid JWK format');
-				}
-			}
-
-
-			return jwk;
-		}
-
-		jwk = jwkToValidate;
-		// Insert key_ops into the JWK
-		if (!jwk.key_ops) {
-			jwk.key_ops = [];
-		}
-
-		// Add "deriveKey" and "deriveBits" to key_ops if they're not already present
-		if (!jwk.key_ops.includes("deriveKey")) {
-			jwk.key_ops.push("deriveKey");
-		}
-		if (!jwk.key_ops.includes("deriveBits")) {
-			jwk.key_ops.push("deriveBits");
-		}
-		if (!jwk.ext) {
-			jwk.ext = true;
-		}
-		// Define the properties that a valid JWK should have
-		const validProperties = ['crv', 'ext', 'key_ops', 'kty', 'x', 'y'];
-
-		// Check if the JWK has all the valid properties
-		const isValid = validProperties.every(prop => prop in jwk);
-
-		if (!isValid) {
-			throw new Error('Invalid JWK format');
-		}
-
-		return jwk;
-	},
-
-
-
 	convertArrBuffToBase64: function convertArrayBufferToBase64(arrayBuffer) {
+		// Convert an encrypted to base64 and return it as a string. allows for easy transmission and avoids odd encoding issues
 		let uint8Array = new Uint8Array(arrayBuffer);
 		return btoa(String.fromCharCode.apply(null, uint8Array));
 	},
@@ -343,12 +265,3 @@ const ECDHCrypto ={
 //	},
 };
 export default ECDHCrypto;
-
-//convertBase64ToArrayBuffer: function convertBase64ToArrayBuffer(base64String) {
-//	const binaryString = window.atob(base64String);
-//	const bytes = new Uint8Array(binaryString.length);
-//	for (let i = 0; i < binaryString.length; i++) {
-//		bytes[i] = binaryString.charCodeAt(i);
-//	}
-//	return bytes.buffer;
-//},
