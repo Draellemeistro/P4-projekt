@@ -128,9 +128,6 @@ const ECDHCrypto ={
 
 		if (typeof serverKeyForSecret === 'string') {
 			serverKeyForSecret = await this.keyImportTemplateECDH(JSON.parse(serverPubKey));
-		} else {
-			serverPubKey = sessionStorage.getItem('serverPublicKeyECDH');
-			serverKeyForSecret = await this.keyImportTemplateECDH(JSON.parse(serverPubKey));
 		}
 		if(typeof clientPrivateKey === 'string') {
 			let clientKeyForSecretParsed = JSON.parse(clientPrivateKey);
@@ -144,6 +141,7 @@ const ECDHCrypto ={
 			};
 			clientKeyForSecret = await this.keyImportTemplateECDH(jwkClient);
 		}
+		console.log('trying to derive secret.')
 
 		try {
 			return await window.crypto.subtle.deriveKey(
@@ -198,6 +196,7 @@ const ECDHCrypto ={
 
 
 	verifySharedSecretTest: async function verifyTestSharedSecret(sharedSecret, clientPubKey) {
+		console.log('verifying shared secret');
 		let sharedSecretJWK = JSON.stringify(await window.crypto.subtle.exportKey('jwk', sharedSecret));
 		let clientPubKeyJWK = JSON.stringify(await window.crypto.subtle.exportKey('jwk', clientPubKey));
 
