@@ -100,7 +100,7 @@ const RSACrypto = {
 				return responseData;
 			} else {
 				console.log('problem ');
-				console.error('Decryption failed: might be in the formatting/encoding of the message.\nresponse:', data);
+				console.error('Decryption failed: might be in the formatting/encoding of the message.\nresponse:', responseData);
 				return responseData;
 			}
 		},
