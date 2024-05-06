@@ -108,6 +108,7 @@ const ECDHCrypto ={
 
 // Function to compute shared secret
 	deriveSecret: async function deriveSecretKey(clientPrivateKey, serverPubKey) {
+		console.log('starting to derive secret.')
 		/////////////
 		//	SOMEHOW DOESN'T WORK WITH CHROME, BUT FIREFOX WORKS???????
 		// 	FUCK THIS SHIT.
