@@ -26,16 +26,7 @@ const RSACrypto = {
 			if (response.ok) {
 				const data = await response.json();
 				//import RSA public key TODO: check if this can be handled by keyImportTemplateRSA.
-				const importedKey = await window.crypto.subtle.importKey(
-					'jwk',
-					data,
-					{
-						name: 'RSA-OAEP',
-						hash: 'SHA-256'
-					},
-					true,
-					['encrypt']
-				);
+				const importedKey = this.keyImportTemplateRSA(data);
 				//export JWK formatted RSA public key for later use TODO: maybe not necessary to import and export key yet
 				const exportedKey = await window.crypto.subtle.exportKey('jwk', importedKey);
 				const keyString = JSON.stringify(exportedKey);
@@ -48,7 +39,7 @@ const RSACrypto = {
 
 		// Avoids errors from fat-fingering by using a template for the key import
 		keyImportTemplateRSA: async function keyImportTemplateRSA(keyString) {
-			return window.crypto.subtle.importKey(
+			return await window.crypto.subtle.importKey(
 				'jwk',
 				keyString,
 				{
