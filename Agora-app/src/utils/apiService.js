@@ -100,14 +100,5 @@ export const fetchKeyECDH = async () => {
 
 
 
-export const messageDecryptTestECDH = (msgForServer) => {
-	// msgForServer is a stringified object containing several properties, one of which is the encrypted message.
-	return fetch(`https://${serverIP}:${serverPort}/decrypt-ECDH-message-Test`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: msgForServer
-	});
-};
+
 

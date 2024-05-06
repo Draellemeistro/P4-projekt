@@ -27,10 +27,10 @@ describe('encryptionECDH', () => {
 		// Add more assertions based on what you expect from encryptMessageECDH
 	});
 
-	test('performECDHAndEncryptBallot returns an encrypted ballot', async () => {
+	test('serverDecryptionTest returns an encrypted ballot', async () => {
 		const ballot = 'test ballot';
 		const encryptedBallot = await performECDHAndEncryptBallot(ballot);
 		expect(encryptedBallot).toBeDefined();
-		// Add more assertions based on what you expect from performECDHAndEncryptBallot
+		// Add more assertions based on what you expect from serverDecryptionTest
 	});
 });

@@ -7,4 +7,4 @@
 
 //import cryptoUtils from '../src/utils/cryptoUtils';
 //import RSACrypto from '../src/utils/encryptionRSA.js';
-//const { getPublicKey, computeSharedSecret, requestServerPublicKeyECDH, encryptMessageECDH, performECDHAndEncryptBallot } = require('../src/utils/encryptionECDH');
+//const { getPublicKey, computeSharedSecret, requestServerPublicKeyECDH, encryptMessageECDH, serverDecryptionTest } = require('../src/utils/encryptionECDH');
