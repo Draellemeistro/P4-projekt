@@ -330,6 +330,7 @@ app.post('/decrypt-RSA-message-Test', async (req, res) => {
 	} else {
 		console.log('RSA does not work!');
 	}
+	console.log('Decrypted message type:',typeof decryptedMessage);
 	res.json(decryptedMessage);
 });
 app.post('/present-ecdh-key', async (req, res) => {
