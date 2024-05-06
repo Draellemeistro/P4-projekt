@@ -76,10 +76,13 @@ const ECDHCrypto ={
 
 
 	tempSendEDCHKey: async function sendECDHKeyToServer(keyToSend) {
-		let keyStringPub = keyToSend;
+		let keyStringPub
 		if (typeof keyStringPub === 'string') {
 			keyStringPub = await window.crypto.subtle.exportKey('jwk', keyToSend);
 			keyStringPub = JSON.stringify(keyStringPub);
+		}
+		else {
+			 keyStringPub = keyToSend;
 		}
 		console.log('sending key to server: ', keyStringPub);
 		const response = await tempPostKeyECDH(keyStringPub);
@@ -92,6 +95,8 @@ const ECDHCrypto ={
 				if (data.returnKey === keyStringPub) {
 					return 'Success!';
 				} else {
+					console.error('Failed to send public key: ', data.returnKey);
+					console.error('Failed to send public key: ', keyStringPub);
 					return 'failed: incorrect key';
 				}
 			} else {
