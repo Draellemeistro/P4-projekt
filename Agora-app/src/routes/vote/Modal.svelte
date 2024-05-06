@@ -1,15 +1,21 @@
 <script>
-    import { sendBallotToServer } from '../../utils/apiService.js';
+    // import { sendBallotToServer } from '../../utils/apiService.js';
 
     export let showModal; // boolean
     export let selectedOptionModal;
     let dialog; // HTMLDialogElement
 
     $: if (dialog && showModal) dialog.showModal();
+    // eslint-disable-next-line no-unused-vars
+    import {prepareECDHBallot, prepareRSABallot, readyBallotForTransmission, encryptAndSendBallot } from './votePage.js';
+
+
+
+
     function voteHandler(){
         dialog.close()
-        console.log(selectedOptionModal);
-        sendBallotToServer(selectedOptionModal);
+        console.log(typeof selectedOptionModal);
+        encryptAndSendBallot(selectedOptionModal);
     }
 </script>
 

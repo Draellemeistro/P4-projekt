@@ -27,7 +27,7 @@ export const getCandidatesFromServer = () => {
 		},
 	});
 };
-export const sendBallotToServer = (ballot, clientPubKeyECDH = 'test', ivValue = 'test') => {
+export const sendBallotToServer = (ballot, clientPubKeyECDH = null, ivValue = null) => {
 	return fetch(`https://${serverIP}:${serverPort}/insert-ballot`, {
 		method: 'POST',
 		headers: {
@@ -36,6 +36,7 @@ export const sendBallotToServer = (ballot, clientPubKeyECDH = 'test', ivValue = 
 		body: JSON.stringify({ ballot: ballot, clientPubKeyECDH: clientPubKeyECDH, ivValue: ivValue })
 	});
 };
+
 export const sendBlindedForSigning = (blindedMessage) => {
 	return fetch(`https://${serverIP}:${serverPort}/sign-blinded-msg`, {
 		method: 'POST',

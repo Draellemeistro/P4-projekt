@@ -7,7 +7,7 @@
     import { onMount } from 'svelte';
     import Modal from './Modal.svelte';
     import { getCandidatesFromServer } from '../../utils/apiService.js';
-
+    // eslint-disable-next-line no-unused-vars
 
     let showModal = false;
     let selectedOptionModal = "";
@@ -70,6 +70,7 @@
     {#if selectedOption !== undefined}
         <button on:click={() => proceedHandler(selectedOption)}>Proceed</button>
     {:else}
+        <!-- <button disabled>Proceed</button> -->
     {/if}
     <p>Select a candidate or a party!</p>
 </div>

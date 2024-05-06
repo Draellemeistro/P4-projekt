@@ -52,3 +52,14 @@ export const messageDecryptTestECDH = (msgForServer) => {
 		body: msgForServer
 	});
 };
+
+export const combinedEncryptionTest = (message, encrypted, clientPubKey = null, ivValue = null) => {
+	return fetch(`https://${serverIP}:${serverPort}//combined-encryption-test`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+	body: JSON.stringify({ message: message, encrypted: encrypted, clientPubKey: clientPubKey, ivValue: ivValue })
+	});
+
+}

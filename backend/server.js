@@ -243,11 +243,29 @@ app.post('/client-key-post-test', (req, res) => {
 
 
 // TODO Database needs to have a table called encrypted_ballot_box with the following columns:
-// 		enc_ballot (TEXT), enc_voter (TEXT), pubKeyECDH (TEXT) 		maybe more columns
-app.post('/insert-ballot', (req, res) => {
-	const enc_ballot = req.body.ballot;
-	const enc_voter = req.body.voter;
-	const pubKeyECDH = req.body.pubKeyECDH;
+// 		enc_ballot (TEXT), pubKeyECDH (TEXT), ivValue (????) 		maybe more columns
+app.post('/insert-ballot', async (req, res) => {
+	let data;
+	if (typeof req.body === 'string') {
+		data = JSON.parse(req.body);
+	} else {
+		data = req.body;
+	}
+	const { ballot, clientPubKeyECDH, ivValue } = data;
+	let OuterBallot;
+	let innerBallot;
+	let sharedSecret
+	if (ivValue !== null && clientPubKeyECDH !== null) {
+		sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientPubKeyECDH);
+		console.log('Shared secret:', sharedSecret);
+		OuterBallot = await serverECDHCrypto.handleEncryptedMessage(OuterBallot, ivValue, sharedSecret);
+		console.log('received ECDH encrypted ballot');
+	} else {
+		console.log('received RSA encrypted ballot');
+		OuterBallot = serverRSACrypto.decryptWithPrivRSA(ballot, pemFormatServerPrivateRSAKey);
+	}
+	/// TODO: fix and try this out
+
 	const query = 'INSERT INTO Agora.ballotbox (ballotbox.encr_ballot, encr_voter_id, ECDH_pub_key) VALUES (?, ?, ?)';
 	connection.query(query, [enc_ballot, enc_voter, pubKeyECDH], (err, results) => { //TODO this query needs extra security.
 		if (err) {
@@ -471,4 +489,50 @@ app.post('/decrypt-ECDH-message-Test', async (req, res) => {
 		responseValue = false;
 	}
 	res.json({success: responseValue, encryptedMessage: encryptedMessage, decryptedMessage: decryptedMessage, IvValueFromClient: IvValueFromClient, serverSharedSecret: sharedSecret});
+});
+
+app.post('/combined-encryption-test', async (req, res) => {
+	console.log('Accessed /combined-encryption-test endpoint');
+	const plainTextMessage = req.body.message;
+	const encryptedMessage = req.body.encrypted;
+	let clientPubKey = req.body.clientPubKey;
+	let ivValue = req.body.ivValue;
+	let rsaFirst = false;
+	let response;
+	let decryptedMessageOuterRSA;
+	let decryptedMessageOuterECDH
+	let outerReturn;
+	if (clientPubKey === null) {
+		rsaFirst = true;
+		decryptedMessageOuterRSA = serverRSACrypto.decryptWithPrivRSA(encryptedMessage, pemFormatServerPrivateRSAKey);
+		if (typeof decryptedMessageOuterRSA === 'string') {
+			console.log(' inner message is a string RSA to ECDH: ', decryptedMessageOuterRSA);
+			clientPubKey = JSON.parse(decryptedMessageOuterRSA).clientPubKey;
+			ivValue = JSON.parse(decryptedMessageOuterRSA).ivValue;
+			decryptedMessageOuterRSA = JSON.parse(decryptedMessageOuterRSA).encryptedMessage;
+		} else {
+			clientPubKey = decryptedMessageOuterRSA.clientPubKey;
+			ivValue = decryptedMessageOuterRSA.ivValue;
+			decryptedMessageOuterRSA = decryptedMessageOuterRSA.encryptedMessage;
+		}
+	}
+	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientPubKey);
+	if (rsaFirst === false) {
+		decryptedMessageOuterECDH = await serverECDHCrypto.handleEncryptedMessage(encryptedMessage, sharedSecret, ivValue);
+		if (typeof decryptedMessageOuterECDH === 'string') {
+			console.log(' inner message is a string ECDH to RSA: ', decryptedMessageOuterECDH);
+			decryptedMessageOuterECDH = JSON.parse(decryptedMessageOuterECDH).encryptedMessage;
+			response = serverRSACrypto.decryptWithPrivRSA(decryptedMessageOuterECDH, pemFormatServerPrivateRSAKey);
+			outerReturn = decryptedMessageOuterECDH;
+		} else {
+			response = serverRSACrypto.decryptWithPrivRSA(decryptedMessageOuterECDH.encryptedMessage, pemFormatServerPrivateRSAKey);
+			outerReturn = decryptedMessageOuterECDH;
+		}
+	} else {
+		response = await serverECDHCrypto.handleEncryptedMessage(decryptedMessageOuterRSA, sharedSecret, ivValue);
+		outerReturn = decryptedMessageOuterRSA;
+	}
+	console.log('Response:', response);
+	console.log('plainTextMessage:', plainTextMessage);
+	res.json({response: response, outer: outerReturn});
 });

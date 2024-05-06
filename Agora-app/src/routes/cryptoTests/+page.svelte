@@ -2,73 +2,88 @@
 	import { onMount } from 'svelte';
 	import RSACrypto from '../../utils/encryptionRSA.js';
 	import ECDHCrypto from '../../utils/encryptionECDH.js';
-	import Box from '../Box.svelte';
+	import { combinedEncryptionTest } from '../../utils/apiServiceDev.js';
 
-	// eslint-disable-next-line no-unused-vars
-
-
-	let rsaPublicKey;
-	let ecdhKeys;
-	// eslint-disable-next-line no-unused-vars
+	let serverKeyPub;
 	let sharedSecret;
-	// eslint-disable-next-line no-unused-vars
-	let encryptedMessage;
-	let WebCryptoResult;
-	let stringified;
-	let msg = 'Hello World';
-	function consoleLog(rsaPublicKey) {
-		console.log(rsaPublicKey);
-		stringified = JSON.stringify(rsaPublicKey);
-		console.log(stringified);
-		return stringified;
-	}
-	function encryptHandler(msg, rsaPublicKey) {
-		let encrypted = RSACrypto.encrypt(msg, rsaPublicKey)
-		console.log(encrypted);
-		return encrypted;
-	}
+	let clientKeyPub;
+	let clientKeyPriv; //TODO: remove this from the frontend
+	let ivValue;
+	let ivValueOut;
 
+
+	let counter = 0;
+
+	// eslint-disable-next-line no-unused-vars
+	let encMsgRSA = '';
+	let encMsgECDH = '';
+	let outMsgRSA = '';
+	let outMsgECDH = '';
+	let responseRSAECDH = '';
+	let responseECDHRSA = '';
+	const plainText = 'Hello World';
 	onMount(async () => {
-		rsaPublicKey = await RSACrypto.request()
-		console.log(rsaPublicKey);
-		console.log(JSON.stringify(rsaPublicKey));
-		console.log('hallelujah');
-		ecdhKeys = await ECDHCrypto.initECDH();
-		WebCryptoResult = await RSACrypto.webCryptoTest();
-		encryptedMessage = RSACrypto.encrypt('Hello World', rsaPublicKey);
-		stringified = JSON.stringify(WebCryptoResult);
+		const rsaPublicKey = await RSACrypto.request();
+		serverKeyPub = await ECDHCrypto.requestServerECDH();
+		const BothKeys = await ECDHCrypto.initECDH();
+		clientKeyPub = BothKeys.pubKey;
+		clientKeyPriv = BothKeys.privKey;
+		sharedSecret = await ECDHCrypto.deriveSecret(clientKeyPriv, serverKeyPub);
+
+
+		counter++;
+		console.log('step ', counter, ' finished'); //1
+		encMsgRSA = await RSACrypto.encrypt(plainText, rsaPublicKey);
+
+		const encryptionInfo = await ECDHCrypto.encryptECDH(plainText, sharedSecret);
+		encMsgECDH = encryptionInfo.encryptedMessage;
+		ivValue = encryptionInfo.ivValue;
+
+
+		counter++;
+		console.log('step ', counter, ' finished'); //2
+
+
+		outMsgRSA = await RSACrypto.encrypt(JSON.stringify({encryptedMessage: encMsgECDH, clientPubKey: clientKeyPub, ivValue: ivValue}));
+
+		const encryptionInfoOut = await ECDHCrypto.encryptECDH(encMsgRSA, sharedSecret);
+		outMsgECDH = encryptionInfoOut.encryptedMessage;
+		ivValueOut = encryptionInfoOut.ivValue;
+
+		responseRSAECDH = await combinedEncryptionTest(plainText, outMsgECDH, clientKeyPub, ivValueOut);
+		responseECDHRSA = await combinedEncryptionTest(plainText, outMsgRSA, null, null);
 	});
 </script>
+
+
 <div>
-	<h2>Test pages</h2>
-	<Box>
-		<input type="button" onclick="location.href='/cryptoTests/testingRSA';" value="RSA test page" />
-		<input type="button" onclick="location.href='/cryptoTests/testingECDH';" value="ECDH test page" />
-		<input type="button" onclick="location.href='/cryptoTests/testingBlindSig';" value="blindSig test page" />
-	</Box>
+<h2>Plaintext to send</h2>
+<p>{plainText}</p>
+</div>
+
+<div>
+	<h2>2: encrypted RSA</h2>
+	<p>RSA encrypted message to re-encrypt: {encMsgRSA}</p>
+	<h2>2: encrypted ECDH</h2>
+	<p>ECDH encrypted message to re-encrypt: {encMsgECDH}</p>
+</div>
+
+<div>
+	<h2>3: RSAtoECDH message for server</h2>
+	<p>{outMsgECDH}</p>
 </div>
 <div>
-	<h2>Request RSA Public Key</h2>
-	<button on:click={RSACrypto.request}>Request RSA Public Key</button>
-	<p>RSA Public Key: {rsaPublicKey}</p>
+	<h2>3: ECDHtoRSA message for server</h2>
+	<p>{outMsgRSA}</p>
 </div>
 <div>
-	<h2>Write RSA Public key to console </h2>
-	<button on:click={consoleLog}>Request RSA Public Key</button>
-	<p>stringy: {stringified}</p>
-</div>
-<div>
-	<h2>Write RSA Public key to console </h2>
-	<button on:click={encryptHandler(msg, rsaPublicKey)}>Request RSA Public Key</button>
-	<p>Encrypted Message: {encryptedMessage}</p>
-</div>
-<div>
-	<h2>test webCrypto</h2>
-	<button on:click={RSACrypto.webCryptoTest}>test web crypto</button>
-	<p>Encrypted Message: {WebCryptoResult}</p>
-</div>
-<div>
-	<h2>Initiate ECDH</h2>
-	<button on:click={ECDHCrypto.initECDH}>Initiate ECDH</button>
-	<p>ECDH Keys: {ecdhKeys}</p>
+	<h2>4: RSAtoECDH response from server</h2>
+	<p>{responseRSAECDH.response}</p>
+	<h3>Decrypted outer layer message: </h3>
+	<p>{responseRSAECDH.outer}</p>
+	<h2>ECDHtoRSA response from server</h2>
+	<p>{responseECDHRSA.response}</p>
+	<h3>Decrypted outer layer message: </h3>
+	<p>{responseECDHRSA.outer}</p>
+
 </div>
