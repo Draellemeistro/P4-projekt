@@ -118,21 +118,14 @@ const ECDHCrypto ={
 
 		//because of some weird bug, the key_ops and ext properties are not passed on correctly
 		//this is a workaround to fix that
-		let jwkClient = {
-			ext: true,
-			kty: clientKeyForSecret.kty,
-			d: clientKeyForSecret.d,
-			crv: clientKeyForSecret.crv,
-			x: clientKeyForSecret.x,
-			y: clientKeyForSecret.y,
-		}
+
 
 		if (typeof serverKeyForSecret === 'string') {
 			serverKeyForSecret = await this.keyImportTemplateECDH(JSON.parse(serverPubKey));
 		}
 		if(typeof clientPrivateKey === 'string') {
 			let clientKeyForSecretParsed = JSON.parse(clientPrivateKey);
-			jwkClient = {
+			let jwkClient = {
 				ext: true,
 				kty: clientKeyForSecretParsed.kty,
 				d: clientKeyForSecretParsed.d,
