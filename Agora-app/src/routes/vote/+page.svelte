@@ -8,6 +8,7 @@
     import Modal from './Modal.svelte';
     import { getCandidatesFromServer } from '../../utils/apiService.js';
 
+
     let showModal = false;
     let selectedOptionModal = "";
     let selectedOption;
