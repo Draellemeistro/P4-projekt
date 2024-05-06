@@ -291,6 +291,7 @@ const ECDHCrypto ={
 			jwk = JSON.parse(jwkToValidate);
 			return insertKeyOpsAndValidate(jwk, isPrivateKey);
 		}
+		jwk = jwkToValidate;
 		if (!jwk.key_ops) {
 			jwk.key_ops = [];
 		}
