@@ -86,8 +86,8 @@ export const sendBallotToServerAndCheckHash = (ballot) => {
 	}
 };
 
-export const fetchKeyRSA = () => {
-	return fetch(`https://${serverIP}:${serverPort}/rsa-public-key`, {
+export const fetchKeyRSA = async () => {
+	return await fetch(`https://${serverIP}:${serverPort}/rsa-public-key`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

@@ -9,23 +9,25 @@
 // - askForDecryptionTest: sends a test message to the server for decryption
 // - encrypt: encrypts a message with the RSA public key
 // - webCryptoTest: generates a RSA-PSS key pair (not implemented yet. Might not be needed.)
+import { fetchKeyRSA } from './apiService.js';
+
 const RSACrypto = {
 
 		// Request the RSA public key from the server, make key object of it and
 		// returns a CryptoKey object and stores a string copy of it in sessionStorage
 		request: async function requestPublicKey() {
 			//TODO: RSARequest i apiService.js, men tør ikke fjerne den her endnu.
-			const serverIP = '192.168.0.113';
-			const serverPort = '3030';
-			const response = await fetch(`https://${serverIP}:${serverPort}/rsa-public-key`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			});
+			const response = await fetchKeyRSA();
+			//const serverIP = '192.168.0.113';
+			//const serverPort = '3030';
+			//const response = await fetch(`https://${serverIP}:${serverPort}/rsa-public-key`, {
+			//	method: 'POST',
+			//	headers: {
+			//		'Content-Type': 'application/json',
+			//	},
+			//});
 			if (response.ok) {
 				const data = await response.json();
-				//import RSA public key TODO: check if this can be handled by keyImportTemplateRSA.
 				const importedKey = await this.keyImportTemplateRSA(data);
 				console.log('importedKey:', importedKey);
 				//export JWK formatted RSA public key for later use TODO: maybe not necessary to import and export key yet
@@ -40,7 +42,6 @@ const RSACrypto = {
 
 		// Avoids errors from fat-fingering by using a template for the key import
 		keyImportTemplateRSA: async function keyImportTemplateRSA(keyString) {
-			console.log('keyString:', keyString);
 			return  window.crypto.subtle.importKey(
 				'jwk',
 				keyString,
