@@ -78,8 +78,9 @@ const ECDHCrypto ={
 	tempSendEDCHKey: async function sendECDHKeyToServer(keyToSend) {
 		let keyStringPub = keyToSend;
 		if (typeof keyStringPub !== 'string') {
-			keyStringPub = JSON.stringify(keyToSend);
+			keyStringPub = JSON.stringify(keyStringPub);
 		}
+		console.log('sending key to server: ', keyStringPub);
 		const response = await tempPostKeyECDH(keyStringPub);
 		if (response.status !== 200) {
 			console.error('Failed to send public key: ', response.status);
