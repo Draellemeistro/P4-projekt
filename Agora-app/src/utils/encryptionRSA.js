@@ -27,6 +27,7 @@ const RSACrypto = {
 				const data = await response.json();
 				//import RSA public key TODO: check if this can be handled by keyImportTemplateRSA.
 				const importedKey = this.keyImportTemplateRSA(data);
+				console.log('importedKey:', importedKey);
 				//export JWK formatted RSA public key for later use TODO: maybe not necessary to import and export key yet
 				const exportedKey = await window.crypto.subtle.exportKey('jwk', importedKey);
 				const keyString = JSON.stringify(exportedKey);
