@@ -340,24 +340,20 @@ app.post('/insert-ballot-double-enc', async (req, res) => {
 	const encBallot = req.body.encryptedSubLayer;
 	const clientKeyPub = req.body.clientKeyPub;
 	const ivValue = req.body.ivValue;
-
-	let stringifyUsed = false;
-	let clientKeyPubString = clientKeyPub;
-	let encBallotString = encBallot;
-	let ivValueString = ivValue;
-	if (typeof clientKeyPub !== 'string') {
-		clientKeyPubString = JSON.stringify(clientKeyPub);
-		stringifyUsed = true;
+	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientKeyPub);
+	let decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encBallot, ivValue, sharedSecret);
+	//TODO: do some handling of decrypted layers data.
+	if (typeof decryptedMessage === 'string') {
+		decryptedMessage = JSON.parse(decryptedMessage);
 	}
-	if (typeof encBallot !== 'string') {
-		encBallotString = JSON.stringify(encBallot);
-		stringifyUsed = true;
+	try {
+		console.log('Original message:', encBallot);
+		console.log('Decrypted message:', decryptedMessage);
+		//Object.keys(decryptedMessage).forEach(key => {
+		//});
+	} catch (error) {
+		console.error('Error:', error);
 	}
-	if (typeof ivValue !== 'string') {
-		ivValueString = JSON.stringify(ivValue);
-		stringifyUsed = true;
-	}
-
 	/// TODO: do we want this? ballot should be storable even before first round of decryption. Could save them for later use?
 	// const query = 'INSERT INTO Agora.ballotbox (ballotbox.encr_ballot, ecdh_pub_key, iv_value) VALUES (?, ?, ?)';
 	// connection.query(query, [encBallotString, clientKeyPubString, ivValueString], (err, results) => {
@@ -368,20 +364,6 @@ app.post('/insert-ballot-double-enc', async (req, res) => {
 	// 		res.json({ message: 'Data inserted successfully', results });
 	// 	}
 	//	});
-	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientKeyPub);
-	let decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encBallot, ivValue, sharedSecret);
-	//TODO: do some handling of decrypted layers data.
-	if (typeof decryptedMessage === 'string') {
-		decryptedMessage = JSON.parse(decryptedMessage);
-	}
-	try {
-		console.log('Original message:', req.body);
-		console.log('Decrypted message:', decryptedMessage);
-		//Object.keys(decryptedMessage).forEach(key => {
-		//});
-	} catch (error) {
-		console.error('Error:', error);
-	}
 });
 
 app.post('/decrypt-RSA-message-Test', async (req, res) => {
