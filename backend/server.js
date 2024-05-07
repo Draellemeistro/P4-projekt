@@ -372,7 +372,17 @@ app.post('/insert-ballot-double-enc', async (req, res) => {
 	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientKeyPub);
 	let decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encBallot, ivValue, sharedSecret);
 	//TODO: do some handling of decrypted layers data.
-
+	if (typeof decryptedMessage === 'string') {
+		decryptedMessage = JSON.parse(decryptedMessage);
+	}
+	try {
+		console.log('Decrypted message:', decryptedMessage);
+		Object.keys(decryptedMessage).forEach(key => {
+			console.log(key, decryptedMessage[key], typeof decryptedMessage[key]);
+		});
+	} catch (error) {
+		console.error('Error:', error);
+	}
 });
 
 app.post('/decrypt-RSA-message-Test', async (req, res) => {
