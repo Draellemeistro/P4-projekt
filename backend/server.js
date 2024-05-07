@@ -571,7 +571,8 @@ app.post('/ecdh-to-rsa-test', async (req, res) => {
 	if (decryptedMessage.encryptedMessage === midwayMessage) {
 		console.log('2RSA upper layer works!');
 	}
-	console.log('decrypted:', decryptedMessage.encryptedMessage);
+	console.log('decrypted Type:',typeof decryptedMessage);
+	console.log('decrypted:', decryptedMessage);
 	console.log('midwayMessage:', midwayMessage);
 	let nextStep = JSON.parse(decryptedMessage);
 
