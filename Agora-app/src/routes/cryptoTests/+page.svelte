@@ -29,7 +29,7 @@
 
 	onMount(async () => {
 		await combo.RSAtoECDH(plainText);
-		await combo.ECDHtoRSA(plainText);
+		//await combo.ECDHtoRSA(plainText);
 	});
 </script>
 

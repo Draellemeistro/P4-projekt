@@ -61,6 +61,8 @@ const combo = {
 
 		encryptedMessage = await this.RSApart(message);
 		let ECDHpart = await this.ECDHpart(encryptedMessage);
+		console.log('ECDHtoRSA ECDHpart..:', ECDHpart);
+		console.log('here we go\n\n\n')
 		ivValue = ECDHpart.ivValue;
 		clientKeyPub = ECDHpart.clientKeyPub;
 		outGoingMessage = ECDHpart.encryptedMessage;
