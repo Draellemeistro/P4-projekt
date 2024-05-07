@@ -13,11 +13,11 @@
 
 
 
-    function voteHandler(){
+    async function voteHandler() {
         dialog.close()
         console.log(typeof selectedOptionModal);
         console.log(selectedOptionModal); //string: 'Candidate: John Doe (X)'
-        sendEncryptedBallotToServer(selectedOptionModal);
+        await sendEncryptedBallotToServer(selectedOptionModal);
     }
 </script>
 
