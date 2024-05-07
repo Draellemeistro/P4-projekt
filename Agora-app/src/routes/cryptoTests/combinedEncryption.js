@@ -46,7 +46,7 @@ const combo = {
 	prepareECDHBallot: async function prepareECDHBallot(encryptedMessage, clientPubKey, ivValue) {
 		return JSON.stringify({
 			encryptedMessage: encryptedMessage, //object
-			clientPublicKey: clientPubKey, //string
+			clientKeyPub: clientPubKey, //string
 			IvValue: ivValue //object
 		});
 	},

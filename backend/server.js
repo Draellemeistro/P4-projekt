@@ -476,7 +476,7 @@ app.post('/decrypt-ECDH-message-Test', async (req, res) => {
 	const clientPublicKey = req.body.clientPublicKey;
 	const IvValueFromClient = req.body.IvValue;
 					//IvValue type: object
-		//clientPublicKey type: string
+		//clientKeyPub type: string
 			//encryptedMessage type: string
 			//plainTextMessage type: string
 	let responseValue;
@@ -578,5 +578,9 @@ app.post('/ecdh-to-rsa-test', async (req, res) => {
 	if (nextStep.encryptedMessage === midwayMessage) {
 		console.log('RSA upper layer works!');
 	}
-
+	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, nextStep.clientKeyPub);
+	let fullyDecryptedMessage = await serverECDHCrypto.handleEncryptedMessage(nextStep.encryptedMessage, nextStep.ivValue, sharedSecret);
+	if (fullyDecryptedMessage === plainTextMessage) {
+		console.log('ECDH to RSA works!');
+	}
 });
