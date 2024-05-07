@@ -34,37 +34,14 @@
 </script>
 
 
-<div>
-<h2>1: Plaintext to send</h2>
-<p>{plainText}</p>
-</div>
+<h1>Combined Encryption Test</h1>
+<h2>Plain Text: {plainText}</h2>
+<h2>Encrypted Message RSA: {encMsgRSA}</h2>
+<h2>Encrypted Message ECDH: {encMsgECDH}</h2>
+<h2>Decrypted Message RSA: {outMsgRSA}</h2>
+<h2>Decrypted Message ECDH: {outMsgECDH}</h2>
+<h2>Response RSA to ECDH: {responseRSAECDH}</h2>
+<h2>Response ECDH to RSA: {responseECDHRSA}</h2>
+<h2>Inner Decrypt Check RSA: {innerDecryptCheckRSA}</h2>
+<h2>Inner Decrypt Check ECDH: {innerDecryptCheckECDH}</h2>
 
-<div>
-	<h2>2: encrypted RSA</h2>
-	<p>RSA encrypted message to re-encrypt: {encMsgRSA}</p>
-	<h2>2: encrypted ECDH</h2>
-	<p>ECDH encrypted message to re-encrypt: {encMsgECDH}</p>
-	<h3> decryption checks:</h3>
-	<p>Inner layer decryption check RSA: {innerDecryptCheckRSA}</p>
-	<p>Inner layer decryption check ECDH: {innerDecryptCheckECDH}</p>
-</div>
-
-<div>
-	<h2>3: RSAtoECDH message for server</h2>
-	<p>{outMsgECDH}</p>
-</div>
-<div>
-	<h2>3: ECDHtoRSA message for server</h2>
-	<p>{outMsgRSA}</p>
-</div>
-<div>
-	<h2>4: RSAtoECDH response from server</h2>
-	<p>{responseRSAECDH.response}</p>
-	<h3>Decrypted outer layer message: </h3>
-	<p>{responseRSAECDH.outer}</p>
-	<h2>ECDHtoRSA response from server</h2>
-	<p>{responseECDHRSA.response}</p>
-	<h3>4: Decrypted outer layer message: </h3>
-	<p>{responseECDHRSA.outer}</p>
-
-</div>
