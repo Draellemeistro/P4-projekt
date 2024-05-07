@@ -14,46 +14,31 @@
     let selectedOption;
 
     // Candidates
-    let candidates;
-    let parties = {};
+    let candidates = [];
 
     onMount(async () => {
         const response = await getCandidatesFromServer();
         if (response.ok) {
             const data = await response.json();
-            console.log('data type:', typeof data);
-            candidates = data.map(item => [item.candidate]);
-            console.log('Candidates after fetch:', candidates);
-            parties = groupCandidatesByParty(candidates);
+            candidates = data.map(item => [item.candidate, item.party]);
         } else {
             console.error('Failed to fetch candidates');
         }
     });
 
     // Group candidates by party
-
-    function groupCandidatesByParty(candidates) {
-        let tempParties = {};
+    let parties = {};
+    $: {
+        parties = {};
         candidates.forEach(([name, party]) => {
             if (party === "N/A")
                 party = "Outside of the parties"
 
-            if (!tempParties[party])
-                tempParties[party] = [];
+            if (!parties[party])
+                parties[party] = [];
 
-            tempParties[party].push(name);
+            parties[party].push(name);
         });
-        ///console.log('Parties:', tempParties);
-
-        Object.keys(tempParties).forEach(party => {
-            let tempCandidates = tempParties[party];
-            console.log(`Party: ${party}`);
-            tempCandidates.forEach(tempCandidates => {
-                console.log(`Candidate: ${tempCandidates} (${party})`);
-            });
-        });
-
-        return tempParties;
     }
 
     function proceedHandler(selectedOption) {
