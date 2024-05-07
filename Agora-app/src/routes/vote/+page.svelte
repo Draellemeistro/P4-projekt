@@ -15,19 +15,26 @@
 
     // Candidates
     let candidates = [];
+    let parties = {};
 
     onMount(async () => {
         const response = await getCandidatesFromServer();
         if (response.ok) {
             const data = await response.json();
-            candidates = data.map(item => [item.candidate, item.party]);
+            data.forEach(item => {
+                if (!candidates.some(candidate => candidate[0] === item.candidate)) {
+                    candidates.push([item.candidate]);
+                }
+                if (!parties.some(party => party[0] === item.party)) {
+                    parties.push([item.party]);
+                }
+            });
         } else {
             console.error('Failed to fetch candidates');
         }
     });
 
-    // Group candidates by party
-    let parties = {};
+
     $: {
         parties = {};
         candidates.forEach(([name, party]) => {
