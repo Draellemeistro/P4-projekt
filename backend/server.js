@@ -585,16 +585,15 @@ app.post('/ecdh-to-rsa-test', async (req, res) => {
 	let values = Object.values(nextStep);
 	console.log(values); // Output: ['John', 30, 'New York'
 let toDecrypt = nextStep.encryptedMessage;
-let newIv = JSON.stringify(nextStep.ivValue);
-console.log('newIv type:', typeof newIv, newIv);
-	if (newIv !== undefined && newIv !== null) {
-		let entries = Object.entries(newIv);
+console.log('newIv type:', typeof nextStep.ivValue, nextStep.ivValue);
+	if (nextStep.ivValue !== undefined && nextStep.ivValue !== null) {
+		let entries = Object.entries(nextStep.ivValue);
 		console.log(entries);
 	} else {
-		console.error('newIv is undefined or null:', newIv);
+		console.error('newIv is undefined or null:', nextStep.ivValue);
 	}
 	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, nextStep.clientKeyPub);
-	let fullyDecryptedMessage = await serverECDHCrypto.handleEncryptedMessage(toDecrypt, newIv, sharedSecret);
+	let fullyDecryptedMessage = await serverECDHCrypto.handleEncryptedMessage(toDecrypt, nextStep.ivValue, sharedSecret);
 	if (fullyDecryptedMessage === plainTextMessage) {
 		console.log('ECDH to RSA works!');
 	}
