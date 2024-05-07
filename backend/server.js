@@ -578,12 +578,9 @@ app.post('/ecdh-to-rsa-test', async (req, res) => {
 	if (nextStep.encryptedMessage === midwayMessage) {
 		console.log('RSA upper layer works!');
 	}
-	console.log('nextStep type:', typeof nextStep);
-	console.log('nextStep.IV type:', nextStep.ivValue);
-	console.log('nextStep.IV', nextStep.ivValue);
-	console.log('nextStep.clientKeyPub type:', nextStep.clientKeyPub);
+
 	Object.keys(nextStep).forEach(key => {
-		console.log(key, nextStep[key]);
+		console.log(key, nextStep[key], typeof nextStep[key]);
 	});
 	let values = Object.values(nextStep);
 	console.log(values); // Output: ['John', 30, 'New York'
