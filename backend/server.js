@@ -209,6 +209,7 @@ app.post('/fetch-candidates', (req, res) => {
 		if (err) throw err;
 		else {
 			console.log(results);
+			console.log(typeof results)
 			res.json(results); // results is array of objects. each has candidate and party properties
 		}
 	});

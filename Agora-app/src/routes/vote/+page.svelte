@@ -21,7 +21,8 @@
         const response = await getCandidatesFromServer();
         if (response.ok) {
             const data = await response.json();
-            candidates = JSON.parse(data);
+            console.log('data type:', typeof data);
+            candidates = data.map(item => [item.candidate]);
             console.log('Candidates after fetch:', candidates);
             parties = groupCandidatesByParty(candidates);
         } else {
