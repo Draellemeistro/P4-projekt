@@ -33,8 +33,9 @@ export async function encryptBallot(ballot) {
 	}
 	console.log('before RSApart:\n', ballot, '\n\ntype:', typeof ballot,);
 	encryptedMessage = await combo.RSApart(ballot);
+	let innerMessage = await combo.prepareSubLayer(encryptedMessage, {testString: 'testString', testNumber: 12345});
 	console.log('before ECDHpart');
-	let ECDHpart = await combo.ECDHpart(encryptedMessage);
+	let ECDHpart = await combo.ECDHpart(innerMessage);
 	outGoingMessage = ECDHpart.encryptedMessage;
 	clientKeyPub = ECDHpart.clientPublicKey;
 	ivValue = ECDHpart.ivValue;
