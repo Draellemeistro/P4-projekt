@@ -43,7 +43,6 @@ const combo = {
 		console.log('attempting to export key.')
 		midwayCheck = await SendEncryptedMsgTest(message, encryptedMessage, clientKeyPub, ivValue);
 		console.log('ECDHtoRSA midwayCheck..:', midwayCheck);
-		clientKeyPub =await ECDHCrypto.exportKeyString(clientKeyPub);
 		return {encryptedMessage: encryptedMessage, clientPublicKey: clientKeyPub, ivValue: encryptionInfo.ivValue};
 	},
 
@@ -83,10 +82,12 @@ const combo = {
 		outGoingMessage = ECDHpart.encryptedMessage;
 		clientKeyPub = ECDHpart.clientKeyPub;
 		ivValue = ECDHpart.ivValue;
-		console.log('ivValue before object..:', ivValue);
+		console.log('exporting key..', clientKeyPub);
+		let clientKeyPubString = await ECDHCrypto.exportKeyString(clientKeyPub);
+		console.log('after exporting key..', clientKeyPubString);
 
 		console.log('okidoki part lets goooooo');
-		const msgForServer = await this.prepareFinalBallot(message, encryptedMessage, outGoingMessage, clientKeyPub, ivValue);
+		const msgForServer = await this.prepareFinalBallot(message, encryptedMessage, outGoingMessage, clientKeyPubString, ivValue);
 		console.log('post prepareFinalBallot plaintext type..:', typeof msgForServer.plaintext);
 		console.log('post prepareFinalBallot midWayEncrypted type..:', typeof msgForServer.midWayEncrypted);
 		console.log('post prepareFinalBallot OutgoingEncrypted type..:', typeof msgForServer.OutgoingEncrypted);
