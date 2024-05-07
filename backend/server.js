@@ -375,7 +375,7 @@ app.post('/insert-ballot-double-enc', async (req, res) => {
 		decryptedMessage = JSON.parse(decryptedMessage);
 	}
 	try {
-		console.log('Decrypted message:', decryptedMessage);
+		console.log('Original message:', req.body);
 		Object.keys(decryptedMessage).forEach(key => {
 			console.log(key, decryptedMessage[key], typeof decryptedMessage[key]);
 		});
