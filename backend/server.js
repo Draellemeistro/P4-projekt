@@ -587,11 +587,13 @@ app.post('/ecdh-to-rsa-test', async (req, res) => {
 	});
 	let values = Object.values(nextStep);
 	console.log(values); // Output: ['John', 30, 'New York']
-console.log('\n\n\n\n');
+;
 let toDecrypt = nextStep.encryptedMessage;
 let newIv = nextStep.ivValue;
 console.log(typeof newIv);
+	console.log('\nherewego\nherewego\nherewego\nherewego')
 	let entries = Object.entries(newIv);
+	console.log('\n\n\n\n')
 	console.log(entries); // Output: [['name', 'John'], ['age', 30], ['city', 'New York']]
 	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, nextStep.clientKeyPub);
 	let fullyDecryptedMessage = await serverECDHCrypto.handleEncryptedMessage(toDecrypt, newIv, sharedSecret);
