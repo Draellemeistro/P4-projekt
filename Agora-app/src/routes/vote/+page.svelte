@@ -21,6 +21,8 @@
         if (response.ok) {
             const data = await response.json();
             candidates = data.map(item => [item.candidate, item.party]);
+            console.log('Candidates after fetch:', candidates);
+
         } else {
             console.error('Failed to fetch candidates');
         }
