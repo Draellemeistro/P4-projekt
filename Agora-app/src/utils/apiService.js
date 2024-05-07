@@ -37,6 +37,17 @@ export const sendBallotToServer = (ballot, clientPubKeyECDH = null, ivValue = nu
 	});
 };
 
+export const sendBallotToServerRSAtoECDH = async (msgForServer) => {
+	return await fetch(`https://${serverIP}:${serverPort}/insert-ballot-double-enc`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: msgForServer
+	});
+
+}
+
 export const sendBlindedForSigning = (blindedMessage) => {
 	return fetch(`https://${serverIP}:${serverPort}/sign-blinded-msg`, {
 		method: 'POST',

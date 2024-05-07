@@ -1,50 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 import ECDHCrypto from '../../utils/encryptionECDH.js';
-import { sendBallotToServer } from '../../utils/apiService.js';
-import RSACrypto from '../../utils/encryptionRSA.js';
-
-export const prepareECDHBallot = async (messageToEncrypt) => {
-	let serverPubKeyECDH = await ECDHCrypto.requestServerECDH();
-	let BothKeysECDH = await ECDHCrypto.initECDH();
-	let sharedSecret = await ECDHCrypto.deriveSecret(BothKeysECDH.privKey, serverPubKeyECDH)
-	let encryptionInfo = await ECDHCrypto.encryptECDH(messageToEncrypt, sharedSecret);
-	let encryptedBallot = encryptionInfo.encryptedMessage;
-	let ivValue = encryptionInfo.ivValue;
-	let clientPubKeyExport = await ECDHCrypto.exportKeyString(BothKeysECDH.pubKey);
-
-	return {encryptedBallot: encryptedBallot, clientPubKey: clientPubKeyExport, ivValue: ivValue};
-}
-export const prepareRSABallot = async (messageToEncrypt) => {
-	let serverPubKeyRSA = await RSACrypto.request();
-	return  {encryptedBallot: await RSACrypto.encrypt(messageToEncrypt, serverPubKeyRSA),clientPubKey: null, ivValue: null};
-}
-
-export const readyBallotForTransmission = async (ballot, encryptChoice = 'RSAECDH') => {
-	if ( typeof ballot !== 'string') {
-		ballot = JSON.stringify(ballot);
-	}
-	let encryptedBallot;
-	switch (encryptChoice) {
-		case 'onlyECDH':
-			return await prepareECDHBallot(ballot);
-		case 'onlyRSA':
-			return await prepareRSABallot(ballot)
-		case 'RSAECDH':
-			encryptedBallot = JSON.stringify(await prepareRSABallot(ballot));
-			return await prepareECDHBallot(encryptedBallot);
-		case 'ECDHRSA':
-			encryptedBallot = JSON.stringify(await prepareECDHBallot(ballot));
-			return await prepareRSABallot(encryptedBallot);
-		default:
-			console.error('No or incorrect encryption method chosen');
-			return false;
-	}
-}
-
-export const encryptAndSendBallot = async (ballot, encryptChoice = 'RSAECDH') => {
-	let readyBallot = await readyBallotForTransmission(ballot, encryptChoice);
-	return await sendBallotToServer(readyBallot.encryptedBallot,readyBallot.clientPubKey, readyBallot.ivValue);
-}
+import { sendBallotToServer, sendBallotToServerRSAtoECDH } from '../../utils/apiService.js';
+//import RSACrypto from '../../utils/encryptionRSA.js';
+import combo from '../cryptoTests/combinedEncryption.js';
 
 function getCandidatesFromServer() {
 	return fetch('/fetch-candidates')
@@ -63,4 +21,30 @@ function getCandidatesFromServer() {
 			console.error('Error:', error);
 		});
 }
+
+async function encryptBallot(ballot) {
+	let clientKeyPub;
+	let encryptedMessage;
+	let outGoingMessage;
+	let ivValue;
+	let message;
+	if (typeof ballot !== 'string') {
+		message = JSON.stringify(ballot);
+	}
+	encryptedMessage = await this.RSApart(message);
+	let ECDHpart = await this.ECDHpart(encryptedMessage);
+	outGoingMessage = ECDHpart.encryptedMessage;
+	clientKeyPub = ECDHpart.clientPublicKey;
+	ivValue = ECDHpart.ivValue;
+	let clientKeyPubString = await ECDHCrypto.exportKeyString(clientKeyPub);
+	return await combo.prepareBallotForServer(outGoingMessage, clientKeyPubString, ivValue);
+}
+
+// eslint-disable-next-line no-unused-vars
+async function sendEncryptedBallotToServer(ballot) {
+	let encryptedBallot = await encryptBallot(ballot);
+	// eslint-disable-next-line no-unused-vars
+	const response = sendBallotToServerRSAtoECDH(encryptedBallot);
+	}
+
 module.exports = { getCandidatesFromServer, sendBallotToServer };

@@ -43,27 +43,6 @@ const combo = {
 		return {encryptedMessage: encryptedMessage, clientPublicKey: clientKeyPub, ivValue: encryptionInfo.ivValue};
 	},
 
-	prepareECDHBallot: async function prepareECDHBallot(encryptedMessage, clientPubKey, ivValue) {
-		return JSON.stringify({
-			encryptedMessage: encryptedMessage, //object
-			clientKeyPub: clientPubKey, //string
-			IvValue: ivValue //object
-		});
-	},
-	prepareFinalBallot: async function prepareExtraInfo(plaintext, midWayEncrypted, OutgoingEncrypted, clientKeyPub, ivValue) {
-		console.log('prepareFinalBallot plaintext type..:', typeof plaintext);
-		console.log('prepareFinalBallot midWayEncrypted type..:', typeof midWayEncrypted);
-		console.log('prepareFinalBallot OutgoingEncrypted type..:', typeof OutgoingEncrypted);
-		console.log('prepareFinalBallot clientKeyPub type..:', typeof clientKeyPub);
-		console.log('prepareFinalBallot ivValue type..:', typeof ivValue);
-		return JSON.stringify({
-			plaintext: plaintext, //string
-			midWayEncrypted: midWayEncrypted, //string (RSA) / object (ECDH)
-			OutgoingEncrypted: OutgoingEncrypted, //string (RSA) / object (ECDH)
-			clientKeyPub: clientKeyPub, //string
-			ivValue: ivValue, //object
-		});
-	},
 
 	RSAtoECDH: async function RSAtoECDH(message) { // WORKS.
 		let clientKeyPub;
@@ -80,7 +59,7 @@ const combo = {
 		clientKeyPub = ECDHpart.clientPublicKey;
 		ivValue = ECDHpart.ivValue;
 		let clientKeyPubString = await ECDHCrypto.exportKeyString(clientKeyPub);
-		const msgForServer = await this.prepareFinalBallot(message, encryptedMessage, outGoingMessage, clientKeyPubString, ivValue);
+		const msgForServer = await this.prepareFinalBallotExample(message, encryptedMessage, outGoingMessage, clientKeyPubString, ivValue);
 		let okidoki = await RSAtoECDHTest(msgForServer);
 		console.log('RSAtoECDH okidoki..:', okidoki);
 		return okidoki;
@@ -96,11 +75,48 @@ const combo = {
 		let encryptedMessage = await this.prepareECDHBallot(ECDHmessage, clientKeyPubString, ivValue);
 		let serverPubKeyRSA = await RSACrypto.request();
 		let outGoingMessage = await RSACrypto.encrypt(encryptedMessage, serverPubKeyRSA);
-		const msgForServer = await this.prepareFinalBallot(message, ECDHmessage, outGoingMessage,null, null);
+		const msgForServer = await this.prepareFinalBallotExample(message, ECDHmessage, outGoingMessage,null, null);
 
 		let okidoki = await ECDHtoRSATest(msgForServer);
 		console.log('ECDHtoRSA okidoki..:', okidoki);
 		return okidoki;
-	}
+	},
+
+	prepareSubLayer: async function prepareSubLayer(midWayEncrypted, otherInformation ) { //add hashOfMidWayEncrypted??
+		return JSON.stringify({
+			midWayEncrypted: midWayEncrypted, //string (RSA) / object (ECDH)
+			otherInformation: otherInformation, //object, strings whatever
+		});
+
+	},
+
+	prepareBallotForServer: async function prepareBallotForServer(OutgoingEncrypted, clientKeyPub, ivValue) {
+		return JSON.stringify({
+			encryptedSubLayer: OutgoingEncrypted, //string (RSA) / object (ECDH)
+			clientKeyPub: clientKeyPub, //string
+			ivValue: ivValue, //object
+		});
+	},
+	prepareECDHBallot: async function prepareECDHBallot(encryptedMessage, clientPubKey, ivValue) {
+		return JSON.stringify({
+			encryptedMessage: encryptedMessage, //object
+			clientKeyPub: clientPubKey, //string
+			IvValue: ivValue //object
+		});
+	},
+	prepareFinalBallotExample: async function prepareExtraInfo(plaintext, midWayEncrypted, OutgoingEncrypted, clientKeyPub, ivValue) {
+		console.log('prepareFinalBallotExample plaintext type..:', typeof plaintext);
+		console.log('prepareFinalBallotExample midWayEncrypted type..:', typeof midWayEncrypted);
+		console.log('prepareFinalBallotExample OutgoingEncrypted type..:', typeof OutgoingEncrypted);
+		console.log('prepareFinalBallotExample clientKeyPub type..:', typeof clientKeyPub);
+		console.log('prepareFinalBallotExample ivValue type..:', typeof ivValue);
+		return JSON.stringify({
+			plaintext: plaintext, //string
+			midWayEncrypted: midWayEncrypted, //string (RSA) / object (ECDH)
+			OutgoingEncrypted: OutgoingEncrypted, //string (RSA) / object (ECDH)
+			clientKeyPub: clientKeyPub, //string
+			ivValue: ivValue, //object
+		});
+	},
 }
 export default combo;

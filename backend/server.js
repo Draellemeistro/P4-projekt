@@ -334,6 +334,47 @@ app.post('/verify-signed-blinded-msg', async (req, res) => {
 	res.json(verify);
 }); //TODO check if this is correct
 
+app.post('/insert-ballot-double-enc', async (req, res) => {
+	console.log('Accessed /insert-ballot-double-enc endpoint');
+	const encBallot = req.body.encryptedSubLayer;
+	const clientKeyPub = req.body.clientKeyPub;
+	const ivValue = req.body.ivValue;
+
+	let stringifyUsed = false;
+	let clientKeyPubString = clientKeyPub;
+	let encBallotString = encBallot;
+	let ivValueString = ivValue;
+	if (typeof clientKeyPub !== 'string') {
+		clientKeyPubString = JSON.stringify(clientKeyPub);
+		stringifyUsed = true;
+	}
+	if (typeof encBallot !== 'string') {
+		encBallotString = JSON.stringify(encBallot);
+		stringifyUsed = true;
+	}
+	if (typeof ivValue !== 'string') {
+		ivValueString = JSON.stringify(ivValue);
+		stringifyUsed = true;
+	}
+	if (stringifyUsed === true) {
+		console.log('double encrypted ballot had to be stringified. Could lead to errors.')
+	}
+	/// TODO: do we want this? ballot should be storable even before first round of decryption. Could save them for later use?
+	// const query = 'INSERT INTO Agora.ballotbox (ballotbox.encr_ballot, ecdh_pub_key, iv_value) VALUES (?, ?, ?)';
+	// connection.query(query, [encBallotString, clientKeyPubString, ivValueString], (err, results) => {
+	// 	if (err) {
+	// 		console.error(err);
+	// 		res.status(500).send('Error inserting data into database');
+	// 	} else {
+	// 		res.json({ message: 'Data inserted successfully', results });
+	// 	}
+	//	});
+	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientKeyPub);
+	let decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encBallot, ivValue, sharedSecret);
+	//TODO: do some handling of decrypted layers data.
+
+});
+
 app.post('/decrypt-RSA-message-Test', async (req, res) => {
 	console.log('Accessed /decrypt-RSA-message-Test endpoint');
 	const plainTextMessage = req.body.plainTextMessage;
