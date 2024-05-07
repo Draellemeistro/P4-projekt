@@ -44,7 +44,7 @@ const combo = {
 		midwayCheck = await SendEncryptedMsgTest(message, encryptedMessage, clientKeyPub, ivValue);
 		console.log('ECDHtoRSA midwayCheck..:', midwayCheck);
 		clientKeyPub = JSON.stringify(await ECDHCrypto.exportKeyString(clientKeyPub));
-		return {encryptedMessage, ivValue, clientKeyPub};
+		return {encryptedMessage: encryptedMessage, clientPublicKey: clientKeyPub, ivValue: ivValue};
 	},
 
 	prepareECDHBallot: async function prepareECDHBallot(encryptedMessage, clientPubKey, ivValue) {
