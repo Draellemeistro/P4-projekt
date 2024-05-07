@@ -23,6 +23,7 @@ export function getCandidatesFromServer() {
 }
 
 export async function encryptBallot(ballot) {
+	console.log('encryptBallot ballot..:', ballot);
 	let clientKeyPub;
 	let encryptedMessage;
 	let outGoingMessage;
@@ -31,7 +32,9 @@ export async function encryptBallot(ballot) {
 	if (typeof ballot !== 'string') {
 		message = JSON.stringify(ballot);
 	}
+	console.log('before RSApart');
 	encryptedMessage = await this.RSApart(message);
+	console.log('before ECDHpart');
 	let ECDHpart = await this.ECDHpart(encryptedMessage);
 	outGoingMessage = ECDHpart.encryptedMessage;
 	clientKeyPub = ECDHpart.clientPublicKey;
