@@ -5,63 +5,30 @@ import { combinedEncryptionTest, ECDHtoRSATest, RSAtoECDHTest } from '../../util
 import { SendEncryptedMsgTest } from './testingECDH/pageECDH.js';
 
 const combo = {
-	RSAtoECDH: async function RSAtoECDH(message) {
-		let clientKeyPub;
-		let clientKeyPriv;
-		let serverKeyPub
-		// eslint-disable-next-line no-unused-vars
+
+	RSApart: async function RSApart(message) {
 		let serverPubKeyRSA = await RSACrypto.request();
-		let sharedSecret;
-		// eslint-disable-next-line no-unused-vars
-		let encryptedMessage;
-		let outGoingMessage;
-		let ivValue;
-		// eslint-disable-next-line no-unused-vars
-		let midwayCheck;
-		// eslint-disable-next-line no-unused-vars
-		let decryptedMessage;
-
-		// eslint-disable-next-line no-unused-vars
-
-
-		// eslint-disable-next-line no-unused-vars
-
-
-		encryptedMessage = await RSACrypto.encrypt(message, serverPubKeyRSA);
-		midwayCheck = await RSACrypto.askForDecryption(message, encryptedMessage);
-		console.log('RSAtoECDH encryptedMessage..:', encryptedMessage);
+		let encryptedMessage = await RSACrypto.encrypt(message, serverPubKeyRSA);
+		let midwayCheck = await RSACrypto.askForDecryption(message, encryptedMessage);
+		console.log('RSApart encryptedMessage..:', encryptedMessage);
 		console.log('encryptedMessage type..:', typeof encryptedMessage);
-		console.log('RSAtoECDH midwayCheck..:', midwayCheck);
-		const BothKeys = await ECDHCrypto.initECDH();
-		clientKeyPub = BothKeys.pubKey;
-		clientKeyPriv = BothKeys.privKey;
-		serverKeyPub = await ECDHCrypto.requestServerECDH();
-		sharedSecret = await ECDHCrypto.deriveSecret(clientKeyPriv, serverKeyPub);
+		console.log('RSApart midwayCheck..:', midwayCheck);
 		if (typeof encryptedMessage !== 'string') {
 			encryptedMessage = JSON.stringify(encryptedMessage);
 		}
-		const encryptionInfo = await ECDHCrypto.encryptECDH(encryptedMessage, sharedSecret);
-		outGoingMessage = encryptionInfo.encryptedMessage;
-		ivValue = encryptionInfo.ivValue;
-		// eslint-disable-next-line no-unused-vars
-		let okidoki = await RSAtoECDHTest(message, encryptedMessage, outGoingMessage, clientKeyPub, ivValue);
-		console.log('RSAtoECDH okidoki..:', okidoki);
+		return encryptedMessage;
 	},
 
-
-	ECDHtoRSA: async function ECDHtoRSA(message) {
+	ECDHpart: async function ECDHpart(message) {
 		let clientKeyPub;
 		let clientKeyPriv;
 		let serverKeyPub
-		// eslint-disable-next-line no-unused-vars
-		let serverPubKeyRSA = await RSACrypto.request();
 		let sharedSecret;
 		let encryptedMessage;
 		let ivValue;
 		let midwayCheck;
-		let outGoingMessage;
-		// eslint-disable-next-line no-unused-vars
-		let decryptedMessage;
+
+
 		const BothKeys = await ECDHCrypto.initECDH();
 		clientKeyPub = BothKeys.pubKey;
 		clientKeyPriv = BothKeys.privKey;
@@ -77,9 +44,38 @@ const combo = {
 		if (typeof encryptedMessage !== 'string') {
 			encryptedMessage = JSON.stringify(encryptedMessage);
 		}
-		outGoingMessage = await RSACrypto.encrypt(encryptedMessage, serverPubKeyRSA);
+		return {encryptedMessage, ivValue, clientKeyPub};
+	},
+
+	RSAtoECDH: async function RSAtoECDH(message) {
+		let clientKeyPub;
+		let encryptedMessage;
+		let outGoingMessage;
+		let ivValue;
+
+
+
+
+
+
+		encryptedMessage = await this.RSApart(message);
+		let ECDHpart = await this.ECDHpart(encryptedMessage);
+		ivValue = ECDHpart.ivValue;
+		clientKeyPub = ECDHpart.clientKeyPub;
+		outGoingMessage = ECDHpart.encryptedMessage;
+		let okidoki = await RSAtoECDHTest(message, encryptedMessage, outGoingMessage, ivValue, clientKeyPub);
+		console.log('RSAtoECDH okidoki..:', okidoki);
+		return okidoki;
+	},
+
+
+	ECDHtoRSA: async function ECDHtoRSA(message) {
+		let encryptedMessage = JSON.stringify(await this.ECDHpart(message));
+		let serverPubKeyRSA = await RSACrypto.request();
+		let outGoingMessage = await RSACrypto.encrypt(encryptedMessage, serverPubKeyRSA);
 		let okidoki = await ECDHtoRSATest(message, encryptedMessage, outGoingMessage, null, null);
 		console.log('ECDHtoRSA okidoki..:', okidoki);
+		return okidoki;
 	}
 }
 export default combo;
