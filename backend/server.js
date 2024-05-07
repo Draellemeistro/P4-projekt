@@ -561,6 +561,8 @@ app.post(/rsa-to-ecdh-test/, async (req, res) => {
 	if (decryptedMessage === midwayMessage) {
 		console.log('ECDH upper layer works!');
 	}
+	let decryptedMidWayMsg = serverRSACrypto.decryptWithPrivRSA(encryptedMessage, pemFormatServerPrivateRSAKey);
+	console.log('decryptedMidWayMsg:', decryptedMidWayMsg);
 	res.json(decryptedMessage);
 });
 
