@@ -40,6 +40,8 @@ const combo = {
 		console.log('encryptedMessage type..:', typeof encryptedMessage);
 		ivValue = encryptionInfo.ivValue;
 		console.log('attempting to export key.')
+		console.log('clientKeyPub..:', clientKeyPub);
+		console.log('clientKeyPub type..:', typeof clientKeyPub);
 		clientKeyPub = JSON.stringify(await window.crypto.subtle.exportKey('jwk', BothKeys.pubKey))
 		midwayCheck = await SendEncryptedMsgTest(message, encryptedMessage, clientKeyPub, ivValue);
 		console.log('ECDHtoRSA midwayCheck..:', midwayCheck);
