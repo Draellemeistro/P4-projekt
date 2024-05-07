@@ -555,7 +555,7 @@ app.post(/rsa-to-ecdh-test/, async (req, res) => {
 	console.log(typeof encryptedMessage);
 	console.log(typeof clientPubKey);
 	console.log(typeof ivValue);
-	console.log('\n\n\n')
+	console.log('\n\n\n');
 	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientPubKey);
 	let decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encryptedMessage, ivValue, sharedSecret);
 	if (decryptedMessage === midwayMessage) {

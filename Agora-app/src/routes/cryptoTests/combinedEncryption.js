@@ -59,13 +59,13 @@ const combo = {
 		console.log('prepareFinalBallot OutgoingEncrypted type..:', typeof OutgoingEncrypted);
 		console.log('prepareFinalBallot clientKeyPub type..:', typeof clientKeyPub);
 		console.log('prepareFinalBallot ivValue type..:', typeof ivValue);
-		return JSON.stringify({
+		return {
 			plaintext: plaintext, //string
 			midWayEncrypted: midWayEncrypted, //string (RSA) / object (ECDH)
 			OutgoingEncrypted: OutgoingEncrypted, //string (RSA) / object (ECDH)
 			clientKeyPub: clientKeyPub, //string
 			ivValue: ivValue, //object
-		});
+		}
 	},
 
 	RSAtoECDH: async function RSAtoECDH(message) {
