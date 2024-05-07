@@ -582,6 +582,10 @@ app.post('/ecdh-to-rsa-test', async (req, res) => {
 	console.log('nextStep.IV type:', nextStep.ivValue);
 	console.log('nextStep.IV', nextStep.ivValue);
 	console.log('nextStep.clientKeyPub type:', nextStep.clientKeyPub);
+	Object.keys(nextStep).forEach(key => {
+		console.log(key, nextStep[key]);
+	});
+
 	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, nextStep.clientKeyPub);
 	let fullyDecryptedMessage = await serverECDHCrypto.handleEncryptedMessage(nextStep.encryptedMessage, nextStep.ivValue, sharedSecret);
 	if (fullyDecryptedMessage === plainTextMessage) {
