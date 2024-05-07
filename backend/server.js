@@ -578,6 +578,7 @@ app.post('/ecdh-to-rsa-test', async (req, res) => {
 	if (nextStep.encryptedMessage === midwayMessage) {
 		console.log('RSA upper layer works!');
 	}
+	console.log('nextStep type:', typeof nextStep);
 	console.log('nextStep.IV type:', nextStep.ivValue);
 	console.log('nextStep.IV', nextStep.ivValue);
 	console.log('nextStep.clientKeyPub type:', nextStep.clientKeyPub);
