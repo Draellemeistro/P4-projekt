@@ -128,7 +128,7 @@ app.post('/get-email', async (req, res) => {
 	const voteId = req.body.voteId;
 	console.log(voteId)
 
-	connection.query('SELECT email FROM Agora.users WHERE person_id = ? AND vote_id = ?', [personId, voteId], async (err, results) => {
+	connection.query('SELECT email FROM agora.users WHERE person_id = ? AND vote_id = ?', [personId, voteId], async (err, results) => {
 		if (err) {
 			res.status(500).send('Error fetching email from database');
 			console.log('Error 500')
@@ -205,7 +205,7 @@ app.post('/verify-2fa', async (req, res) => {
 });
 
 app.post('/fetch-candidates', (req, res) => {
-	connection.query('SELECT candidate, party FROM Agora.ballot', (err, results) => {
+	connection.query('SELECT candidate, party FROM agora.ballot', (err, results) => {
 		if (err) throw err;
 		else {
 			console.log(results);
@@ -299,7 +299,7 @@ app.post('/mark-ballot-as-faulty', (req, res) => {
 	const enc_ballot = req.body.ballot;
 	const enc_voter = req.body.voter;
 	const pubKeyECDH = req.body.pubKeyECDH;
-	const query = 'DELETE FROM Agora.ballotbox WHERE enc_ballot = ?';
+	const query = 'DELETE FROM agora.ballotbox WHERE enc_ballot = ?';
 	connection.query(query, [enc_ballot, enc_voter, pubKeyECDH], (err, results) => { //TODO this query needs extra security.
 		if (err) {
 			console.error(err);
