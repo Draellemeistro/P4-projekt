@@ -475,10 +475,10 @@ app.post('/decrypt-ECDH-message-Test', async (req, res) => {
 	const encryptedMessage = req.body.encryptedMessage;
 	const clientPublicKey = req.body.clientPublicKey;
 	const IvValueFromClient = req.body.IvValue;
-	console.log('IvValue type:', typeof IvValueFromClient);								//IvValue type: object
-	console.log('clientPublicKey type:', typeof clientPublicKey);		//clientPublicKey type: string
-	console.log('encryptedMessage type:', typeof encryptedMessage);		//encryptedMessage type: string
-	console.log('plainTextMessage type:', typeof plainTextMessage);		//plainTextMessage type: string
+					//IvValue type: object
+		//clientPublicKey type: string
+			//encryptedMessage type: string
+			//plainTextMessage type: string
 	let responseValue;
 	let decryptedMessage;
 	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientPublicKey);
@@ -548,21 +548,12 @@ app.post(/rsa-to-ecdh-test/, async (req, res) => {
 	const clientPubKey = req.body.clientKeyPub;
 	const ivValue = req.body.ivValue;
 
-
-
-	console.log(typeof plainTextMessage);
-	console.log(typeof midwayMessage);
-	console.log(typeof encryptedMessage);
-	console.log(typeof clientPubKey);
-	console.log(typeof ivValue);
-	console.log('\n\n\n');
 	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientPubKey);
 	let decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encryptedMessage, ivValue, sharedSecret);
 	if (decryptedMessage === midwayMessage) {
 		console.log('ECDH upper layer works!');
 	}
 	let decryptedMidWayMsg = serverRSACrypto.decryptWithPrivRSA(decryptedMessage, pemFormatServerPrivateRSAKey);
-	console.log('decryptedMidWayMsg:', decryptedMidWayMsg);
 	if (decryptedMidWayMsg === plainTextMessage) {
 		console.log('RSA to ECDH works!');
 	}
