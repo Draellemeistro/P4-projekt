@@ -43,7 +43,7 @@ const combo = {
 		console.log('clientKeyPub..:', clientKeyPub);
 		console.log('clientKeyPub type..:', typeof clientKeyPub);
 		try {
-			clientKeyPub = JSON.stringify(await window.crypto.subtle.exportKey('jwk', clientKeyPub));
+			clientKeyPub = JSON.stringify(clientKeyPub);
 		} catch (error) {
 			console.error('Error exporting key:', error);
 			clientKeyPub = JSON.stringify(clientKeyPub);
