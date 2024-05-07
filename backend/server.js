@@ -562,11 +562,12 @@ app.post(/rsa-to-ecdh-test/, async (req, res) => {
 
 app.post('/ecdh-to-rsa-test', async (req, res) => {
 	console.log('Accessed /ecdh-to-rsa-test endpoint');
-	const encryptedMessage = req.body.encrypted;
-	const plainTextMessage = req.body.message;
-	const midwayMessage = req.body.midway;
-	const clientPubKey = req.body.clientPubKey;
+	const plainTextMessage = req.body.plaintext;
+	const midwayMessage = req.body.midWayEncrypted;
+	const encryptedMessage = req.body.OutgoingEncrypted;
+	const clientPubKey = req.body.clientKeyPub;
 	const ivValue = req.body.ivValue;
+	console.log('clientPubKey type..:', typeof clientPubKey);
 	console.log(typeof clientPubKey);
 	const decryptedMessage = serverRSACrypto.decryptWithPrivRSA(encryptedMessage, pemFormatServerPrivateRSAKey);
 	if (midwayMessage === decryptedMessage) {
