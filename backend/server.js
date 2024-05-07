@@ -544,6 +544,11 @@ app.post(/rsa-to-ecdh-test/, async (req, res) => {
 	const midwayMessage = req.body.midway;
 	const clientPubKey = req.body.clientPubKey;
 	const ivValue = req.body.ivValue;
+	console.log(typeof clientPubKey);
+	console.log('Client public key:', clientPubKey);
+	console.log('IvValue:', ivValue);
+	console.log(typeof ivValue);
+	console.log('\n\n\n')
 	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientPubKey);
 	let decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encryptedMessage, ivValue, sharedSecret);
 	if (decryptedMessage === midwayMessage) {
