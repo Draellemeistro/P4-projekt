@@ -4,7 +4,7 @@ import { sendBallotToServerRSAtoECDH } from '../../utils/apiService.js';
 //import RSACrypto from '../../utils/encryptionRSA.js';
 import combo from '../cryptoTests/combinedEncryption.js';
 
-function getCandidatesFromServer() {
+export function getCandidatesFromServer() {
 	return fetch('/fetch-candidates')
 		.then(response => {
 			if (!response.ok) {
@@ -22,7 +22,7 @@ function getCandidatesFromServer() {
 		});
 }
 
-async function encryptBallot(ballot) {
+export async function encryptBallot(ballot) {
 	let clientKeyPub;
 	let encryptedMessage;
 	let outGoingMessage;
@@ -41,7 +41,7 @@ async function encryptBallot(ballot) {
 }
 
 // eslint-disable-next-line no-unused-vars
-async function sendEncryptedBallotToServer(ballot) {
+export async function sendEncryptedBallotToServer(ballot) {
 	let encryptedBallot = await encryptBallot(ballot);
 	// eslint-disable-next-line no-unused-vars
 	const response = sendBallotToServerRSAtoECDH(encryptedBallot);
