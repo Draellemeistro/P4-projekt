@@ -23,7 +23,7 @@
 	let outMsgECDH = '';
 	let responseRSAECDH = '';
 	let responseECDHRSA = '';
-	const plainText = 'Hello World';
+	const plainText = 'Candidate: Meg Griffin (V)';
 	let innerDecryptCheckRSA = '';
 	let innerDecryptCheckECDH = '';
 
