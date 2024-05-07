@@ -586,7 +586,7 @@ app.post('/ecdh-to-rsa-test', async (req, res) => {
 	console.log(values); // Output: ['John', 30, 'New York'
 let toDecrypt = nextStep.encryptedMessage;
 let newIv = JSON.stringify(nextStep.ivValue);
-
+console.log('newIv type:', typeof newIv, newIv);
 	if (newIv !== undefined && newIv !== null) {
 		let entries = Object.entries(newIv);
 		console.log(entries);
