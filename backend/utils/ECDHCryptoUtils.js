@@ -153,6 +153,10 @@ const serverECDHCrypto = {
 			let clientPublicKeyJWK
 			let JWKserverPrivECDH
 			// Parse the keys from JSON strings back into objects
+			console.log('serverPrivateKeyString:', serverPrivateKeyString);
+			console.log('clientPublicKeyString:', clientPublicKeyString);
+			console.log('typeof serverPrivateKeyString:', typeof serverPrivateKeyString);
+			console.log('typeof clientPublicKeyString:', typeof clientPublicKeyString);
 			if (typeof serverPrivateKeyString === 'string') {
 				clientPublicKeyJWK = JSON.parse(clientPublicKeyString);
 			}
