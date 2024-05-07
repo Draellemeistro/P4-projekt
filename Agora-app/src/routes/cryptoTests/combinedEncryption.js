@@ -69,6 +69,10 @@ const combo = {
 		outGoingMessage = ECDHpart.encryptedMessage;
 		console.log('RSAtoECDH outGoingMessage..:', outGoingMessage);
 		console.log('outGoingMessage type..:', typeof outGoingMessage);
+		console.log('RSAtoECDH ivValue..type:',typeof ivValue);
+		console.log('RSAtoECDH clientKeyPub..type:',typeof clientKeyPub);
+		console.log('RSAtoECDH message..type:',typeof message);
+		console.log('RSAtoECDH message..:',typeof encryptedMessage);
 		console.log('okidoki part lets goooooo');
 		let okidoki = await RSAtoECDHTest(message, encryptedMessage, outGoingMessage, ivValue, clientKeyPub);
 		console.log('RSAtoECDH okidoki..:', okidoki);
