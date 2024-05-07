@@ -13,9 +13,6 @@ const combo = {
 		console.log('RSApart encryptedMessage..:', encryptedMessage);
 		console.log('encryptedMessage type..:', typeof encryptedMessage);
 		console.log('RSApart midwayCheck..:', midwayCheck);
-		if (typeof encryptedMessage !== 'string') {
-			encryptedMessage = JSON.stringify(encryptedMessage);
-		}
 		return encryptedMessage;
 	},
 
