@@ -43,12 +43,15 @@
             tempParties[party].push(name);
         });
         console.log('Parties:', tempParties);
-        for (let key in parties) {
-            let candKey = parties[key];
-            console.log(`Party: ${key}`);
-            for (let i = 0; i < candidates.length; i++) {
-                console.log(`Candidate: ${candKey[i]} (${key})`);
-            }
+
+        Object.keys(tempParties).forEach(party => {
+            let tempCandidates = tempParties[party];
+            console.log(`Party: ${party}`);
+            tempCandidates.forEach(tempCandidates => {
+                console.log(`Candidate: ${tempCandidates} (${party})`);
+            });
+        });
+
         return tempParties;
     }
 
