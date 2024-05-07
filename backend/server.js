@@ -475,10 +475,10 @@ app.post('/decrypt-ECDH-message-Test', async (req, res) => {
 	const encryptedMessage = req.body.encryptedMessage;
 	const clientPublicKey = req.body.clientPublicKey;
 	const IvValueFromClient = req.body.IvValue;
-	console.log('IvValue type:', typeof IvValueFromClient);
-	console.log('clientPublicKey type:', typeof clientPublicKey);
-	console.log('encryptedMessage type:', typeof encryptedMessage);
-	console.log('plainTextMessage type:', typeof plainTextMessage);
+	console.log('IvValue type:', typeof IvValueFromClient);								//IvValue type: object
+	console.log('clientPublicKey type:', typeof clientPublicKey);		//clientPublicKey type: string
+	console.log('encryptedMessage type:', typeof encryptedMessage);		//encryptedMessage type: string
+	console.log('plainTextMessage type:', typeof plainTextMessage);		//plainTextMessage type: string
 	let responseValue;
 	let decryptedMessage;
 	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientPublicKey);
@@ -542,15 +542,18 @@ app.post('/combined-encryption-test', async (req, res) => {
 
 app.post(/rsa-to-ecdh-test/, async (req, res) => {
 	console.log('Accessed /rsa-to-ecdh-test endpoint');
-	const encryptedMessage = req.body.OutgoingEncrypted;
 	const plainTextMessage = req.body.plaintext;
 	const midwayMessage = req.body.midWayEncrypted;
+	const encryptedMessage = req.body.OutgoingEncrypted;
 	const clientPubKey = req.body.clientKeyPub;
 	const ivValue = req.body.ivValue;
 
+
+
+	console.log(typeof plainTextMessage);
+	console.log(typeof midwayMessage);
+	console.log(typeof encryptedMessage);
 	console.log(typeof clientPubKey);
-	console.log('Client public key:', clientPubKey);
-	console.log('IvValue:', ivValue);
 	console.log(typeof ivValue);
 	console.log('\n\n\n')
 	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientPubKey);
