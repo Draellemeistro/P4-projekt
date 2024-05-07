@@ -110,7 +110,6 @@ const serverECDHCrypto = {
 		for (let i = 0; i < binaryString.length; i++) {
 			arrayBuffer[i] = binaryString.charCodeAt(i);
 		}
-		console.log('arrayBuffer:', arrayBuffer);
 		return arrayBuffer;
 	},
 	decryptArrBuffECDH: async function decryptArrBuffWithSecretECDHKey(encryptedMessage, IvValue, sharedSecretKeyString) {
@@ -125,9 +124,6 @@ const serverECDHCrypto = {
 			sharedSecretKey,
 			messageBuffer
 		);
-		console.log('decrypted.toString:', decrypted.toString());
-		console.log('decrypted:', decrypted);
-		console.log('decrypted type:', typeof decrypted, '\n\ndecryptedString type:', typeof decrypted.toString());
 
 		return Buffer.from(this.convertArrBuffToBase64(decrypted),  'base64').toString();
 	},
@@ -136,7 +132,6 @@ const serverECDHCrypto = {
 		return Buffer.from(uint8Array).toString('base64');
 	},
 	handleEncryptedMessage: async function handleEncryptedMessage(encryptedMessage, IvValue, sharedSecretKey) {
-		console.log('encryptedMessage:', encryptedMessage);
 
 		const encryptedMsgArrBuff = this.convertBase64ToArrBuffer(encryptedMessage);
 
@@ -153,9 +148,6 @@ const serverECDHCrypto = {
 			let clientPublicKeyJWK
 			let JWKserverPrivECDH
 			// Parse the keys from JSON strings back into objects
-			console.log('clientPublicKeyString:', clientPublicKeyString);
-			console.log('typeof clientPublicKeyString:', typeof clientPublicKeyString);
-			console.log('serverPrivateKeyString stringify :', clientPublicKeyString);
 			if (typeof serverPrivateKeyString === 'string') {
 				clientPublicKeyJWK = JSON.parse(clientPublicKeyString);
 			}
@@ -177,7 +169,6 @@ const serverECDHCrypto = {
 			const clientPublicKeyECDH = await crypto.subtle.importKey('jwk', clientPublicKeyJWK, { name: 'ECDH', namedCurve: 'P-521' }, true, []);
 			try {
 				console.log('attempting to derive key: 1');
-
 				serverSharedSecret = await crypto.subtle.deriveKey(
 					{
 						name: "ECDH",
@@ -210,12 +201,10 @@ const serverECDHCrypto = {
 						[],
 					);
 				} catch (error) {
-					console.error('2: third attempt failed:', error);
+					console.error('2: second attempt failed:', error);
 				}
-				console.error('1: second attempt failed:', error);
+				console.error('1: first attempt failed:', error);
 			}
-
-			console.log('Server shared secret:', serverSharedSecret);
 			const exportedServerSharedSecret = await crypto.subtle.exportKey('jwk', serverSharedSecret);
 			return JSON.stringify(exportedServerSharedSecret);
 		},

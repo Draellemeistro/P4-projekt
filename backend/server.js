@@ -376,9 +376,9 @@ app.post('/insert-ballot-double-enc', async (req, res) => {
 	}
 	try {
 		console.log('Original message:', req.body);
-		Object.keys(decryptedMessage).forEach(key => {
-			console.log(key, decryptedMessage[key], typeof decryptedMessage[key]);
-		});
+		console.log('Decrypted message:', decryptedMessage);
+		//Object.keys(decryptedMessage).forEach(key => {
+		//});
 	} catch (error) {
 		console.error('Error:', error);
 	}
