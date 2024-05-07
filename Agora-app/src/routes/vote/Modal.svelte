@@ -16,6 +16,7 @@
     function voteHandler(){
         dialog.close()
         console.log(typeof selectedOptionModal);
+        console.log(selectedOptionModal);
         sendEncryptedBallotToServer(selectedOptionModal);
     }
 </script>
