@@ -586,7 +586,7 @@ app.post('/ecdh-to-rsa-test', async (req, res) => {
 	console.log(values); // Output: ['John', 30, 'New York'
 let toDecrypt = nextStep.encryptedMessage;
 console.log('newIv type:', typeof nextStep.ivValue, nextStep.ivValue);
-	if (nextStep.ivValue !== undefined && nextStep.ivValue !== null) {
+	if (nextStep.ivValue !== undefined && nextStep.ivValue !== null) { // TODO see how ivValue is sent, and how it is received
 		let entries = Object.entries(nextStep.ivValue);
 		console.log(entries);
 	} else {
