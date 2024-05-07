@@ -72,12 +72,12 @@ export const RSAtoECDHTest = (msgForServer) => {
 		body: msgForServer
 	});
 }
-export const ECDHtoRSATest = (message, midway, encrypted, clientPubKey = null, ivValue = null) => {
+export const ECDHtoRSATest = (msgForServer) => {
 	return fetch(`https://${serverIP}:${serverPort}/ecdh-to-rsa-test`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({ message: message, midway: midway, encrypted: encrypted, clientPubKey: clientPubKey, ivValue: ivValue })
+		body: msgForServer
 	});
 }

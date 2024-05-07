@@ -88,10 +88,17 @@ const combo = {
 
 
 	ECDHtoRSA: async function ECDHtoRSA(message) {
-		let encryptedMessage = JSON.stringify(await this.ECDHpart(message));
+		let ECDHpart = await this.ECDHpart(message);
+		let ECDHmessage = ECDHpart.encryptedMessage;
+		let clientKeyPub = ECDHpart.clientPublicKey;
+		let ivValue = ECDHpart.ivValue;
+		let clientKeyPubString = await ECDHCrypto.exportKeyString(clientKeyPub);
+		let encryptedMessage = await this.prepareECDHBallot(ECDHmessage, clientKeyPubString, ivValue);
 		let serverPubKeyRSA = await RSACrypto.request();
 		let outGoingMessage = await RSACrypto.encrypt(encryptedMessage, serverPubKeyRSA);
-		let okidoki = await ECDHtoRSATest(message, encryptedMessage, outGoingMessage, null, null);
+		const msgForServer = await this.prepareFinalBallot(message, ECDHmessage, outGoingMessage,null, null);
+
+		let okidoki = await ECDHtoRSATest(msgForServer);
 		console.log('ECDHtoRSA okidoki..:', okidoki);
 		return okidoki;
 	}
