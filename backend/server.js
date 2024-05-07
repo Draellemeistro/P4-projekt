@@ -539,11 +539,12 @@ app.post('/combined-encryption-test', async (req, res) => {
 
 app.post(/rsa-to-ecdh-test/, async (req, res) => {
 	console.log('Accessed /rsa-to-ecdh-test endpoint');
-	const encryptedMessage = req.body.encrypted;
-	const plainTextMessage = req.body.message;
-	const midwayMessage = req.body.midway;
-	const clientPubKey = req.body.clientPubKey;
+	const encryptedMessage = req.body.OutgoingEncrypted;
+	const plainTextMessage = req.body.plaintext;
+	const midwayMessage = req.body.midWayEncrypted;
+	const clientPubKey = req.body.clientKeyPub;
 	const ivValue = req.body.ivValue;
+
 	console.log(typeof clientPubKey);
 	console.log('Client public key:', clientPubKey);
 	console.log('IvValue:', ivValue);
