@@ -42,7 +42,7 @@
 
             tempParties[party].push(name);
         });
-        console.log('Parties:', tempParties);
+        ///console.log('Parties:', tempParties);
 
         Object.keys(tempParties).forEach(party => {
             let tempCandidates = tempParties[party];
