@@ -5,7 +5,7 @@ import { combinedEncryptionTest, ECDHtoRSATest, RSAtoECDHTest } from '../../util
 import { SendEncryptedMsgTest } from './testingECDH/pageECDH.js';
 
 
-	async function RSAtoECDH(message) {
+	export async function RSAtoECDH(message) {
 		let clientKeyPub;
 		let clientKeyPriv;
 		let serverKeyPub
@@ -49,7 +49,7 @@ import { SendEncryptedMsgTest } from './testingECDH/pageECDH.js';
 	}
 
 
-	async function ECDHtoRSA(message) {
+	export async function ECDHtoRSA(message) {
 		let clientKeyPub;
 		let clientKeyPriv;
 		let serverKeyPub
