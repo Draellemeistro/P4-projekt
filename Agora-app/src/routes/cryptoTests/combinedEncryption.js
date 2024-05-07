@@ -39,10 +39,11 @@ const combo = {
 		console.log('ECDHtoRSA encryptedMessage..:', encryptedMessage);
 		console.log('encryptedMessage type..:', typeof encryptedMessage);
 		ivValue = encryptionInfo.ivValue;
+		console.log('ivValue type of just after reading..:', ivValue);
 		console.log('attempting to export key.')
 		midwayCheck = await SendEncryptedMsgTest(message, encryptedMessage, clientKeyPub, ivValue);
 		console.log('ECDHtoRSA midwayCheck..:', midwayCheck);
-		clientKeyPub = await ECDHCrypto.exportKeyString(BothKeys.pubKey);
+		clientKeyPub = JSON.stringify(await ECDHCrypto.exportKeyString(clientKeyPub));
 		return {encryptedMessage, ivValue, clientKeyPub};
 	},
 
