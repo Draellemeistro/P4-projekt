@@ -80,7 +80,7 @@ const combo = {
 		console.log('here we go\n\n\n')
 
 		outGoingMessage = ECDHpart.encryptedMessage;
-		clientKeyPub = ECDHpart.clientKeyPub;
+		clientKeyPub = ECDHpart.clientPublicKey;
 		ivValue = ECDHpart.ivValue;
 		console.log('exporting key..', clientKeyPub);
 		let clientKeyPubString = await ECDHCrypto.exportKeyString(clientKeyPub);
