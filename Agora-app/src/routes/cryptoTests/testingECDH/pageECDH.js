@@ -25,10 +25,10 @@ export async function verifyTestSharedSecret(sharedSecret, clientPubKey) {
 export async function SendEncryptedMsgTest(plainTextMessage, encryptedMessage, clientPubKey, ivValue) {
 	//TODO: remove/move this function
 	let pubKeyString = await ECDHCrypto.exportKeyString(clientPubKey);
-	console.log('clientPubKey type..:', typeof clientPubKey);
+	console.log('clientPubKey type..:', typeof encryptedMessage);
 	console.log('clientPubKey..:',typeof clientPubKey);
-	console.log('clientPubKeyString..:', typeof ivValue);
-	console.log('ivval..:', typeof pubKeyString);
+	console.log('clientPubKeyString..:', typeof pubKeyString);
+	console.log('ivval..:', typeof ivValue);
 	let msgForServer = JSON.stringify({
 		plainTextMessage: plainTextMessage,
 		encryptedMessage: encryptedMessage,
