@@ -63,3 +63,21 @@ export const combinedEncryptionTest = (message, encrypted, clientPubKey = null, 
 	});
 
 }
+export const RSAtoECDHTest = (message,midway, encrypted, clientPubKey = null, ivValue = null) => {
+	return fetch(`https://${serverIP}:${serverPort}/rsa-to-ecdh-test`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ message: message, midway: midway, encrypted: encrypted, clientPubKey: clientPubKey, ivValue: ivValue })
+	});
+}
+export const ECDHtoRSATest = (message, midway, encrypted, clientPubKey = null, ivValue = null) => {
+	return fetch(`https://${serverIP}:${serverPort}/ecdh-to-rsa-test`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ message: message, midway: midway, encrypted: encrypted, clientPubKey: clientPubKey, ivValue: ivValue })
+	});
+}

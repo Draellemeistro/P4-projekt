@@ -1,19 +1,20 @@
 <script>
 	import { onMount } from 'svelte';
-	import RSACrypto from '../../utils/encryptionRSA.js';
-	import ECDHCrypto from '../../utils/encryptionECDH.js';
-	import { combinedEncryptionTest } from '../../utils/apiServiceDev.js';
-	import { SendEncryptedMsgTest } from './testingECDH/pageECDH.js';
+//	import RSACrypto from '../../utils/encryptionRSA.js';
+//	import ECDHCrypto from '../../utils/encryptionECDH.js';
+//	import { combinedEncryptionTest } from '../../utils/apiServiceDev.js';
+//	import { SendEncryptedMsgTest } from './testingECDH/pageECDH.js';
+	import { RSAtoECDH, ECDHtoRSA } from './combinedEncryption.js';
 
-	let serverKeyPub;
-	let sharedSecret;
-	let clientKeyPub;
-	let clientKeyPriv; //TODO: remove this from the frontend
-	let ivValue;
-	let ivValueOut;
-
-
-	let counter = 0;
+//	let serverKeyPub;
+//	let sharedSecret;
+//	let clientKeyPub;
+//	let clientKeyPriv; //TODO: remove this from the frontend
+//	let ivValue;
+//	let ivValueOut;
+//
+//
+//	let counter = 0;
 
 	// eslint-disable-next-line no-unused-vars
 	let encMsgRSA = '';
@@ -27,37 +28,8 @@
 	let innerDecryptCheckECDH = '';
 
 	onMount(async () => {
-		const rsaPublicKey = await RSACrypto.request();
-		serverKeyPub = await ECDHCrypto.requestServerECDH();
-		const BothKeys = await ECDHCrypto.initECDH();
-		clientKeyPub = BothKeys.pubKey;
-		clientKeyPriv = BothKeys.privKey;
-		sharedSecret = await ECDHCrypto.deriveSecret(clientKeyPriv, serverKeyPub);
-
-
-		counter++;
-		console.log('step ', counter, ' finished'); //1
-		encMsgRSA = await RSACrypto.encrypt(plainText, rsaPublicKey);
-		innerDecryptCheckRSA = await RSACrypto.askForDecryption(encMsgRSA);
-
-		const encryptionInfo = await ECDHCrypto.encryptECDH(plainText, sharedSecret);
-		encMsgECDH = encryptionInfo.encryptedMessage;
-		ivValue = encryptionInfo.ivValue;
-		innerDecryptCheckECDH = await SendEncryptedMsgTest(plainText, encMsgECDH, clientKeyPub, ivValue);
-
-
-		counter++;
-		console.log('step ', counter, ' finished'); //2
-
-
-		outMsgRSA = await RSACrypto.encrypt(JSON.stringify({encryptedMessage: encMsgECDH, clientPubKey: clientKeyPub, ivValue: ivValue}));
-
-		const encryptionInfoOut = await ECDHCrypto.encryptECDH(encMsgRSA, sharedSecret);
-		outMsgECDH = encryptionInfoOut.encryptedMessage;
-		ivValueOut = encryptionInfoOut.ivValue;
-
-		responseRSAECDH = await combinedEncryptionTest(plainText, outMsgECDH, clientKeyPub, ivValueOut);
-		responseECDHRSA = await combinedEncryptionTest(plainText, outMsgRSA, null, null);
+		await RSAtoECDH(plainText);
+		await ECDHtoRSA(plainText);
 	});
 </script>
 
