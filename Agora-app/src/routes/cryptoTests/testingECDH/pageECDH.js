@@ -30,10 +30,10 @@ export async function SendEncryptedMsgTest(plainTextMessage, encryptedMessage, c
 	console.log('clientPubKeyString..:', typeof pubKeyString);
 	console.log('ivval..:', typeof ivValue);
 	let msgForServer = JSON.stringify({
-		plainTextMessage: plainTextMessage,
-		encryptedMessage: encryptedMessage,
-		clientPublicKey: pubKeyString,
-		IvValue: ivValue
+		plainTextMessage: plainTextMessage, //string
+		encryptedMessage: encryptedMessage, //object
+		clientPublicKey: pubKeyString, //string
+		IvValue: ivValue //object
 	});
 	const response = await messageDecryptTestECDH(msgForServer);
 	if (response.ok) {

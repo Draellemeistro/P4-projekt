@@ -42,11 +42,25 @@ const combo = {
 		console.log('attempting to export key.')
 		midwayCheck = await SendEncryptedMsgTest(message, encryptedMessage, clientKeyPub, ivValue);
 		console.log('ECDHtoRSA midwayCheck..:', midwayCheck);
-		if (typeof encryptedMessage !== 'string') {
-			encryptedMessage = JSON.stringify(encryptedMessage);
-		}
 		clientKeyPub = await ECDHCrypto.exportKeyString(BothKeys.pubKey);
 		return {encryptedMessage, ivValue, clientKeyPub};
+	},
+
+	prepareECDHBallot: async function prepareECDHBallot(encryptedMessage, clientPubKey, ivValue) {
+		return JSON.stringify({
+			encryptedMessage: encryptedMessage, //object
+			clientPublicKey: clientPubKey, //string
+			IvValue: ivValue //object
+		});
+	},
+	prepareFinalBallot: async function prepareExtraInfo(plaintext, midWayEncrypted, OutgoingEncrypted, ivValue, clientKeyPub) {
+		return JSON.stringify({
+			plaintext: plaintext, //string
+			midWayEncrypted: midWayEncrypted, //string (RSA) / object (ECDH)
+			OutgoingEncrypted: OutgoingEncrypted, //string (RSA) / object (ECDH)
+			clientKeyPub: clientKeyPub, //string
+			ivValue: ivValue, //object
+		});
 	},
 
 	RSAtoECDH: async function RSAtoECDH(message) {
@@ -55,11 +69,6 @@ const combo = {
 		let outGoingMessage;
 		let ivValue;
 
-
-
-
-
-
 		encryptedMessage = await this.RSApart(message);
 		let ECDHpart = await this.ECDHpart(encryptedMessage);
 		console.log('ECDHtoRSA ECDHpart..:', ECDHpart);
@@ -67,14 +76,10 @@ const combo = {
 		ivValue = ECDHpart.ivValue;
 		clientKeyPub = ECDHpart.clientKeyPub;
 		outGoingMessage = ECDHpart.encryptedMessage;
-		console.log('RSAtoECDH outGoingMessage..:', outGoingMessage);
-		console.log('outGoingMessage type..:', typeof outGoingMessage);
-		console.log('RSAtoECDH ivValue..type:',typeof ivValue);
-		console.log('RSAtoECDH clientKeyPub..type:',typeof clientKeyPub);
-		console.log('RSAtoECDH message..type:',typeof message);
-		console.log('RSAtoECDH message..:',typeof encryptedMessage);
+
 		console.log('okidoki part lets goooooo');
-		let okidoki = await RSAtoECDHTest(message, encryptedMessage, outGoingMessage, ivValue, clientKeyPub);
+		const msgForServer = await this.prepareFinalBallot(message, encryptedMessage, outGoingMessage, ivValue, clientKeyPub);
+		let okidoki = await RSAtoECDHTest(msgForServer);
 		console.log('RSAtoECDH okidoki..:', okidoki);
 		return okidoki;
 	},
