@@ -150,10 +150,15 @@ const serverECDHCrypto = {
 		async function deriveSharedSecret(serverPrivateKeyString, clientPublicKeyString) {
 			let responseValue;
 			let serverSharedSecret;
-
+			let clientPublicKeyJWK
+			let JWKserverPrivECDH
 			// Parse the keys from JSON strings back into objects
-			let clientPublicKeyJWK = JSON.parse(clientPublicKeyString);
-			let JWKserverPrivECDH = JSON.parse(serverPrivateKeyString);
+			if (typeof serverPrivateKeyString === 'string') {
+				clientPublicKeyJWK = JSON.parse(clientPublicKeyString);
+			}
+			if (typeof serverPrivateKeyString === 'string') {
+				JWKserverPrivECDH = JSON.parse(serverPrivateKeyString);
+			}
 
 			const jwkServer = {
 				ext: true,
