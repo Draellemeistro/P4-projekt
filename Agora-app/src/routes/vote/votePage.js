@@ -28,12 +28,11 @@ export async function encryptBallot(ballot) {
 	let encryptedMessage;
 	let outGoingMessage;
 	let ivValue;
-	let message = ballot;
-	if (typeof message !== 'string') {
-		message = JSON.stringify(ballot);
+	if (typeof ballot !== 'string') {
+		ballot = JSON.stringify(ballot);
 	}
-	console.log('before RSApart');
-	encryptedMessage = await this.RSApart(message);
+	console.log('before RSApart:\n', ballot, '\n\ntype:', typeof ballot,);
+	encryptedMessage = await this.RSApart(ballot);
 	console.log('before ECDHpart');
 	let ECDHpart = await this.ECDHpart(encryptedMessage);
 	outGoingMessage = ECDHpart.encryptedMessage;
