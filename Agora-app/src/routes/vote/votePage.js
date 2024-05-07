@@ -47,4 +47,3 @@ export async function sendEncryptedBallotToServer(ballot) {
 	const response = sendBallotToServerRSAtoECDH(encryptedBallot);
 	}
 
-module.exports = { getCandidatesFromServer, sendEncryptedBallotToServer, encryptBallot };
