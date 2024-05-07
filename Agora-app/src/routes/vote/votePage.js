@@ -28,8 +28,8 @@ export async function encryptBallot(ballot) {
 	let encryptedMessage;
 	let outGoingMessage;
 	let ivValue;
-	let message;
-	if (typeof ballot !== 'string') {
+	let message = ballot;
+	if (typeof message !== 'string') {
 		message = JSON.stringify(ballot);
 	}
 	console.log('before RSApart');
