@@ -357,9 +357,7 @@ app.post('/insert-ballot-double-enc', async (req, res) => {
 		ivValueString = JSON.stringify(ivValue);
 		stringifyUsed = true;
 	}
-	if (stringifyUsed === true) {
-		console.log('double encrypted ballot had to be stringified. Could lead to errors.')
-	}
+
 	/// TODO: do we want this? ballot should be storable even before first round of decryption. Could save them for later use?
 	// const query = 'INSERT INTO Agora.ballotbox (ballotbox.encr_ballot, ecdh_pub_key, iv_value) VALUES (?, ?, ?)';
 	// connection.query(query, [encBallotString, clientKeyPubString, ivValueString], (err, results) => {
