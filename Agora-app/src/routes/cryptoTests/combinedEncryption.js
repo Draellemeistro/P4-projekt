@@ -53,7 +53,12 @@ const combo = {
 			IvValue: ivValue //object
 		});
 	},
-	prepareFinalBallot: async function prepareExtraInfo(plaintext, midWayEncrypted, OutgoingEncrypted, ivValue, clientKeyPub) {
+	prepareFinalBallot: async function prepareExtraInfo(plaintext, midWayEncrypted, OutgoingEncrypted, clientKeyPub, ivValue) {
+		console.log('prepareFinalBallot plaintext type..:', typeof plaintext);
+		console.log('prepareFinalBallot midWayEncrypted type..:', typeof midWayEncrypted);
+		console.log('prepareFinalBallot OutgoingEncrypted type..:', typeof OutgoingEncrypted);
+		console.log('prepareFinalBallot clientKeyPub type..:', typeof clientKeyPub);
+		console.log('prepareFinalBallot ivValue type..:', typeof ivValue);
 		return JSON.stringify({
 			plaintext: plaintext, //string
 			midWayEncrypted: midWayEncrypted, //string (RSA) / object (ECDH)
@@ -79,6 +84,11 @@ const combo = {
 
 		console.log('okidoki part lets goooooo');
 		const msgForServer = await this.prepareFinalBallot(message, encryptedMessage, outGoingMessage, ivValue, clientKeyPub);
+		console.log('post prepareFinalBallot plaintext type..:', typeof msgForServer.plaintext);
+		console.log('post prepareFinalBallot midWayEncrypted type..:', typeof msgForServer.midWayEncrypted);
+		console.log('post prepareFinalBallot OutgoingEncrypted type..:', typeof msgForServer.OutgoingEncrypted);
+		console.log('post prepareFinalBallot clientKeyPub type..:', typeof msgForServer.clientKeyPub);
+		console.log('post prepareFinalBallot ivValue type..:', typeof msgForServer.ivValue);
 		let okidoki = await RSAtoECDHTest(msgForServer);
 		console.log('RSAtoECDH okidoki..:', okidoki);
 		return okidoki;
