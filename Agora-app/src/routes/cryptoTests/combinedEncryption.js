@@ -42,8 +42,14 @@ const combo = {
 		console.log('attempting to export key.')
 		console.log('clientKeyPub..:', clientKeyPub);
 		console.log('clientKeyPub type..:', typeof clientKeyPub);
-		clientKeyPub = JSON.stringify(await window.crypto.subtle.exportKey('jwk', BothKeys.pubKey))
-		midwayCheck = await SendEncryptedMsgTest(message, encryptedMessage, clientKeyPub, ivValue);
+		try {
+			clientKeyPub = JSON.stringify(await window.crypto.subtle.exportKey('jwk', clientKeyPub));
+		} catch (error) {
+			console.error('Error exporting key:', error);
+			clientKeyPub = JSON.stringify(clientKeyPub);
+			console.log('clientKeyPub..:', clientKeyPub);
+		}
+			midwayCheck = await SendEncryptedMsgTest(message, encryptedMessage, clientKeyPub, ivValue);
 		console.log('ECDHtoRSA midwayCheck..:', midwayCheck);
 		if (typeof encryptedMessage !== 'string') {
 			encryptedMessage = JSON.stringify(encryptedMessage);
