@@ -568,9 +568,10 @@ app.post('/ecdh-to-rsa-test', async (req, res) => {
 	const clientPubKey = req.body.clientKeyPub;
 	const ivValue = req.body.ivValue;
 	const decryptedMessage = serverRSACrypto.decryptWithPrivRSA(encryptedMessage, pemFormatServerPrivateRSAKey);
-	if (midwayMessage === decryptedMessage) {
+	if (decryptedMessage.encryptedMessage === decryptedMessage) {
 		console.log('RSA upper layer works!');
 	}
 	console.log('decrypted:', decryptedMessage);
 	let nextStep = JSON.parse(decryptedMessage);
+
 });
