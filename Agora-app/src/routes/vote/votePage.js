@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import ECDHCrypto from '../../utils/encryptionECDH.js';
-import { sendBallotToServer, sendBallotToServerRSAtoECDH } from '../../utils/apiService.js';
+import { sendBallotToServerRSAtoECDH } from '../../utils/apiService.js';
 //import RSACrypto from '../../utils/encryptionRSA.js';
 import combo from '../cryptoTests/combinedEncryption.js';
 
@@ -47,4 +47,4 @@ async function sendEncryptedBallotToServer(ballot) {
 	const response = sendBallotToServerRSAtoECDH(encryptedBallot);
 	}
 
-module.exports = { getCandidatesFromServer, sendBallotToServer };
+module.exports = { getCandidatesFromServer, sendEncryptedBallotToServer, encryptBallot };
