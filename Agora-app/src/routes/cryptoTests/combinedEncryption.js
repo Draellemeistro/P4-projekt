@@ -4,8 +4,8 @@ import ECDHCrypto from '../../utils/encryptionECDH.js';
 import { combinedEncryptionTest, ECDHtoRSATest, RSAtoECDHTest } from '../../utils/apiServiceDev.js';
 import { SendEncryptedMsgTest } from './testingECDH/pageECDH.js';
 
-
-	export async function RSAtoECDH(message) {
+const combo = {
+	RSAtoECDH: async function RSAtoECDH(message) {
 		let clientKeyPub;
 		let clientKeyPriv;
 		let serverKeyPub
@@ -46,10 +46,10 @@ import { SendEncryptedMsgTest } from './testingECDH/pageECDH.js';
 		// eslint-disable-next-line no-unused-vars
 		let okidoki = await RSAtoECDHTest(message, encryptedMessage, outGoingMessage, clientKeyPub, ivValue);
 		console.log('RSAtoECDH okidoki..:', okidoki);
-	}
+	},
 
 
-	export async function ECDHtoRSA(message) {
+	ECDHtoRSA: async function ECDHtoRSA(message) {
 		let clientKeyPub;
 		let clientKeyPriv;
 		let serverKeyPub
@@ -74,12 +74,12 @@ import { SendEncryptedMsgTest } from './testingECDH/pageECDH.js';
 		ivValue = encryptionInfo.ivValue;
 		midwayCheck = await SendEncryptedMsgTest(message, encryptedMessage, clientKeyPub, ivValue);
 		console.log('ECDHtoRSA midwayCheck..:', midwayCheck);
-		if(typeof encryptedMessage !== 'string'){
+		if (typeof encryptedMessage !== 'string') {
 			encryptedMessage = JSON.stringify(encryptedMessage);
 		}
 		outGoingMessage = await RSACrypto.encrypt(encryptedMessage, serverPubKeyRSA);
 		let okidoki = await ECDHtoRSATest(message, encryptedMessage, outGoingMessage, null, null);
 		console.log('ECDHtoRSA okidoki..:', okidoki);
 	}
-
-module.exports = {ECDHtoRSA, RSAtoECDH};
+}
+export default combo;

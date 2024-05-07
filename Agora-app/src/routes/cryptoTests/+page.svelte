@@ -1,10 +1,10 @@
 <script>
 	import { onMount } from 'svelte';
+	import combo from './combinedEncryption.js';
 //	import RSACrypto from '../../utils/encryptionRSA.js';
 //	import ECDHCrypto from '../../utils/encryptionECDH.js';
 //	import { combinedEncryptionTest } from '../../utils/apiServiceDev.js';
 //	import { SendEncryptedMsgTest } from './testingECDH/pageECDH.js';
-	import { RSAtoECDH, ECDHtoRSA } from './combinedEncryption.js';
 
 //	let serverKeyPub;
 //	let sharedSecret;
@@ -28,8 +28,8 @@
 	let innerDecryptCheckECDH = '';
 
 	onMount(async () => {
-		await RSAtoECDH(plainText);
-		await ECDHtoRSA(plainText);
+		await combo.RSAtoECDH(plainText);
+		await combo.ECDHtoRSA(plainText);
 	});
 </script>
 
