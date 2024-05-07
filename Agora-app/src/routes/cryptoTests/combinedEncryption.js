@@ -40,14 +40,12 @@ const combo = {
 		console.log('encryptedMessage type..:', typeof encryptedMessage);
 		ivValue = encryptionInfo.ivValue;
 		console.log('attempting to export key.')
-		console.log('clientKeyPub..:', clientKeyPub);
-		console.log('clientKeyPub type..:', typeof clientKeyPub);
-
 		midwayCheck = await SendEncryptedMsgTest(message, encryptedMessage, clientKeyPub, ivValue);
 		console.log('ECDHtoRSA midwayCheck..:', midwayCheck);
 		if (typeof encryptedMessage !== 'string') {
 			encryptedMessage = JSON.stringify(encryptedMessage);
 		}
+		clientKeyPub = await ECDHCrypto.exportKeyString(BothKeys.pubKey);
 		return {encryptedMessage, ivValue, clientKeyPub};
 	},
 
@@ -69,6 +67,9 @@ const combo = {
 		ivValue = ECDHpart.ivValue;
 		clientKeyPub = ECDHpart.clientKeyPub;
 		outGoingMessage = ECDHpart.encryptedMessage;
+		console.log('RSAtoECDH outGoingMessage..:', outGoingMessage);
+		console.log('outGoingMessage type..:', typeof outGoingMessage);
+		console.log('okidoki part lets goooooo');
 		let okidoki = await RSAtoECDHTest(message, encryptedMessage, outGoingMessage, ivValue, clientKeyPub);
 		console.log('RSAtoECDH okidoki..:', okidoki);
 		return okidoki;
