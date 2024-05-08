@@ -35,7 +35,7 @@ export async function encryptBallot(ballot) {
 	encryptedMessage = await combo.RSApart(ballot);
 	let innerMessage = await combo.prepareSubLayer(encryptedMessage, {testString: 'testString', testNumber: 12345});
 	console.log('before ECDHpart');
-	let ECDHpart = await combo.ECDHpart(innerMessage);
+	let ECDHpart = await combo.ECDHpart(innerMessage); // include timestamp or unique voter ID in the vote??? Against replay attacks.
 	outGoingMessage = ECDHpart.encryptedMessage;
 	clientKeyPub = ECDHpart.clientPublicKey;
 	ivValue = ECDHpart.ivValue;
