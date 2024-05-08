@@ -207,10 +207,5 @@ const ECDHCrypto ={
 		return btoa(String.fromCharCode.apply(null, uint8Array));
 	},
 
-
-//	agreeSharedSecret_NOTIMPLEMENTED: async function agreeSharedSecretKey() {
-//		//TODO: implement this function
-//		return console.log('shared secret key agreed... when this function is implemented');
-//	},
 };
 export default ECDHCrypto;
