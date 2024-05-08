@@ -141,8 +141,8 @@ const serverECDHCrypto = {
 		//
 		return await this.decryptArrBuffECDH(encryptedMsgArrBuff, IvValueArrBuff, sharedSecretKey);
 	},
-	deriveSharedSecret:
-		async function deriveSharedSecret(serverPrivateKeyString, clientPublicKeyString) {
+
+	deriveSharedSecret: async function deriveSharedSecret(serverPrivateKeyString, clientPublicKeyString) {
 			let responseValue;
 			let serverSharedSecret;
 			let clientPublicKeyJWK
