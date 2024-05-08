@@ -1,6 +1,6 @@
 <script>
     import { sendBallotToServer } from '../../utils/apiService.js';
-    import { cryptoUtils } from './utils/cryptoUtils.js';
+    import { cryptoUtils } from '../../utils/cryptoUtils.js';
     export let showModal; // boolean
     export let selectedOptionModal;
     let dialog; // HTMLDialogElement
@@ -8,7 +8,8 @@
     $: if (dialog && showModal) dialog.showModal();
     async function voteHandler() {
         dialog.close()
-        await sendBallotToServer(await cryptoUtils.encryptBallot(selectedOptionModal));
+        let msgForServer = await cryptoUtils.encryptBallot(selectedOptionModal)
+        await sendBallotToServer(msgForServer);
     }
 </script>
 

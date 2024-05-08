@@ -1,16 +1,15 @@
-import serverECDHCrypto from '../utils/cryptoFunctions/serverECDH.js';
+import serverECDH from '../utils/cryptoFunctions/serverECDH.js';
 import express from 'express';
 const router = express.Router();
 
 router.post('/', async (req, res) => {
 	let responseValue;
 	let clientPubECDHJWK = req.body.clientPublicKey;
-	let serverPrivECDHJWK = JSON.parse(stringJWKServerPrivECDH);
-	let serverSharedSecret;
-	let encryptedTestMessage;
-	let ivValue;
-	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(serverPrivECDHJWK, clientPubECDHJWK);
-	let decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encryptedTestMessage, ivValue, sharedSecret);
+
+	let encryptedTestMessage = req.body.encryptedMessage;
+	let ivValue = req.body.ivValue;
+	let serverSharedSecret = await serverECDH.deriveSharedSecret(clientPubECDHJWK);
+	let decryptedMessage = await serverECDH.handleEncryptedMessage(encryptedTestMessage, ivValue, serverSharedSecret);
 
 	if (decryptedMessage === JSON.stringify(clientPubECDHJWK)) {
 		responseValue = true;

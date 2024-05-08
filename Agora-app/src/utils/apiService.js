@@ -30,19 +30,35 @@ export const getCandidatesFromServer = () => {
 	});
 };
 
-export const sendBallotToServer = (ballot) => {
-	const clientPubKeyECDH = 'test';
-	return fetch(`http://${serverIP}:${serverPort}/insert-ballot`, {
+export const sendBallotToServer = (msgForServer) => {
+	msgForServer = JSON.parse(msgForServer);
+	msgForServer.clientKeyPub = 'test';
+	msgForServer.ivValue = 'test';
+	msgForServer = JSON.stringify(msgForServer);
+	return fetch(`http://${serverIP}:${serverPort}/insert-ballot-untouched`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({ clientPubKeyECDH, ballot })
+		body: msgForServer
 	});
 };
 
-export const generateSharedSecret = (serverPublicKeyBase64) => {
-	const client = crypto.createECDH('secp521r1');
-	const clientKeys = client.generateKeys();
-	return client.computeSecret(serverPublicKeyBase64, 'base64', 'hex');
-}
+export const agreeSharedSecret = (encryptedMessage, clientPublicKey, ivValue) => {
+	return fetch(`http://${serverIP}:${serverPort}/agree-shared-secret`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({encryptedMessage: encryptedMessage, clientPublicKey: clientPublicKey, ivValue: ivValue}),
+	});
+};
+export const sendBallotForHandling = async (msgForServer) => {
+	return await fetch(`https://${serverIP}:${serverPort}/insert-ballot-double-enc`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: msgForServer
+	});
+};

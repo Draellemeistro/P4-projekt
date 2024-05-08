@@ -28,15 +28,27 @@ function generateRSAKeyPair() {
 	fs.writeFileSync(__dirname + '/serverPrivateKeyRSA.pem', keyPair.privateKey);
 
 }
-function generateECDHKeyPair() {
-	const serverECDH = createECDH('secp521r1');
-	const serverKeyECDH = serverECDH.generateKeys();
-	const serverPublicKeyBase64 = serverECDH.getPublicKey().toString('base64');
-	const serverPrivateKeyBase64 = serverECDH.getPrivateKey().toString('base64');
-	// Write the PEM formatted key to a file
-	fs.writeFileSync(__dirname + '/serverPublicKeyECDH.pem', serverPublicKeyBase64);
-	fs.writeFileSync(__dirname + '/serverPrivateKeyECDH.pem', serverPrivateKeyBase64);
+async function initECDH(){
+		let keyStringObject;
+		const newServerKeyPairECDH = await crypto.subtle.generateKey(
+			{
+				name: "ECDH",
+				namedCurve: "P-521"
+			},
+			true,
+			["deriveKey", "deriveBits"]
+		);
+		const exportedPubKeyECDH = await crypto.subtle.exportKey('jwk', newServerKeyPairECDH.publicKey);
+		console.log('client public key as JWK: ', exportedPubKeyECDH);
+		const exportedPrivKeyECDH = await crypto.subtle.exportKey('jwk', newServerKeyPairECDH.privateKey);
+		// Convert the keys to strings
+		const publicKeyString = JSON.stringify(exportedPubKeyECDH);
+		const privateKeyString = JSON.stringify(exportedPrivKeyECDH);
+		fs.writeFileSync('serverPublicKeyECDH.json', publicKeyString);
+		fs.writeFileSync('serverPrivateKeyECDH.json', privateKeyString);
+		return {publicKeyString, privateKeyString};
 }
+
 // Generate the keypairs
 //generateRSAKeyPair();
 //generateECDHKeyPair();

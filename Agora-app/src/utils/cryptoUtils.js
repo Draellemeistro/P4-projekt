@@ -29,17 +29,17 @@ export const cryptoUtils = {
 
 	prepareSubLayer: async function(midWayEncrypted, otherInformation) { //add hashOfMidWayEncrypted??
 		if( otherInformation ===  undefined){
-			return JSON.stringify({midWayEncrypted: midWayEncrypted});
+			return JSON.stringify({encryptedSubLayer: midWayEncrypted});
 		} else {
 			return JSON.stringify({
-				midWayEncrypted: midWayEncrypted, //string (RSA) / object (ECDH)
+				encryptedSubLayer: midWayEncrypted, //string (RSA) / object (ECDH)
 				otherInformation: otherInformation, //object, strings whatever
 			});}
 	},
 
 	prepareBallotForServer: async function(OutgoingEncrypted, clientKeyPub, ivValue) {
 		return JSON.stringify({
-			encryptedSubLayer: OutgoingEncrypted, //string (RSA) / object (ECDH)
+			encryptedUpperLayer: OutgoingEncrypted, //string (RSA) / object (ECDH)
 			clientKeyPub: await this.ECDH.exportKeyString(), //string
 			ivValue: ivValue, //object
 		});

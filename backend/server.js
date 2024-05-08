@@ -2,14 +2,13 @@ import express from 'express';
 import getEmailRoute from './routes/get-email.js';
 import fetchCandidatesRoute from './routes/fetch-candidates.js';
 import verify2faRoute from './routes/verify-2fa.js';
-import insertBallotRoute from './routes/insert-ballot.js';
+import insertBallotRoute from './routes/insert-ballot-untouched.js';
 import handleEncryptedBallotRoute from './routes/handle-encrypted-ballot.js';
 import agreeSharedSecretRoute from './routes/agree-shared-secret.js';
 import cors from 'cors';
 import https from 'https';
 import fs from 'fs';
 import path from 'path';
-import { createECDH } from 'crypto';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
@@ -25,8 +24,6 @@ app.use(cors({}));
 app.use('/get-email', getEmailRoute);
 app.use('/fetch-candidates', fetchCandidatesRoute);
 app.use('/verify-2fa', verify2faRoute);
-
-app.use('/rsa-to-ecdh-test')
 app.use('/insert-ballot', insertBallotRoute);
 app.use('/handle-encrypted-ballot', handleEncryptedBallotRoute);
 app.use('/agree-shared-secret', agreeSharedSecretRoute);

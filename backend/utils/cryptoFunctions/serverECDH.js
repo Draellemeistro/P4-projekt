@@ -7,8 +7,10 @@ export const serverECDH = {
 
 	//serverPubKey:  fs.readFileSync(path.join(__dirname, '../keys/serverPublicKeyECDH.pem'),'utf8'),
 	//serverPrivKey: fs.readFileSync(path.join(__dirname, '../keys/serverPrivateKeyECDH.pem'),'utf8'),
-	serverPubKey: fs.readFileSync(path.join(__dirname, '/serverPublicKeyECDH.json', 'utf8')),
-	serverPrivKey: 	fs.readFileSync(path.join(__dirname, '/serverPrivateKeyECDH.json', 'utf8')),
+	serverPubKeyJWK: fs.readFileSync(path.join(__dirname, '/serverPublicKeyECDH.json'), 'utf8'),
+	serverPrivKeyJWK: 	fs.readFileSync(path.join(__dirname, '/serverPrivateKeyECDH.json'), 'utf8'),
+	clientPubKeyString: '',
+
 
 	convertBase64ToArrBuffer: function convertBase64ToArrayBuffer(base64String) {
 		console.log('base64String:', base64String);
@@ -49,16 +51,14 @@ export const serverECDH = {
 		return await this.decryptArrBuffECDH(encryptedMsgArrBuff, IvValueArrBuff, sharedSecretKey);
 	},
 
-	deriveSharedSecret: async function deriveSharedSecret(stringJWKServerPubKeyECDH, clientPublicKeyString) {
-		let responseValue;
+	deriveSharedSecret: async function deriveSharedSecret(clientPublicKeyString) {
 		let serverSharedSecret;
 		let clientPublicKeyJWK
-		let JWKserverPrivECDH
-		// Parse the keys from JSON strings back into objects
-		if (typeof this.clientPublicKeyString === 'string') {
+		let JWKserverPrivECDH = JSON.parse(this.serverPrivKeyJWK);
+
+		if (typeof clientPublicKeyString === 'string') {
 			clientPublicKeyJWK = JSON.parse(clientPublicKeyString);
 		}
-
 		const jwkServer = {
 			ext: true,
 			kty: JWKserverPrivECDH.kty,
@@ -67,6 +67,7 @@ export const serverECDH = {
 			x: JWKserverPrivECDH.x,
 			y: JWKserverPrivECDH.y
 		};
+
 		clientPublicKeyJWK.key_ops = ['deriveBits'];
 		const serverPrivateKeyECDH = await crypto.subtle.importKey('jwk', jwkServer, { name: 'ECDH', namedCurve: 'P-521' }, true, ['deriveKey', 'deriveBits']);
 		const clientPublicKeyECDH = await crypto.subtle.importKey('jwk', clientPublicKeyJWK, { name: 'ECDH', namedCurve: 'P-521' }, true, []);
@@ -110,13 +111,5 @@ export const serverECDH = {
 		return JSON.stringify(exportedServerSharedSecret);
 	},
 
-
-	removePEM: function removePEMFormatting(key) {
-		return key.replace(/-----BEGIN PUBLIC KEY-----/, '')
-			.replace(/-----END PUBLIC KEY-----/, '')
-			.replace(/-----BEGIN PRIVATE KEY-----/, '')
-			.replace(/-----END PRIVATE KEY-----/, '');
-
-	}
 };
-module.exports = serverECDH;
+export default serverECDH;
