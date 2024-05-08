@@ -4,15 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="fixed __dirname??? broke becouse of change to ES module">
-      <change afterPath="$PROJECT_DIR$/backend/utils/keys/serverECDHPub" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/79f94f10-9b93-402b-af2b-94ac4f87eb5f.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/79f94f10-9b93-402b-af2b-94ac4f87eb5f/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/79f94f10-9b93-402b-af2b-94ac4f87eb5f/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/79f94f10-9b93-402b-af2b-94ac4f87eb5f/storage_v2/_src_/schema/users.CI6mBg.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="changes">
       <change beforePath="$PROJECT_DIR$/backend/routes/get-email.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/get-email.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/insert-ballot.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/insert-ballot.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,15 +121,7 @@
       <workItem from="1713872459744" duration="13952000" />
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
-      <workItem from="1715156432173" duration="2294000" />
-    </task>
-    <task id="LOCAL-00019" summary="Big restructuring, seperated code from loginform to relevant places">
-      <option name="closed" value="true" />
-      <created>1713699562846</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1713699562846</updated>
+      <workItem from="1715156432173" duration="2427000" />
     </task>
     <task id="LOCAL-00020" summary="Added logs to verify-2fa">
       <option name="closed" value="true" />
@@ -522,7 +507,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714402582469</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="changes">
+      <option name="closed" value="true" />
+      <created>1715158900018</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1715158900018</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -552,7 +545,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Comment out cors" />
     <MESSAGE value="Added logs" />
     <MESSAGE value="minor changes" />
     <MESSAGE value="Changed back to http for dev" />
@@ -577,6 +569,7 @@
     <MESSAGE value="Fixed import path" />
     <MESSAGE value="Finished moving out routes from server.js" />
     <MESSAGE value="fixed __dirname??? broke becouse of change to ES module" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed __dirname??? broke becouse of change to ES module" />
+    <MESSAGE value="changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="changes" />
   </component>
 </project>
