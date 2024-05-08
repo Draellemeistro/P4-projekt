@@ -13,7 +13,8 @@ const serverRSACrypto = require('./utils/RSACryptoUtils.js');const app = express
 const serverECDHCrypto = require('./utils/ECDHCryptoUtils.js');
 
 const pem2jwk = require('pem-jwk').pem2jwk; //to correctly format/encode and transport RSA key
-const { JWK } = require('jose');	//to correctly format/encode and transport ECDH key
+const { JWK } = require('jose');
+const serverSignCrypto = require('./utils/signCrypto');	//to correctly format/encode and transport ECDH key
 
 
 
@@ -639,3 +640,29 @@ console.log('newIv type:', typeof nextStep.ivValue, nextStep.ivValue);
 		console.log('ECDH to RSA works!');
 	}
 });
+app.post('/sig-public-key', async (req, res) => {
+	let clientKey;
+	if (typeof req.body.key === 'string') {
+		clientKey = JSON.parse(req.body.key);
+	} else {
+		clientKey = req.body.key;
+	}
+	console.log('Accessed /sig-public-key endpoint');
+	serverSignCrypto.keyObject = await serverSignCrypto.genKeys();
+	serverSignCrypto.importKey(clientKey);
+	let keyForClient = JSON.stringify({returnKey: await serverSignCrypto.exportKey()});
+	res.json(keyForClient);
+});
+
+app.post('/verify-sig', async (req, res) => {
+	const signature = req.body.signature;
+	const message = req.body.message;
+	const verify = await serverSignCrypto.verify(serverSignCrypto.clientKey, signature, message);
+	if (verify === true) {
+		console.log('Signature is valid');
+	} else {
+		console.log('Signature is invalid');
+		console.log('Signature:', signature);
+	}
+	res.json(verify);
+}

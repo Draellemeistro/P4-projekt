@@ -54,6 +54,25 @@ export const sendBlindedForSigning = (blindedMessage) => {
   ///////////////////////////////////
  //	New and/or not implemented		//
 ///////////////////////////////////
+export const exchangePubSigKeys = async (key) => {
+	return await fetch(`https://${serverIP}:${serverPort}/sig-public-key`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: key
+	});
+};
+
+export const verifySignature = async (signature, message) => {
+	return await fetch(`https://${serverIP}:${serverPort}/verify-sig`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({ signature: signature, message: message })
+	});
+};
 
 export const fetchKeyRSA = async () => {
 	return await fetch(`https://${serverIP}:${serverPort}/rsa-public-key`, {
