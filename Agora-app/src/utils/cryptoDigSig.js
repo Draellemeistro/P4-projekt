@@ -56,7 +56,8 @@ const signCrypto = {
 
 	exchangeKeys: async function exchangeKeys(){
 		let responseKey;
-		 let response = await exchangePubSigKeys(this.exportKey(this.pubKey));
+		let exportedKey = await this.exportKey(this.pubKey);
+		let response = await exchangePubSigKeys(exportedKey);
 		if (response.status !== 200) {
 			console.error('Failed to send public key: ', response.status);
 		}
