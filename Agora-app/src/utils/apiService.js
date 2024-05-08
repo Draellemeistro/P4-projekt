@@ -61,7 +61,7 @@ export const exchangePubSigKeys = async (key) => {
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify({ clientKey: key }),
+		body: JSON.stringify({  key }),
 	});
 };
 
