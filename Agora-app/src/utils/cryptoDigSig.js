@@ -2,14 +2,14 @@ import { exchangePubSigKeys } from './apiService.js';
 
 const signCrypto = {
 	// Step 1: Generate a pair of keys for signing and verifying
-	keyObject: this.genKeys(),
-	pubKey: this.keyObject.publicKey,
-	privKey: this.keyObject.privateKey,
+	keyObject: null,
+	pubKey: null,
+	privKey: null,
 	serverKey: null,
 
 
 	 genKeys: async function generateKeys() {
-		return  await window.crypto.subtle.generateKey(
+		let keys =  await window.crypto.subtle.generateKey(
 			{
 				name: "ECDSA",
 				namedCurve: "P-256",
@@ -17,6 +17,9 @@ const signCrypto = {
 			true,
 			["sign", "verify"]
 		);
+		this.pubKey = keys.publicKey;
+		this.privKey = keys.privateKey;
+		return keys;
 	},
 
 // Step 2: Use the private key to sign a message

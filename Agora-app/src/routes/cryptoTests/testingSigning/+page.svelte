@@ -3,11 +3,17 @@
 	import signCrypto from '../../../utils/cryptoDigSig.js';
 	import { verifySignature } from '../../../utils/apiService.js';
 
-const message = 'Hello, World!';
 let signedMessage;
 let verifyResponse = '';
 	onMount(async () => {
-		signCrypto.keyObject = await signCrypto.genKeys();
+		const message = "Hello, world!";
+		// eslint-disable-next-line no-unused-vars
+		const keyPair = await signCrypto.genKeys();
+		const signature = signCrypto.sign(message);
+		const isValid = signCrypto.verify(signCrypto.pubKey, signature, message);
+		console.log(isValid ? "Valid signature" : "Invalid signature");
+
+		console.log(' now for the real test');
 		await signCrypto.exchangeKeys();
 		signedMessage = await signCrypto.sign(message);
 		let verified = await verifySignature(signedMessage, message);
