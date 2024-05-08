@@ -50,17 +50,13 @@ const signCrypto = {
 			data
 		);
 	},
-	exportKey: async function exportKey(choicePublic = true){
-		let key = this.keyObject.publicKey;
-		if (choicePublic === false){
-			 key = this.keyObject.privateKey;
-		 }
+	exportKey: async function exportKey(key){
 		return await window.crypto.subtle.exportKey("jwk", key);
 	},
 
 	exchangeKeys: async function exchangeKeys(){
 		let responseKey;
-		 let response = await exchangePubSigKeys(this.exportKey());
+		 let response = await exchangePubSigKeys(this.exportKey(this.pubKey));
 		if (response.status !== 200) {
 			console.error('Failed to send public key: ', response.status);
 		}
@@ -71,9 +67,10 @@ const signCrypto = {
 				responseKey = JSON.parse(serverPublicKeyString);
 				console.log('Server public key:', responseKey);
 			}
+			console.log('responseKey:', responseKey);
 			this.serverKey = await window.crypto.subtle.importKey('jwk', responseKey, { name: 'ECDSA', namedCurve: 'P-256' }, true, ['verify']);
 
-		}
+		} return responseKey;
 	},
 
 
