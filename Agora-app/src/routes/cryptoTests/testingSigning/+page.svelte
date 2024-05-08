@@ -5,6 +5,7 @@
 
 const message = 'Hello, World!';
 let signedMessage;
+let verifyResponse = '';
 	onMount(async () => {
 		signCrypto.keyObject = await signCrypto.genKeys();
 		await signCrypto.exchangeKeys();
@@ -12,15 +13,22 @@ let signedMessage;
 		let verified = await verifySignature(signedMessage, message);
 		if (verified) {
 			console.log('Signature verified');
+			verifyResponse = 'Signature verified';
 		} else {
 			console.log('Signature not verified');
 			let selfVerify = await signCrypto.verify(signCrypto.pubKey, signedMessage, message);
 			if (selfVerify) {
 				console.log('Self-verified');
+				verifyResponse = 'Self-verified';
 			} else {
 				console.log('Self-verification failed');
+				verifyResponse = 'Self-verification failed';
 			}
 		}
 	});
 
 </script>
+<div>
+	<h2>verify response</h2>
+	<p>{verifyResponse}</p>
+</div>
