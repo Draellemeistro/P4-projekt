@@ -47,7 +47,9 @@ const RSABlindSig = {
 		}
 	},
 
-	blindMsgAndGetSig: function blindMsgAndGetSig(messageFromClient, pubRSAKey) {
+	// Should be more or less quick and easy to implement.
+
+	blindMsgAndGetSig: async function blindMsgAndGetSig(messageFromClient, pubRSAKey) {
 		let unblindedVar;
 		let messageVar = messageFromClient;
 		const serverObject = this.createServerObject(pubRSAKey);
@@ -59,7 +61,7 @@ const RSABlindSig = {
 			N: clientObject.N,
 			E: clientObject.E,
 		});
-		const signedBlindedMessage = sendBlindedForSigning(blinded);
+		const signedBlindedMessage = await sendBlindedForSigning(blinded);
 		unblindedVar = blindSignature.unblind({
 			blinded: blinded,
 			signed: signedBlindedMessage,
