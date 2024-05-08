@@ -81,16 +81,34 @@ const serverSignCrypto = {
 		['sign', 'verify'],
 				);
 		} else {
-			this.clientKey = crypto.subtle.importKey(
-				'jwk',
-				key,
-				{
-					name: 'ECDSA',
-					namedCurve: 'P-256',
-				},
-				true,
-				['verify'],
-			);
+			try {
+				this.clientKey = crypto.subtle.importKey(
+					'jwk',
+					key,
+					{
+						name: 'ECDSA',
+						namedCurve: 'P-256',
+					},
+					true,
+					['verify'],
+				);
+			} catch (error) {
+				console.log('Error importing key:', error);
+				try {
+					this.clientKey = crypto.subtle.importKey(
+						'jwk',
+						JSON.parse(key),
+						{
+							name: 'ECDSA',
+							namedCurve: 'P-256',
+						},
+						true,
+						['verify'],
+					);
+				} catch (error) {
+					console.log('Error importing key:', error);
+				}
+			}
 		}
 	}
 }
