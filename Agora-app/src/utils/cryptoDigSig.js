@@ -55,7 +55,7 @@ const signCrypto = {
 		if (choicePublic === false){
 			 key = this.keyObject.privateKey;
 		 }
-		return JSON.stringify({clientKey: await window.crypto.subtle.exportKey("jwk", key)});
+		return await window.crypto.subtle.exportKey("jwk", key);
 	},
 
 	exchangeKeys: async function exchangeKeys(){

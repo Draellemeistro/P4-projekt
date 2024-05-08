@@ -55,12 +55,13 @@ export const sendBlindedForSigning = (blindedMessage) => {
  //	New and/or not implemented		//
 ///////////////////////////////////
 export const exchangePubSigKeys = async (key) => {
+	console.log('key:', key);
 	return await fetch(`https://${serverIP}:${serverPort}/sig-public-key`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		body: key
+		body: JSON.stringify({ clientKey: key }),
 	});
 };
 

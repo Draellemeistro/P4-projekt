@@ -643,6 +643,7 @@ console.log('newIv type:', typeof nextStep.ivValue, nextStep.ivValue);
 app.post('/sig-public-key', async (req, res) => {
 	let clientKey;
 	if (typeof req.body.key === 'string') {
+		console.log(req.body.key)
 		clientKey = JSON.parse(req.body.key);
 	} else {
 		clientKey = req.body.key;
