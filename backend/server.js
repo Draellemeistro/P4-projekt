@@ -657,6 +657,9 @@ app.post('/sig-public-key', async (req, res) => {
 app.post('/verify-sig', async (req, res) => {
 	const signature = req.body.signature;
 	const message = req.body.message;
+	console.log('serverSignCrypto.clientKey:', serverSignCrypto.clientKey);
+	console.log('serverSignCrypto.clientKey TYPE:', typeof serverSignCrypto.clientKey);
+
 	const verify = await serverSignCrypto.verify(serverSignCrypto.clientKey, signature, message);
 	if (verify === true) {
 		console.log('Signature is valid');
