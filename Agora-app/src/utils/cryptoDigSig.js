@@ -66,6 +66,9 @@ const signCrypto = {
 			if(typeof serverPublicKeyString === 'string'){
 				responseKey = JSON.parse(serverPublicKeyString);
 				console.log('Server public key:', responseKey);
+			} else {
+				responseKey = serverPublicKeyString;
+				console.error('responsekey: ', responseKey);
 			}
 			console.log('responseKey:', responseKey);
 			this.serverKey = await window.crypto.subtle.importKey('jwk', responseKey, { name: 'ECDSA', namedCurve: 'P-256' }, true, ['verify']);
