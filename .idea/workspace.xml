@@ -5,20 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="changes">
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/utils/encryptionECDH.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/utils/keyStore.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/test/apiServie_test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/test/auth.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/test/formValidation.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/src/utils/comboEncrypt.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agora-app/vitest.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/tests/generateOTP.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/tests/otpStore.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/tests/verifyOTP.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/utils/sendEmail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/utils/verifyOTP.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/LoginForm.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/LoginForm.svelte" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/apiService.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/apiService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/cryptoUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/cryptoUtils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/encryptionEDCH.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/formValidation.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/formValidation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes/get-email.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/get-email.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes/verify-2fa.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/verify-2fa.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/serverPrivateKeyECDH.pem" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/keys/serverPrivateKeyECDH.pem" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/serverPrivateKeyRSA.pem" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/keys/serverPrivateKeyRSA.pem" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/serverPublicKeyECDH.pem" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/keys/serverPublicKeyECDH.pem" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/serverPublicKeyRSA.pem" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/keys/serverPublicKeyRSA.pem" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/utils/keys/serverECDHPub.pem" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/generateOTP.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/generateOTP.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/otpStore.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/otpStore.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="">
       <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" afterDir="false" />
@@ -60,16 +66,6 @@
       </UrlAndAccount>
     </option>
   </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte">
-      <ranges>
-        <range start1="3" end1="3" start2="3" end2="5" changelist="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" />
-        <range start1="9" end1="9" start2="11" end2="12" changelist="0d1947b7-2802-4f2f-8b2a-74380697ebba" />
-        <range start1="20" end1="21" start2="23" end2="26" changelist="0d1947b7-2802-4f2f-8b2a-74380697ebba" />
-        <range start1="50" end1="50" start2="55" end2="56" changelist="0d1947b7-2802-4f2f-8b2a-74380697ebba" />
-      </ranges>
-    </file>
-  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -84,44 +80,129 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Node.js.server.js.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;20.12.2&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.12.7&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/umarrashid/WebstormProjects/P4-projekt&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Node.js.server.js.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Vitest.fetchEmail sends the correct data and receives successful response.executor": "Debug",
+    "Vitest.login function sets isAuthenticated to true (1).executor": "Run",
+    "Vitest.login function sets isAuthenticated to true (2).executor": "Run",
+    "Vitest.login function sets isAuthenticated to true.executor": "Run",
+    "Vitest.validateForm returns errors for empty fields.executor": "Run",
+    "Vitest.validateForm returns errors for invalid SSIN.executor": "Run",
+    "Vitest.validateForm returns errors for invalid year in SSIN.executor": "Run",
+    "Vitest.validateForm returns no errors for valid SSIN and voteId.executor": "Run",
+    "git-widget-placeholder": "mainTest",
+    "ignore.virus.scanning.warn.message": "true",
+    "javascript.nodejs.core.library.configured.version": "20.12.2",
+    "javascript.nodejs.core.library.typings.version": "20.12.7",
+    "last_opened_file_path": "/Users/umarrashid/WebstormProjects/P4-projekt",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;greenplum&quot;,
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "greenplum",
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ronie\OneDrive - Aalborg Universitet\Desktop\AGORA\P4-projekt\Agora-app\src\routes\login" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Agora-app/src/test" />
       <recent name="$PROJECT_DIR$/backend/utils/keys" />
       <recent name="$PROJECT_DIR$/backend/utils" />
       <recent name="$PROJECT_DIR$/Agora-app/src/utils" />
       <recent name="C:\Users\ronie\OneDrive - Aalborg Universitet\Desktop\AGORA\P4-projekt\backend" />
     </key>
+  </component>
+  <component name="RunManager" selected="Vitest.validateForm returns errors for invalid year in SSIN">
+    <configuration name="login function sets isAuthenticated to true (2)" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <vitest-package value="$PROJECT_DIR$/Agora-app/node_modules/vitest" />
+      <working-dir value="$PROJECT_DIR$/Agora-app" />
+      <vitest-options value="--run" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/Agora-app/src/test/auth.test.js" />
+      <test-names>
+        <test-name value="login function sets isAuthenticated to true" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="validateForm returns errors for empty fields" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <vitest-package value="$PROJECT_DIR$/Agora-app/node_modules/vitest" />
+      <working-dir value="$PROJECT_DIR$/Agora-app" />
+      <vitest-options value="--run" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/Agora-app/src/test/formValidation.test.js" />
+      <test-names>
+        <test-name value="validateForm returns errors for empty fields" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="validateForm returns errors for invalid SSIN" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <vitest-package value="$PROJECT_DIR$/Agora-app/node_modules/vitest" />
+      <working-dir value="$PROJECT_DIR$/Agora-app" />
+      <vitest-options value="--run" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/Agora-app/src/test/formValidation.test.js" />
+      <test-names>
+        <test-name value="validateForm returns errors for invalid SSIN" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="validateForm returns errors for invalid year in SSIN" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <vitest-package value="$PROJECT_DIR$/Agora-app/node_modules/vitest" />
+      <working-dir value="$PROJECT_DIR$/Agora-app" />
+      <vitest-options value="--run" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/Agora-app/src/test/formValidation.test.js" />
+      <test-names>
+        <test-name value="validateForm returns errors for invalid year in SSIN" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="validateForm returns no errors for valid SSIN and voteId" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <vitest-package value="$PROJECT_DIR$/Agora-app/node_modules/vitest" />
+      <working-dir value="$PROJECT_DIR$/Agora-app" />
+      <vitest-options value="--run" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/Agora-app/src/test/formValidation.test.js" />
+      <test-names>
+        <test-name value="validateForm returns no errors for valid SSIN and voteId" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Vitest.validateForm returns errors for invalid year in SSIN" />
+        <item itemvalue="Vitest.validateForm returns errors for empty fields" />
+        <item itemvalue="Vitest.validateForm returns no errors for valid SSIN and voteId" />
+        <item itemvalue="Vitest.validateForm returns errors for invalid SSIN" />
+        <item itemvalue="Vitest.login function sets isAuthenticated to true (2)" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -149,15 +230,7 @@
       <workItem from="1713872459744" duration="13952000" />
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
-      <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00023" summary="Added better logs to verify-2fa">
-      <option name="closed" value="true" />
-      <created>1713707089770</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1713707089770</updated>
+      <workItem from="1715156432173" duration="23667000" />
     </task>
     <task id="LOCAL-00024" summary="Added HTTPS">
       <option name="closed" value="true" />
@@ -543,7 +616,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715159110348</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="changes">
+      <option name="closed" value="true" />
+      <created>1715169147706</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1715169147706</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -599,5 +680,17 @@
     <MESSAGE value="fixed __dirname??? broke becouse of change to ES module" />
     <MESSAGE value="changes" />
     <option name="LAST_COMMIT_MESSAGE" value="changes" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/Agora-app/src/test/apiServie_test.js</url>
+          <line>3</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
