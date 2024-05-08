@@ -51,9 +51,9 @@ const serverSignCrypto = {
 		);
 	},
 	exportKey: async function exportKey(choicePublic = true){
-		let key = this.keyObject.publicKey;
+		let key = this.pubKey;
 		if (choicePublic === false){
-			key = this.keyObject.privateKey;
+			key = this.privKey;
 		}
 		return JSON.stringify({clientKey: await crypto.subtle.exportKey("jwk", key)});
 	},
