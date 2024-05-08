@@ -3,6 +3,8 @@ import getEmailRoute from './routes/get-email.js';
 import fetchCandidatesRoute from './routes/fetch-candidates.js';
 import verify2faRoute from './routes/verify-2fa.js';
 import insertBallotRoute from './routes/insert-ballot.js';
+import handleEncryptedBallotRoute from './routes/handle-encrypted-ballot.js';
+import agreeSharedSecretRoute from './routes/agree-shared-secret.js';
 import cors from 'cors';
 import https from 'https';
 import fs from 'fs';
@@ -23,9 +25,11 @@ app.use(cors({}));
 app.use('/get-email', getEmailRoute);
 app.use('/fetch-candidates', fetchCandidatesRoute);
 app.use('/verify-2fa', verify2faRoute);
+
+app.use('/rsa-to-ecdh-test')
 app.use('/insert-ballot', insertBallotRoute);
-
-
+app.use('/handle-encrypted-ballot', handleEncryptedBallotRoute);
+app.use('/agree-shared-secret', agreeSharedSecretRoute);
 
 const privateKey = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/privkey.pem', 'utf8');
 const certificate = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/fullchain.pem', 'utf8');
@@ -48,39 +52,3 @@ app.listen(80, () => console.log('HTTP Server started'));
 
 
 
-
-
-// Change the paths to the keys to the correct paths on your server after moving out from project dir
-// const serverPublicKeyECDH = fs.readFileSync(__dirname + '/serverPublicKeyECDH.pem', 'utf8');
-// const serverPrivateKeyECDH = fs.readFileSync(__dirname + '/serverPrivateKeyECDH.pem', 'utf8');
-// const serverPublicRSAKey = fs.readFileSync(__dirname + '/serverPublicKeyRSA.pem', 'utf8');
-// const serverPrivateRSAKey = fs.readFileSync(__dirname + '/serverPrivateKeyRSA.pem', 'utf8');
-// const serverECDH = createECDH('secp521r1');
-//
-// serverECDH.setPrivateKey(serverPrivateKeyECDH, 'base64');
-//
-//
-// app.get('/request-public-ecdh-key', (req, res) => {
-// 	res.send(serverPublicKeyECDH);
-// }	);
-// app.get('/rsa-public-key', (req, res) => {
-// 	res.send(serverPublicRSAKey);
-// } );
-//
-// // not relevant yet, might not be needed.
-// app.post('/present-ecdh-key', async (req, res) => {
-// 	const clientPublicKeyBase64 = req.body.clientPublicKeyBase64;
-// 	const sharedSecret = serverECDH.computeSecret(clientPublicKeyBase64);
-// 	//TODO maybe encrypt the shared secret with a symmetric key
-// 	const personId = req.body.personId;
-// //
-// 	const query = 'INSERT INTO Agora.users.shared_secrets (person_id, shared_secret) VALUES (?, ?)';
-// 	connection.query(query, [personId, sharedSecret], (err, results) => {
-// 		if (err) {
-// 			console.error(err);
-// 			res.status(500).send('Error inserting data into database');
-// 		} else {
-// 			res.json({ message: 'Data inserted successfully', results });
-// 		}
-// 	});
-// });

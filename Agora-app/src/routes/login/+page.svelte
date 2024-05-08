@@ -7,7 +7,7 @@
     import { fetchEmail, verify2FA} from '../../utils/apiService.js';
     import { login } from '../../utils/auth.js';
     import { goto } from '$app/navigation';
-    import ECDHCrypto from '../../utils/encryptionECDH.js';
+    import ECDH from '../../utils/cryptoProtocols/encryptionECDH.js';
 
     let personId;
     let voteId;
@@ -19,7 +19,7 @@
         console.log('handleFormSubmitted called');
         personId = detail.personId;
         voteId = detail.voteId;
-        const keys = ECDHCrypto.initECDH()
+        const keys = ECDH.initECDH()
 
         fetchEmail(personId, voteId, keys.pubKey)
           .then(response => {

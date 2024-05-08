@@ -1,15 +1,14 @@
 <script>
     import { sendBallotToServer } from '../../utils/apiService.js';
-
+    import { cryptoUtils } from './utils/cryptoUtils.js';
     export let showModal; // boolean
     export let selectedOptionModal;
     let dialog; // HTMLDialogElement
 
     $: if (dialog && showModal) dialog.showModal();
-    function voteHandler(){
+    async function voteHandler() {
         dialog.close()
-        console.log(selectedOptionModal);
-        sendBallotToServer(selectedOptionModal);
+        await sendBallotToServer(await cryptoUtils.encryptBallot(selectedOptionModal));
     }
 </script>
 
