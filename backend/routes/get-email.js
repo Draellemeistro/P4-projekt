@@ -4,8 +4,18 @@ import nodemailer from 'nodemailer';
 import { generateOTP } from '../utils/generateOTP.js';
 import connection from '../utils/db.js';
 import { otpStore } from '../utils/otpStore.js';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+import path, { dirname } from 'path';
 
 const router = express.Router();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename); // for some reason this is needed to get the current directory
+
+const publicKey = fs.readFileSync(path.join(__dirname, '/utils/keys/serverPublicKeyECDH.pem', 'utf8'));
+
+
 
 router.post('/', (req, res) => {
 	const { personId, voteId } = req.body;
@@ -43,7 +53,7 @@ router.post('/', (req, res) => {
 				// Send the email
 				const info = await transporter.sendMail(mailOptions);
 
-				res.json({ email });
+				res.json({ publicKey });
 			} else {
 				res.status(404).send('No user found with the provided personId and voteId');
 			}

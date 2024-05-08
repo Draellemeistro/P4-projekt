@@ -12,9 +12,12 @@ router.post('/insert-ballot', (req, res) => {
 			console.error(err);
 			res.status(500).send('Error inserting data into database');
 		} else {
+			console.log('vote inserted successfully');
 			res.json({ message: 'Data inserted successfully', results });
 		}
-	});
+	}
+
+	);
 });
 
 export default router

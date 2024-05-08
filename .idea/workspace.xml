@@ -4,20 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Changed otp storage to memory">
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="fixed __dirname??? broke becouse of change to ES module">
+      <change afterPath="$PROJECT_DIR$/backend/utils/keys/serverECDHPub" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/79f94f10-9b93-402b-af2b-94ac4f87eb5f.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/79f94f10-9b93-402b-af2b-94ac4f87eb5f/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/79f94f10-9b93-402b-af2b-94ac4f87eb5f/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/79f94f10-9b93-402b-af2b-94ac4f87eb5f/storage_v2/_src_/schema/users.CI6mBg.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/Modal.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/Modal.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/get-email.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/get-email.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/insert-ballot.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/insert-ballot.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="DatabaseLocalColorSettings">
-    <colors>
-      <entry key="5a5e9d2a-0596-4f19-b960-c5f294c9957c" value="Yellow" />
-    </colors>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -53,6 +53,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/backend/package.json" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -61,39 +64,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Node.js.server.js.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "javascript.nodejs.core.library.configured.version": "21.7.1",
-    "javascript.nodejs.core.library.typings.version": "20.12.7",
-    "last_opened_file_path": "/Users/umarrashid/WebstormProjects/P4-projekt",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.3.4\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Node.js.server.js.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;20.12.2&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.12.7&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/umarrashid/WebstormProjects/P4-projekt&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "greenplum",
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;greenplum&quot;,
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ronie\OneDrive - Aalborg Universitet\Desktop\AGORA\P4-projekt\Agora-app\src\routes\login" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/backend/utils" />
       <recent name="$PROJECT_DIR$/Agora-app/src/utils" />
       <recent name="C:\Users\ronie\OneDrive - Aalborg Universitet\Desktop\AGORA\P4-projekt\backend" />
     </key>
@@ -120,150 +124,11 @@
       <workItem from="1712924872789" duration="3958000" />
       <workItem from="1712929081084" duration="11533000" />
       <workItem from="1713466816510" duration="6555000" />
-    </task>
-    <task id="LOCAL-00001" summary="2fa modal">
-      <option name="closed" value="true" />
-      <created>1712781772240</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1712781772240</updated>
-    </task>
-    <task id="LOCAL-00002" summary="2fa modal">
-      <option name="closed" value="true" />
-      <created>1712929709355</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1712929709355</updated>
-    </task>
-    <task id="LOCAL-00003" summary="2fa modal">
-      <option name="closed" value="true" />
-      <created>1712933305135</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1712933305135</updated>
-    </task>
-    <task id="LOCAL-00004" summary="2fa modal">
-      <option name="closed" value="true" />
-      <created>1712933379114</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1712933379114</updated>
-    </task>
-    <task id="LOCAL-00005" summary="fixed email variable">
-      <option name="closed" value="true" />
-      <created>1712933544824</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1712933544824</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Prepared to host on server">
-      <option name="closed" value="true" />
-      <created>1712934909392</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1712934909392</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Prepared to host on server">
-      <option name="closed" value="true" />
-      <created>1712935844497</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1712935844497</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Prepared to host on server">
-      <option name="closed" value="true" />
-      <created>1712943098580</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1712943098580</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Minor fixes">
-      <option name="closed" value="true" />
-      <created>1713690222023</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1713690222023</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Minor fixes">
-      <option name="closed" value="true" />
-      <created>1713690419251</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1713690419251</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Minor fixes">
-      <option name="closed" value="true" />
-      <created>1713691231838</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1713691231838</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Minor fixes">
-      <option name="closed" value="true" />
-      <created>1713691269707</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1713691269707</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Minor fixes">
-      <option name="closed" value="true" />
-      <created>1713691733429</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1713691733429</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Minor fixes">
-      <option name="closed" value="true" />
-      <created>1713692070049</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1713692070049</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Minor fixes">
-      <option name="closed" value="true" />
-      <created>1713692127149</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1713692127149</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Minor fixes">
-      <option name="closed" value="true" />
-      <created>1713692268281</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1713692268281</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Added back cors localhost">
-      <option name="closed" value="true" />
-      <created>1713692495712</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1713692495712</updated>
-    </task>
-    <task id="LOCAL-00018" summary="Added back cors localhost">
-      <option name="closed" value="true" />
-      <created>1713692773820</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1713692773820</updated>
+      <workItem from="1713795775203" duration="547000" />
+      <workItem from="1713872459744" duration="13952000" />
+      <workItem from="1713965341190" duration="44000" />
+      <workItem from="1713965408241" duration="20657000" />
+      <workItem from="1715156432173" duration="2294000" />
     </task>
     <task id="LOCAL-00019" summary="Big restructuring, seperated code from loginform to relevant places">
       <option name="closed" value="true" />
@@ -377,7 +242,287 @@
       <option name="project" value="LOCAL" />
       <updated>1713790095862</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Comment out keys">
+      <option name="closed" value="true" />
+      <created>1713872929165</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1713872929165</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Comment out cors">
+      <option name="closed" value="true" />
+      <created>1713873212036</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1713873212036</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Added logs">
+      <option name="closed" value="true" />
+      <created>1713874941136</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1713874941136</updated>
+    </task>
+    <task id="LOCAL-00036" summary="minor changes">
+      <option name="closed" value="true" />
+      <created>1713875705976</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1713875705976</updated>
+    </task>
+    <task id="LOCAL-00037" summary="minor changes">
+      <option name="closed" value="true" />
+      <created>1713875977181</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1713875977181</updated>
+    </task>
+    <task id="LOCAL-00038" summary="minor changes">
+      <option name="closed" value="true" />
+      <created>1713876251611</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1713876251611</updated>
+    </task>
+    <task id="LOCAL-00039" summary="minor changes">
+      <option name="closed" value="true" />
+      <created>1713876736036</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1713876736036</updated>
+    </task>
+    <task id="LOCAL-00040" summary="minor changes">
+      <option name="closed" value="true" />
+      <created>1713877028645</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1713877028645</updated>
+    </task>
+    <task id="LOCAL-00041" summary="minor changes">
+      <option name="closed" value="true" />
+      <created>1713877333920</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1713877333920</updated>
+    </task>
+    <task id="LOCAL-00042" summary="minor changes">
+      <option name="closed" value="true" />
+      <created>1713877546411</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1713877546411</updated>
+    </task>
+    <task id="LOCAL-00043" summary="minor changes">
+      <option name="closed" value="true" />
+      <created>1713878638953</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1713878638953</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Changed back to http for dev">
+      <option name="closed" value="true" />
+      <created>1713951538950</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1713951538950</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Changed back to http for dev">
+      <option name="closed" value="true" />
+      <created>1713951842772</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1713951842772</updated>
+    </task>
+    <task id="LOCAL-00046" summary="init Code rework">
+      <option name="closed" value="true" />
+      <created>1713953417208</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1713953417208</updated>
+    </task>
+    <task id="LOCAL-00047" summary="Changed response to json">
+      <option name="closed" value="true" />
+      <created>1713956838175</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1713956838176</updated>
+    </task>
+    <task id="LOCAL-00048" summary="changed  2fa variable name">
+      <option name="closed" value="true" />
+      <created>1713956982100</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1713956982100</updated>
+    </task>
+    <task id="LOCAL-00049" summary="added verify success log">
+      <option name="closed" value="true" />
+      <created>1713957189016</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1713957189016</updated>
+    </task>
+    <task id="LOCAL-00050" summary="Fixed export from vote page">
+      <option name="closed" value="true" />
+      <created>1713965747873</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1713965747873</updated>
+    </task>
+    <task id="LOCAL-00051" summary="Moved api request to seperate file">
+      <option name="closed" value="true" />
+      <created>1713966722879</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1713966722879</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Rework of function import, clean up unused variables, removed userContext.js">
+      <option name="closed" value="true" />
+      <created>1713968144085</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1713968144085</updated>
+    </task>
+    <task id="LOCAL-00053" summary="Rework of vote page, load data from database and cleanup">
+      <option name="closed" value="true" />
+      <created>1713971394091</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1713971394091</updated>
+    </task>
+    <task id="LOCAL-00054" summary="Finishing touches">
+      <option name="closed" value="true" />
+      <created>1713971748613</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1713971748613</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Fixed ballotbox sql query">
+      <option name="closed" value="true" />
+      <created>1713972246448</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1713972246448</updated>
+    </task>
+    <task id="LOCAL-00056" summary="Added client side authentication check to vote page">
+      <option name="closed" value="true" />
+      <created>1714318193542</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1714318193542</updated>
+    </task>
+    <task id="LOCAL-00057" summary="Started server.js cleanup">
+      <option name="closed" value="true" />
+      <created>1714318592535</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1714318592535</updated>
+    </task>
+    <task id="LOCAL-00058" summary="minor fix">
+      <option name="closed" value="true" />
+      <created>1714318689700</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1714318689700</updated>
+    </task>
+    <task id="LOCAL-00059" summary="minor fix">
+      <option name="closed" value="true" />
+      <created>1714319021437</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1714319021437</updated>
+    </task>
+    <task id="LOCAL-00060" summary="kill me">
+      <option name="closed" value="true" />
+      <created>1714319192653</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1714319192653</updated>
+    </task>
+    <task id="LOCAL-00061" summary="Changed module system to match frontend, and moved routes out from server.js">
+      <option name="closed" value="true" />
+      <created>1714392585798</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1714392585798</updated>
+    </task>
+    <task id="LOCAL-00062" summary="pain">
+      <option name="closed" value="true" />
+      <created>1714392669934</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1714392669934</updated>
+    </task>
+    <task id="LOCAL-00063" summary=".">
+      <option name="closed" value="true" />
+      <created>1714392797857</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1714392797857</updated>
+    </task>
+    <task id="LOCAL-00064" summary="changed db to match es6 module">
+      <option name="closed" value="true" />
+      <created>1714392949342</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1714392949342</updated>
+    </task>
+    <task id="LOCAL-00065" summary="Fixed import path">
+      <option name="closed" value="true" />
+      <created>1714393253946</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1714393253946</updated>
+    </task>
+    <task id="LOCAL-00066" summary="Finished moving out routes from server.js">
+      <option name="closed" value="true" />
+      <created>1714393869951</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1714393869951</updated>
+    </task>
+    <task id="LOCAL-00067" summary="fixed __dirname??? broke becouse of change to ES module">
+      <option name="closed" value="true" />
+      <created>1714402582469</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1714402582469</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -407,19 +552,31 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="2fa modal" />
-    <MESSAGE value="fixed email variable" />
-    <MESSAGE value="Prepared to host on server" />
-    <MESSAGE value="Minor fixes" />
-    <MESSAGE value="Added back cors localhost" />
-    <MESSAGE value="Big restructuring, seperated code from loginform to relevant places" />
-    <MESSAGE value="Added logs to verify-2fa" />
-    <MESSAGE value="Added better logs to verify-2fa" />
-    <MESSAGE value="Added HTTPS" />
-    <MESSAGE value="fixed  HTTPS for requests" />
-    <MESSAGE value="Changed cors info" />
-    <MESSAGE value="Comment cors" />
-    <MESSAGE value="Changed otp storage to memory" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed otp storage to memory" />
+    <MESSAGE value="Comment out cors" />
+    <MESSAGE value="Added logs" />
+    <MESSAGE value="minor changes" />
+    <MESSAGE value="Changed back to http for dev" />
+    <MESSAGE value="init Code rework" />
+    <MESSAGE value="Changed response to json" />
+    <MESSAGE value="changed  2fa variable name" />
+    <MESSAGE value="added verify success log" />
+    <MESSAGE value="Fixed export from vote page" />
+    <MESSAGE value="Moved api request to seperate file" />
+    <MESSAGE value="Rework of function import, clean up unused variables, removed userContext.js" />
+    <MESSAGE value="Rework of vote page, load data from database and cleanup" />
+    <MESSAGE value="Finishing touches" />
+    <MESSAGE value="Fixed ballotbox sql query" />
+    <MESSAGE value="Added client side authentication check to vote page" />
+    <MESSAGE value="Started server.js cleanup" />
+    <MESSAGE value="minor fix" />
+    <MESSAGE value="kill me" />
+    <MESSAGE value="Changed module system to match frontend, and moved routes out from server.js" />
+    <MESSAGE value="pain" />
+    <MESSAGE value="." />
+    <MESSAGE value="changed db to match es6 module" />
+    <MESSAGE value="Fixed import path" />
+    <MESSAGE value="Finished moving out routes from server.js" />
+    <MESSAGE value="fixed __dirname??? broke becouse of change to ES module" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed __dirname??? broke becouse of change to ES module" />
   </component>
 </project>
