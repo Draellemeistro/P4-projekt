@@ -665,4 +665,4 @@ app.post('/verify-sig', async (req, res) => {
 		console.log('Signature:', signature);
 	}
 	res.json(verify);
-}
+});
