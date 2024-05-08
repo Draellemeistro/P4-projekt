@@ -10,13 +10,6 @@ import path, { dirname } from 'path';
 
 const router = express.Router();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename); // for some reason this is needed to get the current directory
-
-const publicKey = fs.readFileSync(path.join(__dirname, '../utils/keys/serverECDHPub.pem'),'utf8');
-
-
-
 router.post('/', (req, res) => {
 	const { personId, voteId } = req.body;
 

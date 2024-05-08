@@ -7,6 +7,7 @@
     import { fetchEmail, verify2FA} from '../../utils/apiService.js';
     import { login } from '../../utils/auth.js';
     import { goto } from '$app/navigation';
+    import ECDHCrypto from '../../utils/encryptionECDH.js';
 
     let personId;
     let voteId;
@@ -18,7 +19,9 @@
         console.log('handleFormSubmitted called');
         personId = detail.personId;
         voteId = detail.voteId;
-        fetchEmail(personId, voteId)
+        const keys = ECDHCrypto.initECDH()
+
+        fetchEmail(personId, voteId, keys.pubKey)
           .then(response => {
               if (!response.ok) {
                   throw new Error(response.statusText);
@@ -48,6 +51,7 @@
           })
           .then(data => {
               if (data.message === 'User verified') {
+
                   goto('/vote');
                   return;
               } else {
