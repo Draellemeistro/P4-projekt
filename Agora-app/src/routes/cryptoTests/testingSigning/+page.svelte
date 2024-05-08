@@ -6,10 +6,16 @@
 let signedMessage;
 let verifyResponse = '';
 	onMount(async () => {
+		console.log(' now for the real test');
+
 		const message = "Hello, world!";
+		console.log(' now for the real test');
+
 		// eslint-disable-next-line no-unused-vars
 		const keyPair = await signCrypto.genKeys();
+		console.log(' now for the real test');
 		const signature = signCrypto.sign(message);
+		console.log(' now for the real test');
 		const isValid = signCrypto.verify(signCrypto.pubKey, signature, message);
 		console.log(isValid ? "Valid signature" : "Invalid signature");
 
