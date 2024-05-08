@@ -1,6 +1,5 @@
 const serverIP = '192.168.0.113';
 const serverPort = '3030';
-import crypto from 'crypto';
 export const fetchEmail = (personId, voteId) => {
 	return fetch(`https://${serverIP}:${serverPort}/get-email`, {
 		method: 'POST',
@@ -25,15 +24,6 @@ export const getCandidatesFromServer = () => {
 		headers: {
 			'Content-Type': 'application/json',
 		},
-	});
-};
-export const sendBallotToServer = (ballot, clientPubKeyECDH = null, ivValue = null) => {
-	return fetch(`https://${serverIP}:${serverPort}/insert-ballot`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ ballot: ballot, clientPubKeyECDH: clientPubKeyECDH, ivValue: ivValue })
 	});
 };
 
@@ -84,29 +74,6 @@ export const fetchKeyECDH = async () => {
 	});
 };
 
-export const sendBallotToServerAndCheckHash = (ballot) => {
-	const clientPubKeyECDH = 'test';
-	const ballotHash = crypto.createHash('sha256').update(JSON.stringify(ballot)).digest('hex');
-	const serverBallotHash = fetch(`https://${serverIP}:${serverPort}/insert-ballot-and-return-hash`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ clientPubKeyECDH, ballot })
-	});
-	if (ballotHash === serverBallotHash) {
-		return true;
-	} else {
-		fetch(`https://${serverIP}:${serverPort}/mark-ballot-as-faulty`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ clientPubKeyECDH, ballot })
-		});
-		return false;
-	}
-};
 
 
 
