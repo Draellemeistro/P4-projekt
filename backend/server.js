@@ -354,7 +354,11 @@ app.post('/insert-ballot-double-enc', async (req, res) => {
 	} catch (error) {
 		console.error('Error:', error);
 	}
+
 	/// TODO: do we want this? ballot should be storable even before first round of decryption. Could save them for later use?
+	//let ivArray = Object.values(ivValue);
+	//let ivHexString = ivArray.map(byte => byte.toString(16).padStart(2, '0')).join(''); // Convert the IV to a hex string, for storage in the database
+	//
 	// const query = 'INSERT INTO Agora.ballotbox (ballotbox.encr_ballot, ecdh_pub_key, iv_value) VALUES (?, ?, ?)';
 	// connection.query(query, [encBallotString, clientKeyPubString, ivValueString], (err, results) => {
 	// 	if (err) {
@@ -364,6 +368,11 @@ app.post('/insert-ballot-double-enc', async (req, res) => {
 	// 		res.json({ message: 'Data inserted successfully', results });
 	// 	}
 	//	});
+	//
+	//let ivArrayDB = {}; //[]??????
+	//for (let i = 0; i < ivHexString.length; i += 2) {
+	//	ivArrayDB.push(parseInt(ivHexString.substring(i, i + 2), 16)); // Convert the hex string back to an array of bytes.
+	//}
 });
 
 app.post('/decrypt-RSA-message-Test', async (req, res) => {
