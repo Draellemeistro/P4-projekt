@@ -641,7 +641,7 @@ console.log('newIv type:', typeof nextStep.ivValue, nextStep.ivValue);
 	}
 });
 app.post('/sig-public-key', async (req, res) => {
-	let clientKey = req.body;
+	let clientKey = req.body.clientKeyExport;
 	console.log('clientKey:', clientKey)
 	const v = await serverSignCrypto.genKeys();
 	let returnKey = await serverSignCrypto.exportKey();
