@@ -53,7 +53,7 @@
 			clientKeyPub: clientKeyPubString, //string
 			ivValue: ivValue, //object
 			signature: signature,
-			signatureKey: signatureKey,
+			signatureKey: JSON.stringify(signatureKey),
 			});
 			let response = await verifyDoubleEnc(msgForServer);
 			await response.json().then((data) => {
