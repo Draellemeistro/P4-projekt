@@ -118,5 +118,17 @@ const combo = {
 			ivValue: ivValue, //object
 		});
 	},
+	prepareSignedBallot: async function prepareFinalBallotExample(plaintext, midWayEncrypted, OutgoingEncrypted, clientKeyPub, ivValue, signature, signatureKey) {
+		return JSON.stringify({
+				plaiTextMessage: plaintext, //string
+				midwayMessage: midWayEncrypted, //string
+				message: OutgoingEncrypted, //string (RSA) / object (ECDH)
+				clientKeyPub: clientKeyPub, //string
+				ivValue: ivValue, //object
+				signature: signature,
+				signatureKey: signatureKey,
+		});
+
+	},
 }
 export default combo;

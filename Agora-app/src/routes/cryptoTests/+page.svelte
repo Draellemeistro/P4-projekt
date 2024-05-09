@@ -46,16 +46,8 @@
 			let clientKeyPubString = await ECDHCrypto.exportKeyString(clientKeyPub);
 			await signCrypto.genKeys();
 			const signature = await signCrypto.prepareSignatureToSend(outGoingMessage);
- 			const signatureKey = await signCrypto.exportKey();
-		const msgForServer = {
-			plaiTextMessage: plainText, //string
-			midwayMessage: encryptedMessage, //string
-			message: outGoingMessage, //string (RSA) / object (ECDH)
-			clientKeyPub: clientKeyPubString, //string
-			ivValue: ivValue, //object
-			signature: signature,
-			signatureKey: JSON.stringify(signatureKey),
-			};
+ 			const signatureKey = JSON.stringify(await signCrypto.exportKey());
+		const msgForServer = combo.prepareSignedBallot(plainText, encryptedMessage, outGoingMessage, clientKeyPubString, ivValue, signature, signatureKey)
 		console.log(msgForServer.plaiTextMessage);
 		console.log(msgForServer.midwayMessage);
 		console.log(msgForServer.message);
