@@ -87,7 +87,11 @@ const signCrypto = {
 	importServerKey: async function importServerKey(serverKeyString){
 			let serverKeyStringParsed;
 			let importedKey;
-		serverKeyStringParsed = JSON.parse(serverKeyString);
+		if (typeof serverKeyString ==='string') {
+			serverKeyStringParsed = JSON.parse(serverKeyString);
+		} else{
+			serverKeyStringParsed = serverKeyString;
+		}
 
 		try {
 			console.log('trying to import server key as JWK:', serverKeyStringParsed);
