@@ -680,7 +680,7 @@ app.post('/verify-2x-encrypted-msg', async (req, res) => {
 	const ivValue = req.body.ivValue;
 	const signature = req.body.signature;
 	const signatureKey = req.body.signatureKey;
-
+	let decryptedMessage;
 
 	await serverSignCrypto.genKeys();
 	await serverSignCrypto.importKey(signatureKey);
@@ -688,17 +688,12 @@ app.post('/verify-2x-encrypted-msg', async (req, res) => {
 	if (verified === true) {
 		console.log('Signature verified');
 		let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientPubKey);
-		let decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encryptedMessage, ivValue, sharedSecret);
+		decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encryptedMessage, ivValue, sharedSecret);
 		if (decryptedMessage === midwayMessage) {
 			console.log('ECDH upper layer works!');
 		}
 	} else {
 		console.log('Signature not verified');
-	}
-	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientPubKey);
-	let decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encryptedMessage, ivValue, sharedSecret);
-	if (decryptedMessage === midwayMessage) {
-		console.log('ECDH upper layer works!');
 	}
 	let decryptedMidWayMsg = serverRSACrypto.decryptWithPrivRSA(decryptedMessage, pemFormatServerPrivateRSAKey);
 	if (decryptedMidWayMsg === plainTextMessage) {

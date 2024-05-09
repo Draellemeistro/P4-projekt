@@ -47,7 +47,7 @@
 			await signCrypto.genKeys();
 			const signature = await signCrypto.prepareSignatureToSend(outGoingMessage);
  			const signatureKey = await signCrypto.exportKey();
-		const msgForServer = JSON.stringify({
+		const msgForServer = {
 			plaiTextMessage: plainText, //string
 			midwayMessage: encryptedMessage, //string
 			message: outGoingMessage, //string (RSA) / object (ECDH)
@@ -55,7 +55,12 @@
 			ivValue: ivValue, //object
 			signature: signature,
 			signatureKey: JSON.stringify(signatureKey),
-			});
+			};
+		console.log(msgForServer.plaiTextMessage);
+		console.log(msgForServer.midwayMessage);
+		console.log(msgForServer.message);
+		console.log(msgForServer.clientKeyPub);
+		console.log(msgForServer.ivValue);
 			let response = await verifyDoubleEnc(msgForServer);
 			await response.json().then((data) => {
 				console.log('RSAtoECDH okidoki..:', data);
