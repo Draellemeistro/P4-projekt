@@ -35,6 +35,7 @@
 			let encryptedMessage;
 			let outGoingMessage;
 			let ivValue;
+			await combo.RSAtoECDH(plainText)
 
 			encryptedMessage = await combo.RSApart(plainText);
 			let ECDHpart = await combo.ECDHpart(encryptedMessage);
@@ -60,7 +61,7 @@
 				console.log('RSAtoECDH okidoki..:', data);
 				responseRSAECDH = data;
 			});
-		//await combo.RSAtoECDH(plainText); //WORKS
+		//; //WORKS
 		// await combo.ECDHtoRSA(plainText); // not functional yet
 	});
 </script>

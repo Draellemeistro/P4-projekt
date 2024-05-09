@@ -687,6 +687,11 @@ app.post('/verify-2x-encrypted-msg', async (req, res) => {
 	let verified = await serverSignCrypto.verifyReceivedMessage(signature, encryptedMessage);
 	if (verified === true) {
 		console.log('Signature verified');
+		let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientPubKey);
+		let decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encryptedMessage, ivValue, sharedSecret);
+		if (decryptedMessage === midwayMessage) {
+			console.log('ECDH upper layer works!');
+		}
 	} else {
 		console.log('Signature not verified');
 	}
