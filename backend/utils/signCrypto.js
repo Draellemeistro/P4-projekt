@@ -2,10 +2,10 @@ const crypto = require('crypto');
 
 // Step 1: Generate a pair of keys for signing and verifying
 const serverSignCrypto = {
-	keyObject: null,
+
 	pubKey: null,
 	privKey: null,
-	serverKey: null,
+	clientKey: null,
 
 
 	genKeys: async function generateKeys() {
@@ -19,7 +19,6 @@ const serverSignCrypto = {
 		);
 		this.pubKey = keys.publicKey;
 		this.privKey = keys.privateKey;
-		return keys;
 	},
 
 // Step 2: Use the private key to sign a message
@@ -37,80 +36,105 @@ const serverSignCrypto = {
 	},
 
 // Step 3: Use the public key to verify the signature
-	verify: async function verifySignature(publicKey, signature, message){
+	verify: async function verifySignature(signature, message, clientKey){
 		const encoder = new TextEncoder();
 		const data = encoder.encode(message);
+		if(!clientKey){
+			return await crypto.subtle.verify(
+				{
+					name: "ECDSA",
+					hash: { name: "SHA-256" },
+				},
+				this.clientKey,
+				signature,
+				data
+			);
+		} else{
 		return await crypto.subtle.verify(
 			{
 				name: "ECDSA",
 				hash: { name: "SHA-256" },
 			},
-			publicKey,
+			clientKey,
 			signature,
 			data
 		);
-	},
+	}},
 	exportKey: async function exportKey(choicePublic = true){
-		let key = this.pubKey;
+		let key;
+		key = this.pubKey;
 		if (choicePublic === false){
 			key = this.privKey;
 		}
-		return JSON.stringify({clientKey: await crypto.subtle.exportKey("jwk", key)});
+		return  await crypto.subtle.exportKey("jwk", key)
+	},
+	importServerKeys: function importServerKeys(pubKey, privKey){
+		this.pubKey = crypto.subtle.importKey(
+			'jwk',
+			pubKey,
+			{
+				name: 'ECDSA',
+				namedCurve: 'P-256',
+			},
+			true,
+			['verify'],
+		);
+		this.privKey = crypto.subtle.importKey(
+			'jwk',
+			privKey,
+			{
+				name: 'ECDSA',
+				namedCurve: 'P-256',
+			},
+			true,
+			['sign'],
+		);
 	},
 
-	importKey: function importKey(key, optionalParams = false, keyTwo = null){
-		if (optionalParams === true) {
-			this.keyObject.pubKey = crypto.subtle.importKey(
-				'jwk',
-				key,
-				{
-					name: 'ECDSA',
-					namedCurve: 'P-256',
-				},
-				true,
-				['sign', 'verify'],
-			);
-			this.keyObject.privKey = crypto.subtle.importKey(
-				'jwk',
-				keyTwo,
-				{
-					name: 'ECDSA',
-					namedCurve: 'P-256',
-				},
-		true,
-		['sign', 'verify'],
-				);
-		} else {
+	importKey: async function importKey(clientKeyString){
+		let clientKeyStringParsed;
+		let importedKey;
+		clientKeyStringParsed = JSON.parse(clientKeyString);
+
+		try {
+			console.log('trying to import server key as JWK:', clientKeyStringParsed);
+			importedKey = await crypto.subtle.importKey('jwk', clientKeyStringParsed, {
+				name: 'ECDSA',
+				namedCurve: 'P-256'
+			}, true, ['verify']);
+		} catch (error) {
+			console.error('Failed to import server key as parsed string:', error);
+			console.log('maybe implementing a JWK workaround will help');
 			try {
-				this.clientKey = crypto.subtle.importKey(
-					'jwk',
-					key,
-					{
-						name: 'ECDSA',
-						namedCurve: 'P-256',
-					},
-					true,
-					['verify'],
-				);
+				console.log('trying to import server key as String:', clientKeyString);
+				importedKey = await crypto.subtle.importKey('jwk', clientKeyString, { name: 'ECDSA', namedCurve: 'P-256' }, true, ['verify']);
 			} catch (error) {
-				console.log('Error importing key:', error);
-				try {
-					this.clientKey = crypto.subtle.importKey(
-						'jwk',
-						JSON.parse(key),
-						{
-							name: 'ECDSA',
-							namedCurve: 'P-256',
-						},
-						true,
-						['verify'],
-					);
-				} catch (error) {
-					console.log('Error importing key:', error);
-				}
+				console.error('Failed to import server key as regular string:', error);
+				console.log('trying to parse server key string, and then import');
 			}
 		}
+		this.clientKey = importedKey;
+		return importedKey;
+	},
+	prepareSignatureToSend: function prepareSignForServer(signatureArrBuff64){
+		return this.arrayBufferToBase64(signatureArrBuff64);
+	},
+
+	arrayBufferToBase64: function (buffer) {
+		let uint8Array = new Uint8Array(buffer);
+		return btoa(String.fromCharCode.apply(null, uint8Array));
+	},
+	base64ToArrayBuffer: function(base64) {
+		let binaryString = window.atob(base64);
+		let len = binaryString.length;
+		let bytes = new Uint8Array(len);
+		for (let i = 0; i < len; i++) {
+			bytes[i] = binaryString.charCodeAt(i);
+		}
+		return bytes.buffer;
 	}
+
+
 }
 module.exports = serverSignCrypto;
 

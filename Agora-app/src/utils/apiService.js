@@ -61,7 +61,7 @@ export const exchangePubSigKeys = async (key) => {
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify({  key }),
+		body: JSON.stringify({ clientKeyExport: key }),
 	});
 };
 
@@ -72,6 +72,14 @@ export const verifySignature = async (signature, message) => {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({ signature: signature, message: message })
+	});
+};
+export const signMessage = async () => {
+	return await fetch(`https://${serverIP}:${serverPort}/sign-message`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
 	});
 };
 

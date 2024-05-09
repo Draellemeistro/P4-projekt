@@ -1,46 +1,68 @@
 <script>
 	import { onMount } from 'svelte';
 	import signCrypto from '../../../utils/cryptoDigSig.js';
-	import { verifySignature } from '../../../utils/apiService.js';
 
-let signedMessage;
 let verifyResponse = '';
+	let isValid;
+	let isValidTwo;
+	let signed;
+
 	onMount(async () => {
-		console.log(' now for the real test');
 
 		const message = "Hello, world!";
-		console.log(' now for the real test');
-
 		// eslint-disable-next-line no-unused-vars
-		const keyPair = await signCrypto.genKeys();
-		console.log(' now for the real test');
-		const signature = signCrypto.sign(message);
-		console.log(' now for the real test');
-		const isValid = signCrypto.verify(signCrypto.pubKey, signature, message);
+		const { privKey, pubKey } = await signCrypto.genKeys()
+		//await signCrypto.putGenKeys(pubKey, privKey); //This shouldn't be needed, but somehow it is.
+		const signature = await signCrypto.sign(message);
+		console.log('sim test # 1');
+		console.log('signature', signature);
+		console.log('signature type', typeof signature);
+		let importedServerKey = await signCrypto.keyExchangeSim(pubKey);
+		isValid = await signCrypto.verify(signature, message, importedServerKey);
+		console.log('isValid', isValid)
 		console.log(isValid ? "Valid signature" : "Invalid signature");
+		console.log(' now for the sim test # 2');
+	  const sigString = signCrypto.prepareSignatureToSend(signature);
+		const sigStringToArrBuf = signCrypto.base64ToArrayBuffer(sigString);
 
+		isValidTwo = await signCrypto.verify(sigStringToArrBuf, message, importedServerKey);
+		console.log('isValidTwo', isValidTwo)
+		console.log(isValidTwo ? "Valid signature" : "Invalid signature");
 		console.log(' now for the real test');
 		await signCrypto.exchangeKeys();
-		signedMessage = await signCrypto.sign(message);
-		let verified = await verifySignature(signedMessage, message);
-		if (verified) {
-			console.log('Signature verified');
-			verifyResponse = 'Signature verified';
-		} else {
-			console.log('Signature not verified');
-			let selfVerify = await signCrypto.verify(signCrypto.pubKey, signedMessage, message);
-			if (selfVerify) {
-				console.log('Self-verified');
-				verifyResponse = 'Self-verified';
-			} else {
-				console.log('Self-verification failed');
-				verifyResponse = 'Self-verification failed';
-			}
-		}
+		let verified = await signCrypto.askForVerify(signature, message);
+		 if (verified) {
+		 	console.log('Signature verified');
+		 	verifyResponse = 'Signature verified';
+		 } else {
+		 	console.log('Signature not verified');
+		 	let selfVerify = await signCrypto.verify(signCrypto.pubKey, signature, message);
+		 	if (selfVerify) {
+		 		console.log('Self-verified');
+		 		verifyResponse = 'Self-verified';
+		 	} else {
+		 		console.log('Self-verification failed');
+		 		verifyResponse = 'Self-verification failed';
+		 	}
+		 }
+		 signed = await signCrypto.askForSignature();
+		 console.log('signed could be verified: ', signed);
 	});
 
 </script>
 <div>
+	<h2>offline self-sign verify</h2>
+	<p>{isValid}</p>
+</div>
+<div>
+	<h2>offline simulation of back-forth</h2>
+	<p>{isValid}</p>
+</div>
+<div>
 	<h2>verify response</h2>
 	<p>{verifyResponse}</p>
+</div>
+<div>
+	<h2>signed response</h2>
+	<p>{signed}</p>
 </div>

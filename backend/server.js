@@ -641,18 +641,12 @@ console.log('newIv type:', typeof nextStep.ivValue, nextStep.ivValue);
 	}
 });
 app.post('/sig-public-key', async (req, res) => {
-	let clientKey = req.body;
+	let clientKey = req.body.clientKeyExport;
 	console.log('clientKey:', clientKey)
-	if (typeof req.body.key === 'string') {
-		console.log(req.body.key)
-		clientKey = JSON.parse(req.body.key);
-	} else {
-		clientKey = req.body.key;
-	}
+	const v = await serverSignCrypto.genKeys();
 	let returnKey = await serverSignCrypto.exportKey();
-	console.log('Accessed /sig-public-key endpoint');
-	serverSignCrypto.keyObject = await serverSignCrypto.genKeys();
-	serverSignCrypto.importKey(clientKey);
+
+	await serverSignCrypto.importKey(clientKey);
 	let keyForClient = JSON.stringify({returnKey});
 	res.json(keyForClient);
 });
@@ -660,10 +654,9 @@ app.post('/sig-public-key', async (req, res) => {
 app.post('/verify-sig', async (req, res) => {
 	const signature = req.body.signature;
 	const message = req.body.message;
-	console.log('serverSignCrypto.clientKey:', serverSignCrypto.clientKey);
-	console.log('serverSignCrypto.clientKey TYPE:', typeof serverSignCrypto.clientKey);
+	const sigArrBuffer = serverSignCrypto.base64ToArrayBuffer(signature);
 
-	const verify = await serverSignCrypto.verify(serverSignCrypto.clientKey, signature, message);
+	const verify = await serverSignCrypto.verify(sigArrBuffer, message, serverSignCrypto.clientKey);
 	if (verify === true) {
 		console.log('Signature is valid');
 	} else {
@@ -672,3 +665,10 @@ app.post('/verify-sig', async (req, res) => {
 	}
 	res.json(verify);
 });
+
+app.post('/sign-message', async (req, res) => {
+	const message = "Hello, world!";
+	const signature = await serverSignCrypto.sign(message);
+	const signatureBase64 = serverSignCrypto.prepareSignatureToSend(signature);
+	res.json(JSON.stringify({signature: signatureBase64, message: message}));
+}
