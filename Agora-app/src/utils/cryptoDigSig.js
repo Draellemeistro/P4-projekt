@@ -146,7 +146,7 @@ const signCrypto = {
 	},
 
 	askForVerify: async function askForVerify(signature, message){
-		signature = this.prepareSignatureToSend(signature);
+		signature = this.arrayBufferToBase64(signature);
 		let response = await verifySignature(signature, message);
 		if (response.ok) {
 			await response.json();
@@ -159,28 +159,30 @@ const signCrypto = {
 		let response = await signMessage();
 		if (response.ok) {
 			let data = await response.json();
-			console.log('data:', data);
-			console.log('data type:',typeof data);
-			console.log('data.signature:', data.signature);
-			console.log('data.message:', data.message);
+
 		const signature = data.signature;
-			console.log('Signature: ', signature);
-			console.log('Signature: ', typeof signature);
+
 			const message = data.message;
-			console.log('Message: ', message);
-			console.log('Message: ',typeof message);
+
 			const sigStringToArrBuf = this.base64ToArrayBuffer(signature);
-			const isValid = await signCrypto.verify(sigStringToArrBuf, message, this.serverKey);
-			console.log('Signature verification: ', isValid);
-			return isValid;
+			return await signCrypto.verify(sigStringToArrBuf, message, this.serverKey);
 		} else {
 			console.error('Failed to sign message: ', response.status);
 			return response;
 		}
 	},
 
-	prepareSignatureToSend: function prepareSignForServer(signatureArrBuff64){
-		return this.arrayBufferToBase64(signatureArrBuff64);
+	prepareSignatureToSend: function prepareSignForServer(message){
+		let signature = this.sign(message);
+		signature.then((sig) => {
+			return this.arrayBufferToBase64(sig);
+		});
+	},
+	verifyReceivedMessage: function verifyReceivedMessage(signature, message) {
+		let sigStringToArrBuf = this.base64ToArrayBuffer(signature);
+		this.verify(sigStringToArrBuf, message, this.serverKey).then(r => {
+			return r;
+		});
 	},
 
 	arrayBufferToBase64: function (buffer) {

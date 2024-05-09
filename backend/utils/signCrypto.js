@@ -116,13 +116,17 @@ const serverSignCrypto = {
 		this.clientKey = importedKey;
 		return importedKey;
 	},
-	prepareSignatureToSend: function prepareSignForServer(signatureArrBuff64){
-		return this.arrayBufferToBase64(signatureArrBuff64);
+	prepareSignatureToSend: function prepareSignForServer(message){
+		let signature = this.sign(message);
+		signature.then((sig) => {
+			return this.arrayBufferToBase64(sig);
+		});
 	},
-
-	arrayBufferToBase64: function (buffer) {
-		let uint8Array = new Uint8Array(buffer);
-		return Buffer.from(uint8Array).toString('base64');
+	verifyReceivedMessage: function verifyReceivedMessage(signature, message) {
+		let sigStringToArrBuf = this.base64ToArrayBuffer(signature);
+		this.verify(sigStringToArrBuf, message, this.serverKey).then(r => {
+			return r;
+		});
 	},
 	base64ToArrayBuffer: function(base64String) {
 			let binaryString = Buffer.from(base64String, 'base64').toString('binary');

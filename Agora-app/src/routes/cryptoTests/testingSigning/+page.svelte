@@ -22,7 +22,7 @@ let verifyResponse = '';
 		console.log('isValid', isValid)
 		console.log(isValid ? "Valid signature" : "Invalid signature");
 		console.log(' now for the sim test # 2');
-	  const sigString = signCrypto.prepareSignatureToSend(signature);
+	  const sigString = signCrypto.arrayBufferToBase64(signature);
 		const sigStringToArrBuf = signCrypto.base64ToArrayBuffer(sigString);
 
 		isValidTwo = await signCrypto.verify(sigStringToArrBuf, message, importedServerKey);
