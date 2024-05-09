@@ -127,6 +127,9 @@ const signCrypto = {
 			console.log('data:', data);
 			console.log('typeof data:', typeof data);
 			console.log('data.returnKey:', data.returnKey);
+			if(data.returnKey !== undefined){
+				return await this.importServerKey(data.returnKey);
+			}
 			return await this.importServerKey(data);
 		} return response;
 	},
