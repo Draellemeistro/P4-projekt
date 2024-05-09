@@ -123,8 +123,9 @@ const signCrypto = {
 			console.error('Failed to send public key: ', response.status);
 		}
 		if (response.ok) {
-			const data = await response.json();
+			let data = await response.json();
 			console.log('data:', data);
+			data = JSON.parse(data);
 			console.log('typeof data:', typeof data);
 			console.log('data.returnKey:', data.returnKey);
 			if(data.returnKey !== undefined){
@@ -158,16 +159,18 @@ const signCrypto = {
 		let response = await signMessage();
 		if (response.ok) {
 			await response.json();
-		const signature = response.signature;
-		console.log('Signature: ', signature);
+			const data = JSON.parse(await response.json());
+			console.log('Response ', response);
+			const signature = data.signature;
+			console.log('Signature: ', signature);
 			console.log('Signature: ', typeof signature);
-		const message = response.message;
-		console.log('Message: ', message);
+			const message = data.message;
+			console.log('Message: ', message);
 			console.log('Message: ',typeof message);
-		const sigStringToArrBuf = this.base64ToArrayBuffer(signature);
-		const isValid = await signCrypto.verify(sigStringToArrBuf, message, this.serverKey);
-		console.log('Signature verification: ', isValid);
-		return isValid;
+			const sigStringToArrBuf = this.base64ToArrayBuffer(signature);
+			const isValid = await signCrypto.verify(sigStringToArrBuf, message, this.serverKey);
+			console.log('Signature verification: ', isValid);
+			return isValid;
 		} else {
 			console.error('Failed to sign message: ', response.status);
 			return response;
