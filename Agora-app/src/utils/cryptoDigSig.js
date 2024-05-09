@@ -162,7 +162,7 @@ const signCrypto = {
 			console.log('data:', data);
 			console.log('data type:',typeof data);
 			console.log('data.signature:', data.signature);
-			cpnsole.log('data.message:', data.message);
+			console.log('data.message:', data.message);
 		const signature = data.signature;
 			console.log('Signature: ', signature);
 			console.log('Signature: ', typeof signature);
