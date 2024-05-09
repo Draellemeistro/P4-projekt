@@ -28,6 +28,7 @@ export const getCandidatesFromServer = () => {
 };
 
 export const sendBallotToServerRSAtoECDH = async (msgForServer) => {
+
 	return await fetch(`https://${serverIP}:${serverPort}/insert-ballot-double-enc`, {
 		method: 'POST',
 		headers: {
@@ -80,6 +81,16 @@ export const signMessage = async () => {
 		headers: {
 			'Content-Type': 'application/json',
 		},
+	});
+};
+export const verifyDoubleEnc = async (msgForServer) => {
+
+	return await fetch(`https://${serverIP}:${serverPort}/verify-2x-encrypted-msg`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: msgForServer
 	});
 };
 

@@ -1,6 +1,9 @@
 <script>
 	import { onMount } from 'svelte';
 	import combo from './combinedEncryption.js';
+	import ECDHCrypto from '../../utils/encryptionECDH.js';
+	import signCrypto from '../../utils/cryptoDigSig.js';
+	import { verifyDoubleEnc } from '../../utils/apiService.js';
 //	import RSACrypto from '../../utils/encryptionRSA.js';
 //	import ECDHCrypto from '../../utils/encryptionECDH.js';
 //	import { combinedEncryptionTest } from '../../utils/apiServiceDev.js';
@@ -28,7 +31,36 @@
 	let innerDecryptCheckECDH = '';
 
 	onMount(async () => {
-		await combo.RSAtoECDH(plainText); //WORKS
+			let clientKeyPub;
+			let encryptedMessage;
+			let outGoingMessage;
+			let ivValue;
+
+			encryptedMessage = await combo.RSApart(plainText);
+			let ECDHpart = await combo.ECDHpart(encryptedMessage);
+
+			outGoingMessage = ECDHpart.encryptedMessage;
+			clientKeyPub = ECDHpart.clientPublicKey;
+			ivValue = ECDHpart.ivValue;
+			let clientKeyPubString = await ECDHCrypto.exportKeyString(clientKeyPub);
+			await signCrypto.genKeys();
+			const signature = await signCrypto.prepareSignatureToSend(outGoingMessage);
+ 			const signatureKey = await signCrypto.exportKey();
+		const msgForServer = JSON.stringify({
+			plaiTextMessage: plainText, //string
+			midwayMessage: encryptedMessage, //string
+			message: outGoingMessage, //string (RSA) / object (ECDH)
+			clientKeyPub: clientKeyPubString, //string
+			ivValue: ivValue, //object
+			signature: signature,
+			signatureKey: signatureKey,
+			});
+			let response = await verifyDoubleEnc(msgForServer);
+			await response.json().then((data) => {
+				console.log('RSAtoECDH okidoki..:', data);
+				responseRSAECDH = data;
+			});
+		//await combo.RSAtoECDH(plainText); //WORKS
 		// await combo.ECDHtoRSA(plainText); // not functional yet
 	});
 </script>

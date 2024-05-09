@@ -174,15 +174,16 @@ const signCrypto = {
 
 	prepareSignatureToSend: function prepareSignForServer(message){
 		let signature = this.sign(message);
-		signature.then((sig) => {
+		return signature.then((sig) => {
 			return this.arrayBufferToBase64(sig);
 		});
 	},
 	verifyReceivedMessage: function verifyReceivedMessage(signature, message) {
 		let sigStringToArrBuf = this.base64ToArrayBuffer(signature);
-		this.verify(sigStringToArrBuf, message, this.serverKey).then(r => {
+		return this.verify(sigStringToArrBuf, message, this.serverKey).then(r => {
 			return r;
 		});
+
 	},
 
 	arrayBufferToBase64: function (buffer) {
