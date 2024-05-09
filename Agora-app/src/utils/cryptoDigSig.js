@@ -125,9 +125,9 @@ const signCrypto = {
 		if (response.ok) {
 			const data = await response.json();
 			console.log('data:', data);
+			console.log('typeof data:', typeof data);
 			console.log('data.returnKey:', data.returnKey);
-			let serverPublicKeyString = data.returnKey;
-			return await this.importServerKey(serverPublicKeyString);
+			return await this.importServerKey(data);
 		} return response;
 	},
 
