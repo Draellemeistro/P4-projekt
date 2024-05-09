@@ -700,4 +700,4 @@ app.post('/verify-2x-encrypted-msg', async (req, res) => {
 		console.log('RSA to ECDH works!');
 	}
 	res.json(decryptedMessage);
-}
+});
