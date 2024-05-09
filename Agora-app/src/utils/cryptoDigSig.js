@@ -119,7 +119,7 @@ const signCrypto = {
 			console.error('Failed to send public key: ', response.status);
 		}
 		if (response.ok) {
-			const data = await response.json();
+			const data = await response.data();
 			const serverPublicKeyString = data.returnKey;
 			return await this.importServerKey(serverPublicKeyString);
 		} return response;
