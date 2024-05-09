@@ -122,17 +122,16 @@ const serverSignCrypto = {
 
 	arrayBufferToBase64: function (buffer) {
 		let uint8Array = new Uint8Array(buffer);
-		return btoa(String.fromCharCode.apply(null, uint8Array));
+		return Buffer.from(uint8Array).toString('base64');
 	},
-	base64ToArrayBuffer: function(base64) {
-		let binaryString = window.atob(base64);
-		let len = binaryString.length;
-		let bytes = new Uint8Array(len);
-		for (let i = 0; i < len; i++) {
-			bytes[i] = binaryString.charCodeAt(i);
-		}
-		return bytes.buffer;
-	}
+	base64ToArrayBuffer: function(base64String) {
+			let binaryString = Buffer.from(base64String, 'base64').toString('binary');
+			let arrayBuffer = new Uint8Array(binaryString.length);
+			for (let i = 0; i < binaryString.length; i++) {
+				arrayBuffer[i] = binaryString.charCodeAt(i);
+			}
+			return arrayBuffer;
+		},
 
 
 }
