@@ -669,5 +669,5 @@ app.post('/sign-message', async (req, res) => {
 	const message = "Hello, world!";
 	const signature = await serverSignCrypto.sign(message);
 	const signatureBase64 = serverSignCrypto.prepareSignatureToSend(signature);
-	res.json(JSON.stringify({signature: signatureBase64, message: message}));
+	res.json({signature: signatureBase64, message: message});
 });
