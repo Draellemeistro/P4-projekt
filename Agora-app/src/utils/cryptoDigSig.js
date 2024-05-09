@@ -159,7 +159,11 @@ const signCrypto = {
 		if (response.ok) {
 			await response.json();
 		const signature = response.signature;
+		console.log('Signature: ', signature);
+			console.log('Signature: ', typeof signature);
 		const message = response.message;
+		console.log('Message: ', message);
+			console.log('Message: ',typeof message);
 		const sigStringToArrBuf = this.base64ToArrayBuffer(signature);
 		const isValid = await signCrypto.verify(sigStringToArrBuf, message, this.serverKey);
 		console.log('Signature verification: ', isValid);
