@@ -647,9 +647,7 @@ app.post('/sig-public-key', async (req, res) => {
 	let returnKey = await serverSignCrypto.exportKey();
 
 	await serverSignCrypto.importKey(clientKey);
-	let keyForClient = JSON.stringify({returnKey});
-	console.log('keyForClient:', keyForClient);
-	res.json(keyForClient);
+	res.json(returnKey);
 });
 
 app.post('/verify-sig', async (req, res) => {
