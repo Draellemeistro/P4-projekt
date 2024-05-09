@@ -159,7 +159,10 @@ const signCrypto = {
 		let response = await signMessage();
 		if (response.ok) {
 			let data = await response.json();
-			data = JSON.parse(data);
+			console.log('data:', data);
+			console.log('data type:',typeof data);
+			console.log('data.signature:', data.signature);
+			cpnsole.log('data.message:', data.message);
 		const signature = data.signature;
 			console.log('Signature: ', signature);
 			console.log('Signature: ', typeof signature);
