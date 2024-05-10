@@ -610,7 +610,7 @@ app.post(/rsa-to-ecdh-test/, async (req, res) => {
 	const clientPubKey = req.body.clientKeyPub;
 	const ivValue = req.body.ivValue;
 	const signatureBase64 = req.body.signature;
-	const signatureKey = req.body.signatureKey;
+	const signatureKey = JSON.stringify(req.body.signatureKey);
 	for (let key in req.body) {
 		if (req.body.hasOwnProperty(key)) {
 			console.log(`Key: ${key}, Value: ${req.body[key]}, Type: ${typeof req.body[key]} `);
