@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
 				try {
 					await sendEmail(email, otp);
 					const PublicRSAKey_JWK = jose.JWK.asKey(PublicRSAKey);
-					const PublicECDHKey_JWK = jose.JWK.asKey(JSON.parse(PublicECDHKey));
+					const PublicECDHKey_JWK = JSON.parse(PublicECDHKey);
 					console.log('PublicRSAKey_JWK: ', PublicRSAKey_JWK);
 					res.json({ message: 'Email sent successfully', PublicRSAKey_JWK, PublicECDHKey_JWK});
 				} catch (error) {
