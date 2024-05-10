@@ -605,7 +605,7 @@ app.post('/combined-encryption-test', async (req, res) => {
 app.post(/rsa-to-ecdh-test/, async (req, res) => {
 	console.log('Accessed /rsa-to-ecdh-test endpoint');
 	const plainTextMessage = req.body.plaintext;
-	const midwayMessage = req.body.midWayEncrypted;
+	const midwayMessage = req.body.midWayEncrypted; /////wtf, why is this the one that is signed???
 	const encryptedMessage = req.body.OutgoingEncrypted;
 	const clientPubKey = req.body.clientKeyPub;
 	const ivValue = req.body.ivValue;
