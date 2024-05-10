@@ -10,6 +10,7 @@ router.post('/', async (req, res) => {
 	let clientKeyPub = req.body.clientKeyPub;
 	const ivValue = req.body.ivValue;
 	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(serverECDHCrypto.serverPubKeyJWK, clientKeyPub);
+	console.log('sharedSecret:', sharedSecret);
 	let decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encBallot, ivValue, sharedSecret);
 	//TODO: do some handling of decrypted layers data.
 	if (typeof decryptedMessage === 'string') {

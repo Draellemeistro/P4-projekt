@@ -34,7 +34,7 @@ export const getCandidatesFromServer = () => {
 export const sendBallotToServer = (msgForServer) => {
 	msgForServer = JSON.parse(msgForServer);
 	msgForServer = JSON.stringify(msgForServer);
-	return fetch(`http://${serverIP}:${serverPort}/insert-ballot-untouched`, {
+	return fetch(`http://${serverIP}:${serverPort}/handle-encrypted-ballot`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
