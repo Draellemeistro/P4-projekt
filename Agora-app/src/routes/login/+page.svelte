@@ -32,11 +32,6 @@
           .then(data => {
               // Use the data here
               console.log(data);
-              console.log(data.PublicRSAKey_JWK);
-              console.log(data.PublicECDHKey_JWK);
-              RSA.saveServerKey(data.PublicRSAKey_JWK);
-              ECDH.saveServerKey(data.PublicECDHKey_JWK);
-
               login();
               showModal = true;
           })
@@ -57,6 +52,11 @@
           })
           .then(data => {
               if (data.message === 'User verified') {
+                  console.log(data)
+                  console.log(data.PublicRSAKey_JWK);
+                  console.log(data.PublicECDHKey_JWK);
+                  RSA.saveServerKey(data.PublicRSAKey_JWK);
+                  ECDH.saveServerKey(data.PublicECDHKey_JWK);
 
                   goto('/vote');
                   return;

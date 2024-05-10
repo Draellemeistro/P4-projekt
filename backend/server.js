@@ -25,6 +25,8 @@ app.use('/insert-ballot', insertBallotRoute);
 app.use('/handle-encrypted-ballot', handleEncryptedBallotRoute);
 app.use('/agree-shared-secret', agreeSharedSecretRoute);
 
+app.use()
+
 const privateKey = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/privkey.pem', 'utf8');
 const certificate = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/fullchain.pem', 'utf8');
 // Create a credentials object for use with https
