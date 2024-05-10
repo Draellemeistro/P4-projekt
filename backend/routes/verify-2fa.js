@@ -9,8 +9,6 @@ const verifyOTP = require('../utils/verifyOTP.js');
 const router = express.Router();
 
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename); // for some reason this is needed to get the current directory
 
 const publicRSAKey = fs.readFileSync(path.join(__dirname, '../utils/keys/serverPublicKeyRSA.pem'),'utf8');
 const publicECDHKey = fs.readFileSync(path.join(__dirname, '../utils/keys/serverPublicKeyECDH.pem'),'utf8');

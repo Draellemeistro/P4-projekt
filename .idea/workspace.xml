@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Changed back to commonjs part 2">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment=".">
+      <change beforePath="$PROJECT_DIR$/backend/routes/verify-2fa.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/verify-2fa.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -210,22 +209,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00032" summary="Changed otp storage to memory">
-      <option name="closed" value="true" />
-      <created>1713790095862</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1713790095862</updated>
-    </task>
-    <task id="LOCAL-00033" summary="Comment out keys">
-      <option name="closed" value="true" />
-      <created>1713872929165</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1713872929165</updated>
     </task>
     <task id="LOCAL-00034" summary="Comment out cors">
       <option name="closed" value="true" />
@@ -603,7 +586,23 @@
       <option name="project" value="LOCAL" />
       <updated>1715340481033</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="Changed back to commonjs part 3">
+      <option name="closed" value="true" />
+      <created>1715340730633</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1715340730633</updated>
+    </task>
+    <task id="LOCAL-00082" summary=".">
+      <option name="closed" value="true" />
+      <created>1715340778011</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1715340778011</updated>
+    </task>
+    <option name="localTasksCounter" value="83" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -633,7 +632,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="changed  2fa variable name" />
     <MESSAGE value="added verify success log" />
     <MESSAGE value="Fixed export from vote page" />
     <MESSAGE value="Moved api request to seperate file" />
@@ -647,7 +645,6 @@
     <MESSAGE value="kill me" />
     <MESSAGE value="Changed module system to match frontend, and moved routes out from server.js" />
     <MESSAGE value="pain" />
-    <MESSAGE value="." />
     <MESSAGE value="changed db to match es6 module" />
     <MESSAGE value="Fixed import path" />
     <MESSAGE value="Finished moving out routes from server.js" />
@@ -658,6 +655,8 @@
     <MESSAGE value="Fixed exports" />
     <MESSAGE value="Changed back to commonjs" />
     <MESSAGE value="Changed back to commonjs part 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed back to commonjs part 2" />
+    <MESSAGE value="Changed back to commonjs part 3" />
+    <MESSAGE value="." />
+    <option name="LAST_COMMIT_MESSAGE" value="." />
   </component>
 </project>
