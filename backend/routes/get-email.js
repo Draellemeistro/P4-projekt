@@ -30,6 +30,7 @@ router.post('/', async (req, res) => {
 					await sendEmail(email, otp);
 					const PublicRSAKey_JWK = pemJwk.pem2jwk(PublicRSAKey);
 					const PublicECDHKey_JWK = pemJwk.pem2jwk(PublicECDHKey);
+					console.log('PublicRSAKey_JWK: ', PublicRSAKey_JWK, 'PublicECDHKey_JWK: ', PublicECDHKey_JWK);
 					res.json({ message: 'Email sent successfully', PublicRSAKey_JWK, PublicECDHKey_JWK});
 				} catch (error) {
 					res.status(500).send('Error sending email');
