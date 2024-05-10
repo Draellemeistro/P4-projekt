@@ -16,7 +16,8 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "mysql2": "^3.9.4",
-    "nodemailer": "^6.9.13"
+    "nodemailer": "^6.9.13",
+    "pem-jwk": "^2.0.0"
   },
   "devDependencies": {
     "jose": "^5.2.4"

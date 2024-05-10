@@ -40,7 +40,7 @@ const serverRSA = {
 		return encrypted.toString('base64');
 	}
 };
-module.export = serverRSA;
+module.exports = serverRSA;
 //const testPublicRSAKey = fs.readFileSync('./serverPublicKeyRSA.pem', 'utf8');
 //const testPrivateRSAKey = fs.readFileSync('./serverPrivateKeyRSA.pem', 'utf8');
 //result = this.RSAUtilsTest(testPublicRSAKey, testPrivateRSAKey).then((result) => {

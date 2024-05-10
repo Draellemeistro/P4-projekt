@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Changed .js to .cjs">
-      <change beforePath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverECDH.cjs" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverECDH.cjs" afterDir="false" />
-    </list>
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="changed key path" />
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,22 +122,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00025" summary="Added HTTPS">
-      <option name="closed" value="true" />
-      <created>1713723154601</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1713723154601</updated>
-    </task>
-    <task id="LOCAL-00026" summary="Added HTTPS">
-      <option name="closed" value="true" />
-      <created>1713723264570</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1713723264570</updated>
     </task>
     <task id="LOCAL-00027" summary="fixed  HTTPS for requests">
       <option name="closed" value="true" />
@@ -517,7 +499,23 @@
       <option name="project" value="LOCAL" />
       <updated>1715334548938</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="Changed .js to .cjs">
+      <option name="closed" value="true" />
+      <created>1715334683105</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1715334683105</updated>
+    </task>
+    <task id="LOCAL-00075" summary="changed key path">
+      <option name="closed" value="true" />
+      <created>1715334909981</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1715334909981</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -547,7 +545,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="minor changes" />
     <MESSAGE value="Changed back to http for dev" />
     <MESSAGE value="init Code rework" />
     <MESSAGE value="Changed response to json" />
@@ -572,6 +569,7 @@
     <MESSAGE value="fixed __dirname??? broke becouse of change to ES module" />
     <MESSAGE value="changes" />
     <MESSAGE value="Changed .js to .cjs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed .js to .cjs" />
+    <MESSAGE value="changed key path" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed key path" />
   </component>
 </project>
