@@ -610,12 +610,20 @@ app.post(/rsa-to-ecdh-test/, async (req, res) => {
 	const clientPubKey = req.body.clientKeyPub;
 	const ivValue = req.body.ivValue;
 	const signatureBase64 = req.body.signature;
-	const signatureKey = JSON.stringify(req.body.signatureKey);
+	const signatureKey = req.body.signatureKey;
 	for (let key in req.body) {
+
 		if (req.body.hasOwnProperty(key)) {
 			console.log(`Key: ${key}, Value: ${req.body[key]}, Type: ${typeof req.body[key]} `);
 		}
 	}
+	console.log(`Key: signatureKey, Value: ${JSON.stringify(signatureKey)}, Type: ${typeof signatureKey}`);
+	console.log(`Key: signatureKey, Value: ${JSON.stringify(signatureKey)}, Type: ${typeof signatureKey}`);console.log(`Key: signatureKey, Value: ${JSON.stringify(signatureKey)}, Type: ${typeof signatureKey}`);
+	console.log(`Key: signatureKey, Value: ${JSON.stringify(signatureKey)}, Type: ${typeof signatureKey}`);
+	console.log(`Key: signatureKey, Value: ${JSON.stringify(signatureKey)}, Type: ${typeof signatureKey}`);
+	console.log(`Key: signatureKey, Value: ${JSON.stringify(signatureKey)}, Type: ${typeof signatureKey}`);
+	console.log(`Key: signatureKey, Value: ${JSON.stringify(signatureKey)}, Type: ${typeof signatureKey}`);
+
 	const verified = await serverSignCrypto.verifyReceivedMessage(signatureBase64, encryptedMessage, signatureKey);
 	if (verified) {
 		console.log('Signature verified. 2x2x decryption may now begin.');
@@ -636,6 +644,7 @@ app.post(/rsa-to-ecdh-test/, async (req, res) => {
 		console.log('Signature verification failed');
 		console.log('Signature verification failed');
 		console.log('Signature verification failed');
+
 		if (signatureKey === null) {
 			console.log('Signature key is null');
 		}
