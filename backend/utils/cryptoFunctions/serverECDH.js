@@ -54,6 +54,7 @@ const serverECDH = {
 	deriveSharedSecret: async function deriveSharedSecret(clientPublicKeyString) {
 		let serverSharedSecret;
 		let clientPublicKeyJWK
+		console.log('serverPrivKeyJWK:', this.serverPrivKeyJWK)
 		let JWKserverPrivECDH = JSON.parse(this.serverPrivKeyJWK);
 
 		if (typeof clientPublicKeyString === 'string') {
