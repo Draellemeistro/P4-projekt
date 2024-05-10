@@ -617,18 +617,21 @@ app.post(/rsa-to-ecdh-test/, async (req, res) => {
 			console.log(`Key: ${key}, Value: ${req.body[key]}, Type: ${typeof req.body[key]} `);
 		}
 	}
-	console.log(`Key: signatureKey, Value: ${JSON.stringify(signatureKey)}, Type: ${typeof signatureKey}`);
-	console.log(`Key: signatureKey, Value: ${JSON.stringify(signatureKey)}, Type: ${typeof signatureKey}`);console.log(`Key: signatureKey, Value: ${JSON.stringify(signatureKey)}, Type: ${typeof signatureKey}`);
-	console.log(`Key: signatureKey, Value: ${JSON.stringify(signatureKey)}, Type: ${typeof signatureKey}`);
-	console.log(`Key: signatureKey, Value: ${JSON.stringify(signatureKey)}, Type: ${typeof signatureKey}`);
-	console.log(`Key: signatureKey, Value: ${JSON.stringify(signatureKey)}, Type: ${typeof signatureKey}`);
-	console.log(`Key: signatureKey, Value: ${JSON.stringify(signatureKey)}, Type: ${typeof signatureKey}`);
+
 	serverSignCrypto.importKey(JSON.stringify(signatureKey)).then(r => {
 		console.log('Imported key:', r);
 		serverSignCrypto.clientKey = r;
 		serverSignCrypto.verify(signatureBase64, encryptedMessage, serverSignCrypto.clientKey).then(r => {
-			console.log('Signature verified in then then....:', r);
-			console.log('Signature verified in then then....:', r);
+			console.log('Signature verified in then1 then....:', r);
+			serverSignCrypto.verify(signatureBase64, midwayMessage, serverSignCrypto.clientKey).then(r => {
+				console.log('Signature verified in then2 then....:', r);
+				serverSignCrypto.verify(signatureBase64, plainTextMessage, serverSignCrypto.clientKey).then(r => {
+					console.log('Signature verified in then3 then....:', r);
+					serverSignCrypto.verify(signatureBase64, JSON.parse(encryptedMessage), serverSignCrypto.clientKey).then(r => {
+						console.log('Signature verified in then4 then....:', r);
+					});
+				});
+			});
 			console.log('Signature verified in then then....:', r);
 			console.log('Signature verified in then then....:', r);
 			console.log('Signature verified in then then....:', r);
