@@ -5,10 +5,10 @@ const { JWK } = require('jose');	//to correctly format/encode and transport ECDH
 
 const serverECDH = {
 
-	//serverPubKey:  fs.readFileSync(path.join(__dirname, '../keys/serverPublicKeyECDH.pem'),'utf8'),
-	//serverPrivKey: fs.readFileSync(path.join(__dirname, '../keys/serverPrivateKeyECDH.pem'),'utf8'),
-	serverPubKeyJWK: fs.readFileSync(path.join(__dirname, '/serverPublicKeyECDH.json'), 'utf8'),
-	serverPrivKeyJWK: 	fs.readFileSync(path.join(__dirname, '/serverPrivateKeyECDH.json'), 'utf8'),
+	serverPubKeyJWK:  fs.readFileSync(path.join(__dirname, '../keys/serverPublicKeyECDH.pem'),'utf8'),
+	serverPrivKeyJWK: fs.readFileSync(path.join(__dirname, '../keys/serverPrivateKeyECDH.pem'),'utf8'),
+	//serverPubKey: fs.readFileSync(path.join(__dirname, '/serverPublicKeyECDH.json'), 'utf8'),
+	//serverPrivKey: 	fs.readFileSync(path.join(__dirname, '/serverPrivateKeyECDH.json'), 'utf8'),
 	clientPubKeyString: '',
 
 
