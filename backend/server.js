@@ -8,12 +8,7 @@ const agreeSharedSecretRoute = require('./routes/agree-shared-secret.js');
 const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
-const path = require('path');
-const { fileURLToPath } = require('url');
-const { dirname } = require('path');
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename); // for some reason this is needed to get the current directory
 
 
 const app = express();
