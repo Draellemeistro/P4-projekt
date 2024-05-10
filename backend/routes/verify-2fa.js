@@ -1,8 +1,7 @@
 const express = require('express');
 const OTPStore = require('../utils/otpStore.js');
 const { keyStore } = require('../utils/keyStore.js');
-const { fileURLToPath } = require('url');
-const { dirname } = require('path');
+const path = require('path');
 const fs = require('fs');
 const verifyOTP = require('../utils/verifyOTP.js');
 
