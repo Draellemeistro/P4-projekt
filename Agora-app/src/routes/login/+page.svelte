@@ -8,6 +8,7 @@
     import { login } from '../../utils/auth.js';
     import { goto } from '$app/navigation';
     import ECDH from '../../utils/cryptoProtocols/encryptionECDH.js';
+    import RSA from '../../utils/cryptoProtocols/encryptionRSA.js';
 
     let personId;
     let voteId;
@@ -31,6 +32,9 @@
           .then(data => {
               // Use the data here
               console.log(data);
+              console.log(data.PublicRSAKey);
+              RSA.saveServerKey(data.PublicRSAKey);
+
               login();
               showModal = true;
           })

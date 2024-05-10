@@ -1,4 +1,3 @@
-
 const RSA = {
 	serverKey: null,
 	//TODO MAKE SURE SERVERKEYSTRING IS NOT NULL
@@ -7,12 +6,11 @@ const RSA = {
 	// returns a CryptoKey object and stores a string copy of it in sessionStorage
 
 	saveServerKey: async function saveServerKey(keyString) {
-		if(typeof keyString === 'string') {
-			keyString = JSON.parse(keyString);
-		}
 		this.serverKeyString = keyString;
-		this.serverKey = await this.keyImportTemplateRSA(keyString);
+		this.serverKey = await this.keyImportTemplateRSA(pemJwk.pem2jwk(keyString));
+		console.log('Server key saved' + this.serverKey);
 	},
+
 	// Avoids errors from fat-fingering by using a template for the key import
 	keyImportTemplateRSA: async function keyImportTemplateRSA(keyString) {
 		return  window.crypto.subtle.importKey(

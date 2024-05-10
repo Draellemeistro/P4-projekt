@@ -5,6 +5,8 @@ const OTPStore = require('../utils/otpStore.js');
 const { sendEmail } = require('../utils/sendEmail.js');
 const fs = require('fs');
 const path = require('path');
+const pemJwk = require('pem-jwk');
+
 
 
 const router = express.Router();
@@ -25,7 +27,8 @@ router.post('/', async (req, res) => {
 
 				try {
 					await sendEmail(email, otp);
-					res.json({ message: 'Email sent successfully', PublicRSAKey});
+					const PublicRSAKey_JWK = pemJwk.pem2jwk(PublicRSAKey);
+					res.json({ message: 'Email sent successfully', PublicRSAKey_JWK});
 				} catch (error) {
 					res.status(500).send('Error sending email');
 				}
