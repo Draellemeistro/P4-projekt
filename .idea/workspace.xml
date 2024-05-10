@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Fixed imports">
-      <change beforePath="$PROJECT_DIR$/backend/routes/verify-2fa.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/verify-2fa.js" afterDir="false" />
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Fixed exports">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/get-email.cjs" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/get-email.cjs" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -209,30 +210,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00025" summary="Added HTTPS">
-      <option name="closed" value="true" />
-      <created>1713723154601</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1713723154601</updated>
-    </task>
-    <task id="LOCAL-00026" summary="Added HTTPS">
-      <option name="closed" value="true" />
-      <created>1713723264570</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1713723264570</updated>
-    </task>
-    <task id="LOCAL-00027" summary="fixed  HTTPS for requests">
-      <option name="closed" value="true" />
-      <created>1713786993834</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1713786993834</updated>
     </task>
     <task id="LOCAL-00028" summary="Changed cors info">
       <option name="closed" value="true" />
@@ -602,7 +579,31 @@
       <option name="project" value="LOCAL" />
       <updated>1715338141591</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="Fixed exports">
+      <option name="closed" value="true" />
+      <created>1715338215937</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1715338215937</updated>
+    </task>
+    <task id="LOCAL-00075" summary="Fixed exports">
+      <option name="closed" value="true" />
+      <created>1715338432835</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1715338432835</updated>
+    </task>
+    <task id="LOCAL-00076" summary="Fixed exports">
+      <option name="closed" value="true" />
+      <created>1715338500552</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1715338500552</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -655,6 +656,7 @@
     <MESSAGE value="changes" />
     <MESSAGE value="changed OTPStore to OOP" />
     <MESSAGE value="Fixed imports" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed imports" />
+    <MESSAGE value="Fixed exports" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed exports" />
   </component>
 </project>
