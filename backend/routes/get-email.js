@@ -29,7 +29,8 @@ router.post('/', async (req, res) => {
 				OTPStore.addOTP(personId, { otp, timestamp });
 				try {
 					await sendEmail(email, otp);
-
+					const PublicRSAKey_JWK = pem2jwk(PublicRSAKey);
+					const PublicECDHKey_JWK = JSON.parse(PublicECDHKey);
 					res.json({ message: 'Email sent successfully', PublicRSAKey_JWK, PublicECDHKey_JWK});
 				} catch (error) {
 					console.error('Error sending email: ', error);
