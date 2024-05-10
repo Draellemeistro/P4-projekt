@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
 				OTPStore.addOTP(personId, { otp, timestamp });
 				try {
 					await sendEmail(email, otp);
-					const PublicRSAKey_JWK = jose.JWK.asKey(PublicRSAKey);
+					const PublicRSAKey_JWK = jose.JWK.asKey(PublicRSAKey, 'pem');
 					console.log('JSON', PublicECDHKey);
 					const PublicECDHKey_JWK = JSON.parse(PublicECDHKey);
 					console.log('PublicRSAKey_JWK: ', PublicRSAKey_JWK);
