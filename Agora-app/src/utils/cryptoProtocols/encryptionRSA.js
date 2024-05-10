@@ -5,6 +5,7 @@ const RSA = {
 	serverKeyString: null,
 	// Request the RSA public key from the server, make key object of it and
 	// returns a CryptoKey object and stores a string copy of it in sessionStorage
+
 	saveServerKey: async function saveServerKey(keyString) {
 		if(typeof keyString === 'string') {
 			keyString = JSON.parse(keyString);
