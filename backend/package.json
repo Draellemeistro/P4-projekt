@@ -19,6 +19,6 @@
     "pem-jwk": "^2.0.0"
   },
   "devDependencies": {
-    "jose": "^5.2.4"
+    "jose": "^5.3.0"
   }
 }

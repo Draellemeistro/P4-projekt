@@ -5,13 +5,13 @@ const OTPStore = require('../utils/otpStore.js');
 const { sendEmail } = require('../utils/sendEmail.js');
 const fs = require('fs');
 const path = require('path');
-const pemJwk = require('pem-jwk');
+const jose = require('jose');
 
 
 
 const router = express.Router();
 const PublicRSAKey = fs.readFileSync(path.join(__dirname, '../utils/keys/serverPublicKeyRSA.pem'), 'utf8');
-const PublicECDHKey = fs.readFileSync(path.join(__dirname, '../utils/keys/serverPublicKeyECDH.pem'), 'utf8');
+const PublicECDHKey = fs.readFileSync(path.join(__dirname, '../utils/keys/serverPublicKeyECDH.json'), 'utf8');
 
 router.post('/', async (req, res) => {
 	const { personId, voteId } = req.body;
@@ -28,15 +28,11 @@ router.post('/', async (req, res) => {
 
 				try {
 					await sendEmail(email, otp);
-					const PublicRSAKey_JWK = pemJwk.pem2jwk(PublicRSAKey);
-					console.log('This runs')
-					try {
-						const PublicECDHKey_JWK = pemJwk.pem2jwk(PublicECDHKey);
-						console.log('PublicECDHKey_JWK: ', PublicECDHKey_JWK);
-					} catch (error) {
-						console.error('Error converting ECDH key to JWK: ', error);
-					}
-					console.log('PublicRSAKey_JWK: ', PublicRSAKey_JWK, 'PublicECDHKey_JWK: ', PublicECDHKey_JWK);
+
+					const PublicRSAKey_JWK = jose.JWK.asKey(PublicRSAKey);
+					const PublicECDHKey_JWK = jose.JWK.asKey(JSON.parse(PublicECDHKey));
+
+					console.log('PublicRSAKey_JWK: ', PublicRSAKey_JWK);
 					res.json({ message: 'Email sent successfully', PublicRSAKey_JWK, PublicECDHKey_JWK});
 				} catch (error) {
 					res.status(500).send('Error sending email');
