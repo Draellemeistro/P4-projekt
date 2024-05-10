@@ -30,7 +30,12 @@ router.post('/', async (req, res) => {
 					await sendEmail(email, otp);
 					const PublicRSAKey_JWK = pemJwk.pem2jwk(PublicRSAKey);
 					console.log('This runs')
-					const PublicECDHKey_JWK = pemJwk.pem2jwk(PublicECDHKey);
+					try {
+						const PublicECDHKey_JWK = pemJwk.pem2jwk(PublicECDHKey);
+						console.log('PublicECDHKey_JWK: ', PublicECDHKey_JWK);
+					} catch (error) {
+						console.error('Error converting ECDH key to JWK: ', error);
+					}
 					console.log('PublicRSAKey_JWK: ', PublicRSAKey_JWK, 'PublicECDHKey_JWK: ', PublicECDHKey_JWK);
 					res.json({ message: 'Email sent successfully', PublicRSAKey_JWK, PublicECDHKey_JWK});
 				} catch (error) {
