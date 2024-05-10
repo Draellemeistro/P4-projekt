@@ -1,5 +1,5 @@
 import express from 'express';
-import getEmailRoute from './routes/get-email.cjs';
+import getEmailRoute from './routes/get-email.js';
 import fetchCandidatesRoute from './routes/fetch-candidates.js';
 import verify2faRoute from './routes/verify-2fa.js';
 import insertBallotRoute from './routes/insert-ballot-untouched.js';

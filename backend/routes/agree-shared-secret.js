@@ -1,5 +1,5 @@
-import serverECDH from '../utils/cryptoFunctions/serverECDH.cjs';
-import express from 'express';
+const serverECDH = require('../utils/cryptoFunctions/serverECDH.cjs');
+const express = require('express');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
@@ -20,4 +20,4 @@ router.post('/', async (req, res) => {
 	res.json({success: responseValue}); //, maybe encrypt own public key for fun? encrypted:
 });
 
-export default router;
+module.exports = router;

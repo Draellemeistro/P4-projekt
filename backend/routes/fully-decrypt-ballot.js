@@ -1,7 +1,7 @@
-import express from 'express';
-import serverECDHCrypto from '../utils/cryptoFunctions/serverECDH.cjs';
+const express = require('express');
+const serverRSACrypto = require('../utils/cryptoFunctions/serverRSA.cjs');
+const serverECDHCrypto = require('../utils/cryptoFunctions/serverECDH.cjs');
 const router = express.Router();
-import connection from '../utils/db.js';
 
 
 
@@ -25,4 +25,4 @@ router.post('/', async (req, res) => {
 	res.json(decryptedMessage);
 });
 
-export default router;
+module.exports = router;

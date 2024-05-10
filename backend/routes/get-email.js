@@ -1,5 +1,5 @@
 const express = require('express');
-const { generateOTP } = require('../utils/generateOTP.cjs');
+const { generateOTP } = require('../utils/generateOTP');
 const connection = require('../utils/db.js');
 const OTPStore = require('../utils/otpStore.js');
 const { sendEmail } = require('../utils/sendEmail.js');

@@ -1,5 +1,5 @@
-import express from 'express';
-import connection from '../utils/db.js';
+const express = require('express');
+const connection = require('../utils/db.js');
 
 const router = express.Router();
 router.post('/insert-ballot', (req, res) => {
@@ -23,4 +23,4 @@ router.post('/insert-ballot', (req, res) => {
 	);
 });
 
-export default router
+module.exports = router;

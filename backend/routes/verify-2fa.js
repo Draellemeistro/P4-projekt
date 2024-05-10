@@ -4,7 +4,7 @@ const { keyStore } = require('../utils/keyStore.js');
 const { fileURLToPath } = require('url');
 const { dirname } = require('path');
 const fs = require('fs');
-const verifyOTP = require('../utils/verifyOTP.cjs');
+const verifyOTP = require('../utils/verifyOTP.js');
 
 const router = express.Router();
 
@@ -32,4 +32,4 @@ router.post('/', async (req, res) => {
 		res.status(400).json({ message: otpVerificationResult.message });
 	}
 });
-export default router;
+module.exports = router;

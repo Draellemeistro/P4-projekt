@@ -4,9 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Fixed exports">
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Changed back to commonjs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/get-email.cjs" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/get-email.cjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/agree-shared-secret.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/agree-shared-secret.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/fetch-candidates.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/fetch-candidates.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/fully-decrypt-ballot.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/fully-decrypt-ballot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/get-email.cjs" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/get-email.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/handle-encrypted-ballot.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/handle-encrypted-ballot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/insert-ballot-untouched.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/insert-ballot-untouched.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/verify-2fa.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/verify-2fa.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/tests/generateOTP.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/tests/generateOTP.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/tests/verifyOTP.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/tests/verifyOTP.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/generateOTP.cjs" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/generateOTP.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/verifyOTP.cjs" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/verifyOTP.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -210,22 +224,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00028" summary="Changed cors info">
-      <option name="closed" value="true" />
-      <created>1713787503383</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1713787503383</updated>
-    </task>
-    <task id="LOCAL-00029" summary="Comment cors">
-      <option name="closed" value="true" />
-      <created>1713787830733</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1713787830733</updated>
     </task>
     <task id="LOCAL-00030" summary="Comment cors">
       <option name="closed" value="true" />
@@ -603,7 +601,23 @@
       <option name="project" value="LOCAL" />
       <updated>1715338500552</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="Fixed exports">
+      <option name="closed" value="true" />
+      <created>1715338572927</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1715338572927</updated>
+    </task>
+    <task id="LOCAL-00078" summary="Fixed exports">
+      <option name="closed" value="true" />
+      <created>1715338752009</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1715338752009</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -657,6 +671,7 @@
     <MESSAGE value="changed OTPStore to OOP" />
     <MESSAGE value="Fixed imports" />
     <MESSAGE value="Fixed exports" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed exports" />
+    <MESSAGE value="Changed back to commonjs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed back to commonjs" />
   </component>
 </project>
