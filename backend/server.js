@@ -612,8 +612,8 @@ app.post(/rsa-to-ecdh-test/, async (req, res) => {
 	const signatureBase64 = req.body.signature;
 	const signatureKey = req.body.signatureKey;
 	const verified = await serverSignCrypto.verifyReceivedMessage(signatureBase64, encryptedMessage, signatureKey);
-
 	if (verified) {
+		console.log('Signature verified. RSA decryption may now begin.');
 		let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientPubKey);
 		let decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encryptedMessage, ivValue, sharedSecret);
 		if (decryptedMessage === midwayMessage) {
