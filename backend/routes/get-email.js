@@ -1,8 +1,8 @@
 // routes/get-email.js
 import express from 'express';
-import { generateOTP } from '../utils/generateOTP.js';
+const { generateOTP } = require('../utils/generateOTP.js');
 import connection from '../utils/db.js';
-import { otpStore } from '../utils/otpStore.js';
+const OTPStore = require('../utils/otpStore.js');
 import { sendEmail } from '../utils/sendEmail.js';
 
 const router = express.Router();
@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
 				const email = results[0].email;
 				const otp = generateOTP();
 				const timestamp = Date.now();
-				otpStore[personId] = { otp, timestamp };
+				OTPStore.addOTP(personId, { otp, timestamp });
 
 				try {
 					await sendEmail(email, otp);

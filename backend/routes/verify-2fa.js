@@ -1,5 +1,5 @@
 import express from 'express';
-import { otpStore } from '../utils/otpStore.js';
+const OTPStore = require('../utils/otpStore.js');
 import { keyStore } from '../utils/keyStore.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -15,7 +15,7 @@ const publicRSAKey = fs.readFileSync(path.join(__dirname, '../utils/keys/serverP
 const publicECDHKey = fs.readFileSync(path.join(__dirname, '../utils/keys/serverPublicKeyECDH.pem'),'utf8');
 router.post('/', async (req, res) => {
 	const { twoFactorCode, personId, voteId, pubKey } = req.body;
-	const otpData = otpStore[personId];
+	const otpData = OTPStore.getOTP(personId);
 	keyStore[personId] = pubKey;
 
 	const otpVerificationResult = verifyOTP(otpData, twoFactorCode, Date.now());

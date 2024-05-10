@@ -5,24 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="changes">
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/utils/encryptionECDH.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/utils/keyStore.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/apiService.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/apiService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/cryptoUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/cryptoUtils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/encryptionEDCH.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes/get-email.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/get-email.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes/verify-2fa.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/verify-2fa.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/serverPrivateKeyECDH.pem" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/keys/serverPrivateKeyECDH.pem" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/serverPrivateKeyRSA.pem" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/keys/serverPrivateKeyRSA.pem" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/serverPublicKeyECDH.pem" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/keys/serverPublicKeyECDH.pem" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/serverPublicKeyRSA.pem" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/keys/serverPublicKeyRSA.pem" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/utils/keys/serverECDHPub.pem" beforeDir="false" />
-    </list>
-    <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="">
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/encryptionRSA.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/encryptionRSA.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -89,7 +74,7 @@
     "Vitest.validateForm returns errors for invalid SSIN.executor": "Run",
     "Vitest.validateForm returns errors for invalid year in SSIN.executor": "Run",
     "Vitest.validateForm returns no errors for valid SSIN and voteId.executor": "Run",
-    "git-widget-placeholder": "mainTest",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "javascript.nodejs.core.library.configured.version": "20.12.2",
     "javascript.nodejs.core.library.typings.version": "20.12.7",
