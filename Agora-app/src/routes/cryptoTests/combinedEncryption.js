@@ -61,11 +61,11 @@ const combo = {
 		outGoingMessage = ECDHpart.encryptedMessage;
 		clientKeyPub = ECDHpart.clientPublicKey;
 		ivValue = ECDHpart.ivValue;
-		let signature = await signCrypto.prepareSignatureToSend(encryptedMessage);
+		let signature = await signCrypto.prepareSignatureToSend(outGoingMessage);
 		let signKey = await signCrypto.exportKey();
 		let clientKeyPubString = await ECDHCrypto.exportKeyString(clientKeyPub);
-		const msgForServer = await this.prepareFinalBallotExample(message, encryptedMessage, outGoingMessage, clientKeyPubString, ivValue, signature, signKey);
-		let okidoki = await RSAtoECDHTest(msgForServer);
+		const msgForServer = await this.prepareFinalBallotExample(message, encryptedMessage, outGoingMessage, clientKeyPubString, ivValue,);
+		let okidoki = await RSAtoECDHTest(msgForServer, signature, JSON.stringify(signKey));
 		console.log('RSAtoECDH okidoki..:', okidoki);
 		return okidoki;
 	},

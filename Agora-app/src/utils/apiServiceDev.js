@@ -80,13 +80,13 @@ export const combinedEncryptionTest = (message, encrypted, clientPubKey = null, 
 	});
 
 }
-export const RSAtoECDHTest = (msgForServer) => {
+export const RSAtoECDHTest = (msgForServer, signature, signatureKey) => {
 	return fetch(`https://${serverIP}:${serverPort}/rsa-to-ecdh-test`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: msgForServer
+		body: msgForServer, signature, signatureKey
 	});
 }
 export const ECDHtoRSATest = (msgForServer) => {
