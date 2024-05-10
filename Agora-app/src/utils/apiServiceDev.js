@@ -19,6 +19,23 @@ export const DecryptTestRSA = async (plainTextMessage, encryptedMessage) => {
 		return response.status;
 	}
 }
+export const DecryptSignedRSA = async (plainTextMessage, encryptedMessage, signature, key) => {
+	let response = await fetch(`https://${serverIP}:${serverPort}/decrypt-RSA-plus-sign`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({ plainTextMessage, encryptedMessage, signature, key }),
+	});
+	if (response.ok) {
+		return response.json();
+	}
+	else {
+		console.error('Error in DecryptTestRSA: ', response.status);
+		return response.status;
+	}
+}
+
 export const checkSharedSecretTest = async (keyStringSharedSecret, keyStringPub) => {
 	return await fetch(`https://${serverIP}:${serverPort}/check-shared-secret-test`, {
 		method: 'POST',

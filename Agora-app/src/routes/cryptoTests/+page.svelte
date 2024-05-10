@@ -1,9 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import combo from './combinedEncryption.js';
-	import ECDHCrypto from '../../utils/encryptionECDH.js';
-	import signCrypto from '../../utils/cryptoDigSig.js';
-	import { verifyDoubleEnc } from '../../utils/apiService.js';
+
 //	import RSACrypto from '../../utils/encryptionRSA.js';
 //	import ECDHCrypto from '../../utils/encryptionECDH.js';
 //	import { combinedEncryptionTest } from '../../utils/apiServiceDev.js';
@@ -31,34 +29,7 @@
 	let innerDecryptCheckECDH = '';
 
 	onMount(async () => {
-			let clientKeyPub;
-			let encryptedMessage;
-			let outGoingMessage;
-			let ivValue;
-			await combo.RSAtoECDH(plainText)
-
-			encryptedMessage = await combo.RSApart(plainText);
-			let ECDHpart = await combo.ECDHpart(encryptedMessage);
-
-			outGoingMessage = ECDHpart.encryptedMessage;
-			clientKeyPub = ECDHpart.clientPublicKey;
-			ivValue = ECDHpart.ivValue;
-			let clientKeyPubString = await ECDHCrypto.exportKeyString(clientKeyPub);
-			await signCrypto.genKeys();
-			const signature = await signCrypto.prepareSignatureToSend(outGoingMessage);
- 			const signatureKey = JSON.stringify(await signCrypto.exportKey());
-		const msgForServer = combo.prepareSignedBallot(plainText, encryptedMessage, outGoingMessage, clientKeyPubString, ivValue, signature, signatureKey)
-		console.log(msgForServer.plaiTextMessage);
-		console.log(msgForServer.midwayMessage);
-		console.log(msgForServer.message);
-		console.log(msgForServer.clientKeyPub);
-		console.log(msgForServer.ivValue);
-			let response = await verifyDoubleEnc(msgForServer);
-			await response.json().then((data) => {
-				console.log('RSAtoECDH okidoki..:', data);
-				responseRSAECDH = data;
-			});
-		//; //WORKS
+		await combo.RSAtoECDH(plainText); //WORKS
 		// await combo.ECDHtoRSA(plainText); // not functional yet
 	});
 </script>

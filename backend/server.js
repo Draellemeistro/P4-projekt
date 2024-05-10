@@ -376,6 +376,26 @@ app.post('/insert-ballot-double-enc', async (req, res) => {
 	//}
 });
 
+app.post('/decrypt-RSA-plus-sign', async (req, res) => {
+	console.log('Accessed /decrypt-RSA-message-Test endpoint');
+	const plainTextMessage = req.body.plainTextMessage;
+	const encryptedMessage = req.body.encryptedMessage;
+	const signature = req.body.signature;
+	const key = req.body.key;
+	const verified = await serverSignCrypto.verifyReceivedMessage(signature, encryptedMessage, key);
+	if (verified) {
+		console.log('Signature verified. RSA decryption may now begin.');
+		const decryptedMessage = serverRSACrypto.decryptWithPrivRSA(encryptedMessage, pemFormatServerPrivateRSAKey);
+		if (plainTextMessage === decryptedMessage) {
+			console.log('RSA works!');
+		} else {
+			console.log('RSA does not work!');
+		}
+		res.json(verified);
+	}
+
+});
+
 app.post('/decrypt-RSA-message-Test', async (req, res) => {
 	console.log('Accessed /decrypt-RSA-message-Test endpoint');
 	const plainTextMessage = req.body.plainTextMessage;
