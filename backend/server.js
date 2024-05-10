@@ -623,7 +623,7 @@ app.post(/rsa-to-ecdh-test/, async (req, res) => {
 	console.log(`Key: signatureKey, Value: ${JSON.stringify(signatureKey)}, Type: ${typeof signatureKey}`);
 	console.log(`Key: signatureKey, Value: ${JSON.stringify(signatureKey)}, Type: ${typeof signatureKey}`);
 	console.log(`Key: signatureKey, Value: ${JSON.stringify(signatureKey)}, Type: ${typeof signatureKey}`);
-	serverSignCrypto.importKey(signatureKey).then(r => {
+	serverSignCrypto.importKey(JSON.stringify(signatureKey)).then(r => {
 		console.log('Imported key:', r);
 		serverSignCrypto.clientKey = r;
 		serverSignCrypto.verify(signatureBase64, encryptedMessage, serverSignCrypto.clientKey).then(r => {
