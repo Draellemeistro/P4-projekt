@@ -4,8 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="minor fix">
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Changed keyexchange to verify2fa endpoint">
+      <change afterPath="$PROJECT_DIR$/backend/utils/clientPublicKeyStore.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/apiService.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/apiService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/agree-shared-secret.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/agree-shared-secret.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/fully-decrypt-ballot.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/fully-decrypt-ballot.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes/get-email.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/get-email.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/handle-encrypted-ballot.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/handle-encrypted-ballot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverECDH.cjs" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverECDH.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -209,6 +217,22 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
+    </task>
+    <task id="LOCAL-00057" summary="Started server.js cleanup">
+      <option name="closed" value="true" />
+      <created>1714318592535</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1714318592535</updated>
+    </task>
+    <task id="LOCAL-00058" summary="minor fix">
+      <option name="closed" value="true" />
+      <created>1714318689700</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1714318689700</updated>
     </task>
     <task id="LOCAL-00059" summary="minor fix">
       <option name="closed" value="true" />
@@ -586,23 +610,7 @@
       <option name="project" value="LOCAL" />
       <updated>1715366313193</updated>
     </task>
-    <task id="LOCAL-00106" summary="Changed keyexchange to verify2fa endpoint">
-      <option name="closed" value="true" />
-      <created>1715369565605</created>
-      <option name="number" value="00106" />
-      <option name="presentableId" value="LOCAL-00106" />
-      <option name="project" value="LOCAL" />
-      <updated>1715369565605</updated>
-    </task>
-    <task id="LOCAL-00107" summary="minor fix">
-      <option name="closed" value="true" />
-      <created>1715369640613</created>
-      <option name="number" value="00107" />
-      <option name="presentableId" value="LOCAL-00107" />
-      <option name="project" value="LOCAL" />
-      <updated>1715369640613</updated>
-    </task>
-    <option name="localTasksCounter" value="108" />
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
