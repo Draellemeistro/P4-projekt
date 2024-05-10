@@ -11,6 +11,7 @@ const pemJwk = require('pem-jwk');
 
 const router = express.Router();
 const PublicRSAKey = fs.readFileSync(path.join(__dirname, '../utils/keys/serverPublicKeyRSA.pem'), 'utf8');
+const PublicECDHKey = fs.readFileSync(path.join(__dirname, '../utils/keys/serverPublicKeyECDH.pem'), 'utf8');
 
 router.post('/', async (req, res) => {
 	const { personId, voteId } = req.body;
@@ -28,7 +29,8 @@ router.post('/', async (req, res) => {
 				try {
 					await sendEmail(email, otp);
 					const PublicRSAKey_JWK = pemJwk.pem2jwk(PublicRSAKey);
-					res.json({ message: 'Email sent successfully', PublicRSAKey_JWK});
+					const PublicECDHKey_JWK = pemJwk.pem2jwk(PublicECDHKey);
+					res.json({ message: 'Email sent successfully', PublicRSAKey_JWK, PublicECDHKey_JWK});
 				} catch (error) {
 					res.status(500).send('Error sending email');
 				}

@@ -32,8 +32,10 @@
           .then(data => {
               // Use the data here
               console.log(data);
-              console.log(data.PublicRSAKey);
-              RSA.saveServerKey(data.PublicRSAKey);
+              console.log(data.PublicRSAKey_JWK);
+              console.log(data.PublicECDHKey_JWK);
+              RSA.saveServerKey(data.PublicRSAKey_JWK);
+              ECDH.saveServerKey(data.PublicECDHKey_JWK);
 
               login();
               showModal = true;

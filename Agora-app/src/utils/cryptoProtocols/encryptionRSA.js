@@ -7,7 +7,7 @@ const RSA = {
 
 	saveServerKey: async function saveServerKey(keyString) {
 		this.serverKeyString = keyString;
-		this.serverKey = await this.keyImportTemplateRSA(pemJwk.pem2jwk(keyString));
+		this.serverKey = await this.keyImportTemplateRSA((keyString));
 		console.log('Server key saved' + this.serverKey);
 	},
 

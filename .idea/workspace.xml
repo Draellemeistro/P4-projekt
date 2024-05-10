@@ -213,14 +213,6 @@
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
     </task>
-    <task id="LOCAL-00042" summary="minor changes">
-      <option name="closed" value="true" />
-      <created>1713877546411</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1713877546411</updated>
-    </task>
     <task id="LOCAL-00043" summary="minor changes">
       <option name="closed" value="true" />
       <created>1713878638953</created>
@@ -605,7 +597,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715342220565</updated>
     </task>
-    <option name="localTasksCounter" value="91" />
+    <task id="LOCAL-00091" summary="changes">
+      <option name="closed" value="true" />
+      <created>1715343762808</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1715343762808</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -661,17 +661,5 @@
     <MESSAGE value="......." />
     <MESSAGE value="changes" />
     <option name="LAST_COMMIT_MESSAGE" value="changes" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte</url>
-          <line>3</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
