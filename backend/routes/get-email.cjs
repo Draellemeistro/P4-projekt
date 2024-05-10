@@ -1,5 +1,5 @@
 const express = require('express');
-const { generateOTP } = require('../utils/generateOTP.js');
+const { generateOTP } = require('../utils/generateOTP.cjs');
 const connection = require('../utils/db.js');
 const OTPStore = require('../utils/otpStore.js');
 const { sendEmail } = require('../utils/sendEmail.js');
@@ -32,4 +32,4 @@ router.post('/', async (req, res) => {
 	});
 });
 
-export default router;
+module.exports = {router};

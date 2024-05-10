@@ -1,4 +1,4 @@
-const { generateOTP } = require('../utils/generateOTP.js');
+const { generateOTP } = require('../utils/generateOTP.cjs');
 
 test('generateOTP - should generate a six-character OTP', () => {
 	const otp = generateOTP();
