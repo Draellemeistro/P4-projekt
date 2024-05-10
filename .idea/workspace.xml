@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="...">
-      <change beforePath="$PROJECT_DIR$/backend/utils/keyStore.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/keyStore.js" afterDir="false" />
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="......">
+      <change beforePath="$PROJECT_DIR$/backend/routes/get-email.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/get-email.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -209,30 +210,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00035" summary="Added logs">
-      <option name="closed" value="true" />
-      <created>1713874941136</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1713874941136</updated>
-    </task>
-    <task id="LOCAL-00036" summary="minor changes">
-      <option name="closed" value="true" />
-      <created>1713875705976</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1713875705976</updated>
-    </task>
-    <task id="LOCAL-00037" summary="minor changes">
-      <option name="closed" value="true" />
-      <created>1713875977181</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1713875977181</updated>
     </task>
     <task id="LOCAL-00038" summary="minor changes">
       <option name="closed" value="true" />
@@ -602,7 +579,31 @@
       <option name="project" value="LOCAL" />
       <updated>1715340808786</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="....">
+      <option name="closed" value="true" />
+      <created>1715340842569</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1715340842569</updated>
+    </task>
+    <task id="LOCAL-00085" summary=".....">
+      <option name="closed" value="true" />
+      <created>1715340908467</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1715340908467</updated>
+    </task>
+    <task id="LOCAL-00086" summary="......">
+      <option name="closed" value="true" />
+      <created>1715340995485</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1715340995485</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -632,9 +633,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed export from vote page" />
-    <MESSAGE value="Moved api request to seperate file" />
-    <MESSAGE value="Rework of function import, clean up unused variables, removed userContext.js" />
     <MESSAGE value="Rework of vote page, load data from database and cleanup" />
     <MESSAGE value="Finishing touches" />
     <MESSAGE value="Fixed ballotbox sql query" />
@@ -657,6 +655,9 @@
     <MESSAGE value="Changed back to commonjs part 3" />
     <MESSAGE value="." />
     <MESSAGE value="..." />
-    <option name="LAST_COMMIT_MESSAGE" value="..." />
+    <MESSAGE value="...." />
+    <MESSAGE value="....." />
+    <MESSAGE value="......" />
+    <option name="LAST_COMMIT_MESSAGE" value="......" />
   </component>
 </project>
