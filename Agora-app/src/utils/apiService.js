@@ -44,7 +44,15 @@ export const sendBallotToServer = (msgForServer) => {
 		body: msgForServer
 	});
 };
+export const fetchPublicKey = () => {
+	return fetch(`http://${serverIP}:${serverPort}/fetch-public-key`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	});
 
+}
 export const agreeSharedSecret = (encryptedMessage, clientPublicKey, ivValue) => {
 	return fetch(`http://${serverIP}:${serverPort}/agree-shared-secret`, {
 		method: 'POST',

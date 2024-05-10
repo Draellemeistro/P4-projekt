@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="......">
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="changes">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/apiService.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/apiService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes/get-email.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/get-email.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -210,30 +211,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00038" summary="minor changes">
-      <option name="closed" value="true" />
-      <created>1713876251611</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1713876251611</updated>
-    </task>
-    <task id="LOCAL-00039" summary="minor changes">
-      <option name="closed" value="true" />
-      <created>1713876736036</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1713876736036</updated>
-    </task>
-    <task id="LOCAL-00040" summary="minor changes">
-      <option name="closed" value="true" />
-      <created>1713877028645</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1713877028645</updated>
     </task>
     <task id="LOCAL-00041" summary="minor changes">
       <option name="closed" value="true" />
@@ -603,7 +580,31 @@
       <option name="project" value="LOCAL" />
       <updated>1715340995485</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary=".......">
+      <option name="closed" value="true" />
+      <created>1715341106804</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1715341106804</updated>
+    </task>
+    <task id="LOCAL-00088" summary="changes">
+      <option name="closed" value="true" />
+      <created>1715341274996</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1715341274996</updated>
+    </task>
+    <task id="LOCAL-00089" summary="changes">
+      <option name="closed" value="true" />
+      <created>1715341570282</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1715341570282</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -633,7 +634,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Rework of vote page, load data from database and cleanup" />
     <MESSAGE value="Finishing touches" />
     <MESSAGE value="Fixed ballotbox sql query" />
     <MESSAGE value="Added client side authentication check to vote page" />
@@ -646,7 +646,6 @@
     <MESSAGE value="Fixed import path" />
     <MESSAGE value="Finished moving out routes from server.js" />
     <MESSAGE value="fixed __dirname??? broke becouse of change to ES module" />
-    <MESSAGE value="changes" />
     <MESSAGE value="changed OTPStore to OOP" />
     <MESSAGE value="Fixed imports" />
     <MESSAGE value="Fixed exports" />
@@ -658,6 +657,8 @@
     <MESSAGE value="...." />
     <MESSAGE value="....." />
     <MESSAGE value="......" />
-    <option name="LAST_COMMIT_MESSAGE" value="......" />
+    <MESSAGE value="......." />
+    <MESSAGE value="changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="changes" />
   </component>
 </project>

@@ -3,9 +3,12 @@ const { generateOTP } = require('../utils/generateOTP');
 const connection = require('../utils/db.js');
 const OTPStore = require('../utils/otpStore.js');
 const { sendEmail } = require('../utils/sendEmail.js');
+const fs = require('fs');
+const path = require('path');
 
 
 const router = express.Router();
+const PublicRSAKey = fs.readFileSync(path.join(__dirname, '../utils/keys/serverPublicKeyRSA.pem'), 'utf8');
 
 router.post('/', async (req, res) => {
 	const { personId, voteId } = req.body;
@@ -22,7 +25,7 @@ router.post('/', async (req, res) => {
 
 				try {
 					await sendEmail(email, otp);
-					res.json({ message: 'Email sent successfully'});
+					res.json({ message: 'Email sent successfully', PublicRSAKey});
 				} catch (error) {
 					res.status(500).send('Error sending email');
 				}
