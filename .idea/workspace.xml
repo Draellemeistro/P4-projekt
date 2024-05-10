@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="changed key path" />
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="pem jwk">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/get-email.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/get-email.js" afterDir="false" />
+    </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,14 +125,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00027" summary="fixed  HTTPS for requests">
-      <option name="closed" value="true" />
-      <created>1713786993834</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1713786993834</updated>
     </task>
     <task id="LOCAL-00028" summary="Changed cors info">
       <option name="closed" value="true" />
@@ -515,7 +510,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715334909981</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="pem jwk">
+      <option name="closed" value="true" />
+      <created>1715335096292</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1715335096292</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -545,7 +548,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Changed back to http for dev" />
     <MESSAGE value="init Code rework" />
     <MESSAGE value="Changed response to json" />
     <MESSAGE value="changed  2fa variable name" />
@@ -570,6 +572,7 @@
     <MESSAGE value="changes" />
     <MESSAGE value="Changed .js to .cjs" />
     <MESSAGE value="changed key path" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed key path" />
+    <MESSAGE value="pem jwk" />
+    <option name="LAST_COMMIT_MESSAGE" value="pem jwk" />
   </component>
 </project>

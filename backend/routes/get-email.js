@@ -46,7 +46,7 @@ router.post('/', (req, res) => {
 				// Send the email
 				const info = await transporter.sendMail(mailOptions);
 
-				res.json({ publicKey });
+				res.json({ message: 'Email sent successfully', info});
 			} else {
 				res.status(404).send('No user found with the provided personId and voteId');
 			}
