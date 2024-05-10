@@ -122,11 +122,12 @@ const serverSignCrypto = {
 			return this.arrayBufferToBase64(sig);
 		});
 	},
-	verifyReceivedMessage: function verifyReceivedMessage(signature, message) {
+	verifyReceivedMessage: async function verifyReceivedMessage(signature, message, clientKey) {
 		let sigStringToArrBuf = this.base64ToArrayBuffer(signature);
-		return this.verify(sigStringToArrBuf, message, this.serverKey).then(r => {
-			return r;
-		});
+		console.log('clientKey:', clientKey);
+		console.log('clientKey type:', typeof clientKey);
+		let importedKey = await this.importKey(clientKey);
+		return await serverSignCrypto.verify(sigStringToArrBuf, message, importedKey);
 	},
 
 	arrayBufferToBase64: function (buffer) {
