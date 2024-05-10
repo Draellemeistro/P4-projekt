@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="jose to convert">
-      <change beforePath="$PROJECT_DIR$/backend/routes/get-email.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/get-email.js" afterDir="false" />
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="dinfar">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -209,22 +209,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00049" summary="added verify success log">
-      <option name="closed" value="true" />
-      <created>1713957189016</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1713957189016</updated>
-    </task>
-    <task id="LOCAL-00050" summary="Fixed export from vote page">
-      <option name="closed" value="true" />
-      <created>1713965747873</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1713965747873</updated>
     </task>
     <task id="LOCAL-00051" summary="Moved api request to seperate file">
       <option name="closed" value="true" />
@@ -602,7 +586,23 @@
       <option name="project" value="LOCAL" />
       <updated>1715347636165</updated>
     </task>
-    <option name="localTasksCounter" value="98" />
+    <task id="LOCAL-00098" summary="error print">
+      <option name="closed" value="true" />
+      <created>1715347712459</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1715347712459</updated>
+    </task>
+    <task id="LOCAL-00099" summary="dinfar">
+      <option name="closed" value="true" />
+      <created>1715348114268</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1715348114268</updated>
+    </task>
+    <option name="localTasksCounter" value="100" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -635,8 +635,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Started server.js cleanup" />
-    <MESSAGE value="minor fix" />
     <MESSAGE value="kill me" />
     <MESSAGE value="Changed module system to match frontend, and moved routes out from server.js" />
     <MESSAGE value="pain" />
@@ -660,6 +658,8 @@
     <MESSAGE value="Send public key" />
     <MESSAGE value="added error log" />
     <MESSAGE value="jose to convert" />
-    <option name="LAST_COMMIT_MESSAGE" value="jose to convert" />
+    <MESSAGE value="error print" />
+    <MESSAGE value="dinfar" />
+    <option name="LAST_COMMIT_MESSAGE" value="dinfar" />
   </component>
 </project>
