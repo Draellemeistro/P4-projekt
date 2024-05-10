@@ -5,7 +5,7 @@ const OTPStore = require('../utils/otpStore.js');
 const { sendEmail } = require('../utils/sendEmail.js');
 const fs = require('fs');
 const path = require('path');
-const jose = require('jose');
+const { JWK } = require('jose');
 
 
 
@@ -25,11 +25,10 @@ router.post('/', async (req, res) => {
 				const otp = generateOTP();
 				const timestamp = Date.now();
 				OTPStore.addOTP(personId, { otp, timestamp });
-
 				try {
 					await sendEmail(email, otp);
-					const PublicRSAKey_JWK = jose.JWK.asKey(PublicRSAKey);
-					const PublicECDHKey_JWK = jose.JWK.asKey(JSON.parse(PublicECDHKey));
+					const PublicRSAKey_JWK = JWK.asKey(PublicRSAKey);
+					const PublicECDHKey_JWK = JWK.asKey(JSON.parse(PublicECDHKey));
 					console.log('PublicRSAKey_JWK: ', PublicRSAKey_JWK);
 					res.json({ message: 'Email sent successfully', PublicRSAKey_JWK, PublicECDHKey_JWK});
 				} catch (error) {
