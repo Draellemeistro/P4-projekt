@@ -32,3 +32,4 @@ router.post('/', async (req, res) => {
 		res.status(400).json({ message: otpVerificationResult.message });
 	}
 });
+export default router;
