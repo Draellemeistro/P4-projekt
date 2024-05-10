@@ -2,8 +2,8 @@ import express from 'express';
 import { otpStore } from '../utils/otpStore.js';
 import { keyStore } from '../utils/keyStore.js';
 const router = express.Router();
-import serverECDH from '../utils/cryptoFunctions/serverECDH.js';
-import serverRSA from '../utils/cryptoFunctions/serverRSA.js';
+import serverECDH from '../utils/cryptoFunctions/serverECDH.cjs';
+import serverRSA from '../utils/cryptoFunctions/serverRSA.cjs';
 
 
 

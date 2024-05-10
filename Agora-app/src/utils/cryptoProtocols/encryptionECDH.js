@@ -6,12 +6,14 @@ const ECDH ={
 	pubKey: null,
 	privKey: null,
 
+//TODO MAKE SURE SERVERKEYSTRING IS NOT NULL
 	saveServerKey: async function saveServerKey(keyString) {
 		if (typeof keyString === 'string') {
 			keyString = this.convertStringToJWK(keyString);
 		}
 		this.serverPubKey = await this.keyImportTemplateECDH(keyString);
 	},
+	//TODO MAKE SURE INITIALIZATION IS DONE
 	initECDH: async function initECDH(){
 		console.log('initializing ECDH');
 		const clientKeyPairECDH = await window.crypto.subtle.generateKey(

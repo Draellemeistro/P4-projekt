@@ -1,4 +1,4 @@
-import serverECDH from '../utils/cryptoFunctions/serverECDH.js';
+import serverECDH from '../utils/cryptoFunctions/serverECDH.cjs';
 import express from 'express';
 const router = express.Router();
 

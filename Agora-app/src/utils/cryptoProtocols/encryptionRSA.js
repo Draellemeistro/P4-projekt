@@ -1,6 +1,7 @@
 
 const RSA = {
 	serverKey: null,
+	//TODO MAKE SURE SERVERKEYSTRING IS NOT NULL
 	serverKeyString: null,
 	// Request the RSA public key from the server, make key object of it and
 	// returns a CryptoKey object and stores a string copy of it in sessionStorage

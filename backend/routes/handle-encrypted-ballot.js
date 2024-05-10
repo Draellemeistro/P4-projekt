@@ -1,5 +1,5 @@
 import express from 'express';
-import serverECDHCrypto from '../utils/cryptoFunctions/serverECDH.js';
+import serverECDHCrypto from '../utils/cryptoFunctions/serverECDH.cjs';
 const router = express.Router();
 import connection from '../utils/db.js';
 

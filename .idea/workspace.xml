@@ -5,25 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="changes">
-      <change afterPath="$PROJECT_DIR$/Agora-app/src/utils/encryptionECDH.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/utils/keyStore.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/apiService.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/apiService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/cryptoUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/cryptoUtils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/encryptionEDCH.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/get-email.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/get-email.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/cryptoProtocols/encryptionECDH.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/cryptoProtocols/encryptionECDH.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/cryptoProtocols/encryptionRSA.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/cryptoProtocols/encryptionRSA.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/agree-shared-secret.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/agree-shared-secret.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/fully-decrypt-ballot.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/fully-decrypt-ballot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/handle-encrypted-ballot.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/handle-encrypted-ballot.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes/verify-2fa.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/verify-2fa.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/serverPrivateKeyECDH.pem" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/keys/serverPrivateKeyECDH.pem" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/serverPrivateKeyRSA.pem" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/keys/serverPrivateKeyRSA.pem" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/serverPublicKeyECDH.pem" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/keys/serverPublicKeyECDH.pem" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/serverPublicKeyRSA.pem" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/keys/serverPublicKeyRSA.pem" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/utils/keys/serverECDHPub.pem" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverECDH.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverECDH.cjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverRSA.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverRSA.cjs" afterDir="false" />
     </list>
-    <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="">
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/encryptionRSA.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/encryptionRSA.js" afterDir="false" />
-    </list>
+    <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,7 +32,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="mainTest" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -59,16 +51,6 @@
         <option name="url" value="https://github.com/Draellemeistro/P4-projekt.git" />
       </UrlAndAccount>
     </option>
-  </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte">
-      <ranges>
-        <range start1="3" end1="3" start2="3" end2="5" changelist="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" />
-        <range start1="9" end1="9" start2="11" end2="12" changelist="0d1947b7-2802-4f2f-8b2a-74380697ebba" />
-        <range start1="20" end1="21" start2="23" end2="26" changelist="0d1947b7-2802-4f2f-8b2a-74380697ebba" />
-        <range start1="50" end1="50" start2="55" end2="56" changelist="0d1947b7-2802-4f2f-8b2a-74380697ebba" />
-      </ranges>
-    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
