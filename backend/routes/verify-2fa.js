@@ -4,7 +4,8 @@ import { keyStore } from '../utils/keyStore.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import fs from 'fs';
-import { verifyOTP } from '../utils/verifyOTP.js';
+const verifyOTP = require('../utils/verifyOTP.js');
+
 const router = express.Router();
 
 
