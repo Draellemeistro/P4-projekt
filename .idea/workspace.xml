@@ -210,14 +210,6 @@
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
     </task>
-    <task id="LOCAL-00044" summary="Changed back to http for dev">
-      <option name="closed" value="true" />
-      <created>1713951538950</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1713951538950</updated>
-    </task>
     <task id="LOCAL-00045" summary="Changed back to http for dev">
       <option name="closed" value="true" />
       <created>1713951842772</created>
@@ -602,7 +594,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715345068285</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <task id="LOCAL-00093" summary="Send public key">
+      <option name="closed" value="true" />
+      <created>1715345260938</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1715345260938</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
