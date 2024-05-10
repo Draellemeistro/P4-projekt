@@ -1,5 +1,5 @@
 // utils/sendEmail.js
-import nodemailer from 'nodemailer';
+const nodemailer = require('nodemailer')
 
 export async function sendEmail(email, otp) {
 	const transporter = nodemailer.createTransport({

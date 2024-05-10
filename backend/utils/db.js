@@ -1,4 +1,4 @@
-import mysql from 'mysql2';
+const mysql = require ('mysql2');
 
 //Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
@@ -14,4 +14,4 @@ connection.connect((err) => {
 	console.log('Connected to MySQL');
 });
 
-export default connection;
+module.exports = connection;

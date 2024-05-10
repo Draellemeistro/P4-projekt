@@ -1,16 +1,16 @@
-import express from 'express';
-import getEmailRoute from './routes/get-email.js';
-import fetchCandidatesRoute from './routes/fetch-candidates.js';
-import verify2faRoute from './routes/verify-2fa.js';
-import insertBallotRoute from './routes/insert-ballot-untouched.js';
-import handleEncryptedBallotRoute from './routes/handle-encrypted-ballot.js';
-import agreeSharedSecretRoute from './routes/agree-shared-secret.js';
-import cors from 'cors';
-import https from 'https';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+const express = require('express');
+const getEmailRoute = require('./routes/get-email.js');
+const fetchCandidatesRoute = require('./routes/fetch-candidates.js');
+const verify2faRoute = require('./routes/verify-2fa.js');
+const insertBallotRoute = require('./routes/insert-ballot-untouched.js');
+const handleEncryptedBallotRoute = require('./routes/handle-encrypted-ballot.js');
+const agreeSharedSecretRoute = require('./routes/agree-shared-secret.js');
+const cors = require('cors');
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
+const { fileURLToPath } = require('url');
+const { dirname } = require('path');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename); // for some reason this is needed to get the current directory
