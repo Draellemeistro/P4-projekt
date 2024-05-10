@@ -3,7 +3,7 @@ const OTPStore = require('../utils/otpStore.js');
 const { keyStore } = require('../utils/keyStore.js');
 const path = require('path');
 const fs = require('fs');
-const verifyOTP = require('../utils/verifyOTP.js');
+const { verifyOTP } = require('../utils/verifyOTP.js');
 
 const router = express.Router();
 
