@@ -211,14 +211,6 @@
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
     </task>
-    <task id="LOCAL-00052" summary="Rework of function import, clean up unused variables, removed userContext.js">
-      <option name="closed" value="true" />
-      <created>1713968144085</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1713968144085</updated>
-    </task>
     <task id="LOCAL-00053" summary="Rework of vote page, load data from database and cleanup">
       <option name="closed" value="true" />
       <created>1713971394091</created>
@@ -603,7 +595,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715349196164</updated>
     </task>
-    <option name="localTasksCounter" value="101" />
+    <task id="LOCAL-00101" summary="fuckjose">
+      <option name="closed" value="true" />
+      <created>1715349998764</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1715349998764</updated>
+    </task>
+    <option name="localTasksCounter" value="102" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
