@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
 
 				try {
 					await sendEmail(email, otp);
-					res.json({ publicKey });
+					res.json({ message: 'Email sent successfully'});
 				} catch (error) {
 					res.status(500).send('Error sending email');
 				}
