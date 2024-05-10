@@ -1,10 +1,10 @@
-import express from 'express';
+const express = require('express');
 const OTPStore = require('../utils/otpStore.js');
-import { keyStore } from '../utils/keyStore.js';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-import fs from 'fs';
-const verifyOTP = require('../utils/verifyOTP.js');
+const { keyStore } = require('../utils/keyStore.js');
+const { fileURLToPath } = require('url');
+const { dirname } = require('path');
+const fs = require('fs');
+const verifyOTP = require('../utils/verifyOTP.cjs');
 
 const router = express.Router();
 

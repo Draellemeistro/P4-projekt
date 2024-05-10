@@ -1,4 +1,4 @@
-const { verifyOTP } = require('../utils/verifyOTP.js')
+const { verifyOTP } = require('../utils/verifyOTP.cjs')
 
 test('verifyOTP - valid OTP', () => {
 	const otpData = { otp: '123456', timestamp: Date.now() }

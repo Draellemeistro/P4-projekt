@@ -1,9 +1,8 @@
-// routes/get-email.js
-import express from 'express';
+const express = require('express');
 const { generateOTP } = require('../utils/generateOTP.js');
-import connection from '../utils/db.js';
+const connection = require('../utils/db.js');
 const OTPStore = require('../utils/otpStore.js');
-import { sendEmail } from '../utils/sendEmail.js';
+const { sendEmail } = require('../utils/sendEmail.js');
 
 const router = express.Router();
 
