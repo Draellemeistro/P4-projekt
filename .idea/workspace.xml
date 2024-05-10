@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="added error log">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="jose to convert">
       <change beforePath="$PROJECT_DIR$/backend/routes/get-email.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/get-email.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
@@ -212,14 +209,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00048" summary="changed  2fa variable name">
-      <option name="closed" value="true" />
-      <created>1713956982100</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1713956982100</updated>
     </task>
     <task id="LOCAL-00049" summary="added verify success log">
       <option name="closed" value="true" />
@@ -605,7 +594,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715346340273</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="jose to convert">
+      <option name="closed" value="true" />
+      <created>1715347636165</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1715347636165</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -638,7 +635,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added client side authentication check to vote page" />
     <MESSAGE value="Started server.js cleanup" />
     <MESSAGE value="minor fix" />
     <MESSAGE value="kill me" />
@@ -663,6 +659,7 @@
     <MESSAGE value="changes" />
     <MESSAGE value="Send public key" />
     <MESSAGE value="added error log" />
-    <option name="LAST_COMMIT_MESSAGE" value="added error log" />
+    <MESSAGE value="jose to convert" />
+    <option name="LAST_COMMIT_MESSAGE" value="jose to convert" />
   </component>
 </project>
