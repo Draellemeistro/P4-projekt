@@ -1,2 +1,3 @@
 
-export let keyStore = {};
+let keyStore = {};
+module.exports = { keyStore };
