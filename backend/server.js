@@ -619,23 +619,21 @@ app.post(/rsa-to-ecdh-test/, async (req, res) => {
 	}
 
 	serverSignCrypto.importKey(JSON.stringify(signatureKey)).then(r => {
-		console.log('Imported key:', r);
 		serverSignCrypto.clientKey = r;
-		serverSignCrypto.verifyECDH(signatureBase64, encryptedMessage, serverSignCrypto.clientKey).then(r => {
-			console.log('Signature verified in then1 then....:', r);
-			serverSignCrypto.verify(signatureBase64, midwayMessage, serverSignCrypto.clientKey).then(r => {
-				console.log('Signature verified in then2 then....:', r);
-				serverSignCrypto.verify(signatureBase64, plainTextMessage, serverSignCrypto.clientKey).then(r => {
-					console.log('Signature verified in then3 then....:', r);
-					serverSignCrypto.verify(signatureBase64, JSON.parse(encryptedMessage), serverSignCrypto.clientKey).then(r => {
-						console.log('Signature verified in then4 then....:', r);
-					});
-				});
-			});
+		serverSignCrypto.verify(signatureBase64, midwayMessage, serverSignCrypto.clientKey).then(r => {
 			console.log('Signature verified in then then....:', r);
-			console.log('Signature verified in then then....:', r);
-			console.log('Signature verified in then then....:', r);
-			console.log('Signature verified in then then....:', r);
+			if (r){
+				console.log('Signature verified. 2x2x decryption may now begin.');
+				let sharedSecret = serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientPubKey);
+				let decryptedMessage = serverECDHCrypto.handleEncryptedMessage(encryptedMessage, ivValue, sharedSecret);
+				if (decryptedMessage === midwayMessage) {
+					console.log('ECDH upper layer works!');
+				}
+				let decryptedMidWayMsg = serverRSACrypto.decryptWithPrivRSA(decryptedMessage, pemFormatServerPrivateRSAKey);
+				if (decryptedMidWayMsg === plainTextMessage) {
+					console.log('RSA to ECDH works!');
+				}
+			}
 		});
 	});
 	const verified = await serverSignCrypto.verifyReceivedMessage(signatureBase64, encryptedMessage, signatureKey);
