@@ -638,6 +638,7 @@ app.post(/rsa-to-ecdh-test/, async (req, res) => {
 			console.log('Signature key is a string');
 		} else {
 			console.log('Signature key is not a string');
+			console.log('Signature key:', signatureKey);
 			serverSignCrypto.verifyReceivedMessage(signatureBase64, encryptedMessage, JSON.stringify(signatureKey)).then(async r => {
 				console.log('Result:', r);
 				if (r) {
