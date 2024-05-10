@@ -621,7 +621,7 @@ app.post(/rsa-to-ecdh-test/, async (req, res) => {
 	serverSignCrypto.importKey(JSON.stringify(signatureKey)).then(r => {
 		console.log('Imported key:', r);
 		serverSignCrypto.clientKey = r;
-		serverSignCrypto.verify(signatureBase64, encryptedMessage, serverSignCrypto.clientKey).then(r => {
+		serverSignCrypto.verifyECDH(signatureBase64, encryptedMessage, serverSignCrypto.clientKey).then(r => {
 			console.log('Signature verified in then1 then....:', r);
 			serverSignCrypto.verify(signatureBase64, midwayMessage, serverSignCrypto.clientKey).then(r => {
 				console.log('Signature verified in then2 then....:', r);

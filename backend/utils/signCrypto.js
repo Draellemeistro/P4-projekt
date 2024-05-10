@@ -63,6 +63,33 @@ const serverSignCrypto = {
 			data
 		);
 	}},
+	verifyECDH: async function verifyECDHencryptedMessage(signature, message, clientKey){
+
+		let data = this.base64ToArrayBuffer(message);
+		if(typeof signature === 'string'){
+			signature = this.base64ToArrayBuffer(signature);
+		}
+		if(!clientKey){
+			return await crypto.subtle.verify(
+				{
+					name: "ECDSA",
+					hash: { name: "SHA-256" },
+				},
+				this.clientKey,
+				signature,
+				data
+			);
+		} else{
+			return await crypto.subtle.verify(
+				{
+					name: "ECDSA",
+					hash: { name: "SHA-256" },
+				},
+				clientKey,
+				signature,
+				data
+			);
+		}},
 	exportKey: async function exportKey(choicePublic = true){
 		let key;
 		key = this.pubKey;

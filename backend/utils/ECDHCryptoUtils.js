@@ -22,30 +22,7 @@ const serverECDHCrypto = {
 		fs.writeFileSync('serverPrivateKeyECDH.json', privateKeyString);
 		return {publicKeyString, privateKeyString};
 	},
-	deriveSecret: async function(serverECDH, clientPublicKey) {
-		return '1';
-	},
-	encryptECDH: async function(plainText, sharedSecretKey) {
-		return '1';
-	},
-	decryptECDH: async function(encryptedText, sharedSecretKey) {
-		return '1';
-	},
-	ECDHCryptoTest: function testImportAndEncryption(serverPrivateKey, clientPublicKey) {
-		const plainMessage = 'Hello, World!';
-		const sharedSecretKey = serverECDHCrypto.deriveSecret(serverPrivateKey, clientPublicKey);
-		const encrypted = serverECDHCrypto.encryptECDH(plainMessage, sharedSecretKey);
-		const decrypted = serverECDHCrypto.decryptECDH(encrypted, sharedSecretKey);
-		if (decrypted === plainMessage) {
-			console.log('ECDH encryption and decryption:\nSuccess:', decrypted === plainMessage);
-			return true;
-		} else {
-			console.log('Failure:', decrypted !== plainMessage);
-			console.log('Decrypted:', decrypted);
-			console.log('plaintext:', plainMessage);
-			return false;
-		}
-	},
+
 	fixAndValidateJWK: function insertKeyOpsAndValidate(jwkToValidate) {
 		let jwk;
 		if (typeof jwkToValidate === 'string') {
