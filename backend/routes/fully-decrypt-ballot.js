@@ -1,6 +1,6 @@
 const express = require('express');
 const serverRSACrypto = require('../utils/cryptoFunctions/serverRSA.cjs');
-const serverECDHCrypto = require('../utils/cryptoFunctions/serverECDH.cjs');
+const serverECDHCrypto = require('../utils/cryptoFunctions/serverECDH.js');
 const router = express.Router();
 
 

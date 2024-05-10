@@ -1,4 +1,4 @@
-const serverECDH = require('../utils/cryptoFunctions/serverECDH.cjs');
+const serverECDH = require('../utils/cryptoFunctions/serverECDH.js');
 const express = require('express');
 const router = express.Router();
 

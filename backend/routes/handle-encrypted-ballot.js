@@ -1,6 +1,6 @@
 const express = require('express');
 const connection = require('../utils/db.js');
-const serverECDHCrypto = require('../utils/cryptoFunctions/serverECDH.cjs');
+const serverECDHCrypto = require('../utils/cryptoFunctions/serverECDH.js');
 const router = express.Router();
 
 

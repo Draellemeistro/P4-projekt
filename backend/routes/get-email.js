@@ -4,6 +4,7 @@ const connection = require('../utils/db.js');
 const OTPStore = require('../utils/otpStore.js');
 const { sendEmail } = require('../utils/sendEmail.js');
 const fs = require('fs');
+const { keyStore } = require('../utils/keyStore.js');
 const path = require('path');
 const jose = require('node-jose');
 const pem2jwk = require('pem-jwk').pem2jwk;
@@ -15,8 +16,8 @@ const PublicRSAKey = fs.readFileSync(path.join(__dirname, '../utils/keys/serverP
 const PublicECDHKey = fs.readFileSync(path.join(__dirname, '../utils/keys/serverPublicKeyECDH.json'), 'utf8');
 
 router.post('/', async (req, res) => {
-	const { personId, voteId } = req.body;
-
+	const { personId, voteId, clientPublicKey } = req.body;
+	keyStore[personId] = clientPublicKey;
 	connection.query('SELECT email FROM Agora.users WHERE person_id = ? AND vote_id = ?', [personId, voteId], async (err, results) => {
 		if (err) {
 			res.status(500).send('Error fetching email from database');

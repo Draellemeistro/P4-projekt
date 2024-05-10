@@ -16,13 +16,14 @@
     let showModal = false;
 
 
-    const handleFormSubmitted = ({ detail }) => {
+    const handleFormSubmitted = async ({ detail }) => {
         console.log('handleFormSubmitted called');
         personId = detail.personId;
         voteId = detail.voteId;
-        const keys = ECDH.initECDH()
+        await ECDH.initECDH();
+        const clientPublicKey = await ECDH.exportKeyString(ECDH.pubKey);
 
-        fetchEmail(personId, voteId, keys.pubKey)
+        fetchEmail(personId, voteId, clientPublicKey)
           .then(response => {
               if (!response.ok) {
                   throw new Error(response.statusText);
@@ -57,7 +58,6 @@
                   console.log(data.PublicECDHKey_JWK);
                   RSA.saveServerKey(data.PublicRSAKey_JWK);
                   ECDH.saveServerKey(data.PublicECDHKey_JWK);
-
                   goto('/vote');
                   return;
               } else {
