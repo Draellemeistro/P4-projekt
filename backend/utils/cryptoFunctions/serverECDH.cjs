@@ -112,4 +112,4 @@ const serverECDH = {
 	},
 
 };
-export default serverECDH;
+module.exports = serverECDH;

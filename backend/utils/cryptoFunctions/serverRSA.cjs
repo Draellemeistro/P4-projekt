@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 const fs = require('fs');
-import path, { dirname } from 'path';
+const path = require('path');
 const pem2jwk = require('pem-jwk').pem2jwk; //to correctly format/encode and transport RSA key
 
 
@@ -40,7 +40,7 @@ const serverRSA = {
 		return encrypted.toString('base64');
 	}
 };
-export default serverRSA;
+module.export = serverRSA;
 //const testPublicRSAKey = fs.readFileSync('./serverPublicKeyRSA.pem', 'utf8');
 //const testPrivateRSAKey = fs.readFileSync('./serverPrivateKeyRSA.pem', 'utf8');
 //result = this.RSAUtilsTest(testPublicRSAKey, testPrivateRSAKey).then((result) => {
