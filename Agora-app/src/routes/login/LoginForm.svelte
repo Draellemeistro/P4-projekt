@@ -7,8 +7,8 @@
     //import Modal from './Modal.svelte';
     import { validateForm } from '../../utils/formValidation.js';
 
-    let personId = "";
-    let voteId = "";
+    let personId;
+    let voteId;
     let isLoading = false;
     let isSuccess = false;
     let errors = {};
