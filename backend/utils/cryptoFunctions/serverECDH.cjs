@@ -1,9 +1,9 @@
 const crypto = require('crypto');
 const fs = require('fs');
-import path, { dirname } from 'path';
+const path = require('path');
 const { JWK } = require('jose');	//to correctly format/encode and transport ECDH key
 
-export const serverECDH = {
+const serverECDH = {
 
 	//serverPubKey:  fs.readFileSync(path.join(__dirname, '../keys/serverPublicKeyECDH.pem'),'utf8'),
 	//serverPrivKey: fs.readFileSync(path.join(__dirname, '../keys/serverPrivateKeyECDH.pem'),'utf8'),
