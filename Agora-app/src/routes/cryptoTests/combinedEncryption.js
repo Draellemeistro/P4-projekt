@@ -3,6 +3,7 @@ import ECDHCrypto from '../../utils/encryptionECDH.js';
 // eslint-disable-next-line no-unused-vars
 import { combinedEncryptionTest, ECDHtoRSATest, RSAtoECDHTest } from '../../utils/apiServiceDev.js';
 import { SendEncryptedMsgTest } from './testingECDH/pageECDH.js';
+import signCrypto from '../../utils/cryptoDigSig.js';
 
 const combo = {
 
@@ -48,6 +49,8 @@ const combo = {
 		let clientKeyPub;
 		let encryptedMessage;
 		let outGoingMessage;
+		await signCrypto.genKeys();
+
 		let ivValue;
 
 		encryptedMessage = await this.RSApart(message);
@@ -58,8 +61,10 @@ const combo = {
 		outGoingMessage = ECDHpart.encryptedMessage;
 		clientKeyPub = ECDHpart.clientPublicKey;
 		ivValue = ECDHpart.ivValue;
+		let signature = await signCrypto.prepareSignatureToSend(encryptedMessage);
+		let signKey = await signCrypto.exportKey();
 		let clientKeyPubString = await ECDHCrypto.exportKeyString(clientKeyPub);
-		const msgForServer = await this.prepareFinalBallotExample(message, encryptedMessage, outGoingMessage, clientKeyPubString, ivValue);
+		const msgForServer = await this.prepareFinalBallotExample(message, encryptedMessage, outGoingMessage, clientKeyPubString, ivValue, signature, signKey);
 		let okidoki = await RSAtoECDHTest(msgForServer);
 		console.log('RSAtoECDH okidoki..:', okidoki);
 		return okidoki;
@@ -104,7 +109,7 @@ const combo = {
 			IvValue: ivValue //object
 		});
 	},
-	prepareFinalBallotExample: async function prepareExtraInfo(plaintext, midWayEncrypted, OutgoingEncrypted, clientKeyPub, ivValue) {
+	prepareFinalBallotExample: async function prepareExtraInfo(plaintext, midWayEncrypted, OutgoingEncrypted, clientKeyPub, ivValue, signature, signatureKey) {
 		console.log('prepareFinalBallotExample plaintext type..:', typeof plaintext);
 		console.log('prepareFinalBallotExample midWayEncrypted type..:', typeof midWayEncrypted);
 		console.log('prepareFinalBallotExample OutgoingEncrypted type..:', typeof OutgoingEncrypted);
@@ -116,6 +121,8 @@ const combo = {
 			OutgoingEncrypted: OutgoingEncrypted, //string (RSA) / object (ECDH)
 			clientKeyPub: clientKeyPub, //string
 			ivValue: ivValue, //object
+			signature: signature,
+			signatureKey: signatureKey,
 		});
 	},
 	prepareSignedBallot: async function prepareFinalBallotExample(plaintext, midWayEncrypted, OutgoingEncrypted, clientKeyPub, ivValue, signature, signatureKey) {

@@ -124,9 +124,9 @@ const serverSignCrypto = {
 	},
 	verifyReceivedMessage: async function verifyReceivedMessage(signature, message, clientKey) {
 		let sigStringToArrBuf = this.base64ToArrayBuffer(signature);
-		console.log('clientKey:', clientKey);
-		console.log('clientKey type:', typeof clientKey);
-		clientKey = JSON.stringify(clientKey);
+		if(typeof clientKey !== 'string'){
+			clientKey = JSON.stringify(clientKey);
+		}
 		let importedKey = await this.importKey(clientKey);
 		return await serverSignCrypto.verify(sigStringToArrBuf, message, importedKey);
 	},

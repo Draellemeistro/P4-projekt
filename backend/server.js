@@ -609,17 +609,23 @@ app.post(/rsa-to-ecdh-test/, async (req, res) => {
 	const encryptedMessage = req.body.OutgoingEncrypted;
 	const clientPubKey = req.body.clientKeyPub;
 	const ivValue = req.body.ivValue;
+	const signatureBase64 = req.body.signature;
+	const signatureKey = req.body.signatureKey;
+	const verified = await serverSignCrypto.verifyReceivedMessage(signatureBase64, encryptedMessage, signatureKey);
 
-	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientPubKey);
-	let decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encryptedMessage, ivValue, sharedSecret);
-	if (decryptedMessage === midwayMessage) {
-		console.log('ECDH upper layer works!');
+	if (verified) {
+		let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientPubKey);
+		let decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encryptedMessage, ivValue, sharedSecret);
+		if (decryptedMessage === midwayMessage) {
+			console.log('ECDH upper layer works!');
+		}
+		let decryptedMidWayMsg = serverRSACrypto.decryptWithPrivRSA(decryptedMessage, pemFormatServerPrivateRSAKey);
+		if (decryptedMidWayMsg === plainTextMessage) {
+			console.log('RSA to ECDH works!');
+		}
+		res.json(decryptedMessage);
 	}
-	let decryptedMidWayMsg = serverRSACrypto.decryptWithPrivRSA(decryptedMessage, pemFormatServerPrivateRSAKey);
-	if (decryptedMidWayMsg === plainTextMessage) {
-		console.log('RSA to ECDH works!');
-	}
-	res.json(decryptedMessage);
+
 });
 
 app.post('/ecdh-to-rsa-test', async (req, res) => {
