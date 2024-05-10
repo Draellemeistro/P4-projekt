@@ -39,6 +39,9 @@ const serverSignCrypto = {
 	verify: async function verifySignature(signature, message, clientKey){
 		const encoder = new TextEncoder();
 		const data = encoder.encode(message);
+		if (typeof signature === 'string'){
+			signature = this.base64ToArrayBuffer(signature);
+		}
 		if(!clientKey){
 			return await crypto.subtle.verify(
 				{
