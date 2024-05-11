@@ -10,21 +10,22 @@ export const cryptoUtils = {
 
 	// Encrypts a ballot using RSA and ECDH
   encryptBallot: async function(ballot) {
-		let clientKeyPub;
-		let encryptedMessage;
+		let encryptedBallot;
 		let outGoingMessage;
 		let ivValue;
 		if (typeof ballot !== 'string') {
 			ballot = JSON.stringify(ballot);
 		}
-		encryptedMessage = await this.RSA.encrypt(ballot);
-		let innerMessage = await this.prepareSubLayer(encryptedMessage, {testString: 'testString', testNumber: 12345});
-		let itemsForECDHDecrypt = await this.ECDH.ECDHPart(innerMessage); // include timestamp or unique voter ID in the vote??? Against replay attacks.
+		encryptedBallot = await this.RSA.encryptAndConvert(ballot);
+		let innerMessage = await this.prepareSubLayer(encryptedBallot, {testString: 'testString', testNumber: 12345});
+
+		let itemsForECDHDecrypt = await this.ECDH.ECDHPart(innerMessage);
+		// include timestamp or unique voter ID in the vote??? Against replay attacks.
 		outGoingMessage = itemsForECDHDecrypt.encryptedMessage;
-		clientKeyPub = itemsForECDHDecrypt.clientPublicKey;
 		ivValue = itemsForECDHDecrypt.ivValue;
-		let clientKeyPubString = await this.ECDH.exportKeyString(clientKeyPub);
-		return await this.prepareBallotForServer(outGoingMessage, clientKeyPubString, ivValue);
+		let clientKeyPubString = await this.ECDH.exportKeyToString();
+
+		return this.prepareBallotForServer(outGoingMessage, clientKeyPubString, ivValue);
 	},
 
 	prepareSubLayer: async function(midWayEncrypted, otherInformation) { //add hashOfMidWayEncrypted??
@@ -37,10 +38,10 @@ export const cryptoUtils = {
 			});}
 	},
 
-	prepareBallotForServer: async function(OutgoingEncrypted, clientKeyPub, ivValue) {
+	prepareBallotForServer: function(OutgoingEncrypted, clientKeyPub, ivValue) {
 		return JSON.stringify({
 			encryptedUpperLayer: OutgoingEncrypted, //string (RSA) / object (ECDH)
-			clientKeyPub: await this.ECDH.exportKeyString(), //string
+			clientKeyPub: clientKeyPub, //string
 			ivValue: ivValue, //object
 		});
 	},

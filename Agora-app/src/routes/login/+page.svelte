@@ -21,7 +21,7 @@
         personId = detail.personId;
         voteId = detail.voteId;
         await ECDH.initECDH();
-        const clientPublicKey = await ECDH.exportKeyString(ECDH.pubKey);
+        const clientPublicKey = await ECDH.exportKeyToString(ECDH.pubKey);
 
         fetchEmail(personId, voteId, clientPublicKey)
           .then(response => {

@@ -3,19 +3,41 @@
 const ECDH ={
 	// ECDH.pubKey
 	serverPubKey: null,
+	serverPubKeyVariant: null,
 	pubKey: null,
 	privKey: null,
 
 //TODO MAKE SURE SERVERKEYSTRING IS NOT NULL
+	saveServerKeyVariant: async function saveServerKey(keyString) {
+		let keyToImportTwo;
+		keyToImportTwo = await this.convertStringToJWK(keyString, true);
+		const serverKey = await this.importKeyProperly(keyToImportTwo);
+		this.serverPubKeyVariant = await serverKey;
+		return serverKey;
+	},
 	saveServerKey: async function saveServerKey(keyString) {
-		if (typeof keyString === 'string') {
-			keyString = this.convertStringToJWK(keyString);
+		let keyToImportTwo;
+		keyToImportTwo = JSON.parse(keyString);
+		const serverKey = await this.importKeyProperly(keyToImportTwo);
+		this.serverPubKey = await serverKey;
+		return serverKey;
+	},
+	importKeyProperly: async function importKeyProperly(keyToImport) {
+		let serverPublicKey;
+		try{
+			serverPublicKey = await this.keyImportTemplateECDH(keyToImport, true)
+		} catch (error) {
+			console.error('Failed to import key without usages: ', error);
+			try {
+				serverPublicKey = await this.keyImportTemplateECDH(keyToImport)
+			} catch (error) {
+				console.error('key has to be imported without key usages. trying now: ');
+			}
 		}
-		this.serverPubKey = await this.keyImportTemplateECDH(keyString);
+		return serverPublicKey;
 	},
 	//TODO MAKE SURE INITIALIZATION IS DONE
 	initECDH: async function initECDH(){
-		console.log('initializing ECDH');
 		const clientKeyPairECDH = await window.crypto.subtle.generateKey(
 			{
 				name: "ECDH",
@@ -26,6 +48,7 @@ const ECDH ={
 		);
 		this.pubKey = clientKeyPairECDH.publicKey;
 		this.privKey = clientKeyPairECDH.privateKey;
+		return {pubKey: this.pubKey, privKey: this.privKey};
 	},
 
 	deriveSecret: async function deriveSecretKey() {
@@ -51,11 +74,14 @@ const ECDH ={
 			console.error('keys should be of type: CryptoKey. clientPrivKey: ', typeof this.privKey, ' serverPubKey: ', typeof this.serverPubKey);
 		}
 	},
-	encryptECDH: async function encryptMessageECDH(message, sharedSecret) {
+	encrypt: async function encryptMessageECDH(message, sharedSecret) {
 		const encoder = new TextEncoder();// Check if the message and publicKey are valid
 		if (typeof message !== 'string' || message.length === 0) {
-			console.error('Invalid message. Please provide a non-empty string.');
-			return false;
+			throw new Error('Invalid message. Please provide a non-empty string.');
+		}
+
+		if (!sharedSecret) {
+			sharedSecret = await this.deriveSecret();
 		}
 		const ivValue = window.crypto.getRandomValues(new Uint8Array(12)); //needed for decryption
 		const encryptedMessage = await window.crypto.subtle.encrypt(
@@ -72,8 +98,8 @@ const ECDH ={
 		};
 	},
 
-	keyImportTemplateECDH: async function keyImportTemplateECDH(keyString,optionalParams = false	) {
-		if (optionalParams === true) {
+	keyImportTemplateECDH: async function keyImportTemplateECDH(keyString,withoutKeyUsages = false	) {
+		if (withoutKeyUsages === true) {
 			return await window.crypto.subtle.importKey(
 				'jwk',
 				keyString,
@@ -98,12 +124,14 @@ const ECDH ={
 		}
 	},
 
-	exportKeyString: async function exportKeyString(keyToExport) {
-		if (typeof keyToExport === "undefined") {
-			return  JSON.stringify(await window.crypto.subtle.exportKey('jwk', this.pubKey));
-		} else {
-			return JSON.stringify(await window.crypto.subtle.exportKey('jwk', keyToExport));
+	exportKeyToString: async function (keyToExport) {
+		if (!keyToExport) {
+			keyToExport = this.pubKey;
 		}
+		if (!(keyToExport instanceof CryptoKey)) {
+			throw new Error('Invalid key. Key must be a CryptoKey.');
+		}
+		return JSON.stringify(await window.crypto.subtle.exportKey('jwk', keyToExport));
 		// to send the key, it must be converted to a string. This function does that. CryptoKey -> JWK -> string
 	},
 
@@ -115,36 +143,50 @@ const ECDH ={
 	},
 
 	//ss
-	convertStringToJWK: async function convertStringToJWK(keyString) {
+	convertStringToJWK: async function convertStringToJWK(keyString, KeyOps = true) {
+		if(typeof keyString !== 'string'){
+			throw new Error('Key must be a string.');
+		}
 		const keyParsed = JSON.parse(keyString);
 		//because of some weird bug, the key_ops and ext properties are not passed on correctly
 		//this is a workaround to fix that
-		const JWKToPassOn = {
-			crv: keyParsed.crv,
-			ext: keyParsed.ext,
-			key_ops: keyParsed.key_ops,
-			kty: keyParsed.kty,
-			x: keyParsed.x,
-			y: keyParsed.y,
-		};
-		let serverPublicKeyJwk;
-		try{
-			serverPublicKeyJwk = await this.keyImportTemplateECDH(JWKToPassOn)
-		} catch (error) {
-			try {
-				serverPublicKeyJwk = await this.keyImportTemplateECDH(JWKToPassOn, true)
-			} catch (error) {
-				console.error('Failed to import FIXED server public key: ', error);
-			}
-			console.error('Failed to import server public key: ', error);
+		let JWKToPassOn;
+		if (KeyOps === true) {
+			JWKToPassOn = {
+				crv: keyParsed.crv,
+				ext: keyParsed.ext,
+				key_ops: keyParsed.key_ops,
+				kty: keyParsed.kty,
+				x: keyParsed.x,
+				y: keyParsed.y,
+			};
 		}
-		return serverPublicKeyJwk;
+		else {
+			JWKToPassOn = {
+				crv: keyParsed.crv,
+				ext: keyParsed.ext,
+				key_ops: [],
+				kty: keyParsed.kty,
+				x: keyParsed.x,
+				y: keyParsed.y,
+			};
+		}
+		console.log('JWKToPassOn:', JWKToPassOn);
+		return JWKToPassOn;
+
 	},
 	ECDHPart: async function ECDHpart(message) {
 		let sharedSecret;
-		sharedSecret = await this.deriveSecret(this.privKey, this.serverPubKey);
-		return await this.encryptECDH(message, sharedSecret);
+		sharedSecret = await this.deriveSecret();
+		return await this.encrypt(message, sharedSecret);
 	},
 
+
+	reset() {
+		this.serverPubKey = null;
+		this.serverPubKeyVariant = null;
+		this.pubKey = null;
+		this.privKey = null;
+	}
 };
 export default ECDH;
