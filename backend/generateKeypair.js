@@ -6,7 +6,21 @@
 const crypto = require('crypto');
 const fs = require('fs');
 const { createECDH } = require('node:crypto');
+const pem2jwk = require('pem-jwk').pem2jwk; //to correctly format/encode and transport RSA key
 
+
+async function generateRSAKeyPairSubtle() {
+	return await crypto.subtle.generateKey(
+	{
+		name: "RSA-OAEP",
+		modulusLength: 4096,
+		publicExponent: new Uint8Array([1, 0, 1]),
+		hash: "SHA-256"
+	},
+	true,
+	["encrypt", "decrypt"]
+);
+}
 function generateRSAKeyPair() {
 
 	// Generates an object where the keys are stored in properties `privateKey` and `publicKey`
@@ -21,6 +35,7 @@ function generateRSAKeyPair() {
 			format: 'pem' // Most common formatting choice
 		}
 	});
+	//jwkFormatServerPublicRSAKey = pem2jwk(keyPair.publicKey)
 	// Create the public key file
 	fs.writeFileSync(__dirname + '/serverPublicKeyRSA.pem', keyPair.publicKey);
 
@@ -48,7 +63,12 @@ async function initECDH(){
 		fs.writeFileSync('serverPrivateKeyECDH.json', privateKeyString);
 		return {publicKeyString, privateKeyString};
 }
-
+function readFileAndConvertToJWK() {
+	const keyString = fs.readFileSync(__dirname + '/utils/keys/serverPublicKeyRSA.pem', 'utf8');
+	const keyStringObject = pem2jwk(keyString);
+	fs.writeFileSync(__dirname + '/serverPublicKeyRSA2.txt', JSON.stringify(keyStringObject));
+}
 // Generate the keypairs
 //generateRSAKeyPair();
 //generateECDHKeyPair();
+readFileAndConvertToJWK();
