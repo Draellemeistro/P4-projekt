@@ -96,7 +96,7 @@ const serverDigSig = {
 		if (!clientKey) {
 			clientKey = this.clientKey;
 		} else {
-			clientKey = await this.importKey(clientKey);
+			clientKey = await this.importClientKey(clientKey);
 		}
 		return await serverDigSig.verify(sigStringToArrBuf, message, clientKey);
 	},
@@ -133,7 +133,7 @@ const serverDigSig = {
 		);
 	},
 
-	importKey: async function importKey(clientKeyString, isPublic = true){
+	importClientKey: async function importKey(clientKeyString, isPublic = true){
 		let clientKeyStringParsed;
 		let importedKey;
 		if (typeof clientKeyString ==='string') {

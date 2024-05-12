@@ -37,6 +37,7 @@ const serverECDH = {
 	},
 	importClientKey: async function importClientKey(clientKeyString) {
 		this.clientPubKey = await this.keyImportTemplateECDH(clientKeyString, true);
+		return this.clientPubKey;
 	},
 
 	keyImportTemplateECDH: async function keyImportTemplateECDH(keyStringJWK,isPublic = true	) {

@@ -6,7 +6,7 @@ export const cryptoUtils = {
 
 
 	RSA: RSA,
-	ECDH: ECDH, // EXAMPLE cryptoUtils.ECDH.initECDH()
+	ECDH: ECDH, // EXAMPLE cryptoUtils.ECDH.genKeys()
 	digSig: digSig, //can quickly be implemented to provide a signature for the vote,
 										// which serves as a proof of message integrity and authenticity
 
@@ -51,8 +51,8 @@ export const cryptoUtils = {
 
 	packagePublicKeys: async function() {
 		return JSON.stringify({
-			ECDHPubKey: await this.ECDH.exportKeyToString(),
-			digSigPubKey: await this.digSig.exportKeyToString()
+			ECDH: await this.ECDH.exportKeyToString(),
+			DigSig: await this.digSig.exportKeyToString()
 		});
 	},
 
@@ -76,5 +76,6 @@ export const cryptoUtils = {
 //			body: encryptedPublicKeys,
 //		});
 //	},
-
 }
+
+export default cryptoUtils;

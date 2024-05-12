@@ -79,29 +79,25 @@ const digSig = {
 		}
 		return JSON.stringify(await window.crypto.subtle.exportKey('jwk', pubKey));
 	},
-
-	importServerKey: async function importServerKey(serverKeyString){
-		let serverKeyStringParsed;
-		let importedKey;
-		if (typeof serverKeyString ==='string') {
-			serverKeyStringParsed = JSON.parse(serverKeyString);
-		} else{
-			serverKeyStringParsed = serverKeyString;
+	importKeyTemplate: async function importKeyTemplate(keyString, isPublic = true){
+		if (typeof keyString === 'string') {
+			keyString = JSON.parse(keyString);
 		}
-
-		try {
-			importedKey = await window.crypto.subtle.importKey('jwk', serverKeyStringParsed, {
+		if (isPublic === true) {
+			return await window.crypto.subtle.importKey('jwk', keyString, {
 				name: 'ECDSA',
 				namedCurve: 'P-256'
 			}, true, ['verify']);
-		} catch (error) {
-			try {
-				importedKey = await window.crypto.subtle.importKey('jwk', serverKeyString, { name: 'ECDSA', namedCurve: 'P-256' }, true, ['verify']);
-			} catch (error) {
-				console.error('Failed to import server key as regular string:', error);
-			}
+		} else {
+			return await window.crypto.subtle.importKey('jwk', keyString, {
+			name: 'ECDSA',
+			namedCurve: 'P-256'
+		}, true, ['sign']);
 		}
+	},
 
+	saveServerKey: async function importServerKey(serverKeyString){
+		let importedKey = await this.importKeyTemplate(serverKeyString, true);
 		this.putServerKey(importedKey);
 		return importedKey;
 	},

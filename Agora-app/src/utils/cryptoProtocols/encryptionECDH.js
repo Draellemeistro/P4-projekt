@@ -2,42 +2,21 @@
 
 const ECDH ={
 	// ECDH.pubKey
+
 	serverPubKey: null,
 	serverPubKeyVariant: null,
 	pubKey: null,
 	privKey: null,
 
-//TODO MAKE SURE SERVERKEYSTRING IS NOT NULL
-	saveServerKeyVariant: async function saveServerKey(keyString) {
-		let keyToImportTwo;
-		keyToImportTwo = await this.convertStringToJWK(keyString, true);
-		const serverKey = await this.importKeyProperly(keyToImportTwo);
-		this.serverPubKeyVariant = await serverKey;
-		return serverKey;
-	},
+
 	saveServerKey: async function saveServerKey(keyString) {
-		let keyToImportTwo;
-		keyToImportTwo = JSON.parse(keyString);
-		const serverKey = await this.importKeyProperly(keyToImportTwo);
+		const serverKey = await this.keyImportTemplateECDH(keyString, true)
 		this.serverPubKey = await serverKey;
 		return serverKey;
 	},
-	importKeyProperly: async function importKeyProperly(keyToImport) {
-		let serverPublicKey;
-		try{
-			serverPublicKey = await this.keyImportTemplateECDH(keyToImport, true)
-		} catch (error) {
-			console.error('Failed to import key without usages: ', error);
-			try {
-				serverPublicKey = await this.keyImportTemplateECDH(keyToImport)
-			} catch (error) {
-				console.error('key has to be imported without key usages. trying now: ');
-			}
-		}
-		return serverPublicKey;
-	},
+
 	//TODO MAKE SURE INITIALIZATION IS DONE
-	initECDH: async function initECDH(){
+	genKeys: async function initECDH(){
 		const clientKeyPairECDH = await window.crypto.subtle.generateKey(
 			{
 				name: "ECDH",
@@ -99,6 +78,7 @@ const ECDH ={
 	},
 
 	keyImportTemplateECDH: async function keyImportTemplateECDH(keyString,isPublic = true	) {
+		if (typeof keyString === 'string') keyString = JSON.parse(keyString);
 		if (isPublic === true) {
 			return await window.crypto.subtle.importKey(
 				'jwk',
@@ -142,7 +122,15 @@ const ECDH ={
 		return btoa(String.fromCharCode.apply(null, uint8Array));
 	},
 
-	//ss
+	//shouldn't be needed!!
+	// TODO: check if saveServerKeyVariant returns the same as saveServerKey. if yes, remove saveServerKeyVariant and convertStringToJWK
+	saveServerKeyVariant: async function saveServerKey(keyString) {
+		let keyToImportTwo;
+		keyToImportTwo = await this.convertStringToJWK(keyString, false);
+		const serverKey = await this.keyImportTemplateECDH(keyToImportTwo);
+		this.serverPubKeyVariant = await serverKey;
+		return serverKey;
+	},
 	convertStringToJWK: async function convertStringToJWK(keyString, KeyOps = true) {
 		if(typeof keyString !== 'string'){
 			throw new Error('Key must be a string.');

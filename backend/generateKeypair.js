@@ -94,7 +94,7 @@ function importKeysasTest() {
 	serverECDH.keyImportTemplateECDH(keyRingObject.ECDH, true).then(r => {
 		console.log('ECDH imported:', r);
 	});
-	serverDigSig.importKey(keyRingObject.DigSig, true).then(r => {
+	serverDigSig.importClientKey(keyRingObject.DigSig, true).then(r => {
 		console.log('Digital Signature imported:', r);
 	});
 	const RSAJWK = JSON.parse(keyRingObject.RSA);
@@ -106,7 +106,7 @@ function importKeysasTest() {
 	serverECDH.keyImportTemplateECDH(ECDHJWK, true).then(r => {
 		console.log('ECDH imported:', r);
 	});
-	serverDigSig.importKey(DigSigJWK, true).then(r => {
+	serverDigSig.importClientKey(DigSigJWK, true).then(r => {
 		console.log('Digital Signature imported:', r);
 	});
 
