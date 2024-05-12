@@ -1,11 +1,14 @@
 import RSA from './cryptoProtocols/encryptionRSA.js';
 import ECDH from './cryptoProtocols/encryptionECDH.js';
+import digSig from './cryptoProtocols/digitalSignatures.js';
 
 export const cryptoUtils = {
 
 
 	RSA: RSA,
 	ECDH: ECDH, // EXAMPLE cryptoUtils.ECDH.initECDH()
+	digSig: digSig, //can quickly be implemented to provide a signature for the vote,
+										// which serves as a proof of message integrity and authenticity
 
 
 	// Encrypts a ballot using RSA and ECDH
@@ -43,6 +46,21 @@ export const cryptoUtils = {
 			encryptedUpperLayer: OutgoingEncrypted, //string (RSA) / object (ECDH)
 			clientKeyPub: clientKeyPub, //string
 			ivValue: ivValue, //object
+		});
+	},
+
+	packagePublicKeys: async function() {
+		return JSON.stringify({
+			ECDHPubKey: await this.ECDH.exportKeyToString(),
+			digSigPubKey: await this.digSig.exportKeyToString()
+		});
+	},
+
+	prepareMessageWithSignature: async function(message) {
+		let signature = await this.digSig.sign(message);
+		return JSON.stringify({
+			message: message,
+			signature: signature
 		});
 	},
 
