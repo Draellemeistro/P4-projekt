@@ -9,7 +9,12 @@ const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
-
+const serverRSA = require('./utils/cryptoFunctions/serverRSA.js');
+const serverECDH = require('./utils/cryptoFunctions/serverECDH.js');
+const serverDigSig = require('./utils/cryptoFunctions/serverDigitalSignatures.js');
+ serverECDH.readKeysFromFiles();
+ serverRSA.readKeysFromFiles();
+ serverDigSig.readKeysFromFiles();
 
 
 
