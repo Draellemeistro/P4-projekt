@@ -59,27 +59,26 @@ const serverRSA = {
 		fs.writeFileSync(path.join(__dirname, '../keys/RSAPrivKey.json'), privKeyString);
 	},
 	decryptRSA: async function decryptMessage(encryptedMessage) {
-		const buffer = encryptedMessage instanceof Buffer ? encryptedMessage : Buffer.from(encryptedMessage, 'base64');
+		if(typeof encryptedMessage === 'string') encryptedMessage = this.base64ToArrBuff(encryptedMessage);
+		const bufferFromBase64 = Buffer.from(encryptedMessage);
 		const decrypted = await crypto.subtle.decrypt(
 			{
 				name: 'RSA-OAEP'
 			},
 			this.privKey,
-			buffer
-		);
-		return decrypted.toString(); /// this may need to be changed to a buffer, use the ArrayBuffer to 64 conversion or likewise
+			bufferFromBase64
+		) /// this may need to be changed to a buffer, use the ArrayBuffer to 64 conversion or likewise
+		return this.ArrBuffToString(decrypted);
 	},
 	encryptRSA: async function encryptMessage(message) {
-		const encoder = new TextEncoder();
-		const data = encoder.encode(message);
-		const encrypted = await crypto.subtle.encrypt(
+		const data =  Buffer.from(message);
+		return await crypto.subtle.encrypt(
 			{
 				name: 'RSA-OAEP'
 			},
 			this.pubKey,
 			data
-		);
-		return encrypted.toString();
+		)
 	},
 
 	readKeysFromFiles: function importKeys() {
@@ -124,6 +123,21 @@ const serverRSA = {
 		}
 		return JSON.stringify(await crypto.subtle.exportKey('jwk', keyToExport));
 		// to send the key, it must be converted to a string. This function does that. CryptoKey -> JWK -> string
+	},
+
+	ArrBuffToString: function convertArrayBufferToBase64(message) {
+		return Buffer.from(message).toString();
+		//return Buffer.from(arrayBuffer).toString('base64');
+	},
+	ArrBuffToBase64: function arrayBufferToBase64(buffer) {
+	return Buffer.from(buffer).toString('base64');
+	},
+	base64ToArrBuff: function base64ToArrayBuffer(base64) {
+	return Buffer.from(base64, 'base64');
+	},
+	stringToArrBuff: function convertBase64ToArrayBuffer(plaintext) {
+		return Buffer.from(plaintext);
+		//return Buffer.from(base64String, 'base64');
 	},
 };
 module.exports = serverRSA;

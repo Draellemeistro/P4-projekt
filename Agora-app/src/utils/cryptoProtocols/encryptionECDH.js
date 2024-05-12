@@ -98,8 +98,8 @@ const ECDH ={
 		};
 	},
 
-	keyImportTemplateECDH: async function keyImportTemplateECDH(keyString,withoutKeyUsages = false	) {
-		if (withoutKeyUsages === true) {
+	keyImportTemplateECDH: async function keyImportTemplateECDH(keyString,isPublic = true	) {
+		if (isPublic === true) {
 			return await window.crypto.subtle.importKey(
 				'jwk',
 				keyString,
