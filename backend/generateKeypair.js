@@ -74,7 +74,7 @@ function readFileAndConvertToJWK() {
 }
 
 async function exportKeysAsTest() {
-	await serverECDH.initKeys();
+	await serverECDH.genKeys();
 	await serverRSA.genKeys();
 	await serverDigSig.genKeys();
 	const RSA = await serverRSA.exportKeyToString();
