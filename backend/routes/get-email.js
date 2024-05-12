@@ -3,17 +3,16 @@ const { generateOTP } = require('../utils/generateOTP');
 const connection = require('../utils/db.js');
 const OTPStore = require('../utils/otpStore.js');
 const { sendEmail } = require('../utils/sendEmail.js');
-const fs = require('fs');
 const { keyStore } = require('../utils/keyStore.js');
-const path = require('path');
-const jose = require('node-jose');
-const pem2jwk = require('pem-jwk').pem2jwk;
-
-
+const serverECDH = require('../utils/cryptoFunctions/serverECDH');
+const serverRSA = require('../utils/cryptoFunctions/serverRSA');
+const serverDigSig = require('../utils/cryptoFunctions/ServerDigitalSignatures');
 
 const router = express.Router();
-const PublicRSAKey = fs.readFileSync(path.join(__dirname, '../utils/keys/serverPublicKeyRSA.pem'), 'utf8');
-const PublicECDHKey = fs.readFileSync(path.join(__dirname, '../utils/keys/serverPublicKeyECDH.json'), 'utf8');
+const RSA = await serverRSA.exportKeyToString();
+const ECDH = await serverECDH.exportKeyToString();
+const DigSig = await serverDigSig.exportKeyToString();
+const keyRing = { RSA: RSA, ECDH: ECDH, DigSig: DigSig };
 
 router.post('/', async (req, res) => {
 	const { personId, voteId, clientPublicKey } = req.body;
@@ -29,9 +28,8 @@ router.post('/', async (req, res) => {
 				OTPStore.addOTP(personId, { otp, timestamp });
 				try {
 					await sendEmail(email, otp);
-					const PublicRSAKey_JWK = pem2jwk(PublicRSAKey);
-					const PublicECDHKey_JWK = JSON.parse(PublicECDHKey);
-					res.json({ message: 'Email sent successfully', PublicRSAKey_JWK, PublicECDHKey_JWK});
+
+					res.json({ message: 'Email sent successfully', keys: keyRing});
 				} catch (error) {
 					console.error('Error sending email: ', error);
 					res.status(500).send('Error sending email');

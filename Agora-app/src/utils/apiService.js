@@ -2,23 +2,23 @@
 export const serverIP = '130.225.39.205';
 export const serverPort = '80';
 
-export const fetchEmail = (personId, voteId, clientPublicKey) => {
+export const fetchEmail = (personId, voteId) => {
 	return fetch(`http://${serverIP}:${serverPort}/get-email`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify({ personId, voteId, clientPublicKey }),
+		body: JSON.stringify({ personId, voteId }),
 	});
 };
 
-export const verify2FA = (twoFactorCode, personId, voteId, pubKey) => {
+export const verify2FA = (twoFactorCode, personId, voteId, pubKeysForServer) => {
 	return fetch(`http://${serverIP}:${serverPort}/verify-2fa`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify({ twoFactorCode, personId, voteId, pubKey }),
+		body: JSON.stringify({ twoFactorCode, personId, voteId, keys: pubKeysForServer }),
 	});
 };
 

@@ -7,9 +7,7 @@
     import { fetchEmail, verify2FA} from '../../utils/apiService.js';
     import { login } from '../../utils/auth.js';
     import { goto } from '$app/navigation';
-    import ECDH from '../../utils/cryptoProtocols/encryptionECDH.js';
-    import RSA from '../../utils/cryptoProtocols/encryptionRSA.js';
-
+    import cryptoUtils from '../../utils/cryptoUtils.js';
     let personId;
     let voteId;
     let errors = {};
@@ -20,10 +18,8 @@
         console.log('handleFormSubmitted called');
         personId = detail.personId;
         voteId = detail.voteId;
-        await ECDH.initECDH();
-        const clientPublicKey = await ECDH.exportKeyToString(ECDH.pubKey);
 
-        fetchEmail(personId, voteId, clientPublicKey)
+        fetchEmail(personId, voteId)
           .then(response => {
               if (!response.ok) {
                   throw new Error(response.statusText);
@@ -33,6 +29,12 @@
           .then(data => {
               // Use the data here
               console.log(data);
+              const ServerPubRSA = JSON.parse(data.keys.RSA);
+              const ServerPubECDH = JSON.parse(data.keys.ECDH);
+              const ServerPubDigSig = JSON.parse(data.keys.DigSig);
+              cryptoUtils.RSA.saveServerKey(ServerPubRSA);
+              cryptoUtils.ECDH.saveServerKey(ServerPubECDH);
+              cryptoUtils.digSig.saveServerKey(ServerPubDigSig);
               login();
               showModal = true;
           })
@@ -43,8 +45,11 @@
     };
 
     const handleModalClose = ({ detail }) => {
+        cryptoUtils.ECDH.genKeys();
+        cryptoUtils.digSig.genKeys();
+        const pubKeysForServer = cryptoUtils.packagePublicKeys();
         const { twoFactorCode} = detail;
-        verify2FA(twoFactorCode, personId, voteId)
+        verify2FA(twoFactorCode, personId, voteId, pubKeysForServer) // TODO: message can be encrypted, and/or signed(maybe) if needed
           .then(response => {
               if (!response.ok) {
                   throw new Error(response.statusText);
@@ -54,12 +59,7 @@
           .then(data => {
               if (data.message === 'User verified') {
                   console.log(data)
-                  console.log(data.PublicRSAKey_JWK);
-                  console.log(data.PublicECDHKey_JWK);
-                  RSA.saveServerKey(data.PublicRSAKey_JWK);
-                  ECDH.saveServerKey(data.PublicECDHKey_JWK);
                   goto('/vote');
-                  return;
               } else {
                   errors.server = 'Invalid 2FA code';
               }
