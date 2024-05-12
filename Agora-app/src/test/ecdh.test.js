@@ -10,11 +10,11 @@ Object.defineProperty(window, 'crypto', { value: { subtle } });
 
 beforeEach(async () => {
 	ECDH.reset();
-	await ECDH.initECDH();
+	await ECDH.genKeys();
 	await ECDH.saveServerKey(dummyKeyString);
 });
 
-test('ECDH initECDH function', async () => {
+test('ECDH genKeys function', async () => {
 	assert(ECDH.pubKey !== null, 'Public key should not be null after initialization');
 	assert(ECDH.privKey !== null, 'Private key should not be null after initialization');
 	assert(ECDH.pubKey instanceof CryptoKey, 'Public key should be of type CryptoKey after initialization');
