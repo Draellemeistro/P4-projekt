@@ -6,6 +6,9 @@
 const crypto = require('crypto');
 const fs = require('fs');
 const { createECDH } = require('node:crypto');
+const serverRSA = require('./utils/cryptoFunctions/serverRSA');
+const serverECDH = require('./utils/cryptoFunctions/serverECDH');
+const serverDigSig = require('./utils/cryptoFunctions/ServerDigitalSignatures');
 const pem2jwk = require('pem-jwk').pem2jwk; //to correctly format/encode and transport RSA key
 
 
@@ -53,6 +56,7 @@ async function initECDH(){
 			true,
 			["deriveKey", "deriveBits"]
 		);
+
 		const exportedPubKeyECDH = await crypto.subtle.exportKey('jwk', newServerKeyPairECDH.publicKey);
 		console.log('client public key as JWK: ', exportedPubKeyECDH);
 		const exportedPrivKeyECDH = await crypto.subtle.exportKey('jwk', newServerKeyPairECDH.privateKey);
@@ -68,7 +72,45 @@ function readFileAndConvertToJWK() {
 	const keyStringObject = pem2jwk(keyString);
 	fs.writeFileSync(__dirname + '/serverPublicKeyRSA2.txt', JSON.stringify(keyStringObject));
 }
-// Generate the keypairs
-//generateRSAKeyPair();
-//generateECDHKeyPair();
-readFileAndConvertToJWK();
+
+async function exportKeysAsTest() {
+	await serverECDH.initKeys();
+	await serverRSA.genKeys();
+	await serverDigSig.genKeys();
+	const RSA = await serverRSA.exportKeyToString();
+	const ECDH = await serverECDH.exportKeyToString();
+	const DigSig = await serverDigSig.exportKeyToString();
+	const keyRing = { RSA: RSA, ECDH: ECDH, DigSig: DigSig };
+	fs.writeFileSync(__dirname + '/utils/keys/keyRing.json', JSON.stringify(keyRing));
+}
+function importKeysasTest() {
+
+	const keyring = fs.readFileSync(__dirname + '/utils/keys/keyRing.json','utf-8');
+	console.log('Keys imported. type:',typeof keyring);
+	const keyRingObject = JSON.parse(keyring);
+	serverRSA.keyImportTemplateRSA(keyRingObject.RSA, true).then(r => {
+		console.log('RSA imported:', r);
+	});
+	serverECDH.keyImportTemplateECDH(keyRingObject.ECDH, true).then(r => {
+		console.log('ECDH imported:', r);
+	});
+	serverDigSig.importKey(keyRingObject.DigSig, true).then(r => {
+		console.log('Digital Signature imported:', r);
+	});
+	const RSAJWK = JSON.parse(keyRingObject.RSA);
+	const ECDHJWK = JSON.parse(keyRingObject.ECDH);
+	const DigSigJWK = JSON.parse(keyRingObject.DigSig);
+	serverRSA.keyImportTemplateRSA(RSAJWK, true).then(r => {
+		console.log('RSA imported:', r);
+	});
+	serverECDH.keyImportTemplateECDH(ECDHJWK, true).then(r => {
+		console.log('ECDH imported:', r);
+	});
+	serverDigSig.importKey(DigSigJWK, true).then(r => {
+		console.log('Digital Signature imported:', r);
+	});
+
+}
+exportKeysAsTest().then(r => {
+	importKeysasTest();
+});
