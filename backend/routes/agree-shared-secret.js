@@ -7,13 +7,11 @@ router.post('/', async (req, res) => {
 	let encryptedTestMessage = reqBody.encryptedMessage;
 	const responsePlainText = 'This is a test message from the server';
 	let ivValue = reqBody.ivValue;
-	let serverSharedSecret = await serverECDH.deriveSecret();
 	let decryptedMessage = await serverECDH.handleEncryptedMessage(encryptedTestMessage, ivValue);
-
+	console.log('decrypted ECDH: ', decryptedMessage);
 	// extra for fun
-	const encryptedResponse = await serverECDH.encryptMessage(responsePlainText, ivValue, serverSharedSecret);
 
-	res.json({decryptedMessage: decryptedMessage, encryptedResponse: JSON.stringify(encryptedResponse)}); //, maybe encrypt own public key for fun? encrypted:
+	res.json({decryptedMessage: decryptedMessage}); //, maybe encrypt own public key for fun? encrypted:
 });
 
 module.exports = router;
