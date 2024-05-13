@@ -2,7 +2,10 @@ import { exchangeKeys } from '../../utils/apiServiceDev.js';
 import cryptoUtils from '../../utils/cryptoUtils.js';
 
 export const packageAndExchangeKeys = async () => {
-	const response = await exchangeKeys(cryptoUtils.packagePublicKeys());
+	console.log('Accessed packageAndExchangeKeys');
+	const keyRing = await cryptoUtils.packagePublicKeys();
+	const response = await exchangeKeys(keyRing);
+	console.log('Response: ', response);
 	if (response.ok) {
 		const data = await response.json();
 		if (typeof data === 'string') {
