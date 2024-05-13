@@ -1,11 +1,10 @@
 const crypto = require('crypto');
 const fs = require('fs');
-const path = require('path');
 
 const serverECDH = {
 
-	serverPubKeyJWK:  fs.readFileSync(path.join(__dirname, '../keys/serverPublicKeyECDH.pem'),'utf8'),
-	serverPrivKeyJWK: fs.readFileSync(path.join(__dirname, '../keys/serverPrivateKeyECDH.pem'),'utf8'),
+	serverPubKeyJWK:  fs.readFileSync('./utils/keys/serverPublicKeyECDH.pem','utf8'),
+	serverPrivKeyJWK: fs.readFileSync('./utils/keys/serverPrivateKeyECDH.pem','utf8'),
 	//pubKey: fs.readFileSync(path.join(__dirname, '/serverPublicKeyECDH.json'), 'utf8'),
 	//privKey: 	fs.readFileSync(path.join(__dirname, '/serverPrivateKeyECDH.json'), 'utf8'),
 	clientPubKey: null,
@@ -13,7 +12,6 @@ const serverECDH = {
 	privKey: null,
 
 	genKeys: async function initECDH() {
-		let keyStringObject;
 		const newServerKeyPairECDH = await crypto.subtle.generateKey(
 			{
 				name: "ECDH",
@@ -26,13 +24,13 @@ const serverECDH = {
 		this.privKey = newServerKeyPairECDH.privateKey;
 	},
 
-	readKeysFromFiles: function importKeys() {
-		const serverPubKeyJWKString = fs.readFileSync(path.join(__dirname, '../keys/serverPublicKeyECDH.json'),'utf8');
-		const serverPrivKeyJWKString = fs.readFileSync(path.join(__dirname, '../keys/serverPrivateKeyECDH.json'),'utf8');
+	readKeysFromFiles: async function importKeys() {
+		const serverPubKeyJWKString = fs.readFileSync('./utils/keys/serverPublicKeyECDH.json', 'utf8');
+		const serverPrivKeyJWKString = fs.readFileSync('./utils/keys/serverPrivateKeyECDH.json', 'utf8');
 		const serverPubKeyJWK = JSON.parse(serverPubKeyJWKString);
 		const serverPrivKeyJWK = JSON.parse(serverPrivKeyJWKString);
-		this.pubKey = this.keyImportTemplateECDH(serverPubKeyJWK, true);
-		this.privKey = this.keyImportTemplateECDH(serverPrivKeyJWK, false);
+		this.pubKey = await this.keyImportTemplateECDH(serverPubKeyJWK, true);
+		this.privKey = await this.keyImportTemplateECDH(serverPrivKeyJWK, false);
 	},
 	importClientKey: async function importClientKey(clientKeyString) {
 		this.clientPubKey = await this.keyImportTemplateECDH(clientKeyString, true);
@@ -79,8 +77,11 @@ const serverECDH = {
 
 
 	handleEncryptedMessage: async function (encryptedMessage, IvValue, clientPubKey) {
-		if(!(clientPubKey instanceof CryptoKey)) {
+		if(!(clientPubKey instanceof CryptoKey) && typeof clientPubKey === 'string') {
 			clientPubKey = await this.keyImportTemplateECDH(clientPubKey, true);
+		} else {
+			clientPubKey = this.clientPubKey;
+			console.log('clientKey in server: ', clientPubKey);
 		}
 		const sharedSecretKey = await this.deriveSecret(clientPubKey);
 		const encryptedMsgArrBuff = this.convertBase64ToArrBuffer(encryptedMessage);
@@ -127,6 +128,23 @@ const serverECDH = {
 				["decrypt"],
 			);
 		}
+	},
+
+encryptMessage: async function encryptMessage(message, secretKey) {
+		const encryptedMsgArrBuff = this.convertBase64ToArrBuffer(message);
+		const ivValue = crypto.randomBytes(12);
+	const encryptedMessage = await crypto.subtle.encrypt(
+		{
+			name: 'AES-GCM',
+			iv: ivValue,
+		},
+		secretKey,
+		encryptedMsgArrBuff
+	);
+	return {
+		encryptedMessage: this.convertArrBuffToBase64(encryptedMessage),
+		ivValue: ivValue
+	};
 	},
 
 

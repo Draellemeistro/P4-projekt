@@ -35,9 +35,9 @@ test('ECDH exportKeyToString() should error if the input is not a CryptoKey', as
 	}
 });
 
-test('ECDH saveServerKey function should save a CryptoKey to the serverPubKey field', async () => {
-	assert(ECDH.serverPubKey !== null, 'Server public key should not be null after saving');
-	assert(ECDH.serverPubKey instanceof CryptoKey, 'Server public key should be of type CryptoKey after saving');
+test('ECDH saveServerKey function should save a CryptoKey to the serverKey field', async () => {
+	assert(ECDH.serverKey !== null, 'Server public key should not be null after saving');
+	assert(ECDH.serverKey instanceof CryptoKey, 'Server public key should be of type CryptoKey after saving');
 });
 
 
@@ -64,11 +64,11 @@ test('ECDH saveServerKeyVariant returns the same CryptoKey as saveServerKeyVaria
 	const compareServerKey = await ECDH.saveServerKeyVariant(dummyKeyString);
 	assert(compareServerKey !== null, 'Server public key should not be null after saving');
 	assert(compareServerKey instanceof CryptoKey, 'Server public key should be of type CryptoKey after saving')
-	if (compareServerKey !== ECDH.serverPubKey) {
+	if (compareServerKey !== ECDH.serverKey) {
 		console.log('compareServerKey:', await ECDH.serverPubKeyVariant);
-		console.log('ECDH.serverPubKey:', await ECDH.serverPubKey);
+		console.log('ECDH.serverKey:', await ECDH.serverKey);
 	}
-	assert(await ECDH.serverPubKeyVariant === await ECDH.serverPubKey, 'Server public key should be the same as the one saved with saveServerKey');
+	assert(await ECDH.serverPubKeyVariant === await ECDH.serverKey, 'Server public key should be the same as the one saved with saveServerKey');
 });
 
 

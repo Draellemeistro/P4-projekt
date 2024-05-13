@@ -30,6 +30,10 @@ export const cryptoUtils = {
 
 		return this.prepareBallotForServer(outGoingMessage, clientKeyPubString, ivValue);
 	},
+	genBothKeys: async function() {
+		await this.ECDH.genKeys();
+		await this.digSig.genKeys();
+	},
 
 	prepareSubLayer: async function(midWayEncrypted, otherInformation) { //add hashOfMidWayEncrypted??
 		if( otherInformation ===  undefined){

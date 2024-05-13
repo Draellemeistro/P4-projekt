@@ -3,7 +3,7 @@
 const ECDH ={
 	// ECDH.pubKey
 
-	serverPubKey: null,
+	serverKey: null,
 	serverPubKeyVariant: null,
 	pubKey: null,
 	privKey: null,
@@ -11,7 +11,7 @@ const ECDH ={
 
 	saveServerKey: async function saveServerKey(keyString) {
 		const serverKey = await this.keyImportTemplateECDH(keyString, true)
-		this.serverPubKey = await serverKey;
+		this.serverKey = await serverKey;
 		return serverKey;
 	},
 
@@ -38,7 +38,7 @@ const ECDH ={
 			return await window.crypto.subtle.deriveKey(
 				{
 					name: "ECDH",
-					public: this.serverPubKey,
+					public: this.serverKey,
 				},
 				this.privKey,
 				{
@@ -50,7 +50,7 @@ const ECDH ={
 			);
 		} catch (error) {
 			console.error('Failed to derive secret key: ', error);
-			console.error('keys should be of type: CryptoKey. clientPrivKey: ', typeof this.privKey, ' serverPubKey: ', typeof this.serverPubKey);
+			console.error('keys should be of type: CryptoKey. clientPrivKey: ', typeof this.privKey, ' serverKey: ', typeof this.serverKey);
 		}
 	},
 	encrypt: async function encryptMessageECDH(message, sharedSecret) {
@@ -171,7 +171,7 @@ const ECDH ={
 
 
 	reset() {
-		this.serverPubKey = null;
+		this.serverKey = null;
 		this.serverPubKeyVariant = null;
 		this.pubKey = null;
 		this.privKey = null;

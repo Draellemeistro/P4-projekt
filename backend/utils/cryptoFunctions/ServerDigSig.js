@@ -1,5 +1,4 @@
 const crypto = require('crypto');
-const path = require('path');
 const fs = require('fs');
 
 const serverDigSig = {
@@ -24,17 +23,23 @@ const serverDigSig = {
 	saveKeysToFile: async function saveKeysToFile(){
 		const pubKeyString = await this.exportKeyToString();
 		const privKeyString = await this.exportKeyToString(false);
-		fs.writeFileSync(path.join(__dirname, '../keys/digSigKeyPub.json'), pubKeyString);
-		fs.writeFileSync(path.join(__dirname, '../keys/digSigKeyPriv.json'), privKeyString);
+		fs.writeFileSync( './utils/keys/digSigKeyPub.json', pubKeyString);
+		fs.writeFileSync('./utils/keys/digSigKeyPriv.json', privKeyString);
 	},
 
-	readKeysFromFiles:  function loadKeys(){
-		const digSigKeyPubString = fs.readFileSync(path.join(__dirname, '../keys/digSigKeyPub.json'),'utf8');
-		const digSigKeyPrivString = fs.readFileSync(path.join(__dirname, '../keys/digSigKeyPriv.json'),'utf8');
+	readKeysFromFiles:  async function loadKeys() {
+		const digSigKeyPubString = fs.readFileSync('./utils/keys/digSigKeyPub.json', 'utf8');
+		const digSigKeyPrivString = fs.readFileSync('./utils/keys/digSigKeyPriv.json', 'utf8');
 		const digSigKeyPub = JSON.parse(digSigKeyPubString);
 		const digSigKeyPriv = JSON.parse(digSigKeyPrivString);
-		this.pubKey =  crypto.subtle.importKey('jwk', digSigKeyPub, {name: 'ECDSA', namedCurve: 'P-256'}, true, ['verify']);
-		this.privKey =  crypto.subtle.importKey('jwk', digSigKeyPriv, {name: 'ECDSA', namedCurve: 'P-256'}, true, ['sign']);
+		this.pubKey = await crypto.subtle.importKey('jwk', digSigKeyPub, {
+			name: 'ECDSA',
+			namedCurve: 'P-256'
+		}, true, ['verify']);
+		this.privKey = await crypto.subtle.importKey('jwk', digSigKeyPriv, {
+			name: 'ECDSA',
+			namedCurve: 'P-256'
+		}, true, ['sign']);
 	},
 
 
@@ -85,20 +90,15 @@ const serverDigSig = {
 		}},
 
 
-	prepareSignatureToSend: function prepareSignForServer(message){
-		let signature = this.sign(message);
-		return signature.then((sig) => {
-			return this.arrayBufferToBase64(sig);
-		});
+	prepareSignatureToSend: async function prepareSignForServer(message) {
+		let signature = await this.sign(message);
+		return this.arrayBufferToBase64(signature);
 	},
-	verifyReceivedMessage: async function verifyReceivedMessage(signature, message, clientKey) {
-		let sigStringToArrBuf = this.base64ToArrayBuffer(signature);
-		if (!clientKey) {
-			clientKey = this.clientKey;
-		} else {
-			clientKey = await this.importClientKey(clientKey);
-		}
-		return await serverDigSig.verify(sigStringToArrBuf, message, clientKey);
+	verifyReceivedMessage: async function verifyReceivedMessage(signature, message) {
+
+		return await this.verify(signature, message, this.clientKey).then(r => {
+			return r;
+		});
 	},
 
 
@@ -157,16 +157,11 @@ const serverDigSig = {
 	},
 
 	arrayBufferToBase64: function (buffer) {
-		let uint8Array = new Uint8Array(buffer);
-		return Buffer.from(uint8Array).toString('base64');
+		return Buffer.from(buffer).toString('base64');
 	},
-	base64ToArrayBuffer: function(base64String) {
-		let binaryString = Buffer.from(base64String, 'base64').toString('binary');
-		let arrayBuffer = new Uint8Array(binaryString.length);
-		for (let i = 0; i < binaryString.length; i++) {
-			arrayBuffer[i] = binaryString.charCodeAt(i);
-		}
-		return arrayBuffer;
+	base64ToArrayBuffer: function(base64) {
+		return Buffer.from(base64, 'base64');
+
 	},
 
 

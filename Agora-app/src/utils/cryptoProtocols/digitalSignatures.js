@@ -102,12 +102,11 @@ const digSig = {
 		return importedKey;
 	},
 
-	prepareSignatureToSend: function prepareSignForServer(message){
-		let signature = this.sign(message);
-		return signature.then((sig) => {
-			return this.arrayBufferToBase64(sig);
-		});
+	prepareSignatureToSend: async function prepareSignForServer(message){
+		let signature = await this.sign(message);
+		return  this.arrayBufferToBase64(signature);
 	},
+
 	verifyReceivedMessage: function verifyReceivedMessage(signature, message) {
 		let sigStringToArrBuf = this.base64ToArrayBuffer(signature);
 		return this.verify(sigStringToArrBuf, message, this.serverKey).then(r => {
