@@ -1,5 +1,5 @@
 import { exchangeKeys } from '../../utils/apiServiceDev.js';
-import cryptoUtils from '/../../utils/cryptoUtils.js';
+import cryptoUtils from '../../utils/cryptoUtils.js';
 
 export const generateAndExchangeKeys = async () => {
 	await cryptoUtils.genBothKeys();
