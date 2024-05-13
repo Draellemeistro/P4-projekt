@@ -7,15 +7,12 @@
 	import generalStuff from './generalStuff/+page.svelte';
 	import { Router, Route, navigate } from 'svelte-routing';
 
-	import cryptoUtils from '../../utils/cryptoUtils.js';
-
 
 	function goToGeneralStuffPage() {
 		navigate('/cryptoTests/geneneralStuff');
 	}
 
 	onMount(async () => {
-		await cryptoUtils.genBothKeys();
 		goToGeneralStuffPage();
 	});
 </script>
