@@ -27,13 +27,19 @@ const serverDigSig = {
 		fs.writeFileSync('./utils/keys/digSigKeyPriv.json', privKeyString);
 	},
 
-	readKeysFromFiles:  function loadKeys(){
-		const digSigKeyPubString = fs.readFileSync('./utils/keys/digSigKeyPub.json','utf8');
+	readKeysFromFiles:  async function loadKeys() {
+		const digSigKeyPubString = fs.readFileSync('./utils/keys/digSigKeyPub.json', 'utf8');
 		const digSigKeyPrivString = fs.readFileSync('./utils/keys/digSigKeyPriv.json', 'utf8');
 		const digSigKeyPub = JSON.parse(digSigKeyPubString);
 		const digSigKeyPriv = JSON.parse(digSigKeyPrivString);
-		this.pubKey =  crypto.subtle.importKey('jwk', digSigKeyPub, {name: 'ECDSA', namedCurve: 'P-256'}, true, ['verify']);
-		this.privKey =  crypto.subtle.importKey('jwk', digSigKeyPriv, {name: 'ECDSA', namedCurve: 'P-256'}, true, ['sign']);
+		this.pubKey = await crypto.subtle.importKey('jwk', digSigKeyPub, {
+			name: 'ECDSA',
+			namedCurve: 'P-256'
+		}, true, ['verify']);
+		this.privKey = await crypto.subtle.importKey('jwk', digSigKeyPriv, {
+			name: 'ECDSA',
+			namedCurve: 'P-256'
+		}, true, ['sign']);
 	},
 
 

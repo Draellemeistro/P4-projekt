@@ -80,12 +80,18 @@ const serverRSA = {
 			data
 		)
 	},
+	readKeysFromFiles: async function importKeys() {
+		const serverPubKeyString = fs.readFileSync('./utils/keys/RSAPubKey.json', 'utf8');
+		const serverPrivKeyString = fs.readFileSync('./utils/keys/RSAPrivKey.json', 'utf8');
+		this.pubKey = await this.keyImportTemplateRSA(serverPubKeyString, true);
+		this.privKey = await this.keyImportTemplateRSA(serverPrivKeyString, false);
+	},
 
-	readKeysFromFiles: function importKeys() {
-		const serverPubKeyString = fs.readFileSync('./utils/keys/serverPublicKeyRSA.pem','utf8');
-		const serverPrivKeyString = fs.readFileSync('./utils/keys/serverPrivateKeyRSA.pem','utf8');
-		this.pubKey = this.keyImportTemplateRSA(pem2jwk(serverPubKeyString), true);
-		this.privKey = this.keyImportTemplateRSA(pem2jwk(serverPrivKeyString), false);
+	readKeysFromFilesPEM: async function importKeys() {
+		const serverPubKeyString = fs.readFileSync('./utils/keys/serverPublicKeyRSA.pem', 'utf8');
+		const serverPrivKeyString = fs.readFileSync('./utils/keys/serverPrivateKeyRSA.pem', 'utf8');
+		this.pubKey = await this.keyImportTemplateRSA(pem2jwk(serverPubKeyString), true);
+		this.privKey = await this.keyImportTemplateRSA(pem2jwk(serverPrivKeyString), false);
 	},
 	keyImportTemplateRSA: async function keyImportTemplateRSA(keyString, isPublic = true) {
 		if (typeof keyString === 'string') keyString = JSON.parse(keyString);

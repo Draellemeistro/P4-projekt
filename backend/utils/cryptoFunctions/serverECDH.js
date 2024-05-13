@@ -24,13 +24,13 @@ const serverECDH = {
 		this.privKey = newServerKeyPairECDH.privateKey;
 	},
 
-	readKeysFromFiles: function importKeys() {
+	readKeysFromFiles: async function importKeys() {
 		const serverPubKeyJWKString = fs.readFileSync('./utils/keys/serverPublicKeyECDH.json', 'utf8');
-		const serverPrivKeyJWKString = fs.readFileSync('./utils/keys/serverPrivateKeyECDH.json','utf8');
+		const serverPrivKeyJWKString = fs.readFileSync('./utils/keys/serverPrivateKeyECDH.json', 'utf8');
 		const serverPubKeyJWK = JSON.parse(serverPubKeyJWKString);
 		const serverPrivKeyJWK = JSON.parse(serverPrivKeyJWKString);
-		this.pubKey = this.keyImportTemplateECDH(serverPubKeyJWK, true);
-		this.privKey = this.keyImportTemplateECDH(serverPrivKeyJWK, false);
+		this.pubKey = await this.keyImportTemplateECDH(serverPubKeyJWK, true);
+		this.privKey = await this.keyImportTemplateECDH(serverPrivKeyJWK, false);
 	},
 	importClientKey: async function importClientKey(clientKeyString) {
 		this.clientPubKey = await this.keyImportTemplateECDH(clientKeyString, true);
