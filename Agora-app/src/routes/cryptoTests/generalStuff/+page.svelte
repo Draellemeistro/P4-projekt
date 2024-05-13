@@ -1,12 +1,14 @@
 <script>
 	import { onMount } from 'svelte';
-	import { packageAndExchangeKeys } from '../cryptoTests.js';
+	import { encryptRSA, packageAndExchangeKeys } from '../cryptoTests.js';
 	import { navigate } from 'svelte-routing';
 
 	import cryptoUtils from '../../../utils/cryptoUtils.js';
 	let shitString;
 	let keyStatus = 'have not checked yet';
 	let keyStatusServer = 'have not checked yet';
+	const hello = 'hello World';
+	let rsaCheck = 'nope';
 	function goToECDHPage() {
 		navigate('/cryptoTests/testingECDH');
 	}
@@ -41,7 +43,9 @@
 		}
 	}
 
-
+ async function quickRsaCheck(){
+	 rsaCheck = await encryptRSA(hello);
+ }
 
 	onMount(async () => {
 		await cryptoUtils.genBothKeys();
@@ -54,6 +58,8 @@
 <button on:click={checkKeyStatus}>Check key status</button>
 <p>keyStatus message: {keyStatus}</p>
 <p>Server keyStatus message: {keyStatusServer}</p>
+<button on:click={quickRsaCheck}>Check RSA</button>
+<p>rsaCheck: {rsaCheck}</p>
 <div>
 	<button on:click={goToECDHPage}>Go to ECDH</button>
 	<button on:click={goToRSAPage}>Go to RSA</button>

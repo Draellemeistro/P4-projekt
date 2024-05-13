@@ -9,11 +9,10 @@ router.post('/', async (req, res) => {
 	const message = req.body.message;
 	const signature = req.body.signature;
 	const verify = await serverDigSig.verifyReceivedMessage(signature, message);
-	console.log('Verify: ', verify);
 	if(verify){
 		console.log('Signature is valid');
 	}
-	res.json({result: verify})
+	res.json({result: verify});
 });
 
 module.exports = router;

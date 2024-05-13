@@ -32,20 +32,12 @@ export const packageAndExchangeKeys = async () => {
 }
 
 export const encryptRSA = async (plainTextMessage) => {
-	let parsedMessage;
 	const encryptedMessage = await cryptoUtils.RSA.encrypt(plainTextMessage);
 	const response = await DecryptTestRSA(plainTextMessage, encryptedMessage);
 	if (response.ok) {
 		const data = await response.json();
 		console.log('Data: ', data);
-		if (data !== 'string') {
-			parsedMessage = data.decryptedMessage
-		} else {
-			parsedMessage = JSON.parse(data);
-			console.log('Parsed message: ', parsedMessage);
-			parsedMessage = parsedMessage.decryptedMessage;
-			console.log('Parsed message: ', parsedMessage);
-		}
+		return data.decryptedMessage;
 	}
 	else {
 		console.error('Error in encryptRSA: ', response.status);
@@ -53,9 +45,7 @@ export const encryptRSA = async (plainTextMessage) => {
 	}
 }
 export const signAndSendMessage = async (messageToSign) => {
-
 	const signature = await cryptoUtils.digSig.prepareSignatureToSend(messageToSign);
-	console.log(await cryptoUtils.digSig.exportKeyToString());
 	const response = await sendSignedMessage(messageToSign, signature);
 	if (response.ok) {
 		const data = await response.json();
