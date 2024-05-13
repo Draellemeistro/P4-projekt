@@ -14,6 +14,9 @@ router.post('/', async (req, res) => {
 		} else {
 			keyRingForImport = req.body.keyRing;
 		}
+		console.log('Importing keys');
+		console.log(typeof keyRingForImport);
+		console.log(keyRingForImport);
 		await serverECDH.importClientKey(keyRingForImport.ECDH);
 		await serverDigSig.importClientKey(keyRingForImport.DigSig);
 	}
