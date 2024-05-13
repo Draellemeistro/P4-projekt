@@ -8,7 +8,6 @@ router.post('/', async (req, res) => {
 	const message = req.body.message;
 	const signature = req.body.signature;
 	const verified = await serverDigSig.verifyReceivedMessage(message, signature);
-	console.lo
 	res.json({result: verified})
 });
 
