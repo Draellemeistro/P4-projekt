@@ -39,13 +39,13 @@ export const DecryptTestECDH = (objectContainingMessage) => {
 	});
 };
 
-export const sendSignedMessage = async (message, signature) => {
+export const sendSignedMessage = async (msgobj) => {
 	return await fetch(`https://${serverIP}:${serverPort}/sign-msg`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		body:  message, signature,
+		body:  JSON.stringify({msgobj: msgobj}),
 	});
 	}
 

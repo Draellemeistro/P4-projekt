@@ -56,7 +56,7 @@ export const signAndSendMessage = async (messageToSign) => {
 	console.log(messageToSign);
 	const msg = 'hello world'
 	const signature = await cryptoUtils.digSig.prepareSignatureToSend(msg);
-	const response = await sendSignedMessage(msg, signature);
+	const response = await sendSignedMessage(JSON.stringify({message: msg, signature: signature}));
 	if (response.ok) {
 		const data = await response.json();
 		if(data.result === true){
