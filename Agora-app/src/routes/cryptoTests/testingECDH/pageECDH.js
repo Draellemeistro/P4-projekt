@@ -17,7 +17,7 @@ export const sendECDHMessage = async (msgString) => {
 	}
 }
 export const agreeOnSharedSecret = async () => {
-	const testMsg = 'This is a test message';
+	const testMsg = 'This is also a test message,';
 	const neededInfo = await cryptoUtils.ECDH.ECDHPart(testMsg);
 
 	const response = await agreeSharedSecret(JSON.stringify(neededInfo), cryptoUtils.ECDH.exportKeyToString());
