@@ -127,6 +127,23 @@ const serverECDH = {
 		}
 	},
 
+encryptMessage: async function encryptMessage(message, secretKey) {
+		const encryptedMsgArrBuff = this.convertBase64ToArrBuffer(message);
+		const ivValue = crypto.randomBytes(12);
+	const encryptedMessage = await window.crypto.subtle.encrypt(
+		{
+			name: 'AES-GCM',
+			iv: ivValue,
+		},
+		secretKey,
+		encryptedMsgArrBuff
+	);
+	return {
+		encryptedMessage: this.convertArrBuffToBase64(encryptedMessage),
+		ivValue: ivValue
+	};
+	},
+
 
 
 	decryptArrBuffECDH: async function decryptArrBuffWithSecretECDHKey(encryptedMessage, IvValue, sharedSecret) {
