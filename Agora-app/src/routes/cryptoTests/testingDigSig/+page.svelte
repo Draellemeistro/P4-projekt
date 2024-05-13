@@ -32,7 +32,7 @@
 		verifiedServersDigSig = await recieveAndVerifySig();
 	}
 	async function sendSignatureForVerification() {
-		digSigAccepted = signAndSendMessage(messsage);
+		digSigAccepted = await signAndSendMessage(messsage);
 	}
 	onMount(async () => {
 		await checkKeyStatus();
