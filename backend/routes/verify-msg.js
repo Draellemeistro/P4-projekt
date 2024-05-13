@@ -1,5 +1,5 @@
 const express = require('express');
-const serverDigSig = require('../utils/cryptoFunctions/serverDigSig.js');
+const serverDigSig = require('../utils/cryptoFunctions/ServerDigSig.js');
 
 const router = express.Router();
 router.post('/', async (req, res) => {

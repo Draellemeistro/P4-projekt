@@ -1,5 +1,5 @@
 
-const serverDigSig = require('../utils/cryptoFunctions/serverDigSig.js');
+const serverDigSig = require('../utils/cryptoFunctions/ServerDigSig.js');
 const express = require('express');
 
 const router = express.Router();
