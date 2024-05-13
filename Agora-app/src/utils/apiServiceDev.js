@@ -45,7 +45,7 @@ export const sendSignedMessage = async (message, signature) => {
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify({ message: message, signature: signature }),
+		body:  message, signature,
 	});
 	}
 
