@@ -14,11 +14,11 @@ router.post('/', async (req, res) => {
 		} else {
 			keyRingForImport = req.body.keyRing;
 		}
-		console.log('Importing keys');
-		console.log(typeof keyRingForImport);
-		console.log(keyRingForImport);
-		await serverECDH.importClientKey(keyRingForImport.ECDH);
-		await serverDigSig.importClientKey(keyRingForImport.DigSig);
+		console.log('Keyring for import: ', keyRingForImport.ECDH);
+		console.log(typeof keyRingForImport.ECDH);
+
+		await serverECDH.importClientKey(JSON.parse(keyRingForImport.ECDH));
+		await serverDigSig.importClientKey(JSON.parse(keyRingForImport.DigSig));
 	}
 	const RSA = await serverRSA.exportKeyToString();
 	const ECDH = await serverECDH.exportKeyToString();
