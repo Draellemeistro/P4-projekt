@@ -4,21 +4,14 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
 	let responseValue;
-	let clientPubECDHJWK = req.body.clientPublicKey;
-
-	let encryptedTestMessage = req.body.encryptedMessage;
-	let ivValue = req.body.ivValue;
-	await serverECDH.importClientKey(clientPubECDHJWK);
-	let serverSharedSecret = await serverECDH.deriveSecret(clientPubECDHJWK);
+	const reqBody = JSON.parse(req.body.msgForServer);
+	let encryptedTestMessage = reqBody.encryptedMessage;
+	let ivValue = reqBody.ivValue;
+	await serverECDH.importClientKey();
+	let serverSharedSecret = await serverECDH.deriveSecret();
 	let decryptedMessage = await serverECDH.handleEncryptedMessage(encryptedTestMessage, ivValue, serverSharedSecret);
 
-	if (decryptedMessage === JSON.stringify(clientPubECDHJWK)) {
-		responseValue = true;
-	} else{
-		responseValue = decryptedMessage === clientPubECDHJWK;
-	}
-
-	res.json({success: responseValue}); //, maybe encrypt own public key for fun? encrypted:
+	res.json({decryptedMessage: decryptedMessage}); //, maybe encrypt own public key for fun? encrypted:
 });
 
 module.exports = router;

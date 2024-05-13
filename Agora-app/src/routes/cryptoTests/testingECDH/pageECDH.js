@@ -7,7 +7,9 @@ export const sendECDHMessage = async (msgString) => {
 
 	let response = await DecryptTestECDH(JSON.stringify(neededInfo));
 	if (response.ok) {
-		return response.json();
+		const data = await response.json();
+		console.log('Data: ', data);
+		return data.decryptedMessage;
 	}
 	else {
 		console.error('Error in sendECDHMessage: ', response.status);
@@ -20,7 +22,9 @@ export const agreeOnSharedSecret = async () => {
 
 	const response = await agreeSharedSecret(JSON.stringify(neededInfo), cryptoUtils.ECDH.exportKeyToString());
 	if (response.ok) {
-		return response.json();
+		const data = await response.json();
+		console.log('Data: ', data);
+		return data.decryptedMessage;
 	}
 	else {
 		console.error('Error in agreeOnSharedSecret: ', response.status);

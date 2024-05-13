@@ -13,6 +13,7 @@ router.post('/', async (req, res) => {
 	}
 	const decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(detailsObj.encryptedMessage, detailsObj.ivValue, serverECDHCrypto.clientPubKey);
 	console.log('Decrypted message: ', decryptedMessage);
+	res.json({decryptedMessage: decryptedMessage});
 });
 
 module.exports = router;
