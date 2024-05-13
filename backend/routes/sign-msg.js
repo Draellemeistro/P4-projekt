@@ -6,8 +6,9 @@ const router = express.Router();
 router.post('/', async (req, res) => {
 	console.log('Accessed /sign-msg endpoint');
 	let waitingForVerify = true
-	const message = req.body.message;
-	const signature = req.body.signature;
+	const body = req.body;
+	const message = body.message;
+	const signature = body.signature;
 	console.log(message);
 	waitingForVerify = await serverDigSig.verifyReceivedMessage(message, signature);
 	console.log('stopped waiting?', waitingForVerify);
