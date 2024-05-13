@@ -6,6 +6,7 @@
 	import cryptoUtils from '../../../utils/cryptoUtils.js';
 
 	let keyStatus = 'have not checked yet';
+	let keyStatusServer = 'have not checked yet';
 	function goToECDHPage() {
 		navigate('/cryptoTests/testingECDH');
 	}
@@ -19,8 +20,8 @@
 		navigate('/cryptoTests/dummyVote');
 	}
 	async function checkKeyStatus() {
-		if (cryptoUtils.ECDH.pubKey) {
-			if (cryptoUtils.ECDH.pubKey instanceof CryptoKey) {
+		if (cryptoUtils.ECDH.pubKey && cryptoUtils.digSig.pubKey) {
+			if (cryptoUtils.ECDH.pubKey instanceof CryptoKey && cryptoUtils.digSig.pubKey instanceof CryptoKey) {
 				console.log('Public key:', cryptoUtils.ECDH.pubKey);
 				keyStatus = 'Public key exists';
 			}
@@ -28,7 +29,14 @@
 			console.log('No public key');
 			keyStatus = 'No public key';
 		}
+		if (cryptoUtils.ECDH.serverKey instanceof CryptoKey && cryptoUtils.digSig.serverKey instanceof CryptoKey){
+			keyStatusServer = 'Server public key exists';
+		} else {
+			console.log('No server public key');
+			keyStatusServer = 'No server public key';
+		}
 	}
+
 
 
 	onMount(async () => {
@@ -40,6 +48,7 @@
 <button on:click={cryptoUtils.genBothKeys()}>generate new keys</button>
 <button on:click={checkKeyStatus}>Check key status</button>
 <p>keyStatus message: {keyStatus}</p>
+<p>Server keyStatus message: {keyStatusServer}</p>
 <div>
 	<button on:click={goToECDHPage}>Go to ECDH</button>
 	<button on:click={goToRSAPage}>Go to RSA</button>

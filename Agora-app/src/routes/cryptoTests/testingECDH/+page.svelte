@@ -6,6 +6,7 @@
 	let keyStatus = 'have not checked yet';
 	let encryptResponse;
 	let sharedSecretResponse;
+	let keyStatusServer = 'have not checked yet';
 	async function handleClickSend() {
 		encryptResponse = await sendECDHMessage(testMessage);
 	}
@@ -17,8 +18,8 @@
 	}
 
 	async function checkKeyStatus() {
-		if (cryptoUtils.ECDH.pubKey) {
-			if(cryptoUtils.ECDH.pubKey instanceof CryptoKey){
+		if (cryptoUtils.ECDH.pubKey && cryptoUtils.digSig.pubKey) {
+			if (cryptoUtils.ECDH.pubKey instanceof CryptoKey && cryptoUtils.digSig.pubKey instanceof CryptoKey) {
 				console.log('Public key:', cryptoUtils.ECDH.pubKey);
 				keyStatus = 'Public key exists';
 			}
@@ -26,12 +27,19 @@
 			console.log('No public key');
 			keyStatus = 'No public key';
 		}
+		if (cryptoUtils.ECDH.serverKey instanceof CryptoKey && cryptoUtils.digSig.serverKey instanceof CryptoKey){
+			keyStatusServer = 'Server public key exists';
+		} else {
+			console.log('No server public key');
+			keyStatusServer = 'No server public key';
+		}
 	}
 
 </script>
 
 <button on:click={checkKeyStatus}>Check key status</button>
 <p>keyStatus message: {keyStatus}</p>
+<p>keyStatusServer message: {keyStatusServer}</p>
 
 <button on:click={handleClickSend}>Check decrypt</button>
 {#if encryptResponse}
