@@ -5,6 +5,8 @@ const express = require('express');
 const router = express.Router();
 router.post('/', async (req, res) => {
 	console.log('Accessed /sign-msg endpoint');
+	console.log('Request body: ', req.body)
+	console.log(serverDigSig.clientKey);
 	let detailsObj;
 	if (typeof req.body.msgForServer === 'string') {
 		console.log('String detected');
