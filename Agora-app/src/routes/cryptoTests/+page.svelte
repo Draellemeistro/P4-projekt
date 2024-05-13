@@ -1,14 +1,17 @@
 <script>
 	import { onMount } from 'svelte';
-	import { generateAndExchangeKeys } from './cryptoTests.js';
+	import { packageAndExchangeKeys } from './cryptoTests.js';
 	import { Link } from "svelte-routing";
+	import cryptoUtils from '../../utils/cryptoUtils.js';
 
 
 	onMount(async () => {
-		await generateAndExchangeKeys();
+		await cryptoUtils.genBothKeys();
 	});
 
 </script>
+<button on:click={packageAndExchangeKeys}>Check decrypt</button>
+
 
 <Link to="/testingRSA">
 	<button>Go to RSA test</button>
