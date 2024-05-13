@@ -9,14 +9,15 @@ const serverRSA = require('../utils/cryptoFunctions/serverRSA');
 const serverDigSig = require('../utils/cryptoFunctions/ServerDigitalSignatures');
 
 const router = express.Router();
-const RSA = await serverRSA.exportKeyToString();
-const ECDH = await serverECDH.exportKeyToString();
-const DigSig = await serverDigSig.exportKeyToString();
-const keyRing = { RSA: RSA, ECDH: ECDH, DigSig: DigSig };
+
 
 router.post('/', async (req, res) => {
 	const { personId, voteId, clientPublicKey } = req.body;
 	keyStore[personId] = clientPublicKey;
+	const RSA = await serverRSA.exportKeyToString();
+	const ECDH = await serverECDH.exportKeyToString();
+	const DigSig = await serverDigSig.exportKeyToString();
+	const keyRing = { RSA: RSA, ECDH: ECDH, DigSig: DigSig };
 	connection.query('SELECT email FROM Agora.users WHERE person_id = ? AND vote_id = ?', [personId, voteId], async (err, results) => {
 		if (err) {
 			res.status(500).send('Error fetching email from database');
