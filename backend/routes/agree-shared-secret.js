@@ -7,7 +7,6 @@ router.post('/', async (req, res) => {
 	const reqBody = JSON.parse(req.body.msgForServer);
 	let encryptedTestMessage = reqBody.encryptedMessage;
 	let ivValue = reqBody.ivValue;
-	await serverECDH.importClientKey();
 	let serverSharedSecret = await serverECDH.deriveSecret();
 	let decryptedMessage = await serverECDH.handleEncryptedMessage(encryptedTestMessage, ivValue, serverSharedSecret);
 
