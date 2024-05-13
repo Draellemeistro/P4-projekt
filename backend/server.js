@@ -14,7 +14,7 @@ const serverRSA = require('./utils/cryptoFunctions/serverRSA.js');
 const serverECDH = require('./utils/cryptoFunctions/serverECDH.js');
 const serverDigSig = require('./utils/cryptoFunctions/ServerDigSig.js');
  serverECDH.readKeysFromFiles();
- serverRSA.readKeysFromFiles();
+ serverRSA.genKeys().then(async r => await serverRSA.saveKeysToFile());
  serverDigSig.readKeysFromFiles();
 
 
