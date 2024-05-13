@@ -23,7 +23,7 @@
 		navigate('/cryptoTests/dummyVote');
 	}
 	function goToGeneralStuffPage() {
-		navigate('/cryptoTests/geneneralStuff', { replace: true });
+		navigate('/cryptoTests/geneneralStuff', { replace: false });
 	}
 
 	onMount(async () => {
