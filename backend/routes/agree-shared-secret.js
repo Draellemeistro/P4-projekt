@@ -3,7 +3,6 @@ const express = require('express');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-	let responseValue;
 	const reqBody = JSON.parse(req.body.msgForServer);
 	let encryptedTestMessage = reqBody.encryptedMessage;
 	let ivValue = reqBody.ivValue;
