@@ -4,6 +4,7 @@
 	import TestingRSA from './testingRSA/+page.svelte';
 	import TestingDigSig from './testingDigSig/+page.svelte';
 	import dummyVote from './testingDigSig/+page.svelte';
+	import generalStuff from './generalStuff/+page.svelte';
 	import { Router, Route, navigate } from 'svelte-routing';
 
 	import cryptoUtils from '../../utils/cryptoUtils.js';
@@ -21,6 +22,9 @@
 	function goToDummyVotePage() {
 		navigate('/cryptoTests/dummyVote');
 	}
+	function goToGeneralStuffPage() {
+		navigate('/cryptoTests/geneneralStuff', { replace: true });
+	}
 
 	onMount(async () => {
 		await cryptoUtils.genBothKeys();
@@ -32,6 +36,7 @@
 	<Route path="/cryptoTests/testingRSA" component={TestingRSA} />
 	<Route path="/cryptoTests/testingDigSig" component={TestingDigSig} />
 	<Route path="/cryptoTests/dummyVote" component={dummyVote} />
+	<Route path="/cryptoTests/geneneralStuff" component={generalStuff} />
 </Router>
 
 
@@ -39,3 +44,4 @@
 <button on:click={goToRSAPage}>Go to RSA</button>
 <button on:click={goToDigSigPage}>Go to Digital Signature</button>
 <button on:click={goToDummyVotePage}>Go to Dummy Vote</button>
+<button on:click={goToGeneralStuffPage}>Go to General Stuff</button>
