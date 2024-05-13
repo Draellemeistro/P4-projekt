@@ -97,6 +97,7 @@ const serverDigSig = {
 		});
 	},
 	verifyReceivedMessage: async function verifyReceivedMessage(signature, message, clientKey) {
+		console.log('inside verify digsig');
 		let sigStringToArrBuf = this.base64ToArrayBuffer(signature);
 		if (!clientKey) {
 			clientKey = this.clientKey;

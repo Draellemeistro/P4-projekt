@@ -7,6 +7,7 @@ router.post('/', async (req, res) => {
 	console.log('Accessed /sign-msg endpoint');
 	const message = req.body.message;
 	const signature = req.body.signature;
+	console.log(message);
 	const verified = await serverDigSig.verifyReceivedMessage(message, signature);
 	res.json({result: verified})
 });
