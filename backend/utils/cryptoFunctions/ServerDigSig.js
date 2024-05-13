@@ -90,11 +90,9 @@ const serverDigSig = {
 		}},
 
 
-	prepareSignatureToSend: function prepareSignForServer(message){
-		let signature = this.sign(message);
-		return signature.then((sig) => {
-			return this.arrayBufferToBase64(sig);
-		});
+	prepareSignatureToSend: async function prepareSignForServer(message) {
+		let signature = await this.sign(message);
+		return this.arrayBufferToBase64(signature);
 	},
 	verifyReceivedMessage: async function verifyReceivedMessage(signature, message, clientKey) {
 		console.log('inside verify digsig');
