@@ -3,8 +3,8 @@ const fs = require('fs');
 
 const serverECDH = {
 
-	serverPubKeyJWK:  fs.readFileSync('../keys/serverPublicKeyECDH.pem','utf8'),
-	serverPrivKeyJWK: fs.readFileSync('../keys/serverPrivateKeyECDH.pem','utf8'),
+	serverPubKeyJWK:  fs.readFileSync('./utils/keys/serverPublicKeyECDH.pem','utf8'),
+	serverPrivKeyJWK: fs.readFileSync('./utils/keys/serverPrivateKeyECDH.pem','utf8'),
 	//pubKey: fs.readFileSync(path.join(__dirname, '/serverPublicKeyECDH.json'), 'utf8'),
 	//privKey: 	fs.readFileSync(path.join(__dirname, '/serverPrivateKeyECDH.json'), 'utf8'),
 	clientPubKey: null,
@@ -25,8 +25,8 @@ const serverECDH = {
 	},
 
 	readKeysFromFiles: function importKeys() {
-		const serverPubKeyJWKString = fs.readFileSync('../keys/serverPublicKeyECDH.json', 'utf8');
-		const serverPrivKeyJWKString = fs.readFileSync('../keys/serverPrivateKeyECDH.json','utf8');
+		const serverPubKeyJWKString = fs.readFileSync('./utils/keys/serverPublicKeyECDH.json', 'utf8');
+		const serverPrivKeyJWKString = fs.readFileSync('./utils/keys/serverPrivateKeyECDH.json','utf8');
 		const serverPubKeyJWK = JSON.parse(serverPubKeyJWKString);
 		const serverPrivKeyJWK = JSON.parse(serverPrivKeyJWKString);
 		this.pubKey = this.keyImportTemplateECDH(serverPubKeyJWK, true);

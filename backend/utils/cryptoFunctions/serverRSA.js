@@ -9,8 +9,8 @@ const serverRSA = {
 
 	pubKey: null,
 	privKey: null,
-	pubKeyString:  fs.readFileSync('../keys/serverPublicKeyRSA.pem','utf8'),
-	privKeyString: fs.readFileSync('../keys/serverPrivateKeyRSA.pem','utf8'),
+	pubKeyString:  fs.readFileSync('./utils/keys/serverPublicKeyRSA.pem','utf8'),
+	privKeyString: fs.readFileSync('./utils/keys/serverPrivateKeyRSA.pem','utf8'),
 
 ///////////////////////////////////////
 // 		NOTE: below is from:
@@ -52,10 +52,11 @@ const serverRSA = {
 
 	},
 	saveKeysToFile: async function saveKeysToFile(){
+		// TODO fix this to either be .pem or change the other files to .json
 		const pubKeyString = await this.exportKeyToString(this.pubKey);
 		const privKeyString = await this.exportKeyToString(this.privKey);
-		fs.writeFileSync('../keys/RSAPubKey.json', pubKeyString);
-		fs.writeFileSync('../keys/RSAPrivKey.json', privKeyString);
+		fs.writeFileSync('./utils/keys/RSAPubKey.json', pubKeyString);
+		fs.writeFileSync('./utils/keys/RSAPrivKey.json', privKeyString);
 	},
 	decryptRSA: async function decryptMessage(encryptedMessage) {
 		if(typeof encryptedMessage === 'string') encryptedMessage = this.base64ToArrBuff(encryptedMessage);
@@ -81,8 +82,8 @@ const serverRSA = {
 	},
 
 	readKeysFromFiles: function importKeys() {
-		const serverPubKeyString = fs.readFileSync('../keys/serverPublicKeyRSA.pem','utf8');
-		const serverPrivKeyString = fs.readFileSync('../keys/serverPrivateKeyRSA.pem','utf8');
+		const serverPubKeyString = fs.readFileSync('./utils/keys/serverPublicKeyRSA.pem','utf8');
+		const serverPrivKeyString = fs.readFileSync('./utils/keys/serverPrivateKeyRSA.pem','utf8');
 		this.pubKey = this.keyImportTemplateRSA(pem2jwk(serverPubKeyString), true);
 		this.privKey = this.keyImportTemplateRSA(pem2jwk(serverPrivKeyString), false);
 	},
