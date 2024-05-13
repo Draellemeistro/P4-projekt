@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
 	const ECDH = await serverECDH.exportKeyToString();
 	const DigSig = await serverDigSig.exportKeyToString();
 	const keyRing = JSON.stringify({ RSA: RSA, ECDH: ECDH, DigSig: DigSig });
-	res.json({ message: 'Keys sent', returnKey: keyRing });
+	res.json({ message: 'Keys sent', keyRing: keyRing });
 });
 
 module.exports = router;
