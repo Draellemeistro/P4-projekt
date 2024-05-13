@@ -13,8 +13,8 @@ router.post('/', async (req, res) => {
 	const clientPubKey = req.body.clientKeyPub;
 	const ivValue = req.body.ivValue;
 
-	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(stringJWKServerPrivECDH, clientPubKey);
-	let decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encryptedMessage, ivValue, sharedSecret);
+	let sharedSecret = await serverECDHCrypto.deriveSecret();
+	let decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encryptedMessage, ivValue, clientPubKey);
 	if (decryptedMessage === midwayMessage) {
 		console.log('ECDH upper layer works!');
 	}

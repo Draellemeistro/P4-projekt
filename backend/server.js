@@ -5,6 +5,7 @@ const verify2faRoute = require('./routes/verify-2fa.js');
 const insertBallotRoute = require('./routes/insert-ballot-untouched.js');
 const handleEncryptedBallotRoute = require('./routes/handle-encrypted-ballot.js');
 const agreeSharedSecretRoute = require('./routes/agree-shared-secret.js');
+const requestServerKeysRoute = require('./routes/request-server-keys.js');
 const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
@@ -40,6 +41,7 @@ app.use('/verify-2fa', verify2faRoute);
 app.use('/insert-ballot', insertBallotRoute);
 app.use('/handle-encrypted-ballot', handleEncryptedBallotRoute);
 app.use('/agree-shared-secret', agreeSharedSecretRoute);
+app.use('/request-server-keys', requestServerKeysRoute);
 
 const privateKey = fs.readFileSync('./key.pem', 'utf8');
 const certificate = fs.readFileSync('./cert.pem', 'utf8');

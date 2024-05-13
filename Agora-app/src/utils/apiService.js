@@ -51,13 +51,13 @@ export const fetchPublicKey = () => {
 	});
 
 }
-export const agreeSharedSecret = (encryptedMessage, clientPublicKey, ivValue) => {
-	return fetch(`http://${serverIP}:${serverPort}/agree-shared-secret`, {
+export const agreeSharedSecret = async (msgForServer, clientPublicKey) => {
+	return await fetch(`http://${serverIP}:${serverPort}/agree-shared-secret`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify({encryptedMessage: encryptedMessage, clientPublicKey: clientPublicKey, ivValue: ivValue}),
+		body: JSON.stringify({ msgForServer: msgForServer, clientPublicKey: clientPublicKey }),
 	});
 };
 export const sendBallotForHandling = async (msgForServer) => {
