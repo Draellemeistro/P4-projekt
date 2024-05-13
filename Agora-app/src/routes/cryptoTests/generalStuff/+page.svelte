@@ -20,7 +20,7 @@
 
 
 	onMount(async () => {
-		await cryptoUtils.genBothKeys();
+		//await cryptoUtils.genBothKeys();
 	});
 	</script>
 
