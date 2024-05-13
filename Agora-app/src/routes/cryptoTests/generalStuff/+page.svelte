@@ -4,7 +4,7 @@
 	import { navigate } from 'svelte-routing';
 
 	import cryptoUtils from '../../../utils/cryptoUtils.js';
-
+	let shitString;
 	let keyStatus = 'have not checked yet';
 	let keyStatusServer = 'have not checked yet';
 	function goToECDHPage() {
@@ -18,6 +18,10 @@
 	}
 	function goToDummyVotePage() {
 		navigate('/cryptoTests/dummyVote');
+	}
+
+	async function doExchange() {
+		shitString = packageAndExchangeKeys();
 	}
 	async function checkKeyStatus() {
 		if (cryptoUtils.ECDH.pubKey && cryptoUtils.digSig.pubKey) {
@@ -44,7 +48,8 @@
 	});
 	</script>
 
-<button on:click={packageAndExchangeKeys}>exchange keys</button>
+<button on:click={doExchange}>exchange keys</button>
+<p>shitString: {shitString}</p>
 <button on:click={cryptoUtils.genBothKeys()}>generate new keys</button>
 <button on:click={checkKeyStatus}>Check key status</button>
 <p>keyStatus message: {keyStatus}</p>
