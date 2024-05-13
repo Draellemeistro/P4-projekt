@@ -3,7 +3,7 @@ const OTPStore = require('../utils/otpStore.js');
 const { keyStore } = require('../utils/keyStore.js');
 const { verifyOTP } = require('../utils/verifyOTP.js');
 const serverECDH = require('../utils/cryptoFunctions/serverECDH');
-const serverDigSig = require('../utils/cryptoFunctions/ServerDigitalSignatures');
+const serverDigSig = require('../utils/cryptoFunctions/ServerDigSig');
 
 const router = express.Router();
 
