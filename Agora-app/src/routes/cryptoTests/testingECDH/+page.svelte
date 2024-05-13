@@ -1,6 +1,7 @@
 <script>
 	import { cryptoUtils } from '../../../utils/cryptoUtils.js';
 	import { agreeOnSharedSecret, sendECDHMessage } from './pageECDH.js';
+	import { navigate } from 'svelte-routing';
 	const testMessage = 'Hello, this is a test message';
 	let keyStatus = 'have not checked yet';
 	let encryptResponse;
@@ -11,6 +12,10 @@
 	async function handleClickAgree() {
 		sharedSecretResponse = await agreeOnSharedSecret();
 	}
+	function goToGeneralStuffPage() {
+		navigate('/cryptoTests/geneneralStuff');
+	}
+
 	async function checkKeyStatus() {
 		if (cryptoUtils.ECDH.pubKey) {
 			if(cryptoUtils.ECDH.pubKey instanceof CryptoKey){
@@ -36,3 +41,7 @@
 {#if sharedSecretResponse}
 	<p>Shared secret: {sharedSecretResponse}</p>
 {/if}
+
+<div>
+	<button on:click={goToGeneralStuffPage}>Go to General Stuff</button>
+</div>
