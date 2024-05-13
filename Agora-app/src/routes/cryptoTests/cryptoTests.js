@@ -53,11 +53,10 @@ export const encryptRSA = async (plainTextMessage) => {
 	}
 }
 export const signAndSendMessage = async (messageToSign) => {
-	console.log(messageToSign);
-	const msg = 'hello world'
-	const signature = await cryptoUtils.digSig.prepareSignatureToSend(msg);
+
+	const signature = await cryptoUtils.digSig.prepareSignatureToSend(messageToSign);
 	console.log(await cryptoUtils.digSig.exportKeyToString());
-	const response = await sendSignedMessage(JSON.stringify({message: msg, signature: signature}));
+	const response = await sendSignedMessage(messageToSign, signature);
 	if (response.ok) {
 		const data = await response.json();
 		if(data.result === true){
