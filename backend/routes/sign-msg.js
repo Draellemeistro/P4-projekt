@@ -6,6 +6,7 @@ const router = express.Router();
 router.post('/', async (req, res) => {
 	console.log('Accessed /sign-msg endpoint');
 	let waitingForVerify = true
+	console.log(req.body);
 	const message = req.body.message;
 	const signature = req.body.signature;
 	console.log(typeof message);
