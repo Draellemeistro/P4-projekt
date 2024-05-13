@@ -2,8 +2,12 @@
 	import { cryptoUtils } from '../../../utils/cryptoUtils.js';
 	import { navigate } from 'svelte-routing';
 	import { onMount } from 'svelte';
+	import { recieveAndVerifySig, signAndSendMessage } from '../cryptoTests.js';
 	let keyStatus = 'No public key';
 	let keyStatusServer = 'No server public key';
+	const messsage = 'Hello, this is a test message';
+	let digSigAccepted;
+	let verifiedServersDigSig;
 	function goToGeneralStuffPage() {
 		navigate('/cryptoTests/geneneralStuff');
 	}
@@ -24,6 +28,12 @@
 			keyStatusServer = 'No server public key';
 		}
 	}
+	async function askForSignature() {
+		verifiedServersDigSig = await recieveAndVerifySig();
+	}
+	async function sendSignatureForVerification() {
+		digSigAccepted = signAndSendMessage(messsage);
+	}
 	onMount(async () => {
 		await checkKeyStatus();
 	});
@@ -36,6 +46,10 @@
 	<button on:click={checkKeyStatus}>Check key status</button>
 	<p>keyStatus message: {keyStatus}</p>
 	<p>keyStatusServer message: {keyStatusServer}</p>
+	<button on:click={sendSignatureForVerification}>Check digSig</button>
+	<p>servers response to our digital signature: {digSigAccepted}</p>
+<button on:click={askForSignature}>Check digSig</button>
+<p>verificiation of servers signature: {verifiedServersDigSig}</p>
 </div>
 
 <div>

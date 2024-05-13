@@ -1,4 +1,4 @@
-import { DecryptTestRSA, exchangeKeys } from '../../utils/apiServiceDev.js';
+import { DecryptTestRSA, exchangeKeys, requestMsgToVerify, sendSignedMessage } from '../../utils/apiServiceDev.js';
 import cryptoUtils from '../../utils/cryptoUtils.js';
 
 export const packageAndExchangeKeys = async () => {
@@ -52,9 +52,30 @@ export const encryptRSA = async (plainTextMessage) => {
 		return response.status;
 	}
 }
-export const sendSignedMessage = async (plainTextMessage) => {
-	const encryptedMessage = await cryptoUtils.RSA.encrypt(plainTextMessage);
-	const signature = await cryptoUtils.digSig.sign(plainTextMessage);
-	const key = await cryptoUtils.RSA.exportKeyToString();
-	return await DecryptTestRSA(plainTextMessage, encryptedMessage, signature, key);
+export const signAndSendMessage = async (messageToSign) => {
+	const signature = await cryptoUtils.digSig.prepareSignatureToSend(messageToSign);
+	const response = await sendSignedMessage(messageToSign, signature);
+	if (response.ok) {
+		const data = await response.json();
+		if(data.result === true){
+		return 'server successfully verified the signature'
+		} else {
+			return 'server failed to verify the signature'
+		}
+	}
+}
+export const recieveAndVerifySig = async () => {
+	let data;
+	const response = await requestMsgToVerify();
+	if (response.ok) {
+		data = await response.json();
+		if(typeof data === 'string') {
+		data = JSON.parse(data);
+		}
+	} const result = await cryptoUtils.digSig.verifyReceivedMessage(data.signature, data.message);
+	if(result === true){
+		return 'successfully verified the servers signature'
+	} else {
+		return 'failed to verify the servers signature'
+	}
 }

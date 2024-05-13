@@ -5,17 +5,11 @@ const express = require('express');
 const router = express.Router();
 router.post('/', async (req, res) => {
 	console.log('Accessed /sign-msg endpoint');
-	console.log('Request body: ', req.body)
-	console.log(serverDigSig.clientKey);
-	let detailsObj;
-	if (typeof req.body.msgForServer === 'string') {
-		console.log('String detected');
-		detailsObj = JSON.parse(req.body.msgForServer);
-	} else {
-		detailsObj = req.body.msgForServer;
-	}
-	console.log('Details object: ', detailsObj);
-	res.json({success: true});
+	const body = JSON.parse(req.body);
+	const message = body.message;
+	const signature = body.signature;
+	const verified = await serverDigSig.verifyReceivedMessage(message, signature);
+	res.json({result: verified})
 });
 
 module.exports = router;

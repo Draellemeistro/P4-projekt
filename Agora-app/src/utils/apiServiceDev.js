@@ -58,18 +58,6 @@ export const requestMsgToVerify = async () => {
 	});
 }
 
-export const checkSharedSecretTest = async (keyStringSharedSecret, keyStringPub) => {
-	return await fetch(`https://${serverIP}:${serverPort}/check-shared-secret-test`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			sharedSecret: keyStringSharedSecret,
-			clientPublicKey: keyStringPub
-		})
-	});
-}
 
 
 
