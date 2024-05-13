@@ -1,6 +1,9 @@
 <script>
 	import { onMount } from 'svelte';
 	import { packageAndExchangeKeys } from './cryptoTests.js';
+	import TestingECDH from './testingECDH/TestingECDH.svelte';
+	import { Router, Route, Link } from 'svelte-routing';
+
 	import cryptoUtils from '../../utils/cryptoUtils.js';
 	let keyStatus = 'have not checked yet';
 	async function checkKeyStatus() {
@@ -18,8 +21,14 @@
 	onMount(async () => {
 		await cryptoUtils.genBothKeys();
 	});
-
 </script>
+<Router>
+	<nav>
+		<Link to="/cryptoTests/testingECDH">Testing ECDH</Link>
+	</nav>
+
+	<Route path="/cryptoTests/testingECDH" component={TestingECDH} />
+</Router>
 <button on:click={packageAndExchangeKeys}>exchange keys</button>
 <button on:click={cryptoUtils.genBothKeys()}>generate new keys</button>
 <button on:click={checkKeyStatus}>Check key status</button>
