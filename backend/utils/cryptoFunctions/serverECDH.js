@@ -133,7 +133,7 @@ const serverECDH = {
 encryptMessage: async function encryptMessage(message, secretKey) {
 		const encryptedMsgArrBuff = this.convertBase64ToArrBuffer(message);
 		const ivValue = crypto.randomBytes(12);
-	const encryptedMessage = await window.crypto.subtle.encrypt(
+	const encryptedMessage = await crypto.subtle.encrypt(
 		{
 			name: 'AES-GCM',
 			iv: ivValue,
