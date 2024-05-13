@@ -1,8 +1,8 @@
 <script>
-	import { onMount } from 'svelte';
 	import { cryptoUtils } from '../../../utils/cryptoUtils.js';
 	import { agreeOnSharedSecret, sendECDHMessage } from './pageECDH.js';
 	const testMessage = 'Hello, this is a test message';
+	let keyStatus = 'have not checked yet';
 	let encryptResponse;
 	let sharedSecretResponse;
 	async function handleClickSend() {
@@ -11,16 +11,22 @@
 	async function handleClickAgree() {
 		sharedSecretResponse = await agreeOnSharedSecret();
 	}
-	onMount(async () => {
-		if (cryptoUtils.ECDH.pubKey === null) {
-			console.log('Key empty as of entering page');
-			await cryptoUtils.ECDH.genKeys();
-
+	async function checkKeyStatus() {
+		if (cryptoUtils.ECDH.pubKey) {
+			if(cryptoUtils.ECDH.pubKey instanceof CryptoKey){
+				console.log('Public key:', cryptoUtils.ECDH.pubKey);
+				keyStatus = 'Public key exists';
+			}
+		} else {
+			console.log('No public key');
+			keyStatus = 'No public key';
 		}
-	} );
+	}
 
 </script>
 
+<button on:click={checkKeyStatus}>Check key status</button>
+<p>keyStatus message: {keyStatus}</p>
 
 <button on:click={handleClickSend}>Check decrypt</button>
 {#if encryptResponse}
