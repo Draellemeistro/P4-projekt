@@ -2,7 +2,6 @@ const crypto = require('crypto');
 const fs = require('fs');
 
 
-const path = require('path');
 const pem2jwk = require('pem-jwk').pem2jwk; //to correctly format/encode and transport RSA key
 
 
@@ -10,8 +9,8 @@ const serverRSA = {
 
 	pubKey: null,
 	privKey: null,
-	pubKeyString:  fs.readFileSync(path.join(__dirname, '../keys/serverPublicKeyRSA.pem'),'utf8'),
-	privKeyString: fs.readFileSync(path.join(__dirname, '../keys/serverPrivateKeyRSA.pem'),'utf8'),
+	pubKeyString:  fs.readFileSync('../keys/serverPublicKeyRSA.pem','utf8'),
+	privKeyString: fs.readFileSync('../keys/serverPrivateKeyRSA.pem','utf8'),
 
 ///////////////////////////////////////
 // 		NOTE: below is from:
@@ -55,8 +54,8 @@ const serverRSA = {
 	saveKeysToFile: async function saveKeysToFile(){
 		const pubKeyString = await this.exportKeyToString(this.pubKey);
 		const privKeyString = await this.exportKeyToString(this.privKey);
-		fs.writeFileSync(path.join(__dirname, '../keys/RSAPubKey.json'), pubKeyString);
-		fs.writeFileSync(path.join(__dirname, '../keys/RSAPrivKey.json'), privKeyString);
+		fs.writeFileSync('../keys/RSAPubKey.json', pubKeyString);
+		fs.writeFileSync('../keys/RSAPrivKey.json', privKeyString);
 	},
 	decryptRSA: async function decryptMessage(encryptedMessage) {
 		if(typeof encryptedMessage === 'string') encryptedMessage = this.base64ToArrBuff(encryptedMessage);
@@ -82,8 +81,8 @@ const serverRSA = {
 	},
 
 	readKeysFromFiles: function importKeys() {
-		const serverPubKeyString = fs.readFileSync(path.join(__dirname, '../keys/serverPublicKeyRSA.pem'),'utf8');
-		const serverPrivKeyString = fs.readFileSync(path.join(__dirname, '../keys/serverPrivateKeyRSA.pem'),'utf8');
+		const serverPubKeyString = fs.readFileSync('../keys/serverPublicKeyRSA.pem','utf8');
+		const serverPrivKeyString = fs.readFileSync('../keys/serverPrivateKeyRSA.pem','utf8');
 		this.pubKey = this.keyImportTemplateRSA(pem2jwk(serverPubKeyString), true);
 		this.privKey = this.keyImportTemplateRSA(pem2jwk(serverPrivKeyString), false);
 	},

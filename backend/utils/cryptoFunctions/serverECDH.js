@@ -1,11 +1,10 @@
 const crypto = require('crypto');
 const fs = require('fs');
-const path = require('path');
 
 const serverECDH = {
 
-	serverPubKeyJWK:  fs.readFileSync(path.join(__dirname, '../keys/serverPublicKeyECDH.pem'),'utf8'),
-	serverPrivKeyJWK: fs.readFileSync(path.join(__dirname, '../keys/serverPrivateKeyECDH.pem'),'utf8'),
+	serverPubKeyJWK:  fs.readFileSync('../keys/serverPublicKeyECDH.pem','utf8'),
+	serverPrivKeyJWK: fs.readFileSync('../keys/serverPrivateKeyECDH.pem','utf8'),
 	//pubKey: fs.readFileSync(path.join(__dirname, '/serverPublicKeyECDH.json'), 'utf8'),
 	//privKey: 	fs.readFileSync(path.join(__dirname, '/serverPrivateKeyECDH.json'), 'utf8'),
 	clientPubKey: null,
@@ -13,7 +12,6 @@ const serverECDH = {
 	privKey: null,
 
 	genKeys: async function initECDH() {
-		let keyStringObject;
 		const newServerKeyPairECDH = await crypto.subtle.generateKey(
 			{
 				name: "ECDH",
@@ -27,8 +25,8 @@ const serverECDH = {
 	},
 
 	readKeysFromFiles: function importKeys() {
-		const serverPubKeyJWKString = fs.readFileSync(path.join(__dirname, '../keys/serverPublicKeyECDH.json'),'utf8');
-		const serverPrivKeyJWKString = fs.readFileSync(path.join(__dirname, '../keys/serverPrivateKeyECDH.json'),'utf8');
+		const serverPubKeyJWKString = fs.readFileSync('../keys/serverPublicKeyECDH.json', 'utf8');
+		const serverPrivKeyJWKString = fs.readFileSync('../keys/serverPrivateKeyECDH.json','utf8');
 		const serverPubKeyJWK = JSON.parse(serverPubKeyJWKString);
 		const serverPrivKeyJWK = JSON.parse(serverPrivKeyJWKString);
 		this.pubKey = this.keyImportTemplateECDH(serverPubKeyJWK, true);
