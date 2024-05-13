@@ -11,6 +11,8 @@ router.post('/', async (req, res) => {
 	} else {
 		detailsObj = req.body.msgForServer;
 	}
+	console.log('Details object: ', detailsObj);
+	res.json({success: true});
 });
 
 module.exports = router;
