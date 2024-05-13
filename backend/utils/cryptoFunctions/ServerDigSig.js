@@ -95,6 +95,8 @@ const serverDigSig = {
 		return this.arrayBufferToBase64(signature);
 	},
 	verifyReceivedMessage: async function verifyReceivedMessage(signature, message) {
+		const clientKey = await crypto.subtle.exportKey('jwk', serverDigSig.clientKey);
+		console.log(JSON.stringify(clientKey));
 		let sigStringToArrBuf = this.base64ToArrayBuffer(signature);
 		return this.verify(sigStringToArrBuf, message, this.clientKey).then(r => {
 			return r;
