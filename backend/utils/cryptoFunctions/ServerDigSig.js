@@ -94,15 +94,11 @@ const serverDigSig = {
 		let signature = await this.sign(message);
 		return this.arrayBufferToBase64(signature);
 	},
-	verifyReceivedMessage: async function verifyReceivedMessage(signature, message, clientKey) {
-		console.log('inside verify digsig');
+	verifyReceivedMessage: async function verifyReceivedMessage(signature, message) {
 		let sigStringToArrBuf = this.base64ToArrayBuffer(signature);
-		if (!clientKey) {
-			clientKey = this.clientKey;
-		} else {
-			clientKey = await this.importClientKey(clientKey);
-		}
-		return await serverDigSig.verify(sigStringToArrBuf, message, clientKey);
+		return this.verify(sigStringToArrBuf, message, this.clientKey).then(r => {
+			return r;
+		});
 	},
 
 
