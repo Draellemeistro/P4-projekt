@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { packageAndExchangeKeys } from './cryptoTests.js';
-	import TestingECDH from './testingECDH/+.svelte';
+	import TestingECDH from './testingECDH/+page.svelte';
 	import { Router, Route, Link } from 'svelte-routing';
 
 	import cryptoUtils from '../../utils/cryptoUtils.js';
