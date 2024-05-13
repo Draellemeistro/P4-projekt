@@ -1,10 +1,11 @@
 const crypto = require('crypto');
 const fs = require('fs');
+const path = require('path');
 
 const serverDigSig = {
 
-	pubKey: null,
-	privKey: null,
+	pubKey: this.readPubKeyFromFile(),
+	privKey: this.readPrivKeyFromFile(),
 	clientKey: null,
 
 
@@ -23,13 +24,21 @@ const serverDigSig = {
 	saveKeysToFile: async function saveKeysToFile(){
 		const pubKeyString = await this.exportKeyToString();
 		const privKeyString = await this.exportKeyToString(false);
-		fs.writeFileSync( './utils/keys/digSigKeyPub.json', pubKeyString);
-		fs.writeFileSync('./utils/keys/digSigKeyPriv.json', privKeyString);
+		fs.writeFileSync( path.join(__dirname,'../keys/digSigKeyPub.json'), pubKeyString);
+		fs.writeFileSync(path.join(__dirname,'../keys/digSigKeyPriv.json'), privKeyString);
+	},
+	readPubKeyFromFile: async function readPubKeyFromFile() {
+		const serverPubKeyString = fs.readFileSync(path.join(__dirname,'../keys/digSigKeyPub.json'), 'utf8');
+		return await this.keyImportTemplateDigSig(serverPubKeyString, true);
+	},
+	readPrivKeyFromFile: async function readPrivKeyFromFile() {
+		const serverPrivKeyString = fs.readFileSync(path.join(__dirname,'../keys/digSigKeyPriv.json'), 'utf8');
+		return await this.keyImportTemplateDigSig(serverPrivKeyString, false);
 	},
 
 	readKeysFromFiles:  async function loadKeys() {
-		const digSigKeyPubString = fs.readFileSync('./utils/keys/digSigKeyPub.json', 'utf8');
-		const digSigKeyPrivString = fs.readFileSync('./utils/keys/digSigKeyPriv.json', 'utf8');
+		const digSigKeyPubString = fs.readFileSync(path.join(__dirname,'../keys/digSigKeyPub.json'), 'utf8');
+		const digSigKeyPrivString = fs.readFileSync(path.join(__dirname,'../keys/digSigKeyPriv.json'), 'utf8');
 		const digSigKeyPub = JSON.parse(digSigKeyPubString);
 		const digSigKeyPriv = JSON.parse(digSigKeyPrivString);
 		this.pubKey = await crypto.subtle.importKey('jwk', digSigKeyPub, {
@@ -110,50 +119,23 @@ const serverDigSig = {
 		}
 		return  JSON.stringify(await crypto.subtle.exportKey('jwk', key));
 	},
-	importServerKeys: function importServerKeys(pubKey, privKey){
-		this.pubKey = crypto.subtle.importKey(
-			'jwk',
-			pubKey,
-			{
-				name: 'ECDSA',
-				namedCurve: 'P-256',
-			},
-			true,
-			['verify'],
-		);
-		this.privKey = crypto.subtle.importKey(
-			'jwk',
-			privKey,
-			{
-				name: 'ECDSA',
-				namedCurve: 'P-256',
-			},
-			true,
-			['sign'],
-		);
-	},
 
-	importClientKey: async function importKey(clientKeyString, isPublic = true){
-		let clientKeyStringParsed;
-		let importedKey;
-		if (typeof clientKeyString ==='string') {
-			clientKeyStringParsed = JSON.parse(clientKeyString);
-		} else{
-			clientKeyStringParsed = clientKeyString;
+	importClientKey: async function importKey(clientKeyString){
+		this.clientKey = this.keyImportTemplateDigSig(clientKeyString, true);
+	},
+	keyImportTemplateDigSig: async function keyImportTemplateDigSig(keyString, isPublic = true) {
+		if (typeof keyString === 'string') keyString = JSON.parse(keyString);
+		if(isPublic){
+			return await crypto.subtle.importKey('jwk', keyString, {
+				name: 'ECDSA',
+				namedCurve: 'P-256'
+			}, true, ['verify']);
+		} else {
+			return  await crypto.subtle.importKey('jwk', keyString, {
+				name: 'ECDSA',
+				namedCurve: 'P-256'
+			}, true, ['sign']);
 		}
-  if(isPublic){
-		importedKey = await crypto.subtle.importKey('jwk', clientKeyStringParsed, {
-			name: 'ECDSA',
-			namedCurve: 'P-256'
-		}, true, ['verify']);
-	} else {
-		importedKey = await crypto.subtle.importKey('jwk', clientKeyStringParsed, {
-			name: 'ECDSA',
-			namedCurve: 'P-256'
-		}, true, ['sign']);
-	}
-		this.clientKey = importedKey;
-		return importedKey;
 	},
 
 	arrayBufferToBase64: function (buffer) {

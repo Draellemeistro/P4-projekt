@@ -14,13 +14,8 @@ const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
-const serverRSA = require('./utils/cryptoFunctions/serverRSA.js');
-const serverECDH = require('./utils/cryptoFunctions/serverECDH.js');
-const serverDigSig = require('./utils/cryptoFunctions/ServerDigSig.js');
- serverECDH.readKeysFromFiles().then(async r => {
-		 await serverRSA.readKeysFromFiles();
-		 await serverDigSig.readKeysFromFiles();
- });
+
+
 
 
 
@@ -28,11 +23,7 @@ const app = express();
 
 // Create a credentials object
 app.use(express.json());
-app.use(cors({
-	origin: '192.168.0.113', // Update with your frontend URL
-	methods: ['GET', 'POST'],
-	allowedHeaders: ['Content-Type'],
-}));
+aapp.use(cors({}));
 
 
 
@@ -52,9 +43,8 @@ app.use('/rsa-msg', rsaMsgRoute);
 app.use('/sign-msg', signMsgRoute);
 app.use('/verify-msg', verifyMsgRoute);
 
-
-const privateKey = fs.readFileSync('./key.pem', 'utf8');
-const certificate = fs.readFileSync('./cert.pem', 'utf8');
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/fullchain.pem', 'utf8');
 // Create a credentials object for use with https
 
 const credentials = {
@@ -62,8 +52,7 @@ const credentials = {
 	cert: certificate,
 	secureProtocol: 'TLSv1_2_method' // Use TLS 1.2
 };
-const serverLocal = https.createServer(credentials, app).listen(3030, () => console.log('HTTPs Server started'));
-console.log(`Server listening at https://${serverLocal.address().address}:${serverLocal.address().port}`);
+
 
 
 app.use(express.static(path.join(__dirname, '../Agora-app/build')));
@@ -71,7 +60,7 @@ app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../Agora-app/build/index.html'));
 	console.log('Static file server is running'); // Add this line
 });
-
+app.listen(80, () => console.log('HTTP Server started')); // TODO wepcrypto kræver at vi bruger https
 //https.createServer(credentials, app).listen(443);
 
 

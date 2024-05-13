@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
 	if (decryptedMessage === midwayMessage) {
 		console.log('ECDH upper layer works!');
 	}
-	let decryptedMidWayMsg = serverRSACrypto.decryptWithPrivRSA(decryptedMessage, pemFormatServerPrivateRSAKey);
+	let decryptedMidWayMsg = serverRSACrypto.decryptRSA(decryptedMessage);
 	if (decryptedMidWayMsg === plainTextMessage) {
 		console.log('RSA to ECDH works!');
 	}

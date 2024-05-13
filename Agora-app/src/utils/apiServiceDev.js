@@ -1,6 +1,6 @@
 /// api calls not meant for production, but useful for development and testing.
-const serverIP = '192.168.0.113';
-const serverPort = '3030';
+export const serverIP = '130.225.39.205';
+export const serverPort = '80';
 //import crypto from 'crypto';
 
 export const exchangeKeys = async (keyRing) => {
