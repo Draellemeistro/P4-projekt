@@ -65,7 +65,7 @@ const serverDigSig = {
 		const encoder = new TextEncoder();
 		const data = encoder.encode(message);
 		if (typeof signature === 'string'){
-			signature = encoder.encode(signature);
+			signature = this.base64ToArrayBuffer(signature);
 		}
 		if(!clientKey){
 			return await crypto.subtle.verify(
@@ -97,8 +97,7 @@ const serverDigSig = {
 	verifyReceivedMessage: async function verifyReceivedMessage(signature, message) {
 		const clientKey = await crypto.subtle.exportKey('jwk', serverDigSig.clientKey);
 		console.log(JSON.stringify(clientKey));
-		let sigStringToArrBuf = this.base64ToArrayBuffer(signature);
-		return this.verify(sigStringToArrBuf, message, this.clientKey).then(r => {
+		return await this.verify(signature, message, this.clientKey).then(r => {
 			return r;
 		});
 	},
