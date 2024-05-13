@@ -2,6 +2,9 @@
 	import { onMount } from 'svelte';
 	import { packageAndExchangeKeys } from './cryptoTests.js';
 	import TestingECDH from './testingECDH/+page.svelte';
+	import TestingRSA from './testingRSA/+page.svelte';
+	import TestingDigSig from './testingDigSig/+page.svelte';
+	import dummyVote from './testingDigSig/+page.svelte';
 	import { Router, Route, navigate } from 'svelte-routing';
 
 	import cryptoUtils from '../../utils/cryptoUtils.js';
@@ -21,19 +24,34 @@
 	function goToECDHPage() {
 		navigate('/cryptoTests/testingECDH');
 	}
+	function goToRSAPage() {
+		navigate('/cryptoTests/testingRSA');
+	}
+	function goToDigSigPage() {
+		navigate('/cryptoTests/testingDigSig');
+	}
+	function goToDummyVotePage() {
+		navigate('/cryptoTests/dummyVote');
+	}
 
 	onMount(async () => {
 		await cryptoUtils.genBothKeys();
 	});
 </script>
 <Router>
+
 	<Route path="/cryptoTests/testingECDH" component={TestingECDH} />
+	<Route path="/cryptoTests/testingRSA" component={TestingRSA} />
+	<Route path="/cryptoTests/testingDigSig" component={TestingDigSig} />
+	<Route path="/cryptoTests/dummyVote" component={dummyVote} />
 </Router>
+
 <button on:click={packageAndExchangeKeys}>exchange keys</button>
 <button on:click={cryptoUtils.genBothKeys()}>generate new keys</button>
 <button on:click={checkKeyStatus}>Check key status</button>
 <p>keyStatus message: {keyStatus}</p>
 
 <button on:click={goToECDHPage}>Go to ECDH</button>
-<input type="button" onclick="location.href='/cryptoTests/testingRSA';" value="Go to rsa" />
-<input type="button" onclick="location.href='/cryptoTests/testingDigSig';" value="Go to digSig" /><input type="button" onclick="location.href='/cryptoTests/dummyVote';" value="Go to dummyvote" />
+<button on:click={goToRSAPage}>Go to RSA</button>
+<button on:click={goToDigSigPage}>Go to Digital Signature</button>
+<button on:click={goToDummyVotePage}>Go to Dummy Vote</button>
