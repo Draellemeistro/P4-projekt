@@ -77,9 +77,7 @@ const serverECDH = {
 
 
 	handleEncryptedMessage: async function (encryptedMessage, IvValue, clientPubKey) {
-		if(!clientPubKey) {
-			clientPubKey = this.clientPubKey;
-		} else {
+		if(clientPubKey instanceof CryptoKey) {
 			clientPubKey = await this.keyImportTemplateECDH(clientPubKey, true);
 		}
 		const sharedSecretKey = await this.deriveSecret(clientPubKey);
