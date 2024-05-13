@@ -42,14 +42,10 @@
 <p>keyStatusServer message: {keyStatusServer}</p>
 
 <button on:click={handleClickSend}>Check decrypt</button>
-{#if encryptResponse}
-	<p>Encrypted message: {encryptResponse}</p>
-{/if}
-<button on:click={handleClickAgree}>Check shared secret</button>
-{#if sharedSecretResponse}
-	<p>Shared secret: {sharedSecretResponse}</p>
-{/if}
+<p>Response: {encryptResponse}</p>
 
+<button on:click={handleClickAgree}>Check shared secret</button>
+<p>Response: {sharedSecretResponse}</p>
 <div>
 	<button on:click={goToGeneralStuffPage}>Go to General Stuff</button>
 </div>
