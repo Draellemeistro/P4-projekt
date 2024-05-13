@@ -65,7 +65,7 @@ const serverDigSig = {
 		const encoder = new TextEncoder();
 		const data = encoder.encode(message);
 		if (typeof signature === 'string'){
-			signature = this.base64ToArrayBuffer(signature);
+			signature = encoder.encode(signature);
 		}
 		if(!clientKey){
 			return await crypto.subtle.verify(
