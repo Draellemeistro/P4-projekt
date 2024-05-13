@@ -20,8 +20,19 @@ const serverDigSig = require('./utils/cryptoFunctions/serverDigitalSignatures.js
 
 const app = express();
 
+// Create a credentials object
 app.use(express.json());
-app.use(cors({}));
+app.use(cors({
+	origin: '192.168.0.113', // Update with your frontend URL
+	methods: ['GET', 'POST'],
+	allowedHeaders: ['Content-Type'],
+}));
+
+
+
+
+
+
 
 app.use('/get-email', getEmailRoute);
 app.use('/fetch-candidates', fetchCandidatesRoute);
@@ -30,15 +41,17 @@ app.use('/insert-ballot', insertBallotRoute);
 app.use('/handle-encrypted-ballot', handleEncryptedBallotRoute);
 app.use('/agree-shared-secret', agreeSharedSecretRoute);
 
-
-const privateKey = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/fullchain.pem', 'utf8');
+const privateKey = fs.readFileSync('./key.pem', 'utf8');
+const certificate = fs.readFileSync('./cert.pem', 'utf8');
 // Create a credentials object for use with https
+
 const credentials = {
 	key: privateKey,
 	cert: certificate,
 	secureProtocol: 'TLSv1_2_method' // Use TLS 1.2
 };
+const serverLocal = https.createServer(credentials, app).listen(3030, () => console.log('HTTPs Server started'));
+console.log(`Server listening at https://${serverLocal.address().address}:${serverLocal.address().port}`);
 
 
 app.use(express.static(path.join(__dirname, '../Agora-app/build')));
@@ -48,7 +61,6 @@ app.get('*', (req, res) => {
 });
 
 //https.createServer(credentials, app).listen(443);
-app.listen(80, () => console.log('HTTP Server started'));
 
 
 
