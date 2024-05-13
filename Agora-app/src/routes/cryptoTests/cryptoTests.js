@@ -1,4 +1,4 @@
-import { exchangeKeys } from '../../utils/apiServiceDev.js';
+import { DecryptTestRSA, exchangeKeys } from '../../utils/apiServiceDev.js';
 import cryptoUtils from '../../utils/cryptoUtils.js';
 
 export const packageAndExchangeKeys = async () => {
@@ -29,4 +29,32 @@ export const packageAndExchangeKeys = async () => {
 		console.error('Error in ExchangeKeys: ', response.status);
 		return response.status;
 	}
+}
+
+export const encryptRSA = async (plainTextMessage) => {
+	let parsedMessage;
+	const encryptedMessage = await cryptoUtils.RSA.encrypt(plainTextMessage);
+	const response = await DecryptTestRSA(plainTextMessage, encryptedMessage);
+	if (response.ok) {
+		const data = await response.json();
+		console.log('Data: ', data);
+		if (data !== 'string') {
+			parsedMessage = data.decryptedMessage
+		} else {
+			parsedMessage = JSON.parse(data);
+			console.log('Parsed message: ', parsedMessage);
+			parsedMessage = parsedMessage.decryptedMessage;
+			console.log('Parsed message: ', parsedMessage);
+		}
+	}
+	else {
+		console.error('Error in encryptRSA: ', response.status);
+		return response.status;
+	}
+}
+export const sendSignedMessage = async (plainTextMessage) => {
+	const encryptedMessage = await cryptoUtils.RSA.encrypt(plainTextMessage);
+	const signature = await cryptoUtils.digSig.sign(plainTextMessage);
+	const key = await cryptoUtils.RSA.exportKeyToString();
+	return await DecryptTestRSA(plainTextMessage, encryptedMessage, signature, key);
 }

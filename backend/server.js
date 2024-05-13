@@ -6,6 +6,10 @@ const insertBallotRoute = require('./routes/insert-ballot-untouched.js');
 const handleEncryptedBallotRoute = require('./routes/handle-encrypted-ballot.js');
 const agreeSharedSecretRoute = require('./routes/agree-shared-secret.js');
 const requestServerKeysRoute = require('./routes/request-server-keys.js');
+const ecdhMsgRoute = require('./routes/ecdh-msg.js');
+const rsaMsgRoute = require('./routes/rsa-msg.js');
+const signMsgRoute = require('./routes/sign-msg.js');
+const verifyMsgRoute = require('./routes/verify-msg.js');
 const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
@@ -43,6 +47,11 @@ app.use('/insert-ballot', insertBallotRoute);
 app.use('/handle-encrypted-ballot', handleEncryptedBallotRoute);
 app.use('/agree-shared-secret', agreeSharedSecretRoute);
 app.use('/request-server-keys', requestServerKeysRoute);
+app.use('/ecdh-msg', ecdhMsgRoute);
+app.use('/rsa-msg', rsaMsgRoute);
+app.use('/sign-msg', signMsgRoute);
+app.use('/verify-msg', verifyMsgRoute);
+
 
 const privateKey = fs.readFileSync('./key.pem', 'utf8');
 const certificate = fs.readFileSync('./cert.pem', 'utf8');

@@ -13,12 +13,12 @@ export const exchangeKeys = async (keyRing) => {
 	});
 }
 export const DecryptTestRSA = async (plainTextMessage, encryptedMessage) => {
-	let response = await fetch(`https://${serverIP}:${serverPort}/decrypt-RSA-message-Test`, {
+	let response = await fetch(`https://${serverIP}:${serverPort}/rsa-msg`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify({ plainTextMessage, encryptedMessage }),
+		body: JSON.stringify({ plaintext: plainTextMessage, encrypted: encryptedMessage }),
 	});
 	if (response.ok) {
 		return response.json();
@@ -38,21 +38,24 @@ export const DecryptTestECDH = (objectContainingMessage) => {
 		body: JSON.stringify({ msgForServer: objectContainingMessage })
 	});
 };
-export const DecryptSignedRSA = async (plainTextMessage, encryptedMessage, signature, key) => {
-	let response = await fetch(`https://${serverIP}:${serverPort}/decrypt-RSA-plus-sign`, {
+
+export const sendSignedMessage = async (message, signature) => {
+	return await fetch(`https://${serverIP}:${serverPort}/sign-msg`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify({ plainTextMessage, encryptedMessage, signature, key }),
+		body: JSON.stringify({ message: message, signature: signature }),
 	});
-	if (response.ok) {
-		return response.json();
 	}
-	else {
-		console.error('Error in DecryptTestRSA: ', response.status);
-		return response.status;
-	}
+
+export const requestMsgToVerify = async () => {
+	return await fetch(`https://${serverIP}:${serverPort}/verify-msg`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	});
 }
 
 export const checkSharedSecretTest = async (keyStringSharedSecret, keyStringPub) => {

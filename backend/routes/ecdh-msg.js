@@ -1,4 +1,3 @@
-const serverECDH = require('../utils/cryptoFunctions/serverECDH');
 const express = require('express');
 const serverECDHCrypto = require('../utils/cryptoFunctions/serverECDH');
 
