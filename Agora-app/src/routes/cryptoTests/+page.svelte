@@ -2,11 +2,11 @@
 	import { onMount } from 'svelte';
 	import { packageAndExchangeKeys } from './cryptoTests.js';
 	import { Link } from "svelte-routing";
-	import cryptoUtils from '../../utils/cryptoUtils.js';
+	//import cryptoUtils from '../../utils/cryptoUtils.js';
 
 
 	onMount(async () => {
-		await cryptoUtils.genBothKeys();
+		//await cryptoUtils.genBothKeys();
 	});
 
 </script>

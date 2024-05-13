@@ -2,9 +2,9 @@
 	import { onMount } from 'svelte';
 	import { cryptoUtils } from '../../../utils/cryptoUtils.js';
 	import { agreeOnSharedSecret, sendECDHMessage } from './pageECDH.js';
-const testMessage = 'Hello, this is a test message';
-let encryptResponse;
-let sharedSecretResponse;
+	const testMessage = 'Hello, this is a test message';
+	let encryptResponse;
+	let sharedSecretResponse;
 	async function handleClickSend() {
 		encryptResponse = await sendECDHMessage(testMessage);
 	}
