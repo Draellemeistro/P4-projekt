@@ -77,8 +77,11 @@ const serverECDH = {
 
 
 	handleEncryptedMessage: async function (encryptedMessage, IvValue, clientPubKey) {
-		if(clientPubKey instanceof CryptoKey) {
+		if(!(clientPubKey instanceof CryptoKey) && typeof clientPubKey === 'string') {
 			clientPubKey = await this.keyImportTemplateECDH(clientPubKey, true);
+		} else {
+			clientPubKey = this.clientPubKey;
+			console.log('clientKey in server: ', clientPubKey);
 		}
 		const sharedSecretKey = await this.deriveSecret(clientPubKey);
 		const encryptedMsgArrBuff = this.convertBase64ToArrBuffer(encryptedMessage);
