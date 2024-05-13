@@ -21,7 +21,7 @@
 	}
 
 	async function doExchange() {
-		shitString = packageAndExchangeKeys();
+		shitString = await packageAndExchangeKeys();
 	}
 	async function checkKeyStatus() {
 		if (cryptoUtils.ECDH.pubKey && cryptoUtils.digSig.pubKey) {

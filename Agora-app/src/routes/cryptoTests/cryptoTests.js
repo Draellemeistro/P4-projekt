@@ -12,6 +12,9 @@ export const packageAndExchangeKeys = async () => {
 			const keyRing = JSON.parse(data);
 			await cryptoUtils.ECDH.saveServerKey(keyRing.ECDH);
 			await cryptoUtils.digSig.saveServerKey(keyRing.DigSig);
+			console.log('Keyring: ', keyRing);
+			console.log('Server keys saved');
+			console.log(keyRing.ECDH);
 			return data;
 		}
 	}
