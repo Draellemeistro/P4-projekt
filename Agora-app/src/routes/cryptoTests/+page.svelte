@@ -7,6 +7,7 @@
 	import generalStuff from './generalStuff/+page.svelte';
 	import votePage from '../vote/+page.svelte';
 	import { Router, Route, navigate } from 'svelte-routing';
+	import cryptoUtils from '../../utils/cryptoUtils.js';
 
 
 	function goToGeneralStuffPage() {
@@ -14,6 +15,7 @@
 	}
 
 	onMount(async () => {
+		await cryptoUtils.genBothKeys();
 		goToGeneralStuffPage();
 	});
 </script>

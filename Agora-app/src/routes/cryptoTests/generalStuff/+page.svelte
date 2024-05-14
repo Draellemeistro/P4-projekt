@@ -27,6 +27,7 @@
 
 	async function doExchange() {
 		shitString = await packageAndExchangeKeys();
+		await checkKeyStatus();
 	}
 	async function checkKeyStatus() {
 		if (cryptoUtils.ECDH.pubKey && cryptoUtils.digSig.pubKey) {
@@ -38,11 +39,13 @@
 			console.log('No public key');
 			keyStatus = 'No public key';
 		}
-		if (cryptoUtils.ECDH.serverKey instanceof CryptoKey && cryptoUtils.digSig.serverKey instanceof CryptoKey){
-			keyStatusServer = 'Server public key exists';
+		if (cryptoUtils.ECDH.serverKey instanceof CryptoKey
+			&& cryptoUtils.digSig.serverKey instanceof CryptoKey
+			&& cryptoUtils.RSA.serverKey instanceof CryptoKey){
+			keyStatusServer = 'Server public keys properly loaded';
 		} else {
-			console.log('No server public key');
-			keyStatusServer = 'No server public key';
+			console.log('Server public keys not loaded properly');
+			keyStatusServer = 'Server public keys not loaded.';
 		}
 	}
 
@@ -51,13 +54,18 @@
  }
 
 	onMount(async () => {
-		await cryptoUtils.genBothKeys();
+		await checkKeyStatus();
 	});
 	</script>
+<div>
+	<h1>Testing Crypto</h1>
+	<p>Client keys should be generated from a previous page.</p>
+	<p>Clients key status: {keyStatus}</p>
 
+</div>
+<button on:click={cryptoUtils.genBothKeys()}>generate new keys</button>
 <button on:click={doExchange}>exchange keys</button>
 <p>shitString: {shitString}</p>
-<button on:click={cryptoUtils.genBothKeys()}>generate new keys</button>
 <button on:click={checkKeyStatus}>Check key status</button>
 <p>keyStatus message: {keyStatus}</p>
 <p>Server keyStatus message: {keyStatusServer}</p>
