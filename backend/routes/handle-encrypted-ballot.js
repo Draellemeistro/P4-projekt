@@ -7,7 +7,8 @@ const router = express.Router();
 
 
 router.post('/', async (req, res) => {
-	const messageObject = JSON.parse(req.body.message);
+	const message = req.body.message;
+	const messageObject = JSON.parse(message);
 	const signature = req.body.signature;
 
 	// ballot can be stored even before first round of decryption. Could save them for later use?
@@ -25,16 +26,12 @@ router.post('/', async (req, res) => {
 	// TODO do something to utilize the otherInformation object (VoteID, etc.)
 	if (typeof decryptedMessage === 'string') {
 		 subMessageObject = JSON.parse(decryptedMessage);
-		console.log('subMessageObject:', subMessageObject);
-	} else {
-		subMessageObject = decryptedMessage;
 	}
-	if (typeof  subMessageObject.otherInformation === 'string') {
+	if (typeof  messageObject.otherInformation === 'string') {
 		otherInformation = JSON.parse(subMessageObject.otherInformation);
 	} else {
-		otherInformation = subMessageObject.otherInformation;
+		otherInformation = messageObject.otherInformation;
 	}
-	console.log('Other Information:', otherInformation);
 	voteID = otherInformation.voteID;
 
 	// TODO: Use vote ID to get the correct clientKey to verify the signature.
@@ -43,7 +40,7 @@ router.post('/', async (req, res) => {
 		console.log('Signature is valid');
 		// TODO: compare the voteID with the database to ensure it is eligible to vote.
 		voteIdEligible = await checkVoteID(voteID);
-		if(typeof subMessageObject === 'string') {
+		if(typeof subMessageObject.innerLayer === 'string') {
 			const encBallot = JSON.parse(subMessageObject.innerLayer);
 			console.log('Encrypted Ballot:', encBallot);
 		}
