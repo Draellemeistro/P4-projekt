@@ -7,7 +7,7 @@
     import { onMount } from 'svelte';
     import Modal from './Modal.svelte';
    // import { goto } from '$app/navigation';
-    import { checkAuthentication } from '../../utils/auth.js';
+    //import { checkAuthentication } from '../../utils/auth.js';
     import { requestCandidates, formatCandidates } from './votePage.js';
 
     let showModal = false;
@@ -22,12 +22,13 @@
 
 
     onMount(async () => {
-        if (!checkAuthentication()) {
+        //if (!checkAuthentication()) {
         //    goto('/login');
         //    return;
-            // eslint-disable-next-line no-unused-vars
-            const voteID = 10203040
-        }
+        //}
+        // eslint-disable-next-line no-unused-vars
+        const voteID = 10203040
+
         try {
             candidates = await requestCandidates();
         } catch (error) {

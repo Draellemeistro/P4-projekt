@@ -11,6 +11,7 @@ export async function requestCandidates() {
 		return candidates;
 	} else {
 		console.log('Error fetching candidates from server');
+		return [];
 	}
 }
 export function formatCandidates(candidates) {
