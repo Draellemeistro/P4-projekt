@@ -16,6 +16,7 @@ const fs = require('fs');
 const path = require('path');
 const { loadKeys: loadKeysECDH } = require('./utils/cryptoFunctions/serverECDH');
 const { loadKeys: loadKeysRSA } = require('./utils/cryptoFunctions/serverRSA');
+const { loadKeys: loadKeysDigSig } = require('./utils/cryptoFunctions/ServerDigSig');
 
 
 
@@ -49,6 +50,9 @@ console.log('RSA Keys loaded');
 });
 loadKeysECDH().then(() => {
 	console.log('ECDH Keys loaded');
+});
+loadKeysDigSig().then(() => {
+	console.log('DigSig Keys loaded');
 });
 
 const privateKey = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/privkey.pem', 'utf8');
