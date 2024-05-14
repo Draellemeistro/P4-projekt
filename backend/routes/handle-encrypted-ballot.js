@@ -50,7 +50,8 @@ router.post('/', async (req, res) => {
 				console.log('Ballot stored successfully');
 			}
 			//TODO: save hash of voteID+publicKey to database???
-		}
+		} // TODO: check DB stuff
+
 	}
 	const responseSignature = await serverDigSig.prepareSignatureToSend(message);
 	res.json({message: message, signature: responseSignature});
@@ -64,7 +65,7 @@ async function checkVoteID(voteId)	{
 
 async function storeAcceptedBallot(encBallot, receipt) {
 	const query = 'INSERT INTO Agora.ballotbox (encr_ballot, receipt) VALUES (?, ?)';
-	return connection.query(query, [encBallot, receipt], (err, results) => {
+	return connection.query(query, [encBallot, receipt], (err) => {
 			if (err) {
 				console.error(err);
 				console.error('Error inserting data into database');
