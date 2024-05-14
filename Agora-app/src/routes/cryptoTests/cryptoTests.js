@@ -36,13 +36,7 @@ export const encryptRSA = async (plainTextMessage) => {
 	const response = await DecryptTestRSA(plainTextMessage, encryptedMessage);
 	if (response.ok) {
 		const data = await response.json();
-		console.log('Data: ', data);
-		console.log('decryptedMessage: ', data.decryptedMessage);
-		if(data.decryptedMessage === plainTextMessage) {
-			console.log('Data.decryptedMessage is the one');
-			return data.decryptedMessage;
-		} else if(data === plainTextMessage) {
-			console.log('Data is the one');
+		if(data === plainTextMessage) {
 			return data;
 		}
 	}

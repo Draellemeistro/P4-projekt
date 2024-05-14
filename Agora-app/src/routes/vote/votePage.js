@@ -1,7 +1,7 @@
 import cryptoUtils from '../../utils/cryptoUtils.js';
 import { getCandidatesFromServer } from '../../utils/apiService.js';
 
-export async function requestAndFormatCandidates() {
+export async function requestCandidates() {
 	const response = await getCandidatesFromServer();
 	if (response.ok) {
 		const data = await response.json();
@@ -10,8 +10,21 @@ export async function requestAndFormatCandidates() {
 		console.log('candidates: ', candidates);
 		return candidates;
 	} else {
-		throw new Error('Error fetching candidates from server');
+		console.log('Error fetching candidates from server');
 	}
+}
+export function formatCandidates(candidates) {
+	let parties = {};
+	candidates.forEach(([name, party]) => {
+		if (party === "N/A")
+			party = "Outside of the parties"
+
+		if (!parties[party])
+			parties[party] = [];
+
+		parties[party].push(name);
+	});
+	return parties;
 }
 
 export async function sendEncryptedBallotToServer(ballot) {

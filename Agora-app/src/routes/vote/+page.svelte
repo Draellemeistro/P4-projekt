@@ -8,7 +8,7 @@
     import Modal from './Modal.svelte';
    // import { goto } from '$app/navigation';
     import { checkAuthentication } from '../../utils/auth.js';
-    import { requestAndFormatCandidates } from './votePage.js';
+    import { requestCandidates, formatCandidates } from './votePage.js';
 
     let showModal = false;
     let selectedOptionModal = "";
@@ -16,6 +16,8 @@
 
     // Candidates
     let candidates = [];
+    let parties = {};
+
 
     onMount(async () => {
         if (!checkAuthentication()) {
@@ -25,26 +27,14 @@
             const voteID = 10203040
         }
         try {
-            candidates = await requestAndFormatCandidates();
+            candidates = await requestCandidates();
         } catch (error) {
             console.error(error);
         }
+        parties = formatCandidates(candidates);
     });
 
     // Group candidates by party
-    let parties = {};
-    $: {
-        parties = {};
-        candidates.forEach(([name, party]) => {
-            if (party === "N/A")
-                party = "Outside of the parties"
-
-            if (!parties[party])
-                parties[party] = [];
-
-            parties[party].push(name);
-        });
-    }
 
     function proceedHandler(selectedOption) {
         selectedOptionModal = selectedOption;
