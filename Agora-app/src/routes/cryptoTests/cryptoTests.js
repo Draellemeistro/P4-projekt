@@ -32,12 +32,13 @@ export const packageAndExchangeKeys = async () => {
 }
 
 export const encryptRSA = async (plainTextMessage) => {
-	const encryptedMessage = await cryptoUtils.RSA.encrypt(plainTextMessage);
+	const encryptedMessage = await cryptoUtils.RSA.encryptAndConvert(plainTextMessage);
 	const response = await DecryptTestRSA(plainTextMessage, encryptedMessage);
 	if (response.ok) {
 		const data = await response.json();
-		console.log('Data: ', data);
-		return data.decryptedMessage;
+		if(data.decryptedMessage === plainTextMessage) {
+			return data.decryptedMessage;
+		}
 	}
 	else {
 		console.error('Error in encryptRSA: ', response.status);

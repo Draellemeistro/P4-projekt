@@ -73,7 +73,8 @@ const ECDH ={
 		);
 		return {
 			encryptedMessage: this.convertArrBuffToBase64(encryptedMessage),
-			ivValue: ivValue
+			ivValue: ivValue,
+			clientPubKey: await this.exportKeyToString()
 		};
 	},
 
@@ -166,7 +167,8 @@ const ECDH ={
 	ECDHPart: async function ECDHpart(message) {
 		let sharedSecret;
 		sharedSecret = await this.deriveSecret();
-		return await this.encrypt(message, sharedSecret);
+		const encryptedMessage = await this.encrypt(message, sharedSecret);
+		return JSON.stringify(encryptedMessage);
 	},
 
 

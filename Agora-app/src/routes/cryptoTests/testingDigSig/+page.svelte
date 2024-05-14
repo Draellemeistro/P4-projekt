@@ -49,7 +49,7 @@
 	<button on:click={sendSignatureForVerification}>Check digSig</button>
 	<p>servers response to our digital signature: {digSigAccepted}</p>
 <button on:click={askForSignature}>Check digSig</button>
-<p>verificiation of servers signature: {verifiedServersDigSig}</p>
+<p>result: {verifiedServersDigSig}</p>
 </div>
 
 <div>
