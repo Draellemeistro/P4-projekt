@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
 	voteID = otherInformation.voteID;
 
 	// TODO: Use vote ID to get the correct clientKey to verify the signature.
-	const verify = await serverDigSig.verifyReceivedMessage(signature, req.body.message);
+	const verify = await serverDigSig.verifyReceivedMessage(signature, message);
 	if(verify){
 		console.log('Signature is valid');
 		// TODO: compare the voteID with the database to ensure it is eligible to vote.
