@@ -31,6 +31,7 @@ router.post('/', async (req, res) => {
 	} else {
 		otherInformation = messageObject.otherInformation;
 	}
+	console.log('Other Information:', otherInformation);
 	voteID = otherInformation.voteID;
 
 	// TODO: Use vote ID to get the correct clientKey to verify the signature.
