@@ -18,6 +18,8 @@
     let candidates = [];
     let parties = {};
 
+    let isLoading = true;
+
 
     onMount(async () => {
         if (!checkAuthentication()) {
@@ -32,6 +34,7 @@
             console.error(error);
         }
         parties = formatCandidates(candidates);
+        isLoading = false;
     });
 
     // Group candidates by party
@@ -41,37 +44,41 @@
         showModal = true;
     }
 </script>
-<div class="main-container">
-    {#each Object.entries(parties) as [party, candidates]}
-        <div class="party-header">
-            <label >
-                {#if party !== "Outside of the parties"}
-                    <input type="radio" bind:group={selectedOption} value={`Party: ${party}`} />
-                {/if}
-                {party}
-            </label>
-        </div>
-
-        {#each candidates as candidate}
-            <div class="grid-item">
-                <label>
-                    <input type="radio" bind:group={selectedOption} value={`Candidate: ${candidate} (${party})`} />
-                    {candidate}
+{#if isLoading}
+    <p>Loading...</p>
+{:else}
+    <div class="main-container">
+        {#each Object.entries(parties) as [party, candidates]}
+            <div class="party-header">
+                <label >
+                    {#if party !== "Outside of the parties"}
+                        <input type="radio" bind:group={selectedOption} value={`Party: ${party}`} />
+                    {/if}
+                    {party}
                 </label>
             </div>
+
+            {#each candidates as candidate}
+                <div class="grid-item">
+                    <label>
+                        <input type="radio" bind:group={selectedOption} value={`Candidate: ${candidate} (${party})`} />
+                        {candidate}
+                    </label>
+                </div>
+            {/each}
         {/each}
-    {/each}
 
-    {#if selectedOption !== undefined}
-        <button on:click={() => proceedHandler(selectedOption)}>Proceed</button>
-    {/if}
-    <p>Select a candidate or a party!</p>
-</div>
+        {#if selectedOption !== undefined}
+            <button on:click={() => proceedHandler(selectedOption)}>Proceed</button>
+        {/if}
+        <p>Select a candidate or a party!</p>
+    </div>
 
-<Modal bind:showModal {selectedOptionModal}>
-    <h2 slot="header">
-        Cast vote for {selectedOption}
-    </h2>
+    <Modal bind:showModal {selectedOptionModal}>
+        <h2 slot="header">
+            Cast vote for {selectedOption}
+        </h2>
 
-    <a href="https://www.merriam-webster.com/dictionary/modal">merriam-webster.com</a>
-</Modal>
+        <a href="https://www.merriam-webster.com/dictionary/modal">merriam-webster.com</a>
+    </Modal>
+{/if}
