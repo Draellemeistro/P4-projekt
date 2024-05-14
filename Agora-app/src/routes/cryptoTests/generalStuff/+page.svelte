@@ -76,6 +76,7 @@
 
 	onMount(async () => {
 		await checkKeyStatus();
+		await doExchange();
 	});
 	</script>
 <div>
