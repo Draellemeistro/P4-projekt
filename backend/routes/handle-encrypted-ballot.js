@@ -20,6 +20,7 @@ router.post('/', async (req, res) => {
 	const verify = await serverDigSig.verifyReceivedMessage(signature, req.body.message);
 	if(verify){
 		console.log('Signature is valid');
+		console.log('Decrypted message type:', typeof decryptedMessage);
 
 	}
 	//
