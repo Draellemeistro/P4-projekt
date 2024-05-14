@@ -6,9 +6,9 @@
 <script>
     import { onMount } from 'svelte';
     import Modal from './Modal.svelte';
-    import { getCandidatesFromServer } from '../../utils/apiService.js';
    // import { goto } from '$app/navigation';
     import { checkAuthentication } from '../../utils/auth.js';
+    import { requestAndFormatCandidates } from './votePage.js';
 
     let showModal = false;
     let selectedOptionModal = "";
@@ -24,12 +24,10 @@
             // eslint-disable-next-line no-unused-vars
             const voteID = 10203040
         }
-        const response = await getCandidatesFromServer();
-        if (response.ok) {
-            const data = await response.json();
-            candidates = data.map(item => [item.candidate, item.party]);
-        } else {
-            console.error('Failed to fetch candidates');
+        try {
+            candidates = await requestAndFormatCandidates();
+        } catch (error) {
+            console.error(error);
         }
     });
 
