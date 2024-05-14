@@ -13,20 +13,13 @@ export const exchangeKeys = async (keyRing) => {
 	});
 }
 export const DecryptTestRSA = async (plainTextMessage, encryptedMessage) => {
-	let response = await fetch(`https://${serverIP}:${serverPort}/rsa-msg`, {
+	return  await fetch(`https://${serverIP}:${serverPort}/rsa-msg`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({ plaintext: plainTextMessage, encrypted: encryptedMessage }),
 	});
-	if (response.ok) {
-		return response.json();
-	}
-	else {
-		console.error('Error in DecryptTestRSA: ', response.status);
-		return response.status;
-	}
 }
 export const DecryptTestECDH = (objectContainingMessage) => {
 	// msgForServer is a stringified object containing several properties, one of which is the encrypted message.
