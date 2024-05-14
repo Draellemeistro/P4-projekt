@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Added loadKeys to avoid &quot;this.&quot; error">
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="minor fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverRSA.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverRSA.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
@@ -211,30 +210,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00061" summary="Changed module system to match frontend, and moved routes out from server.js">
-      <option name="closed" value="true" />
-      <created>1714392585798</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1714392585798</updated>
-    </task>
-    <task id="LOCAL-00062" summary="pain">
-      <option name="closed" value="true" />
-      <created>1714392669934</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1714392669934</updated>
-    </task>
-    <task id="LOCAL-00063" summary=".">
-      <option name="closed" value="true" />
-      <created>1714392797857</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1714392797857</updated>
     </task>
     <task id="LOCAL-00064" summary="changed db to match es6 module">
       <option name="closed" value="true" />
@@ -604,7 +579,31 @@
       <option name="project" value="LOCAL" />
       <updated>1715690806449</updated>
     </task>
-    <option name="localTasksCounter" value="110" />
+    <task id="LOCAL-00110" summary="Added loadKeys to avoid &quot;this.&quot; error">
+      <option name="closed" value="true" />
+      <created>1715691247583</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1715691247583</updated>
+    </task>
+    <task id="LOCAL-00111" summary="digsig same pattern as other loadKey">
+      <option name="closed" value="true" />
+      <created>1715691449674</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1715691449674</updated>
+    </task>
+    <task id="LOCAL-00112" summary="minor fix">
+      <option name="closed" value="true" />
+      <created>1715691484806</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1715691484806</updated>
+    </task>
+    <option name="localTasksCounter" value="113" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -637,8 +636,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Finished moving out routes from server.js" />
-    <MESSAGE value="fixed __dirname??? broke becouse of change to ES module" />
     <MESSAGE value="changed OTPStore to OOP" />
     <MESSAGE value="Fixed imports" />
     <MESSAGE value="Fixed exports" />
@@ -659,9 +656,11 @@
     <MESSAGE value="dinfar" />
     <MESSAGE value="fuckjose" />
     <MESSAGE value="Changed keyexchange to verify2fa endpoint" />
-    <MESSAGE value="minor fix" />
     <MESSAGE value="added test print" />
     <MESSAGE value="Added loadKeys to avoid &quot;this.&quot; error" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added loadKeys to avoid &quot;this.&quot; error" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/main'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;backend/server.js" />
+    <MESSAGE value="digsig same pattern as other loadKey" />
+    <MESSAGE value="minor fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor fix" />
   </component>
 </project>
