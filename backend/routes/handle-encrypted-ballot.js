@@ -33,20 +33,18 @@ router.post('/', async (req, res) => {
 	} else {
 		otherInformation = subMessageObject.otherInformation;
 	}
-	logObjectEntriesWithType(otherInformation);
-	logObjectEntriesWithType(subMessageObject);
 	voteID = otherInformation.voteID;
-	const encBallot = subMessageObject.encryptedMessage;
+
 	// TODO: Use vote ID to get the correct clientKey to verify the signature.
 	const verify = await serverDigSig.verifyReceivedMessage(signature, message);
 	if(verify){
 		console.log('Signature is valid');
 		// TODO: compare the voteID with the database to ensure it is eligible to vote.
 		voteIdEligible = await checkVoteID(voteID);
-
 		if (voteIdEligible) {
+			const encBallot = subMessageObject.InnerLayer;
 			console.log('Vote ID is eligible');
-			const receipt = await serverDigSig.prepareSignatureToSend(subMessageObject.innerLayer);
+			const receipt = await serverDigSig.prepareSignatureToSend(encBallot);
 			console.log('Receipt:', receipt);
 			console.log('Encrypted Ballot:', encBallot);
 			console.log('subMessageObject', subMessageObject);
