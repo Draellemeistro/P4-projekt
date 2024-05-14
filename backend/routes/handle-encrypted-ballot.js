@@ -27,10 +27,10 @@ router.post('/', async (req, res) => {
 	if (typeof decryptedMessage === 'string') {
 		 subMessageObject = JSON.parse(decryptedMessage);
 	}
-	if (typeof  messageObject.otherInformation === 'string') {
+	if (typeof  subMessageObject.otherInformation === 'string') {
 		otherInformation = JSON.parse(subMessageObject.otherInformation);
 	} else {
-		otherInformation = messageObject.otherInformation;
+		otherInformation = subMessageObject.otherInformation;
 	}
 	voteID = otherInformation.voteID;
 
