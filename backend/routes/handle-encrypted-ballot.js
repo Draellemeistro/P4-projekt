@@ -9,41 +9,48 @@ const router = express.Router();
 router.post('/', async (req, res) => {
 	const messageObject = JSON.parse(req.body.message);
 	const signature = req.body.signature;
+
+	// ballot can be stored even before first round of decryption. Could save them for later use?
 	const decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(
 		messageObject.encryptedMessage,
 		messageObject.ivValue,
 		messageObject.clientPubKey//serverECDHCrypto.clientPubKey
 	);
+
+	let voteID;
+	let voteIdEligible = false;
+	let otherInformation;
+	let subMessageObject;
 	console.log('Decrypted message:', decryptedMessage);
+	// TODO do something to utilize the otherInformation object (VoteID, etc.)
+	if (typeof decryptedMessage === 'string') {
+		 subMessageObject = JSON.parse(decryptedMessage);
+	}
+	if (typeof  messageObject.otherInformation === 'string') {
+		otherInformation = JSON.parse(subMessageObject.otherInformation);
+	} else {
+		otherInformation = messageObject.otherInformation;
+	}
+	voteID = otherInformation.voteID;
 
-
+	// TODO: Use vote ID to get the correct clientKey to verify the signature.
 	const verify = await serverDigSig.verifyReceivedMessage(signature, req.body.message);
 	if(verify){
 		console.log('Signature is valid');
-		console.log('Decrypted message type:', typeof decryptedMessage);
-
+		// TODO: compare the voteID with the database to ensure it is eligible to vote.
+		voteIdEligible = await checkVoteID(voteID);
+		const encBallot = subMessageObject.innerLayer;
+		if (voteIdEligible) {
+			console.log('Vote ID is eligible');
+			const receipt = await serverDigSig.prepareSignatureToSend(subMessageObject.innerLayer);
+			console.log('Receipt:', receipt);
+			console.log('Encrypted Ballot:', encBallot);
+			}
+		//TODO: save hash of voteID+publicKey to database???
 	}
-	//
-	////TODO: do some handling of decrypted layers data.
-	//if (typeof decryptedMessage === 'string') {
-	//	decryptedMessage = JSON.parse(decryptedMessage);
-	//}
-	//try {
-	//	console.log('Original message:', encBallot);
-	//	console.log('Decrypted message:', decryptedMessage);
-	//	//Object.keys(decryptedMessage).forEach(key => {
-	//	//});
-	//} catch (error) {
-	//	console.error('Error:', error);
-	//}
-	//if (typeof encBallot !== 'string') {
-	//	encBallot = JSON.stringify(encBallot);
-	//}
-	//if (typeof clientKeyPub !== 'string') {
-	//	clientKeyPub = JSON.stringify(clientKeyPub);
-	//}
+
 //
-	///// TODO: do we want this? ballot should be storable even before first round of decryption. Could save them for later use?
+
 	//let ivArray = Object.values(ivValue);
 	//let ivHexString = ivArray.map(byte => byte.toString().padStart(2, '0')).join(''); // haven't tested thoroughly. Convert the IV to a hex string, for storage in the database
 	//const query = 'INSERT INTO Agora.ballotbox (encr_ballot, ECDH_pub_key, iv_value) VALUES (?, ?, ?)';
@@ -56,4 +63,21 @@ router.post('/', async (req, res) => {
 	//	}
 	//});
 });
+async function checkVoteID(voteId)	{
+	if(voteId)
+		return true;
+}
+
+async function storeAcceptedBallot(encBallot, receipt){
+	const query = 'INSERT INTO Agora.ballotbox (encr_ballot, receipt) VALUES (?, ?)';
+	connection.query(query, [encBallot, receipt], (err, results) => {
+		if (err) {
+			console.error(err);
+			console.error('Error inserting data into database');
+			return false;
+		} else {
+			return true; //what would results be?
+		}
+	});
+}
 module.exports = router;
