@@ -25,11 +25,14 @@ router.post('/', async (req, res) => {
 	// TODO do something to utilize the otherInformation object (VoteID, etc.)
 	if (typeof decryptedMessage === 'string') {
 		 subMessageObject = JSON.parse(decryptedMessage);
+		console.log('subMessageObject:', subMessageObject);
+	} else {
+		subMessageObject = decryptedMessage;
 	}
-	if (typeof  messageObject.otherInformation === 'string') {
+	if (typeof  subMessageObject.otherInformation === 'string') {
 		otherInformation = JSON.parse(subMessageObject.otherInformation);
 	} else {
-		otherInformation = messageObject.otherInformation;
+		otherInformation = subMessageObject.otherInformation;
 	}
 	console.log('Other Information:', otherInformation);
 	voteID = otherInformation.voteID;
