@@ -50,6 +50,7 @@ router.post('/', async (req, res) => {
 			const receipt = await serverDigSig.prepareSignatureToSend(subMessageObject.innerLayer);
 			console.log('Receipt:', receipt);
 			console.log('Encrypted Ballot:', encBallot);
+			console.log('subMessageObject', subMessageObject);
 			}
 		//TODO: save hash of voteID+publicKey to database???
 	}
