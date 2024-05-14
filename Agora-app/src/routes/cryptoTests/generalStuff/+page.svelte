@@ -21,6 +21,9 @@
 	function goToDummyVotePage() {
 		navigate('/cryptoTests/dummyVote');
 	}
+	function goToVotePage() {
+		navigate('/vote');
+	}
 
 	async function doExchange() {
 		shitString = await packageAndExchangeKeys();
@@ -65,4 +68,7 @@
 	<button on:click={goToRSAPage}>Go to RSA</button>
 	<button on:click={goToDigSigPage}>Go to Digital Signature</button>
 	<button on:click={goToDummyVotePage}>Go to Dummy Vote</button>
+</div>
+<div>
+	<button on:click={goToVotePage}>Go to Vote</button>
 </div>

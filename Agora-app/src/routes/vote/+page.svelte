@@ -7,7 +7,7 @@
     import { onMount } from 'svelte';
     import Modal from './Modal.svelte';
     import { getCandidatesFromServer } from '../../utils/apiService.js';
-    import { goto } from '$app/navigation';
+   // import { goto } from '$app/navigation';
     import { checkAuthentication } from '../../utils/auth.js';
 
     let showModal = false;
@@ -19,8 +19,10 @@
 
     onMount(async () => {
         if (!checkAuthentication()) {
-            goto('/login');
-            return;
+        //    goto('/login');
+        //    return;
+            // eslint-disable-next-line no-unused-vars
+            const voteID = 10203040
         }
         const response = await getCandidatesFromServer();
         if (response.ok) {
@@ -74,7 +76,6 @@
 
     {#if selectedOption !== undefined}
         <button on:click={() => proceedHandler(selectedOption)}>Proceed</button>
-    {:else}
     {/if}
     <p>Select a candidate or a party!</p>
 </div>
