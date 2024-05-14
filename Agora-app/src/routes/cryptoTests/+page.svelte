@@ -5,7 +5,7 @@
 	import TestingDigSig from './testingDigSig/+page.svelte';
 	import dummyVote from './testingDigSig/+page.svelte';
 	import generalStuff from './generalStuff/+page.svelte';
-	import votePage from './votePage/+page.svelte';
+	import votePage from '../vote/+page.svelte';
 	import { Router, Route, navigate } from 'svelte-routing';
 
 
