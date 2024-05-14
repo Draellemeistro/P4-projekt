@@ -28,7 +28,8 @@
         //}
         // eslint-disable-next-line no-unused-vars
         const voteID = 10203040
-
+        console.log("Vote ID: ", voteID);
+        isLoading = true;
         try {
             candidates = await requestCandidates();
         } catch (error) {

@@ -5,6 +5,7 @@
 	import TestingDigSig from './testingDigSig/+page.svelte';
 	import dummyVote from './testingDigSig/+page.svelte';
 	import generalStuff from './generalStuff/+page.svelte';
+	import votePage from '../votePage/+page.svelte';
 	import { Router, Route, navigate } from 'svelte-routing';
 
 
@@ -24,6 +25,7 @@
 	<Route path="/cryptoTests/testingDigSig" component={TestingDigSig} />
 	<Route path="/cryptoTests/dummyVote" component={dummyVote} />
 	<Route path="/cryptoTests/geneneralStuff" component={generalStuff} />
+	<Route path="/vote" component={votePage} />
 </Router>
 
 
