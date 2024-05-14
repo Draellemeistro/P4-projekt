@@ -26,7 +26,7 @@ const app = express();
 
 // Create a credentials object
 app.use(express.json());
-aapp.use(cors({}));
+app.use(cors({}));
 
 
 
