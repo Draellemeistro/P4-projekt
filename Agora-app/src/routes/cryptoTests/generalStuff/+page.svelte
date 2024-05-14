@@ -1,14 +1,21 @@
 <script>
 	import { onMount } from 'svelte';
-	import { encryptRSA, packageAndExchangeKeys } from '../cryptoTests.js';
+	import { encryptRSA, packageAndExchangeKeys, recieveAndVerifySig, signAndSendMessage } from '../cryptoTests.js';
 	import { navigate } from 'svelte-routing';
 
 	import cryptoUtils from '../../../utils/cryptoUtils.js';
-	let shitString;
+	import { sendECDHMessage } from '../testingECDH/pageECDH.js';
+	let packageResponse;
+	let exchangeStatus = 'have not checked yet';
 	let keyStatus = 'have not checked yet';
 	let keyStatusServer = 'have not checked yet';
-	const hello = 'hello World';
+	const hello = 'Success. This is a demonstration of RSA encryption.';
 	let rsaCheck = 'nope';
+	let encryptResponseECDH;
+	const testMessageECDH = 'This is a test message for ECDH encryption.';
+	let digSigAccepted;
+	let verifiedServersDigSig;
+	const testMessageDigSig = 'This is a test message for Digital Signature verification.';
 	function goToECDHPage() {
 		navigate('/cryptoTests/testingECDH');
 	}
@@ -24,9 +31,22 @@
 	function goToVotePage() {
 		navigate('/vote');
 	}
+	async function checkEncryptionEcdh() {
+		encryptResponseECDH = await sendECDHMessage(testMessageECDH);
+	}
+	async function askForSignature() {
+		verifiedServersDigSig = await recieveAndVerifySig();
+	}
+	async function sendSignatureForVerification() {
+		digSigAccepted = await signAndSendMessage(testMessageDigSig);
+	}
 
 	async function doExchange() {
-		shitString = await packageAndExchangeKeys();
+		packageResponse = await packageAndExchangeKeys();
+		if (packageResponse) {
+			console.log('Package response:', packageResponse);
+			exchangeStatus = 'Key-exchange performed';
+		}
 		await checkKeyStatus();
 	}
 	async function checkKeyStatus() {
@@ -61,21 +81,45 @@
 	<h1>Testing Crypto</h1>
 	<p>Client keys should be generated from a previous page.</p>
 	<p>Clients key status: {keyStatus}</p>
-
+	<p>{exchangeStatus}</p>
 </div>
-<button on:click={cryptoUtils.genBothKeys()}>generate new keys</button>
 <button on:click={doExchange}>exchange keys</button>
-<p>shitString: {shitString}</p>
 <button on:click={checkKeyStatus}>Check key status</button>
-<p>keyStatus message: {keyStatus}</p>
-<p>Server keyStatus message: {keyStatusServer}</p>
-<button on:click={quickRsaCheck}>Check RSA</button>
-<p>rsaCheck: {rsaCheck}</p>
+<button on:click={cryptoUtils.genBothKeys()}>generate new keys</button>
 <div>
+	<p>keyStatus message: {keyStatus}</p>
+	<p>Server keyStatus message: {keyStatusServer}</p>
+</div>
+
+<div>
+	<h3>RSA tests</h3>
+	<p>rsaCheck: {rsaCheck}</p>
+	<button on:click={quickRsaCheck}>Check RSA</button>
+	<p>String that gets decrypted: {hello}</p>
+	<p>Decrypted message received from server: {rsaCheck}</p>
+</div>
+
+<div>
+	<h3>ECDH tests</h3>
+	<button on:click={checkEncryptionEcdh}>Check ECDH</button>
+	<p>String that gets decrypted: {testMessageECDH}</p>
+	<p>Decrypted message received from server: {encryptResponseECDH}</p>
+</div>
+
+<div>
+	<h3>Digital Signature tests</h3>
+	<button on:click={sendSignatureForVerification}>Sign message for server to verify</button>
+	<p>servers response: {digSigAccepted}</p>
+	<button on:click={askForSignature}>Ask server for signature, then verify it</button>
+	<p>result: {verifiedServersDigSig}</p>
+</div>
+
+<div>
+	<h3>Navigation</h3>
 	<button on:click={goToECDHPage}>Go to ECDH</button>
 	<button on:click={goToRSAPage}>Go to RSA</button>
 	<button on:click={goToDigSigPage}>Go to Digital Signature</button>
-	<button on:click={goToDummyVotePage}>Go to Dummy Vote</button>
+	<button on:click={goToDummyVotePage}>Go to Dummy Vote(not implemented)</button>
 </div>
 <div>
 	<button on:click={goToVotePage}>Go to Vote</button>
