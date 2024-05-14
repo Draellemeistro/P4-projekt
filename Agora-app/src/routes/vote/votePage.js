@@ -33,10 +33,12 @@ export async function handleBallot(ballot) {
 	const response = await sendBallotToServer(encryptedBallot);
 	if (response.ok) {
 		const data = await response.json();
-		console.log('data: ', data);
-		return data;
-	} else {
-		console.log('Error sending ballot to server');
-		return  'Error sending ballot to server';
+		const verify = await cryptoUtils.digSig.verifyReceivedMessage(data.signature, data.message);
+		if (verify) {
+			console.log('Server successfully verified the signature');
+			if (data.message ===encryptedBallot.message) {
+				console.log('Server received the correct message');
+			}
+		}
 	}
 }

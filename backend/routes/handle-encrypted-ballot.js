@@ -25,9 +25,9 @@ router.post('/', async (req, res) => {
 	console.log('Decrypted message:', decryptedMessage);
 	// TODO do something to utilize the otherInformation object (VoteID, etc.)
 	if (typeof decryptedMessage === 'string') {
-		 subMessageObject = JSON.parse(decryptedMessage);
+		subMessageObject = JSON.parse(decryptedMessage);
 	}
-	if (typeof  subMessageObject.otherInformation === 'string') {
+	if (typeof subMessageObject.otherInformation === 'string') {
 		otherInformation = JSON.parse(subMessageObject.otherInformation);
 
 	} else {
@@ -37,59 +37,53 @@ router.post('/', async (req, res) => {
 
 	// TODO: Use vote ID to get the correct clientKey to verify the signature.
 	const verify = await serverDigSig.verifyReceivedMessage(signature, message);
-	if(verify){
+	if (verify) {
 		console.log('Signature is valid');
 		// TODO: compare the voteID with the database to ensure it is eligible to vote.
 		voteIdEligible = await checkVoteID(voteID);
 		if (voteIdEligible) {
-			const encBallot = subMessageObject.InnerLayer;
 			console.log('Vote ID is eligible');
+			const encBallot = subMessageObject.InnerLayer;
 			const receipt = await serverDigSig.prepareSignatureToSend(encBallot);
-			console.log('Receipt:', receipt);
-			console.log('Encrypted Ballot:', encBallot);
-			console.log('subMessageObject', subMessageObject);
+			const responseDB = await storeAcceptedBallot(encBallot, receipt);
+			if (responseDB) {
+				console.log('Ballot stored successfully');
 			}
-		//TODO: save hash of voteID+publicKey to database???
+			//TODO: save hash of voteID+publicKey to database???
+		}
 	}
-
-//
-
-	//let ivArray = Object.values(ivValue);
-	//let ivHexString = ivArray.map(byte => byte.toString().padStart(2, '0')).join(''); // haven't tested thoroughly. Convert the IV to a hex string, for storage in the database
-	//const query = 'INSERT INTO Agora.ballotbox (encr_ballot, ECDH_pub_key, iv_value) VALUES (?, ?, ?)';
-	//connection.query(query, [encBallot, clientKeyPub, ivHexString], (err, results) => {
-	//	if (err) {
-	//		console.error(err);
-	//		res.status(500).send('Error inserting data into database');
-	//	} else {
-	//		res.json({ message: 'Data inserted successfully', results });
-	//	}
-	//});
+	const responseSignature = await serverDigSig.prepareSignatureToSend(message);
+	res.json({message: message, signature: responseSignature});
 });
+
 async function checkVoteID(voteId)	{
 	if(voteId)
 		return true;
 }
-function logObjectEntriesWithType(obj) {
-	if(typeof obj !== 'object') {
-		console.log('Invalid object');
-		return;
-	}
-	for (const [key, value] of Object.entries(obj)) {
-		console.log(`Key: ${key}, Value: ${value}, Type: ${typeof value}`);
-	}
-}
+
 
 async function storeAcceptedBallot(encBallot, receipt){
 	const query = 'INSERT INTO Agora.ballotbox (encr_ballot, receipt) VALUES (?, ?)';
-	connection.query(query, [encBallot, receipt], (err, results) => {
-		if (err) {
-			console.error(err);
-			console.error('Error inserting data into database');
-			return false;
-		} else {
-			return true; //what would results be?
-		}
+	return new Promise((resolve) => {
+		connection.query(query, [encBallot, receipt], (err, results) => {
+			if (err) {
+				console.error(err);
+				console.error('Error inserting data into database');
+				resolve(false);
+			} else {
+				resolve(true);
+				}
+		});
 	});
 }
 module.exports = router;
+
+//function logObjectEntriesWithType(obj) {
+//	if(typeof obj !== 'object') {
+//		console.log('Invalid object');
+//		return;
+//	}
+//	for (const [key, value] of Object.entries(obj)) {
+//		console.log(`Key: ${key}, Value: ${value}, Type: ${typeof value}`);
+//	}
+//}
