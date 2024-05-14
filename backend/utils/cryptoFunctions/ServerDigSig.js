@@ -3,10 +3,14 @@ const fs = require('fs');
 const path = require('path');
 
 const serverDigSig = {
-
-	pubKey: this.readPubKeyFromFile(),
-	privKey: this.readPrivKeyFromFile(),
+	pubKey: null,
+	privKey: null,
 	clientKey: null,
+
+	async loadKeys() {
+		this.pubKey = await this.readPubKeyFromFile();
+		this.privKey = await this.readPrivKeyFromFile();
+	},
 
 
 	genKeys: async function generateKeys() {

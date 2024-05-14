@@ -14,7 +14,9 @@ const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
-const { loadKeys } = require('./utils/cryptoFunctions/serverECDH');
+const { loadKeys: loadKeysECDH } = require('./utils/cryptoFunctions/serverECDH');
+const { loadKeys: loadKeysRSA } = require('./utils/cryptoFunctions/serverRSA');
+const { loadKeys: loadKeysDigSig } = require('./utils/cryptoFunctions/ServerDigSig');
 
 
 
@@ -24,7 +26,7 @@ const app = express();
 
 // Create a credentials object
 app.use(express.json());
-aapp.use(cors({}));
+app.use(cors({}));
 
 
 
@@ -43,8 +45,14 @@ app.use('/ecdh-msg', ecdhMsgRoute);
 app.use('/rsa-msg', rsaMsgRoute);
 app.use('/sign-msg', signMsgRoute);
 app.use('/verify-msg', verifyMsgRoute);
-loadKeys().then(() => {
-console.log('Keys loaded');
+loadKeysRSA().then(() => {
+console.log('RSA Keys loaded');
+});
+loadKeysECDH().then(() => {
+	console.log('ECDH Keys loaded');
+});
+loadKeysDigSig().then(() => {
+	console.log('DigSig Keys loaded');
 });
 
 const privateKey = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/privkey.pem', 'utf8');

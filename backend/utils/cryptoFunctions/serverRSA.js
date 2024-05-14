@@ -5,8 +5,13 @@ const fs = require('fs');
 
 const serverRSA = {
 
-	pubKey: this.readPubKeyFromFile(),
-	privKey: this.readPrivKeyFromFile(),
+	pubKey: null,
+	privKey: null,
+
+	async loadKeys() {
+		this.pubKey = await this.readPubKeyFromFile();
+		this.privKey = await this.readPrivKeyFromFile();
+	},
 	//pubKeyString:  fs.readFileSync('./utils/keys/serverPublicKeyRSA.pem','utf8'),
 	//privKeyString: fs.readFileSync('./utils/keys/serverPrivateKeyRSA.pem','utf8'),
 
