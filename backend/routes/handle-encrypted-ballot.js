@@ -39,6 +39,10 @@ router.post('/', async (req, res) => {
 		console.log('Signature is valid');
 		// TODO: compare the voteID with the database to ensure it is eligible to vote.
 		voteIdEligible = await checkVoteID(voteID);
+		if(typeof subMessageObject === 'string') {
+			const encBallot = JSON.parse(subMessageObject.innerLayer);
+			console.log('Encrypted Ballot:', encBallot);
+		}
 		const encBallot = subMessageObject.innerLayer;
 		if (voteIdEligible) {
 			console.log('Vote ID is eligible');
