@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="added test print">
-      <change beforePath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverECDH.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverECDH.js" afterDir="false" />
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Added loadKeys to avoid &quot;this.&quot; error">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverRSA.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverRSA.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -209,14 +211,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00060" summary="kill me">
-      <option name="closed" value="true" />
-      <created>1714319192653</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1714319192653</updated>
     </task>
     <task id="LOCAL-00061" summary="Changed module system to match frontend, and moved routes out from server.js">
       <option name="closed" value="true" />
@@ -602,7 +596,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715371314895</updated>
     </task>
-    <option name="localTasksCounter" value="109" />
+    <task id="LOCAL-00109" summary="Added loadKeys to avoid &quot;this.&quot; error">
+      <option name="closed" value="true" />
+      <created>1715690806449</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1715690806449</updated>
+    </task>
+    <option name="localTasksCounter" value="110" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -635,7 +637,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed import path" />
     <MESSAGE value="Finished moving out routes from server.js" />
     <MESSAGE value="fixed __dirname??? broke becouse of change to ES module" />
     <MESSAGE value="changed OTPStore to OOP" />
@@ -660,6 +661,7 @@
     <MESSAGE value="Changed keyexchange to verify2fa endpoint" />
     <MESSAGE value="minor fix" />
     <MESSAGE value="added test print" />
-    <option name="LAST_COMMIT_MESSAGE" value="added test print" />
+    <MESSAGE value="Added loadKeys to avoid &quot;this.&quot; error" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added loadKeys to avoid &quot;this.&quot; error" />
   </component>
 </project>

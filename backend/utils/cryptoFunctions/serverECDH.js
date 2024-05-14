@@ -3,10 +3,14 @@ const fs = require('fs');
 const path = require('path');
 
 const serverECDH = {
-
 	clientPubKey: null,
-	pubKey: await this.readPubKeyFromFile(),
-	privKey: await this.readPrivKeyFromFile(),
+	pubKey: null,
+	privKey: null,
+
+	async loadKeys() {
+		this.pubKey = await this.readPubKeyFromFile();
+		this.privKey = await this.readPrivKeyFromFile();
+	},
 
 	genKeys: async function initECDH() {
 		const newServerKeyPairECDH = await crypto.subtle.generateKey(
