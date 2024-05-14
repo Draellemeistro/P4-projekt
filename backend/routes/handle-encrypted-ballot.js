@@ -62,20 +62,19 @@ async function checkVoteID(voteId)	{
 }
 
 
-async function storeAcceptedBallot(encBallot, receipt){
+async function storeAcceptedBallot(encBallot, receipt) {
 	const query = 'INSERT INTO Agora.ballotbox (encr_ballot, receipt) VALUES (?, ?)';
-	return new Promise((resolve) => {
-		connection.query(query, [encBallot, receipt], (err, results) => {
+	return connection.query(query, [encBallot, receipt], (err, results) => {
 			if (err) {
 				console.error(err);
 				console.error('Error inserting data into database');
-				resolve(false);
-			} else {
-				resolve(true);
-				}
-		});
-	});
+			}
+			return true;
+		}
+	);
 }
+
+
 module.exports = router;
 
 //function logObjectEntriesWithType(obj) {
