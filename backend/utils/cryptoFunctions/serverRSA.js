@@ -18,9 +18,8 @@ const serverRSA = {
 ///////////////////////////////////////
 	decryptWithPrivRSA: function decryptWithPrivateKey(encryptedMessage, ) {
 		const buffer = encryptedMessage instanceof Buffer ? encryptedMessage : Buffer.from(encryptedMessage, 'base64');
-		const privateKey = typeof this.privKeyString === 'string' ? this.privKeyString : this.privKeyString.toString();
 		const decrypted = crypto.privateDecrypt({
-				key: privateKey,
+				key: this.privKey,
 				// In order to decrypt the data, we need to specify the
 				// same hashing function and padding scheme that we used to
 				// encrypt the data in the previous step
