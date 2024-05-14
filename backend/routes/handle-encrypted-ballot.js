@@ -29,22 +29,21 @@ router.post('/', async (req, res) => {
 	}
 	if (typeof  subMessageObject.otherInformation === 'string') {
 		otherInformation = JSON.parse(subMessageObject.otherInformation);
+
 	} else {
 		otherInformation = subMessageObject.otherInformation;
 	}
+	logObjectEntriesWithType(otherInformation);
+	logObjectEntriesWithType(subMessageObject);
 	voteID = otherInformation.voteID;
-
+	const encBallot = subMessageObject.encryptedMessage;
 	// TODO: Use vote ID to get the correct clientKey to verify the signature.
 	const verify = await serverDigSig.verifyReceivedMessage(signature, message);
 	if(verify){
 		console.log('Signature is valid');
 		// TODO: compare the voteID with the database to ensure it is eligible to vote.
 		voteIdEligible = await checkVoteID(voteID);
-		if(typeof subMessageObject.innerLayer === 'string') {
-			const encBallot = JSON.parse(subMessageObject.innerLayer);
-			console.log('Encrypted Ballot:', encBallot);
-		}
-		const encBallot = subMessageObject.innerLayer;
+
 		if (voteIdEligible) {
 			console.log('Vote ID is eligible');
 			const receipt = await serverDigSig.prepareSignatureToSend(subMessageObject.innerLayer);
@@ -72,6 +71,15 @@ router.post('/', async (req, res) => {
 async function checkVoteID(voteId)	{
 	if(voteId)
 		return true;
+}
+function logObjectEntriesWithType(obj) {
+	if(typeof obj !== 'object') {
+		console.log('Invalid object');
+		return;
+	}
+	for (const [key, value] of Object.entries(obj)) {
+		console.log(`Key: ${key}, Value: ${value}, Type: ${typeof value}`);
+	}
 }
 
 async function storeAcceptedBallot(encBallot, receipt){
