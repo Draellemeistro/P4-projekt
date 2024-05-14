@@ -5,7 +5,7 @@ import { agreeSharedSecret } from '../../../utils/apiService.js';
 export const sendECDHMessage = async (msgString) => {
 	const neededInfo = await cryptoUtils.ECDH.ECDHPart(msgString);
 
-	let response = await DecryptTestECDH(JSON.stringify(neededInfo));
+	let response = await DecryptTestECDH(neededInfo);
 	if (response.ok) {
 		const data = await response.json();
 		console.log('Data: ', data);

@@ -1,5 +1,5 @@
 import cryptoUtils from '../../utils/cryptoUtils.js';
-import { getCandidatesFromServer } from '../../utils/apiService.js';
+import { getCandidatesFromServer, sendBallotToServer } from '../../utils/apiService.js';
 
 export async function requestCandidates() {
 	const response = await getCandidatesFromServer();
@@ -28,15 +28,15 @@ export function formatCandidates(candidates) {
 	return parties;
 }
 
-export async function sendEncryptedBallotToServer(ballot) {
-	// eslint-disable-next-line no-unused-vars
-	const encryptedBallot = await encryptBallot(ballot);
-console.log('response: ', encryptedBallot);
-	return encryptedBallot;
-}
-
-export async function encryptBallot(ballot) {
-	let encryptedBallot = await cryptoUtils.encryptBallot(ballot);
-	console.log('Encrypted ballot: ', encryptedBallot);
-	return encryptedBallot;
+export async function handleBallot(ballot) {
+	const encryptedBallot = await cryptoUtils.encryptBallot(ballot);
+	const response = await sendBallotToServer(encryptedBallot);
+	if (response.ok) {
+		const data = await response.json();
+		console.log('data: ', data);
+		return data;
+	} else {
+		console.log('Error sending ballot to server');
+		return  'Error sending ballot to server';
+	}
 }
