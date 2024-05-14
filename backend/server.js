@@ -14,6 +14,7 @@ const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
+const { loadKeys } = require('./utils/cryptoFunctions/serverECDH');
 
 
 
@@ -42,6 +43,9 @@ app.use('/ecdh-msg', ecdhMsgRoute);
 app.use('/rsa-msg', rsaMsgRoute);
 app.use('/sign-msg', signMsgRoute);
 app.use('/verify-msg', verifyMsgRoute);
+loadKeys().then(() => {
+console.log('Keys loaded');
+});
 
 const privateKey = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/privkey.pem', 'utf8');
 const certificate = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/fullchain.pem', 'utf8');
