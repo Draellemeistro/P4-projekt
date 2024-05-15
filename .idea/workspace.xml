@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Minor fix">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="changed Api request back to http?">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/utils/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/db.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverECDH.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverECDH.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -211,22 +210,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00073" summary="Fixed imports">
-      <option name="closed" value="true" />
-      <created>1715338141591</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1715338141591</updated>
-    </task>
-    <task id="LOCAL-00074" summary="Fixed exports">
-      <option name="closed" value="true" />
-      <created>1715338215937</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1715338215937</updated>
     </task>
     <task id="LOCAL-00075" summary="Fixed exports">
       <option name="closed" value="true" />
@@ -604,7 +587,23 @@
       <option name="project" value="LOCAL" />
       <updated>1715762528051</updated>
     </task>
-    <option name="localTasksCounter" value="122" />
+    <task id="LOCAL-00122" summary="changed port to 3366">
+      <option name="closed" value="true" />
+      <created>1715762988140</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1715762988140</updated>
+    </task>
+    <task id="LOCAL-00123" summary="changed Api request back to http?">
+      <option name="closed" value="true" />
+      <created>1715763293480</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1715763293480</updated>
+    </task>
+    <option name="localTasksCounter" value="124" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -637,8 +636,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="...." />
-    <MESSAGE value="....." />
     <MESSAGE value="......" />
     <MESSAGE value="......." />
     <MESSAGE value="changes" />
@@ -662,6 +659,8 @@
     <MESSAGE value="added check for JWK" />
     <MESSAGE value="added json rsa keys and changed dir" />
     <MESSAGE value="Minor fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minor fix" />
+    <MESSAGE value="changed port to 3366" />
+    <MESSAGE value="changed Api request back to http?" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed Api request back to http?" />
   </component>
 </project>

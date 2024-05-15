@@ -1,18 +1,19 @@
 const crypto = require('crypto');
 const fs = require('fs');
-const path = require('path');
 
-const serverECDH = {
-	clientPubKey: null,
-	pubKey: null,
-	privKey: null,
+class ServerECDH {
+	constructor() {
+		this.clientPubKey = null;
+		this.pubKey = null;
+		this.privKey = null;
+	}
 
-	loadKeys: async () => {
-		serverECDH.pubKey = await serverECDH.readPubKeyFromFile();
-		serverECDH.privKey = await serverECDH.readPrivKeyFromFile();
-	},
+	async loadKeys() {
+		this.pubKey = await this.readPubKeyFromFile();
+		this.privKey = await this.readPrivKeyFromFile();
+	}
 
-	genKeys: async function initECDH() {
+	async genKeys() {
 		const newServerKeyPairECDH = await crypto.subtle.generateKey(
 			{
 				name: "ECDH",
@@ -23,45 +24,39 @@ const serverECDH = {
 		);
 		this.pubKey = newServerKeyPairECDH.publicKey;
 		this.privKey = newServerKeyPairECDH.privateKey;
-	},
-	readPubKeyFromFile: async function readPubKeyFromFile() {
+	}
+
+	async readPubKeyFromFile() {
 		const serverPubKeyJWKString = fs.readFileSync('./utils/keys/serverPublicKeyECDH.json', 'utf8');
 		return await this.keyImportTemplateECDH(serverPubKeyJWKString, true);
-	},
-	readPrivKeyFromFile: async function readPrivKeyFromFile() {
+	}
+
+	async readPrivKeyFromFile() {
 		const serverPrivKeyJWKString = fs.readFileSync('./utils/keys/serverPrivateKeyECDH.json', 'utf8');
 		return await this.keyImportTemplateECDH(serverPrivKeyJWKString, false);
-	},
+	}
 
-
-	importClientKey: async function importClientKey(clientKeyString) {
+	async importClientKey(clientKeyString) {
 		this.clientPubKey = await this.keyImportTemplateECDH(clientKeyString, true);
 		return this.clientPubKey;
-	},
+	}
 
-
-
-	handleEncryptedMessage: async function (encryptedMessage, IvValue, clientPubKey) {
+	async handleEncryptedMessage(encryptedMessage, IvValue, clientPubKey) {
 		if(clientPubKey){
 			if(!(clientPubKey instanceof CryptoKey) && typeof clientPubKey === 'string') {
 				clientPubKey = await this.keyImportTemplateECDH(clientPubKey, true);
 			}
 		} else {
 			clientPubKey = this.clientPubKey;
-			console.log('clientKey in server: ', clientPubKey);
 		}
 		const sharedSecretKey = await this.deriveSecret(clientPubKey);
 		const encryptedMsgArrBuff = this.convertBase64ToArrBuffer(encryptedMessage);
 
 		let IvValueArrBuff = Buffer.from(Object.values(IvValue));
-		//
-		// TODO: Implement server fetching client public key from DB and deriving shared secret key
-		//
 		return await this.decryptArrBuffECDH(encryptedMsgArrBuff, IvValueArrBuff, sharedSecretKey);
-	},
+	}
 
-	deriveSecret: async function deriveSecretKey(clientPubKey) {
-		// Compute the shared secret using the server's private key and the client's public key
+	async deriveSecretKey(clientPubKey) {
 		if (!clientPubKey) {
 			clientPubKey = this.clientPubKey;
 		}
@@ -95,10 +90,9 @@ const serverECDH = {
 				["decrypt"],
 			);
 		}
-	},
+	}
 
-
-	decryptArrBuffECDH: async function decryptArrBuffWithSecretECDHKey(encryptedMessage, IvValue, sharedSecret) {
+	async decryptArrBuffECDH(encryptedMessage, IvValue, sharedSecret) {
 		let messageBuffer = encryptedMessage instanceof Buffer ? encryptedMessage : Buffer.from(Object.values(encryptedMessage));
 
 		if (!(sharedSecret instanceof CryptoKey)) {
@@ -118,23 +112,23 @@ const serverECDH = {
 		);
 
 		return Buffer.from(this.convertArrBuffToBase64(decrypted),  'base64').toString();
-	},
+	}
 
-	convertArrBuffToBase64: function convertArrayBufferToBase64(arrayBuffer) {
+	convertArrBuffToBase64(arrayBuffer) {
 		let uint8Array = new Uint8Array(arrayBuffer);
 		return Buffer.from(uint8Array).toString('base64');
-	},
-	convertBase64ToArrBuffer: function convertBase64ToArrayBuffer(base64String) {
-		console.log('base64String:', base64String);
+	}
+
+	convertBase64ToArrBuffer(base64String) {
 		let binaryString = Buffer.from(base64String, 'base64').toString('binary');
 		let arrayBuffer = new Uint8Array(binaryString.length);
 		for (let i = 0; i < binaryString.length; i++) {
 			arrayBuffer[i] = binaryString.charCodeAt(i);
 		}
 		return arrayBuffer;
-	},
+	}
 
-	keyImportTemplateECDH: async function keyImportTemplateECDH(keyStringJWK,isPublic = true	) {
+	async keyImportTemplateECDH(keyStringJWK,isPublic = true) {
 		if(typeof keyStringJWK === 'string') keyStringJWK = JSON.parse(keyStringJWK);
 		if (isPublic === true) {
 			return await crypto.subtle.importKey(
@@ -159,9 +153,9 @@ const serverECDH = {
 				["deriveKey", "deriveBits"],
 			);
 		}
-	},
+	}
 
-	exportKeyToString: async function (keyToExport) {
+	async exportKeyToString(keyToExport) {
 		if (!keyToExport) {
 			keyToExport = this.pubKey;
 		}
@@ -169,9 +163,7 @@ const serverECDH = {
 			throw new Error('Invalid key. Key must be a CryptoKey.');
 		}
 		return JSON.stringify(await crypto.subtle.exportKey('jwk', keyToExport));
-		// to send the key, it must be converted to a string. This function does that. CryptoKey -> JWK -> string
-	},
+	}
+}
 
-
-};
-module.exports = serverECDH;
+module.exports = new ServerECDH();
