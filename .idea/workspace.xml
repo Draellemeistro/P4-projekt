@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Temporary changed RSA key path to ECDH">
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="added check for JWK">
+      <change afterPath="$PROJECT_DIR$/backend/utils/keys/serverPrivateKeyRSA.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/utils/keys/serverPublicKeyRSA.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverRSA.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverRSA.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -210,30 +211,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00068" summary="changes">
-      <option name="closed" value="true" />
-      <created>1715158900018</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1715158900018</updated>
-    </task>
-    <task id="LOCAL-00069" summary="changes">
-      <option name="closed" value="true" />
-      <created>1715159004030</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1715159004030</updated>
-    </task>
-    <task id="LOCAL-00070" summary="changes">
-      <option name="closed" value="true" />
-      <created>1715159060449</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1715159060449</updated>
     </task>
     <task id="LOCAL-00071" summary="changes">
       <option name="closed" value="true" />
@@ -603,7 +580,31 @@
       <option name="project" value="LOCAL" />
       <updated>1715761801577</updated>
     </task>
-    <option name="localTasksCounter" value="117" />
+    <task id="LOCAL-00117" summary="Temporary changed RSA key path to ECDH">
+      <option name="closed" value="true" />
+      <created>1715761921653</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1715761921653</updated>
+    </task>
+    <task id="LOCAL-00118" summary="changed paths">
+      <option name="closed" value="true" />
+      <created>1715761981130</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1715761981130</updated>
+    </task>
+    <task id="LOCAL-00119" summary="added check for JWK">
+      <option name="closed" value="true" />
+      <created>1715762118409</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1715762118409</updated>
+    </task>
+    <option name="localTasksCounter" value="120" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -636,8 +637,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Changed back to commonjs part 2" />
-    <MESSAGE value="Changed back to commonjs part 3" />
     <MESSAGE value="." />
     <MESSAGE value="..." />
     <MESSAGE value="...." />
@@ -661,6 +660,8 @@
     <MESSAGE value="changed read and load functions to arrow functions" />
     <MESSAGE value="changed read and loak functions to arrow functions" />
     <MESSAGE value="Temporary changed RSA key path to ECDH" />
-    <option name="LAST_COMMIT_MESSAGE" value="Temporary changed RSA key path to ECDH" />
+    <MESSAGE value="changed paths" />
+    <MESSAGE value="added check for JWK" />
+    <option name="LAST_COMMIT_MESSAGE" value="added check for JWK" />
   </component>
 </project>

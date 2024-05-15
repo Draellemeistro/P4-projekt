@@ -9,12 +9,12 @@ const serverRSA = {
 	privKey: null,
 
 	readPubKeyFromFile: async () => {
-		const serverPubKeyString = fs.readFileSync('./utils/keys/serverPublicKeyECDH.json', 'utf8');
+		const serverPubKeyString = fs.readFileSync('./utils/keys/serverPublicKeyRSA.json', 'utf8');
 		return await serverRSA.keyImportTemplateRSA(serverPubKeyString, true);
 	},
 
 	readPrivKeyFromFile: async () => {
-		const serverPrivKeyString = fs.readFileSync('./utils/keys/serverPrivateKeyECDH.json', 'utf8');
+		const serverPrivKeyString = fs.readFileSync('./utils/keys/serverPrivateKeyRSA.json', 'utf8');
 		return await serverRSA.keyImportTemplateRSA(serverPrivKeyString, false);
 	},
 
