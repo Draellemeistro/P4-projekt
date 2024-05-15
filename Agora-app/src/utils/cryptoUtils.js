@@ -17,7 +17,8 @@ export const cryptoUtils = {
 			ballot = JSON.stringify(ballot);
 		}
 		const encryptedBallot = await this.RSA.encryptAndConvert(ballot);
-		const innerMessage = await this.prepareSubLayer(encryptedBallot, {voterString: 'testString', voteID: 12345});
+		const voteId = sessionStorage.voteId;
+		const innerMessage = await this.prepareSubLayer(encryptedBallot, voteId);
 
 		const doubleEncryptedBallot = await this.ECDH.ECDHPart(innerMessage);
 		// include timestamp or unique voter ID in the vote??? Against replay attacks.
@@ -28,13 +29,13 @@ export const cryptoUtils = {
 		await this.digSig.genKeys();
 	},
 
-	prepareSubLayer: async function(RSAEncryptedBallot, otherInformation) { //add hashOfMidWayEncrypted??
-		if( otherInformation ===  undefined){
+	prepareSubLayer: async function(RSAEncryptedBallot, voteId) { //add hashOfMidWayEncrypted??
+		if( voteId ===  undefined){
 			return JSON.stringify({InnerLayer: RSAEncryptedBallot});
 		} else {
 			return JSON.stringify({
 				InnerLayer: RSAEncryptedBallot, //string (RSA) / object (ECDH)
-				otherInformation: otherInformation, //object, strings whatever
+				voteId: voteId, //object, strings whatever
 			});}
 	},
 

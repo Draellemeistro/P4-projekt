@@ -29,6 +29,7 @@ router.post('/', async (req, res) => {
 				OTPStore.addOTP(personId, { otp, timestamp });
 				try {
 					await sendEmail(email, otp);
+					console.log(otp)
 
 					res.json({ message: 'Email sent successfully', keys: keyRing});
 				} catch (error) {

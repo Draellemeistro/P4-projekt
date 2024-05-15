@@ -4,6 +4,7 @@ const { keyStore } = require('../utils/keyStore.js');
 const { verifyOTP } = require('../utils/verifyOTP.js');
 const serverECDH = require('../utils/cryptoFunctions/serverECDH');
 const serverDigSig = require('../utils/cryptoFunctions/ServerDigSig');
+const { generateToken } = require('../utils/jwt');
 
 const router = express.Router();
 
@@ -14,10 +15,6 @@ const router = express.Router();
 router.post('/', async (req, res) => {
 	const { twoFactorCode, personId, voteId, keys } = req.body;
 	const otpData = OTPStore.getOTP(personId);
-
-
-
-
 	const otpVerificationResult = verifyOTP(otpData, twoFactorCode, Date.now());
 
 	if (otpVerificationResult.isValid) {
@@ -39,13 +36,14 @@ router.post('/', async (req, res) => {
 				console.log('Error importing keys inside verify-2fa: ', error);
 			}
 		}
-
+		console.log('User verified');
+		const token = generateToken(personId, voteId);
 		res.json({
+			token: token,
 			message: otpVerificationResult.message,
 		});
 		keyStore[personId] = { ECDH: clientKeyECDH, DigSig: clientKeyDigSig };
 
-		console.log('User verified');
 	} else {
 		res.status(400).json({ message: otpVerificationResult.message });
 	}

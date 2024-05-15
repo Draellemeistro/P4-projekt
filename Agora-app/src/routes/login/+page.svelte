@@ -18,6 +18,8 @@
         console.log('handleFormSubmitted called');
         personId = detail.personId;
         voteId = detail.voteId;
+        sessionStorage.setItem('voteId', voteId); // TODO CHANGE to server side for security
+
 
         fetchEmail(personId, voteId)
           .then(response => {
@@ -58,6 +60,7 @@
           })
           .then(data => {
               if (data.message === 'User verified') {
+                  sessionStorage.setItem('token', data.token)
                   console.log(data)
                   goto('/vote');
               } else {
