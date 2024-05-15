@@ -13,11 +13,13 @@ function verifyToken(req, res, next) {
 	const token = req.headers['authorization'];
 
 	if (!token) {
+		console.log('No token provided');
 		return res.status(403).send({ message: 'No token provided.' });
 	}
 
 	jwt.verify(token, SECRET_KEY, (err, decoded) => {
 		if (err) {
+			console.log('Failed to authenticate token');
 			return res.status(500).send({ message: 'Failed to authenticate token.' });
 		}
 
