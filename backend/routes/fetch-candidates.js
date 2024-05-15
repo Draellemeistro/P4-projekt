@@ -1,8 +1,10 @@
 const express = require('express');
 const connection = require('../utils/db.js');
+const { verifyToken } = require('../utils/jwt.js');
+
 
 const router = express.Router();
-router.post('/', (req, res) => {
+router.post('/', verifyToken, (req, res) => {
 	connection.query('SELECT candidate, party FROM Agora.ballot', (err, results) => {
 		if (err) {
 			console.error(err);
