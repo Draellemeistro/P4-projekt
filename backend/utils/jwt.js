@@ -18,6 +18,7 @@ function verifyToken(req, res, next) {
 	}
 
 	jwt.verify(token, SECRET_KEY, (err, decoded) => {
+		console.log('token:', token);
 		if (err) {
 			console.log('Failed to authenticate token', err);
 			return res.status(500).send({ message: 'Failed to authenticate token.' });
