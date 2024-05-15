@@ -20,10 +20,11 @@
         voteId = detail.voteId;
         sessionStorage.setItem('voteId', voteId); // TODO CHANGE to server side for security
 
-
+        console.log('1')
         fetchEmail(personId, voteId)
           .then(response => {
               if (!response.ok) {
+                  console.log('2')
                   throw new Error(response.statusText);
               }
               return response.json();
