@@ -19,9 +19,11 @@ router.post('/', async (req, res) => {
 			clientPubKey
 		);
 
-		const { voteID } = JSON.parse(decryptedMessage).voteId;
+		const voteID = JSON.parse(decryptedMessage).voteId;
+		const innerlayer = JSON.parse(decryptedMessage).InnerLayer;
 		console.log('VoteID:', voteID);
 		console.log('Decrypted message:', decryptedMessage.InnerLayer);
+
 		const query = 'INSERT IGNORE INTO Agora.used_voteID (vote_id) VALUES (?)';
 		connection.query(query, [voteID], (err, result) => {
 			if (err) {
@@ -38,7 +40,7 @@ router.post('/', async (req, res) => {
 
 			console.log('VoteID inserted into database');
 			const query = 'INSERT INTO Agora.ballotbox (encr_ballot) VALUES (?)';
-			connection.query(query, [decryptedMessage.InnerLayer], (err, result) => {
+			connection.query(query, [innerlayer], (err, result) => {
 				if (err) {
 					console.error('Error executing query:', err);
 					res.status(500).json({ message: 'Internal server error' });
