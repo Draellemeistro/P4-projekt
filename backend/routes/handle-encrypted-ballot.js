@@ -19,9 +19,9 @@ router.post('/', async (req, res) => {
 			clientPubKey
 		);
 
-		const { voteID } = JSON.parse(decryptedMessage);
+		const { voteID } = JSON.parse(decryptedMessage).voteId;
 		console.log('VoteID:', voteID);
-		console.log('Decrypted message:', decryptedMessage);
+		console.log('Decrypted message:', decryptedMessage.InnerLayer);
 		const query = 'INSERT IGNORE INTO Agora.used_voteID (vote_id) VALUES (?)';
 		connection.query(query, [voteID], (err, result) => {
 			if (err) {
