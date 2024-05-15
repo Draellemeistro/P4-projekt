@@ -14,9 +14,12 @@ const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
-const { loadKeys: loadKeysECDH } = require('./utils/cryptoFunctions/serverECDH');
+const ServerECDH = require('./utils/cryptoFunctions/serverECDH');
+const ServerRSA = require('./utils/cryptoFunctions/serverRSA');
+
 const { loadKeys: loadKeysRSA } = require('./utils/cryptoFunctions/serverRSA');
 const { loadKeys: loadKeysDigSig } = require('./utils/cryptoFunctions/ServerDigSig');
+const { Server } = require('mysql2/typings/mysql/lib/Server');
 
 
 
@@ -29,10 +32,10 @@ app.use(express.json());
 app.use(cors({}));
 
 
-loadKeysRSA().then(() => {
+ServerRSA.loadKeys().then(() => {
 	console.log('RSA Keys loaded');
 });
-loadKeysECDH().then(() => {
+ServerECDH.loadKeys().then(() => {
 	console.log('ECDH Keys loaded');
 });
 loadKeysDigSig().then(() => {
