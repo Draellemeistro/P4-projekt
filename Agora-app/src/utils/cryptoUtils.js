@@ -39,10 +39,10 @@ export const cryptoUtils = {
 	},
 
 	packagePublicKeys: async function() {
-		return JSON.stringify({
+		return{
 			ECDH: await this.ECDH.exportKeyToString(),
 			DigSig: await this.digSig.exportKeyToString()
-		});
+		};
 	},
 
 	prepareMessageWithSignature: async function(message = '') {

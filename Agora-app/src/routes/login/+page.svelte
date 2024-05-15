@@ -44,11 +44,11 @@
           });
     };
 
-    const handleModalClose = ({ detail }) => {
-        cryptoUtils.ECDH.genKeys();
-        cryptoUtils.digSig.genKeys();
-        const pubKeysForServer = cryptoUtils.packagePublicKeys();
-        const { twoFactorCode} = detail;
+    const handleModalClose = async ({ detail }) => {
+        await cryptoUtils.ECDH.genKeys();
+        await cryptoUtils.digSig.genKeys();
+        const pubKeysForServer = await cryptoUtils.packagePublicKeys();
+        const { twoFactorCode } = detail;
         verify2FA(twoFactorCode, personId, voteId, pubKeysForServer) // TODO: message can be encrypted, and/or signed(maybe) if needed
           .then(response => {
               if (!response.ok) {

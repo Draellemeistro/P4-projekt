@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="serverECDH.js cleanup">
-      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverRSA.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverRSA.js" afterDir="false" />
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Refactor to use keyStores">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/apiService.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/apiService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/cryptoUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/cryptoUtils.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -210,30 +212,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00076" summary="Fixed exports">
-      <option name="closed" value="true" />
-      <created>1715338500552</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1715338500552</updated>
-    </task>
-    <task id="LOCAL-00077" summary="Fixed exports">
-      <option name="closed" value="true" />
-      <created>1715338572927</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1715338572927</updated>
-    </task>
-    <task id="LOCAL-00078" summary="Fixed exports">
-      <option name="closed" value="true" />
-      <created>1715338752009</created>
-      <option name="number" value="00078" />
-      <option name="presentableId" value="LOCAL-00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1715338752009</updated>
     </task>
     <task id="LOCAL-00079" summary="Changed back to commonjs">
       <option name="closed" value="true" />
@@ -603,7 +581,31 @@
       <option name="project" value="LOCAL" />
       <updated>1715763771030</updated>
     </task>
-    <option name="localTasksCounter" value="125" />
+    <task id="LOCAL-00125" summary="serverRSA.js cleanup">
+      <option name="closed" value="true" />
+      <created>1715764018438</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1715764018438</updated>
+    </task>
+    <task id="LOCAL-00126" summary="minor fix">
+      <option name="closed" value="true" />
+      <created>1715764113008</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1715764113008</updated>
+    </task>
+    <task id="LOCAL-00127" summary="Refactor to use keyStores">
+      <option name="closed" value="true" />
+      <created>1715765018556</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1715765018556</updated>
+    </task>
+    <option name="localTasksCounter" value="128" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -636,8 +638,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="......." />
-    <MESSAGE value="changes" />
     <MESSAGE value="Send public key" />
     <MESSAGE value="added error log" />
     <MESSAGE value="jose to convert" />
@@ -649,7 +649,6 @@
     <MESSAGE value="Added loadKeys to avoid &quot;this.&quot; error" />
     <MESSAGE value="Merge remote-tracking branch 'origin/main'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;backend/server.js" />
     <MESSAGE value="digsig same pattern as other loadKey" />
-    <MESSAGE value="minor fix" />
     <MESSAGE value="minor change" />
     <MESSAGE value="changed read and load functions to arrow functions" />
     <MESSAGE value="changed read and loak functions to arrow functions" />
@@ -661,6 +660,9 @@
     <MESSAGE value="changed port to 3366" />
     <MESSAGE value="changed Api request back to http?" />
     <MESSAGE value="serverECDH.js cleanup" />
-    <option name="LAST_COMMIT_MESSAGE" value="serverECDH.js cleanup" />
+    <MESSAGE value="serverRSA.js cleanup" />
+    <MESSAGE value="minor fix" />
+    <MESSAGE value="Refactor to use keyStores" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor to use keyStores" />
   </component>
 </project>

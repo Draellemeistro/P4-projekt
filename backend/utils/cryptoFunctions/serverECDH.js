@@ -60,7 +60,7 @@ class ServerECDH {
 		return await this.decryptArrBuffECDH(encryptedMsgArrBuff, IvValueArrBuff, sharedSecretKey);
 	}
 
-	async deriveSecretKey(clientPubKey) {
+	async deriveSecret(clientPubKey) {
 		if (!clientPubKey) {
 			clientPubKey = this.clientPubKey;
 		}
