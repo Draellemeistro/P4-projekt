@@ -71,8 +71,8 @@ app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../Agora-app/build/index.html'));
 	console.log('Static file server is running'); // Add this line
 });
-app.listen(80, () => console.log('HTTP Server started')); // TODO wepcrypto kræver at vi bruger https
-//https.createServer(credentials, app).listen(443);
+//app.listen(80, () => console.log('HTTP Server started')); // TODO wepcrypto kræver at vi bruger https
+https.createServer(credentials, app).listen(443);
 
 
 
