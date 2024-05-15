@@ -24,38 +24,44 @@ router.post('/', async (req, res) => {
 		console.log('VoteID:', voteID);
 		console.log('Decrypted message:', decryptedMessage.InnerLayer);
 
-		const query = 'INSERT IGNORE INTO Agora.used_voteID (vote_id) VALUES (?)';
-		connection.query(query, [voteID], (err, result) => {
+		const query = 'INSERT INTO Agora.used_voteID (vote_id) VALUES (?)';
+		const checkQuery = 'SELECT * FROM Agora.used_voteID WHERE vote_id = ?';
+		connection.query(checkQuery, [voteID], (err, result) => {
 			if (err) {
 				console.error('Error executing query:', err);
 				res.status(500).json({ message: 'Internal server error' });
 				return;
 			}
-
-			if (result.affectedRows === 0) {
+			if (result.length === 0) { // voteID does not exist
+				const insertQuery = 'INSERT INTO Agora.used_voteID (vote_id) VALUES (?)';
+				connection.query(insertQuery, [voteID], (err, result) => {
+					if (err) {
+						console.error('Error executing query:', err);
+						res.status(500).json({ message: 'Internal server error' });
+						return;
+					}else{
+						console.log('VoteID inserted into database');
+						const query = 'INSERT INTO Agora.ballotbox (encr_ballot) VALUES (?)';
+						connection.query(query, [innerlayer], (err, result) => {
+							if (err) {
+								console.error('Error executing query:', err);
+								res.status(500).json({ message: 'Internal server error' });
+								return;
+							}
+							if (result.affectedRows === 0) {
+								console.log('Error Encrypted ballot not inserted into database');
+								res.status(500).json({ message: 'Error Encrypted ballot not inserted into database' });
+								return;
+							}
+							console.log('Encrypted ballot inserted into database');
+							res.status(200).json({ message: 'Encrypted ballot inserted into database' });
+						});
+					}
+				});
+			} else {
 				console.log('VoteID already exists in the database');
 				res.status(409).json({ message: 'VoteID already exists in the database' });
-				return;
 			}
-
-			console.log('VoteID inserted into database');
-			const query = 'INSERT INTO Agora.ballotbox (encr_ballot) VALUES (?)';
-			connection.query(query, [innerlayer], (err, result) => {
-				if (err) {
-					console.error('Error executing query:', err);
-					res.status(500).json({ message: 'Internal server error' });
-					return;
-				}
-
-				if (result.affectedRows === 0) {
-					console.log('Error Encrypted ballot not inserted into database');
-					res.status(500).json({ message: 'Error Encrypted ballot not inserted into database' });
-					return;
-				}
-
-				console.log('Encrypted ballot inserted into database');
-				res.status(200).json({ message: 'Encrypted ballot inserted into database' });
-			});
 		});
 	}
 });
