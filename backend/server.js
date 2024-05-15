@@ -29,7 +29,15 @@ app.use(express.json());
 app.use(cors({}));
 
 
-
+loadKeysRSA().then(() => {
+	console.log('RSA Keys loaded');
+});
+loadKeysECDH().then(() => {
+	console.log('ECDH Keys loaded');
+});
+loadKeysDigSig().then(() => {
+	console.log('DigSig Keys loaded');
+});
 
 
 
@@ -45,15 +53,7 @@ app.use('/ecdh-msg', ecdhMsgRoute);
 app.use('/rsa-msg', rsaMsgRoute);
 app.use('/sign-msg', signMsgRoute);
 app.use('/verify-msg', verifyMsgRoute);
-loadKeysRSA().then(() => {
-console.log('RSA Keys loaded');
-});
-loadKeysECDH().then(() => {
-	console.log('ECDH Keys loaded');
-});
-loadKeysDigSig().then(() => {
-	console.log('DigSig Keys loaded');
-});
+
 
 const privateKey = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/privkey.pem', 'utf8');
 const certificate = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/fullchain.pem', 'utf8');
