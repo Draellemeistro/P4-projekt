@@ -1,6 +1,6 @@
 
 export const serverIP = '130.225.39.205';
-export const serverPort = '80';
+export const serverPort = '443';
 
 export const fetchEmail = (personId, voteId) => {
 	return fetch(`https://${serverIP}:${serverPort}/get-email`, {
