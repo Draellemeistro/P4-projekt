@@ -8,6 +8,7 @@ function generateToken(personId, voteId) {
 
 	token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
 	verifyToken(token)
+	return token;
 }
 
 // Middleware function to verify JWT and protect routes
