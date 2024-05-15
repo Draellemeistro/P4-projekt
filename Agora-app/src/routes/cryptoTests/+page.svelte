@@ -5,7 +5,9 @@
 	import TestingDigSig from './testingDigSig/+page.svelte';
 	import dummyVote from './testingDigSig/+page.svelte';
 	import generalStuff from './generalStuff/+page.svelte';
+	import votePage from '../vote/+page.svelte';
 	import { Router, Route, navigate } from 'svelte-routing';
+	import cryptoUtils from '../../utils/cryptoUtils.js';
 
 
 	function goToGeneralStuffPage() {
@@ -13,6 +15,7 @@
 	}
 
 	onMount(async () => {
+		await cryptoUtils.genBothKeys();
 		goToGeneralStuffPage();
 	});
 </script>
@@ -24,6 +27,7 @@
 	<Route path="/cryptoTests/testingDigSig" component={TestingDigSig} />
 	<Route path="/cryptoTests/dummyVote" component={dummyVote} />
 	<Route path="/cryptoTests/geneneralStuff" component={generalStuff} />
+	<Route path="/vote" component={votePage} />
 </Router>
 
 

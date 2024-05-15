@@ -13,44 +13,29 @@ export const cryptoUtils = {
 
 	// Encrypts a ballot using RSA and ECDH
   encryptBallot: async function(ballot) {
-		let encryptedBallot;
-		let outGoingMessage;
-		let ivValue;
 		if (typeof ballot !== 'string') {
 			ballot = JSON.stringify(ballot);
 		}
-		encryptedBallot = await this.RSA.encryptAndConvert(ballot);
-		let innerMessage = await this.prepareSubLayer(encryptedBallot, {testString: 'testString', testNumber: 12345});
+		const encryptedBallot = await this.RSA.encryptAndConvert(ballot);
+		const innerMessage = await this.prepareSubLayer(encryptedBallot, {voterString: 'testString', voteID: 12345});
 
-		let itemsForECDHDecrypt = await this.ECDH.ECDHPart(innerMessage);
+		const doubleEncryptedBallot = await this.ECDH.ECDHPart(innerMessage);
 		// include timestamp or unique voter ID in the vote??? Against replay attacks.
-		outGoingMessage = itemsForECDHDecrypt.encryptedMessage;
-		ivValue = itemsForECDHDecrypt.ivValue;
-		let clientKeyPubString = await this.ECDH.exportKeyToString();
-
-		return this.prepareBallotForServer(outGoingMessage, clientKeyPubString, ivValue);
+		return await this.prepareMessageWithSignature(doubleEncryptedBallot);
 	},
 	genBothKeys: async function() {
 		await this.ECDH.genKeys();
 		await this.digSig.genKeys();
 	},
 
-	prepareSubLayer: async function(midWayEncrypted, otherInformation) { //add hashOfMidWayEncrypted??
+	prepareSubLayer: async function(RSAEncryptedBallot, otherInformation) { //add hashOfMidWayEncrypted??
 		if( otherInformation ===  undefined){
-			return JSON.stringify({encryptedSubLayer: midWayEncrypted});
+			return JSON.stringify({InnerLayer: RSAEncryptedBallot});
 		} else {
 			return JSON.stringify({
-				encryptedSubLayer: midWayEncrypted, //string (RSA) / object (ECDH)
+				InnerLayer: RSAEncryptedBallot, //string (RSA) / object (ECDH)
 				otherInformation: otherInformation, //object, strings whatever
 			});}
-	},
-
-	prepareBallotForServer: function(OutgoingEncrypted, clientKeyPub, ivValue) {
-		return JSON.stringify({
-			encryptedUpperLayer: OutgoingEncrypted, //string (RSA) / object (ECDH)
-			clientKeyPub: clientKeyPub, //string
-			ivValue: ivValue, //object
-		});
 	},
 
 	packagePublicKeys: async function() {
@@ -60,8 +45,8 @@ export const cryptoUtils = {
 		});
 	},
 
-	prepareMessageWithSignature: async function(message) {
-		let signature = await this.digSig.sign(message);
+	prepareMessageWithSignature: async function(message = '') {
+		const signature = await this.digSig.prepareSignatureToSend(message);
 		return JSON.stringify({
 			message: message,
 			signature: signature

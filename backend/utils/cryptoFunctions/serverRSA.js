@@ -3,7 +3,6 @@ const fs = require('fs');
 
 
 
-
 const serverRSA = {
 
 	pubKey: null,
@@ -72,7 +71,7 @@ const serverRSA = {
 		)
 	},
 	readKeysFromFiles: async function importKeys() {
-
+		const serverPubKeyString = fs.readFileSync('./utils/keys/RSAPubKey.json', 'utf8');
 		const serverPrivKeyString = fs.readFileSync('./utils/keys/RSAPrivKey.json', 'utf8');
 		this.pubKey = await this.keyImportTemplateRSA(serverPubKeyString, true);
 		this.privKey = await this.keyImportTemplateRSA(serverPrivKeyString, false);

@@ -1,48 +1,89 @@
 const express = require('express');
 const connection = require('../utils/db.js');
 const serverECDHCrypto = require('../utils/cryptoFunctions/serverECDH.js');
+const serverDigSig = require('../utils/cryptoFunctions/ServerDigSig');
 const router = express.Router();
 
 
 
 router.post('/', async (req, res) => {
-	let encBallot = req.body.encryptedSubLayer;
-	let clientKeyPub = req.body.clientKeyPub;
-	const ivValue = req.body.ivValue;
-	console.log(clientKeyPub);
-	let sharedSecret = await serverECDHCrypto.deriveSharedSecret(clientKeyPub);
-	console.log('sharedSecret:', sharedSecret);
-	let decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(encBallot, ivValue, sharedSecret);
-	//TODO: do some handling of decrypted layers data.
-	if (typeof decryptedMessage === 'string') {
-		decryptedMessage = JSON.parse(decryptedMessage);
-	}
-	try {
-		console.log('Original message:', encBallot);
-		console.log('Decrypted message:', decryptedMessage);
-		//Object.keys(decryptedMessage).forEach(key => {
-		//});
-	} catch (error) {
-		console.error('Error:', error);
-	}
-	if (typeof encBallot !== 'string') {
-		encBallot = JSON.stringify(encBallot);
-	}
-	if (typeof clientKeyPub !== 'string') {
-		clientKeyPub = JSON.stringify(clientKeyPub);
-	}
+	const message = req.body.message;
+	const messageObject = JSON.parse(message);
+	const signature = req.body.signature;
 
-	/// TODO: do we want this? ballot should be storable even before first round of decryption. Could save them for later use?
-	let ivArray = Object.values(ivValue);
-	let ivHexString = ivArray.map(byte => byte.toString().padStart(2, '0')).join(''); // haven't tested thoroughly. Convert the IV to a hex string, for storage in the database
-	const query = 'INSERT INTO Agora.ballotbox (encr_ballot, ECDH_pub_key, iv_value) VALUES (?, ?, ?)';
-	connection.query(query, [encBallot, clientKeyPub, ivHexString], (err, results) => {
-		if (err) {
-			console.error(err);
-			res.status(500).send('Error inserting data into database');
-		} else {
-			res.json({ message: 'Data inserted successfully', results });
-		}
-	});
+	// ballot can be stored even before first round of decryption. Could save them for later use?
+	const decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(
+		messageObject.encryptedMessage,
+		messageObject.ivValue,
+		messageObject.clientPubKey//serverECDHCrypto.clientPubKey
+	);
+
+	let voteID;
+	let voteIdEligible = false;
+	let otherInformation;
+	let subMessageObject;
+	console.log('Decrypted message:', decryptedMessage);
+	// TODO do something to utilize the otherInformation object (VoteID, etc.)
+	if (typeof decryptedMessage === 'string') {
+		subMessageObject = JSON.parse(decryptedMessage);
+	}
+	if (typeof subMessageObject.otherInformation === 'string') {
+		otherInformation = JSON.parse(subMessageObject.otherInformation);
+
+	} else {
+		otherInformation = subMessageObject.otherInformation;
+	}
+	voteID = otherInformation.voteID;
+
+	// TODO: Use vote ID to get the correct clientKey to verify the signature.
+	const verify = await serverDigSig.verifyReceivedMessage(signature, message);
+	if (verify) {
+		console.log('Signature is valid');
+		// TODO: compare the voteID with the database to ensure it is eligible to vote.
+		voteIdEligible = await checkVoteID(voteID);
+		if (voteIdEligible) {
+			console.log('Vote ID is eligible');
+			const encBallot = subMessageObject.InnerLayer;
+			const receipt = await serverDigSig.prepareSignatureToSend(encBallot);
+			const responseDB = await storeAcceptedBallot(encBallot, receipt);
+			if (responseDB) {
+				console.log('Ballot stored successfully');
+			}
+			//TODO: save hash of voteID+publicKey to database???
+		} // TODO: check DB stuff
+
+	}
+	const responseSignature = await serverDigSig.prepareSignatureToSend(message);
+	res.json({message: message, signature: responseSignature});
 });
+
+async function checkVoteID(voteId)	{
+	if(voteId)
+		return true;
+}
+
+
+async function storeAcceptedBallot(encBallot, receipt) {
+	const query = 'INSERT INTO Agora.ballotbox (encr_ballot, receipt) VALUES (?, ?)';
+	return connection.query(query, [encBallot, receipt], (err) => {
+			if (err) {
+				console.error(err);
+				console.error('Error inserting data into database');
+			}
+			return true;
+		}
+	);
+}
+
+
 module.exports = router;
+
+//function logObjectEntriesWithType(obj) {
+//	if(typeof obj !== 'object') {
+//		console.log('Invalid object');
+//		return;
+//	}
+//	for (const [key, value] of Object.entries(obj)) {
+//		console.log(`Key: ${key}, Value: ${value}, Type: ${typeof value}`);
+//	}
+//}

@@ -1,15 +1,37 @@
 <script>
-    import { sendBallotToServer } from '../../utils/apiService.js';
     import { cryptoUtils } from '../../utils/cryptoUtils.js';
+    import { handleBallot } from './votePage.js';
     export let showModal; // boolean
     export let selectedOptionModal;
     let dialog; // HTMLDialogElement
+    let keyStatus;
+    let keyStatusServer;
 
     $: if (dialog && showModal) dialog.showModal();
     async function voteHandler() {
         dialog.close()
-        let msgForServer = await cryptoUtils.encryptBallot(selectedOptionModal)
-        await sendBallotToServer(msgForServer);
+        await handleBallot(selectedOptionModal);
+    }
+
+    async function checkKeyStatus() {
+        if (cryptoUtils.ECDH.pubKey && cryptoUtils.digSig.pubKey) {
+            if (cryptoUtils.ECDH.pubKey instanceof CryptoKey
+              && cryptoUtils.digSig.pubKey instanceof CryptoKey) {
+                console.log('Public key:', cryptoUtils.ECDH.pubKey);
+                keyStatus = 'Public keys exist';
+            }
+        } else {
+            console.log('No public key');
+            keyStatus = 'No public key';
+        }
+        if (cryptoUtils.ECDH.serverKey instanceof CryptoKey
+          && cryptoUtils.digSig.serverKey instanceof CryptoKey
+          && cryptoUtils.RSA.serverKey instanceof CryptoKey){
+            keyStatusServer = 'Server public keys properly loaded';
+        } else {
+            console.log('Server public keys not loaded properly');
+            keyStatusServer = 'Server public keys not loaded.';
+        }
     }
 </script>
 
@@ -25,6 +47,9 @@
         <hr />
         <slot />
         <hr />
+        <button on:click={() => checkKeyStatus()}>Check key status</button>
+        <p>{keyStatus}</p>
+        <p>{keyStatusServer}</p>
         <!-- svelte-ignore a11y-autofocus -->
         <button autofocus on:click={() => dialog.close()}>Go back</button>
         <button on:click={() => voteHandler()}>CAST VOTE</button>
