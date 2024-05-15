@@ -29,7 +29,7 @@ const serverECDH = {
 		return await this.keyImportTemplateECDH(serverPubKeyJWKString, true);
 	},
 	readPrivKeyFromFile: async function readPrivKeyFromFile() {
-		const serverPrivKeyJWKString = s.readFileSync('./utils/keys/serverPrivateKeyECDH.json', 'utf8');
+		const serverPrivKeyJWKString = fs.readFileSync('./utils/keys/serverPrivateKeyECDH.json', 'utf8');
 		return await this.keyImportTemplateECDH(serverPrivKeyJWKString, false);
 	},
 
