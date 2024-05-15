@@ -7,7 +7,6 @@ function generateToken(personId, voteId) {
 	const payload = { personId, voteId };
 
 	token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
-	verifyToken(token)
 	return token;
 }
 
@@ -15,7 +14,7 @@ function generateToken(personId, voteId) {
 function verifyToken(token) {
 	if (!token) {
 		console.log('No token provided');
-		throw new Error('No token provided.');
+			return false
 	}
 
 	let decoded;
@@ -23,10 +22,10 @@ function verifyToken(token) {
 		decoded = jwt.verify(token, SECRET_KEY);
 	} catch (err) {
 		console.log('Failed to authenticate token', err);
-		throw new Error('Failed to authenticate token.');
+		return false
 	}
-
-	return decoded;
+	console.log('Token verified');
+	return true;
 }
 
 module.exports = {

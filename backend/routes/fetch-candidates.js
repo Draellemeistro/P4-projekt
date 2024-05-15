@@ -8,11 +8,7 @@ router.post('/', (req, res) => {
 	const token = authHeader && authHeader.split(' ')[1];
 
 	if (token == null) return res.sendStatus(401); // if there isn't any token
-
-	verifyToken(token, (err, user) => {
-		if (err) return res.sendStatus(403);
-		req.user = user;
-
+	if (verifyToken(token)) {
 		connection.query('SELECT candidate, party FROM Agora.ballot', (err, results) => {
 			if (err) {
 				console.error(err);
@@ -21,7 +17,7 @@ router.post('/', (req, res) => {
 				res.json(results);
 			}
 		});
-	});
+	}
 });
 
 module.exports = router;

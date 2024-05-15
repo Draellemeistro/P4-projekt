@@ -3,6 +3,7 @@ import { getCandidatesFromServer, sendBallotToServer } from '../../utils/apiServ
 
 export async function requestCandidates(token) {
 	const response = await getCandidatesFromServer(token);
+	console.log('waiting done')
 	if (response.ok) {
 		const data = await response.json();
 		console.log('data: ', data);
