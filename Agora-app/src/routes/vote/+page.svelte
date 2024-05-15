@@ -27,11 +27,11 @@
         //    return;
         //}
         // eslint-disable-next-line no-unused-vars
-        const voteID = 10203040
-        console.log("Vote ID: ", voteID);
+        const token = sessionStorage.getItem('token');
+        console.log('token', token); // 'voteID
         isLoading = true;
         try {
-            candidates = await requestCandidates();
+            candidates = await requestCandidates(token);
         } catch (error) {
             console.error(error);
         }
