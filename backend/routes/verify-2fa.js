@@ -24,28 +24,27 @@ router.post('/', async (req, res) => {
 		let clientKeyECDH;
 		let clientKeyDigSig;
 		if (typeof keys === 'string') {
-			keyStore[personId] = keys;
 			const keysParsed = JSON.parse(keys);
 			if (typeof keysParsed.ECDH === 'string'){
 				clientKeyECDH = await serverECDH.keyImportTemplateECDH(keysParsed.ECDH, true);
 			}
 			if (typeof keysParsed.DigSig === 'string') {
-				clientKeyDigSig= await serverDigSig.importClientKey(keysParsed.DigSig, true);
+				clientKeyDigSig = await serverDigSig.importClientKey(keysParsed.DigSig, true);
 			}
 		} else {
 			try {
-				keyStore[personId] = JSON.stringify(keys);
-				clientKeyECDH= await serverECDH.importClientKey(keys.ECDH, true);
-				clientKeyDigSig= await serverDigSig.importClientKey(keys.DigSig, true);
+				clientKeyECDH = await serverECDH.keyImportTemplateECDH(keys.ECDH, true);
+				clientKeyDigSig = await serverDigSig.importClientKey(keys.DigSig, true);
 			} catch (error) {
 				console.log('Error importing keys inside verify-2fa: ', error);
-				//res.status(500).send('Error importing keys');
 			}
 		}
 
 		res.json({
 			message: otpVerificationResult.message,
 		});
+		keyStore[personId] = { ECDH: clientKeyECDH, DigSig: clientKeyDigSig };
+
 		console.log('User verified');
 	} else {
 		res.status(400).json({ message: otpVerificationResult.message });

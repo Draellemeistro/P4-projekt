@@ -13,18 +13,20 @@ class ServerECDH {
 		this.privKey = await this.readPrivKeyFromFile();
 	}
 
-	async genKeys() {
-		const newServerKeyPairECDH = await crypto.subtle.generateKey(
-			{
-				name: "ECDH",
-				namedCurve: "P-521"
-			},
-			true,
-			["deriveKey", "deriveBits"]
-		);
-		this.pubKey = newServerKeyPairECDH.publicKey;
-		this.privKey = newServerKeyPairECDH.privateKey;
-	}
+
+	// Dont need this if we are loading keys from file
+	// async genKeys() {
+	// 	const newServerKeyPairECDH = await crypto.subtle.generateKey(
+	// 		{
+	// 			name: "ECDH",
+	// 			namedCurve: "P-521"
+	// 		},
+	// 		true,
+	// 		["deriveKey", "deriveBits"]
+	// 	);
+	// 	this.pubKey = newServerKeyPairECDH.publicKey;
+	// 	this.privKey = newServerKeyPairECDH.privateKey;
+	// }
 
 	async readPubKeyFromFile() {
 		const serverPubKeyJWKString = fs.readFileSync('./utils/keys/serverPublicKeyECDH.json', 'utf8');
@@ -36,10 +38,12 @@ class ServerECDH {
 		return await this.keyImportTemplateECDH(serverPrivKeyJWKString, false);
 	}
 
-	async importClientKey(clientKeyString) {
-		this.clientPubKey = await this.keyImportTemplateECDH(clientKeyString, true);
-		return this.clientPubKey;
-	}
+
+	// We need to use keystore to store the client public key
+	// async importClientKey(clientKeyString) {
+	// 	this.clientPubKey = await this.keyImportTemplateECDH(clientKeyString, true);
+	// 	return this.clientPubKey;
+	// }
 
 	async handleEncryptedMessage(encryptedMessage, IvValue, clientPubKey) {
 		if(clientPubKey){
