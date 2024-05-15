@@ -6,9 +6,9 @@
 <script>
     import { onMount } from 'svelte';
     import Modal from './Modal.svelte';
-   // import { goto } from '$app/navigation';
-    //import { checkAuthentication } from '../../utils/auth.js';
+    import { checkAuthentication } from '../../utils/auth.js';
     import { requestCandidates, formatCandidates } from './votePage.js';
+    import { goto } from '$app/navigation';
 
     let showModal = false;
     let selectedOptionModal = "";
@@ -22,10 +22,10 @@
 
 
     onMount(async () => {
-        //if (!checkAuthentication()) {
-        //    goto('/login');
-        //    return;
-        //}
+        if (!checkAuthentication()) {
+           goto('/login');
+           return;
+        }
         // eslint-disable-next-line no-unused-vars
         const token = sessionStorage.getItem('token');
         console.log('token', token); // 'voteID
