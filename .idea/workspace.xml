@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Refactor to use keyStores">
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="Added await to make sure keys are not promises when sent, fixed function call names">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/apiService.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/apiService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/cryptoUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/cryptoUtils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/handle-encrypted-ballot.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/handle-encrypted-ballot.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -212,14 +210,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00079" summary="Changed back to commonjs">
-      <option name="closed" value="true" />
-      <created>1715340182631</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1715340182631</updated>
     </task>
     <task id="LOCAL-00080" summary="Changed back to commonjs part 2">
       <option name="closed" value="true" />
@@ -605,7 +595,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715765018556</updated>
     </task>
-    <option name="localTasksCounter" value="128" />
+    <task id="LOCAL-00128" summary="Added await to make sure keys are not promises when sent, fixed function call names">
+      <option name="closed" value="true" />
+      <created>1715766143170</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1715766143170</updated>
+    </task>
+    <option name="localTasksCounter" value="129" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -638,7 +636,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Send public key" />
     <MESSAGE value="added error log" />
     <MESSAGE value="jose to convert" />
     <MESSAGE value="error print" />
@@ -663,6 +660,7 @@
     <MESSAGE value="serverRSA.js cleanup" />
     <MESSAGE value="minor fix" />
     <MESSAGE value="Refactor to use keyStores" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor to use keyStores" />
+    <MESSAGE value="Added await to make sure keys are not promises when sent, fixed function call names" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added await to make sure keys are not promises when sent, fixed function call names" />
   </component>
 </project>
