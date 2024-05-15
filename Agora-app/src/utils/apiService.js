@@ -23,11 +23,13 @@ export const verify2FA = (twoFactorCode, personId, voteId, pubKeysForServer) => 
 	});
 };
 
-export const getCandidatesFromServer = () => {
+export const getCandidatesFromServer = (token) => {
 	return fetch(`http://${serverIP}:${serverPort}/fetch-candidates`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
+			'Authorization': 'Bearer ' + token
+
 		},
 	});
 };

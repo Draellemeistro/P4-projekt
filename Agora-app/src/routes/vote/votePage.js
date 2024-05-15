@@ -2,7 +2,7 @@ import cryptoUtils from '../../utils/cryptoUtils.js';
 import { getCandidatesFromServer, sendBallotToServer } from '../../utils/apiService.js';
 
 export async function requestCandidates() {
-	const response = await getCandidatesFromServer();
+	const response = await getCandidatesFromServer(sessionStorage.getItem('token'));
 	if (response.ok) {
 		const data = await response.json();
 		console.log('data: ', data);
