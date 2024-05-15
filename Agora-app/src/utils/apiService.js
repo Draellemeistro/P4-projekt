@@ -3,7 +3,7 @@ export const serverIP = '130.225.39.205';
 export const serverPort = '80';
 
 export const fetchEmail = (personId, voteId) => {
-	return fetch(`http://${serverIP}:${serverPort}/get-email`, {
+	return fetch(`https://${serverIP}:${serverPort}/get-email`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -14,7 +14,7 @@ export const fetchEmail = (personId, voteId) => {
 
 export const verify2FA = (twoFactorCode, personId, voteId, pubKeysForServer) => {
 	console.log('pubKeysForServer: ', pubKeysForServer);
-	return fetch(`http://${serverIP}:${serverPort}/verify-2fa`, {
+	return fetch(`https://${serverIP}:${serverPort}/verify-2fa`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ export const verify2FA = (twoFactorCode, personId, voteId, pubKeysForServer) => 
 };
 
 export const getCandidatesFromServer = (token) => {
-	return fetch(`http://${serverIP}:${serverPort}/fetch-candidates`, {
+	return fetch(`https://${serverIP}:${serverPort}/fetch-candidates`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ export const getCandidatesFromServer = (token) => {
 };
 
 export const sendBallotToServer = (msgForServer, token) => {
-	return fetch(`http://${serverIP}:${serverPort}/handle-encrypted-ballot`, {
+	return fetch(`https://${serverIP}:${serverPort}/handle-encrypted-ballot`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export const sendBallotToServer = (msgForServer, token) => {
 	});
 };
 export const fetchPublicKey = () => {
-	return fetch(`http://${serverIP}:${serverPort}/fetch-public-key`, {
+	return fetch(`https://${serverIP}:${serverPort}/fetch-public-key`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export const fetchPublicKey = () => {
 
 }
 export const agreeSharedSecret = async (msgForServer, clientPublicKey) => {
-	return await fetch(`http://${serverIP}:${serverPort}/agree-shared-secret`, {
+	return await fetch(`https://${serverIP}:${serverPort}/agree-shared-secret`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ export const agreeSharedSecret = async (msgForServer, clientPublicKey) => {
 	});
 };
 export const sendBallotForHandling = async (msgForServer) => {
-	return await fetch(`http://${serverIP}:${serverPort}/insert-ballot-double-enc`, {
+	return await fetch(`https://${serverIP}:${serverPort}/insert-ballot-double-enc`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
