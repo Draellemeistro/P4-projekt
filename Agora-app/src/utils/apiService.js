@@ -34,11 +34,13 @@ export const getCandidatesFromServer = (token) => {
 	});
 };
 
-export const sendBallotToServer = (msgForServer) => {
+export const sendBallotToServer = (msgForServer, token) => {
 	return fetch(`http://${serverIP}:${serverPort}/handle-encrypted-ballot`, {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
+			'Authorization': 'Bearer ' + token
+
 		},
 		body: msgForServer
 	});
