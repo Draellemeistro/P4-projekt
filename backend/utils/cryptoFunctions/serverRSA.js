@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const fs = require('fs');
+const { join } = require('path');
 
 
 
@@ -9,12 +10,12 @@ const serverRSA = {
 	privKey: null,
 
 	readPubKeyFromFile: async () => {
-		const serverPubKeyString = fs.readFileSync('./utils/keys/RSAPubKey.json', 'utf8');
+		const serverPubKeyString = fs.readFileSync(join(__dirname, '/serverPublicKeyECDH.json'), 'utf8');
 		return await serverRSA.keyImportTemplateRSA(serverPubKeyString, true);
 	},
 
 	readPrivKeyFromFile: async () => {
-		const serverPrivKeyString = fs.readFileSync('./utils/keys/RSAPrivKey.json', 'utf8');
+		const serverPrivKeyString = fs.readFileSync(path.join(__dirname, '/serverPrivateKeyECDH.json'), 'utf8');
 		return await serverRSA.keyImportTemplateRSA(serverPrivKeyString, false);
 	},
 
