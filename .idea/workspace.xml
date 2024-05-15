@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="minor fix">
-      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="changed read and loak functions to arrow functions">
+      <change beforePath="$PROJECT_DIR$/backend/utils/cryptoFunctions/ServerDigSig.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/cryptoFunctions/ServerDigSig.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverECDH.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverECDH.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -209,22 +210,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00064" summary="changed db to match es6 module">
-      <option name="closed" value="true" />
-      <created>1714392949342</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1714392949342</updated>
-    </task>
-    <task id="LOCAL-00065" summary="Fixed import path">
-      <option name="closed" value="true" />
-      <created>1714393253946</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1714393253946</updated>
     </task>
     <task id="LOCAL-00066" summary="Finished moving out routes from server.js">
       <option name="closed" value="true" />
@@ -602,7 +587,23 @@
       <option name="project" value="LOCAL" />
       <updated>1715691484806</updated>
     </task>
-    <option name="localTasksCounter" value="113" />
+    <task id="LOCAL-00113" summary="minor change">
+      <option name="closed" value="true" />
+      <created>1715761279128</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1715761279129</updated>
+    </task>
+    <task id="LOCAL-00114" summary="changed read and loak functions to arrow functions">
+      <option name="closed" value="true" />
+      <created>1715761416449</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1715761416449</updated>
+    </task>
+    <option name="localTasksCounter" value="115" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -635,8 +636,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="changed OTPStore to OOP" />
-    <MESSAGE value="Fixed imports" />
     <MESSAGE value="Fixed exports" />
     <MESSAGE value="Changed back to commonjs" />
     <MESSAGE value="Changed back to commonjs part 2" />
@@ -660,6 +659,8 @@
     <MESSAGE value="Merge remote-tracking branch 'origin/main'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;backend/server.js" />
     <MESSAGE value="digsig same pattern as other loadKey" />
     <MESSAGE value="minor fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="minor fix" />
+    <MESSAGE value="minor change" />
+    <MESSAGE value="changed read and loak functions to arrow functions" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed read and loak functions to arrow functions" />
   </component>
 </project>

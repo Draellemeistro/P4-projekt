@@ -7,11 +7,10 @@ const serverDigSig = {
 	privKey: null,
 	clientKey: null,
 
-	async loadKeys() {
-		this.pubKey = await this.readPubKeyFromFile();
-		this.privKey = await this.readPrivKeyFromFile();
+	loadKeys: async () => {
+		serverDigSig.pubKey = await serverDigSig.readPubKeyFromFile();
+		serverDigSig.privKey = await serverDigSig.readPrivKeyFromFile();
 	},
-
 
 	genKeys: async function generateKeys() {
 		let keys =  await crypto.subtle.generateKey(

@@ -7,9 +7,9 @@ const serverECDH = {
 	pubKey: null,
 	privKey: null,
 
-	async loadKeys() {
-		this.pubKey = await this.readPubKeyFromFile();
-		this.privKey = await this.readPrivKeyFromFile();
+	loadKeys: async () => {
+		serverECDH.pubKey = await serverECDH.readPubKeyFromFile();
+		serverECDH.privKey = await serverECDH.readPrivKeyFromFile();
 	},
 
 	genKeys: async function initECDH() {

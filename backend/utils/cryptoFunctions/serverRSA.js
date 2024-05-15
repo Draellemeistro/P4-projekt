@@ -8,18 +8,19 @@ const serverRSA = {
 	pubKey: null,
 	privKey: null,
 
-	readPubKeyFromFile: async function readPubKeyFromFile() {
+	readPubKeyFromFile: async () => {
 		const serverPubKeyString = fs.readFileSync('./utils/keys/RSAPubKey.json', 'utf8');
-		return await this.keyImportTemplateRSA(serverPubKeyString, true);
-	},
-	readPrivKeyFromFile: async function readPrivKeyFromFile() {
-		const serverPrivKeyString = fs.readFileSync('./utils/keys/RSAPrivKey.json', 'utf8');
-		return await this.keyImportTemplateRSA(serverPrivKeyString, false);
+		return await serverRSA.keyImportTemplateRSA(serverPubKeyString, true);
 	},
 
-	async loadKeys() {
-		this.pubKey = await this.readPubKeyFromFile();
-		this.privKey = await this.readPrivKeyFromFile();
+	readPrivKeyFromFile: async () => {
+		const serverPrivKeyString = fs.readFileSync('./utils/keys/RSAPrivKey.json', 'utf8');
+		return await serverRSA.keyImportTemplateRSA(serverPrivKeyString, false);
+	},
+
+	loadKeys: async () => {
+		serverRSA.pubKey = await serverRSA.readPubKeyFromFile();
+		serverRSA.privKey = await serverRSA.readPrivKeyFromFile();
 	},
 	//pubKeyString:  fs.readFileSync('./utils/keys/serverPublicKeyRSA.pem','utf8'),
 	//privKeyString: fs.readFileSync('./utils/keys/serverPrivateKeyRSA.pem','utf8'),
