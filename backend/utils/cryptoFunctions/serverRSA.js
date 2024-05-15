@@ -82,6 +82,9 @@ const serverRSA = {
 
 	keyImportTemplateRSA: async function keyImportTemplateRSA(keyString, isPublic = true) {
 		if (typeof keyString === 'string') keyString = JSON.parse(keyString);
+		if (!keyString.kty || keyString.kty !== 'RSA') {
+			throw new Error('Invalid JWK: "kty" parameter should be "RSA"');
+		}
 		if (isPublic) {
 			return await crypto.subtle.importKey(
 				'jwk',
@@ -104,7 +107,6 @@ const serverRSA = {
 				true,
 				['decrypt']
 			);
-
 		}
 	},
 	exportKeyToString: async function (keyToExport) {
