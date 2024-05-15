@@ -16,10 +16,8 @@ const fs = require('fs');
 const path = require('path');
 const ServerECDH = require('./utils/cryptoFunctions/serverECDH');
 const ServerRSA = require('./utils/cryptoFunctions/serverRSA');
-
 const { loadKeys: loadKeysRSA } = require('./utils/cryptoFunctions/serverRSA');
 const { loadKeys: loadKeysDigSig } = require('./utils/cryptoFunctions/ServerDigSig');
-const { Server } = require('mysql2/typings/mysql/lib/Server');
 
 
 
