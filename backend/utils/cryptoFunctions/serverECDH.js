@@ -25,11 +25,11 @@ const serverECDH = {
 		this.privKey = newServerKeyPairECDH.privateKey;
 	},
 	readPubKeyFromFile: async function readPubKeyFromFile() {
-		const serverPubKeyJWKString = fs.readFileSync(path.join(__dirname, '/serverPublicKeyECDH.json'), 'utf8');
+		const serverPubKeyJWKString = fs.readFileSync('./utils/keys/serverPublicKeyECDH.json', 'utf8');
 		return await this.keyImportTemplateECDH(serverPubKeyJWKString, true);
 	},
 	readPrivKeyFromFile: async function readPrivKeyFromFile() {
-		const serverPrivKeyJWKString = fs.readFileSync(path.join(__dirname, '/serverPrivateKeyECDH.json'), 'utf8');
+		const serverPrivKeyJWKString = s.readFileSync('./utils/keys/serverPrivateKeyECDH.json', 'utf8');
 		return await this.keyImportTemplateECDH(serverPrivKeyJWKString, false);
 	},
 
