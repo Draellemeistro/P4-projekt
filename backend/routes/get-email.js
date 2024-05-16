@@ -13,6 +13,7 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
 	const { hashedDetail, clientPublicKey } = req.body;
+	console.log(hashedDetail);
 	const { personIdHash, voteIdHash, salt } = hashedDetail;
 	keyStore[personIdHash] = clientPublicKey;
 	const RSA = await serverRSA.exportKeyToString();
