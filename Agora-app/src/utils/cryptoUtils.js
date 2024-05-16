@@ -11,7 +11,6 @@ export const cryptoUtils = {
 										// which serves as a proof of message integrity and authenticity
 
 	hashString: function(detail) {
-		const crypto = require('crypto');
 		const salt = crypto.randomBytes(16).toString('hex'); // Generate a new salt for voteId
 		const hashPersonId = crypto.createHash('sha256');
 		const hashVoteId = crypto.createHash('sha256');
