@@ -45,30 +45,3 @@ export const sendBallotToServer = (msgForServer, token) => {
 		body: msgForServer
 	});
 };
-export const fetchPublicKey = () => {
-	return fetch(`https://${serverIP}:${serverPort}/fetch-public-key`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-	});
-
-}
-export const agreeSharedSecret = async (msgForServer, clientPublicKey) => {
-	return await fetch(`https://${serverIP}:${serverPort}/agree-shared-secret`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify({ msgForServer: msgForServer, clientPublicKey: clientPublicKey }),
-	});
-};
-export const sendBallotForHandling = async (msgForServer) => {
-	return await fetch(`https://${serverIP}:${serverPort}/insert-ballot-double-enc`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: msgForServer
-	});
-};
