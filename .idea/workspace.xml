@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="added print">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" afterDir="false" />
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="din far">
+      <change beforePath="$PROJECT_DIR$/backend/routes/get-email.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/get-email.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -213,14 +212,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00120" summary="added json rsa keys and changed dir">
-      <option name="closed" value="true" />
-      <created>1715762491195</created>
-      <option name="number" value="00120" />
-      <option name="presentableId" value="LOCAL-00120" />
-      <option name="project" value="LOCAL" />
-      <updated>1715762491195</updated>
     </task>
     <task id="LOCAL-00121" summary="Minor fix">
       <option name="closed" value="true" />
@@ -606,7 +597,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715868747322</updated>
     </task>
-    <option name="localTasksCounter" value="169" />
+    <task id="LOCAL-00169" summary="din far">
+      <option name="closed" value="true" />
+      <created>1715869132203</created>
+      <option name="number" value="00169" />
+      <option name="presentableId" value="LOCAL-00169" />
+      <option name="project" value="LOCAL" />
+      <updated>1715869132203</updated>
+    </task>
+    <option name="localTasksCounter" value="170" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -639,7 +638,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Temporary changed RSA key path to ECDH" />
     <MESSAGE value="changed paths" />
     <MESSAGE value="added check for JWK" />
     <MESSAGE value="added json rsa keys and changed dir" />
@@ -664,6 +662,7 @@
     <MESSAGE value="added hash to vote_id and person_id" />
     <MESSAGE value="minor change" />
     <MESSAGE value="added print" />
-    <option name="LAST_COMMIT_MESSAGE" value="added print" />
+    <MESSAGE value="din far" />
+    <option name="LAST_COMMIT_MESSAGE" value="din far" />
   </component>
 </project>

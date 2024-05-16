@@ -31,6 +31,8 @@ router.post('/', async (req, res) => {
 				const voteIdFromDB = results[0].vote_id;
 				const hashVoteIdFromDB = crypto.createHash('sha256').update(voteIdFromDB + salt).digest('hex');
 				if (hashVoteIdFromDB !== voteIdHash) {
+					console.log('hashVoteIdFromDB:', hashVoteIdFromDB)
+					console.log('voteIdHash:', voteIdHash)
 					res.status(400).send('Invalid voteId');
 					return;
 				}
