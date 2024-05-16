@@ -7,31 +7,27 @@ class keyStore {
 		this.store = {};
 	}
 
-	addKeyRing(personId, keyRingObject) {
-		this.store[personId] = keyRingObject;
-	}
-
-	getKeyRing(personId) {
-		return this.store[personId];
+	addKeys(personId, ecdhKey,digSigKey ) {
+		this.store[personId] = { ecdh:ecdhKey, digSig: digSigKey };
 	}
 
 	getDigSigKey(personId)  {
-		return this.store[personId].digSigKey;
+		return this.store[personId].digSig;
 	}
 
 	getECDHKey(personId) {
-		return this.store[personId].ecdhKey;
+		return this.store[personId].ecdh;
 	}
 
 	deleteECDHKey(personId) {
-		delete this.store[personId].ecdhKey;
+		delete this.store[personId].ecdh;
 	}
 
 	deleteDigSigKey(personId) {
-		delete this.store[personId].digSigKey;
+		delete this.store[personId].digSig;
 	}
 
-	deleteKeyRing(personId) {
+	deleteKeys(personId) {
 		delete this.store[personId];
 	}
 }
