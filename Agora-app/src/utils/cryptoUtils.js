@@ -1,7 +1,7 @@
 import RSA from './cryptoProtocols/encryptionRSA.js';
 import ECDH from './cryptoProtocols/encryptionECDH.js';
 import digSig from './cryptoProtocols/digitalSignatures.js';
-import crypto from 'crypto';
+
 export const cryptoUtils = {
 
 
@@ -10,17 +10,22 @@ export const cryptoUtils = {
 	digSig: digSig, //can quickly be implemented to provide a signature for the vote,
 										// which serves as a proof of message integrity and authenticity
 
-	hashString: function(detail) {
-		const salt = crypto.randomBytes(16).toString('hex'); // Generate a new salt for voteId
-		const hashPersonId = crypto.createHash('sha256');
-		const hashVoteId = crypto.createHash('sha256');
-		hashPersonId.update(detail.personId);
-		hashVoteId.update(detail.voteId + salt);
+	hashString: async function(detail) {
+		const salt = window.crypto.getRandomValues(new Uint8Array(16)); // Generate a new salt for voteId
+		const encoder = new TextEncoder();
+		const dataPersonId = encoder.encode(detail.personId);
+		const dataVoteId = encoder.encode(detail.voteId + salt);
+		const hashPersonId = await window.crypto.subtle.digest('SHA-256', dataPersonId);
+		const hashVoteId = await window.crypto.subtle.digest('SHA-256', dataVoteId);
 		return {
-			personIdHash: hashPersonId.digest('hex'),
-			voteIdHash: hashVoteId.digest('hex'),
-			salt: salt
+			personIdHash: this.arrayBufferToHex(hashPersonId),
+			voteIdHash: this.arrayBufferToHex(hashVoteId),
+			salt: this.arrayBufferToHex(salt)
 		};
+	},
+
+	arrayBufferToHex: function(buffer) {
+		return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
 	},
 
 	// Encrypts a ballot using RSA and ECDH

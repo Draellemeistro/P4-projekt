@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="chg">
-      <change beforePath="$PROJECT_DIR$/backend/routes/get-email.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/get-email.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/handle-encrypted-ballot.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/handle-encrypted-ballot.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/utils/jwt.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/jwt.js" afterDir="false" />
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="added print">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/cryptoUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/cryptoUtils.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -214,54 +213,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00113" summary="minor change">
-      <option name="closed" value="true" />
-      <created>1715761279128</created>
-      <option name="number" value="00113" />
-      <option name="presentableId" value="LOCAL-00113" />
-      <option name="project" value="LOCAL" />
-      <updated>1715761279129</updated>
-    </task>
-    <task id="LOCAL-00114" summary="changed read and loak functions to arrow functions">
-      <option name="closed" value="true" />
-      <created>1715761416449</created>
-      <option name="number" value="00114" />
-      <option name="presentableId" value="LOCAL-00114" />
-      <option name="project" value="LOCAL" />
-      <updated>1715761416449</updated>
-    </task>
-    <task id="LOCAL-00115" summary="changed read and loak functions to arrow functions">
-      <option name="closed" value="true" />
-      <created>1715761531296</created>
-      <option name="number" value="00115" />
-      <option name="presentableId" value="LOCAL-00115" />
-      <option name="project" value="LOCAL" />
-      <updated>1715761531296</updated>
-    </task>
-    <task id="LOCAL-00116" summary="Temporary changed RSA key path to ECDH">
-      <option name="closed" value="true" />
-      <created>1715761801577</created>
-      <option name="number" value="00116" />
-      <option name="presentableId" value="LOCAL-00116" />
-      <option name="project" value="LOCAL" />
-      <updated>1715761801577</updated>
-    </task>
-    <task id="LOCAL-00117" summary="Temporary changed RSA key path to ECDH">
-      <option name="closed" value="true" />
-      <created>1715761921653</created>
-      <option name="number" value="00117" />
-      <option name="presentableId" value="LOCAL-00117" />
-      <option name="project" value="LOCAL" />
-      <updated>1715761921653</updated>
-    </task>
-    <task id="LOCAL-00118" summary="changed paths">
-      <option name="closed" value="true" />
-      <created>1715761981130</created>
-      <option name="number" value="00118" />
-      <option name="presentableId" value="LOCAL-00118" />
-      <option name="project" value="LOCAL" />
-      <updated>1715761981130</updated>
     </task>
     <task id="LOCAL-00119" summary="added check for JWK">
       <option name="closed" value="true" />
@@ -607,7 +558,55 @@
       <option name="project" value="LOCAL" />
       <updated>1715866682868</updated>
     </task>
-    <option name="localTasksCounter" value="162" />
+    <task id="LOCAL-00162" summary="added hash to vote_id and person_id">
+      <option name="closed" value="true" />
+      <created>1715867939292</created>
+      <option name="number" value="00162" />
+      <option name="presentableId" value="LOCAL-00162" />
+      <option name="project" value="LOCAL" />
+      <updated>1715867939292</updated>
+    </task>
+    <task id="LOCAL-00163" summary="minor change">
+      <option name="closed" value="true" />
+      <created>1715868071608</created>
+      <option name="number" value="00163" />
+      <option name="presentableId" value="LOCAL-00163" />
+      <option name="project" value="LOCAL" />
+      <updated>1715868071608</updated>
+    </task>
+    <task id="LOCAL-00164" summary="minor change">
+      <option name="closed" value="true" />
+      <created>1715868093683</created>
+      <option name="number" value="00164" />
+      <option name="presentableId" value="LOCAL-00164" />
+      <option name="project" value="LOCAL" />
+      <updated>1715868093683</updated>
+    </task>
+    <task id="LOCAL-00165" summary="added print">
+      <option name="closed" value="true" />
+      <created>1715868251377</created>
+      <option name="number" value="00165" />
+      <option name="presentableId" value="LOCAL-00165" />
+      <option name="project" value="LOCAL" />
+      <updated>1715868251377</updated>
+    </task>
+    <task id="LOCAL-00166" summary="added print">
+      <option name="closed" value="true" />
+      <created>1715868313428</created>
+      <option name="number" value="00166" />
+      <option name="presentableId" value="LOCAL-00166" />
+      <option name="project" value="LOCAL" />
+      <updated>1715868313428</updated>
+    </task>
+    <task id="LOCAL-00167" summary="added print">
+      <option name="closed" value="true" />
+      <created>1715868408040</created>
+      <option name="number" value="00167" />
+      <option name="presentableId" value="LOCAL-00167" />
+      <option name="project" value="LOCAL" />
+      <updated>1715868408041</updated>
+    </task>
+    <option name="localTasksCounter" value="168" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -640,9 +639,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="minor change" />
-    <MESSAGE value="changed read and load functions to arrow functions" />
-    <MESSAGE value="changed read and loak functions to arrow functions" />
     <MESSAGE value="Temporary changed RSA key path to ECDH" />
     <MESSAGE value="changed paths" />
     <MESSAGE value="added check for JWK" />
@@ -665,6 +661,9 @@
     <MESSAGE value="please work i will never be bad again" />
     <MESSAGE value="sorry" />
     <MESSAGE value="chg" />
-    <option name="LAST_COMMIT_MESSAGE" value="chg" />
+    <MESSAGE value="added hash to vote_id and person_id" />
+    <MESSAGE value="minor change" />
+    <MESSAGE value="added print" />
+    <option name="LAST_COMMIT_MESSAGE" value="added print" />
   </component>
 </project>
