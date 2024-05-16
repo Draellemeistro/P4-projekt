@@ -31,10 +31,10 @@ export const cryptoUtils = {
 
 	prepareSubLayer: async function(RSAEncryptedBallot, voteId) { //add hashOfMidWayEncrypted??
 		if( voteId ===  undefined){
-			return JSON.stringify({InnerLayer: RSAEncryptedBallot});
+			return JSON.stringify({innerLayer: RSAEncryptedBallot});
 		} else {
 			return JSON.stringify({
-				InnerLayer: RSAEncryptedBallot, //string (RSA) / object (ECDH)
+				innerLayer: RSAEncryptedBallot, //string (RSA) / object (ECDH)
 				voteId: voteId, //object, strings whatever
 			});}
 	},
