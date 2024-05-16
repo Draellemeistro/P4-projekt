@@ -25,8 +25,8 @@ router.post('/', async (req, res) => {
 				ivValue,
 				clientPubKey
 			);
-			const {innerLayer, voteID} = JSON.parse(decryptedMessage);
-
+			const {innerLayer, otherInfo} = JSON.parse(decryptedMessage);
+			const voteID = otherInfo.voteId;
 			console.log('VoteID:', voteID);
 			console.log('innerLayer:', innerLayer);
 			const insertQuery = 'INSERT INTO Agora.used_voteID (vote_id) VALUES (?)';
