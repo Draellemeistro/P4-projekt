@@ -12,17 +12,14 @@ router.post('/', async (req, res) => {
 	const { encryptedMessage, ivValue, clientPubKey } = JSON.parse(message);
 
 
-	if (token == null) return res.sendStatus(401); // if there isn't any token
+	if (token == null) {
+		console.log('No token');
+		return res.sendStatus(401);
+	}
 	if (!verifyToken(token)) {
-		console.log('VoteID already exists in the database'); // TODO: is this the correct message?
-		res.status(409).json({ message: 'VoteID already exists in the database' });
+		console.log('Invalid token');
+		res.status(409).json({ message: 'Invalid token' });
 	} else {
-		const verify = await serverDigSig.verifyReceivedMessage(signature, message);
-		if (!verify) {
-			console.log('Signature is invalid');
-			res.status(401).json({ message: 'Signature is invalid' });
-		} else {
-			console.log('Signature is valid');
 			const decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(
 				encryptedMessage,
 				ivValue,
@@ -64,9 +61,12 @@ router.post('/', async (req, res) => {
 							});
 						}
 					});
+				}else{
+					console.log('VoteID already exists');
+					res.status(409).json({ message: 'VoteID already exists' });
 				}
 			});
-		}
+
 	}
 });
 

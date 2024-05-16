@@ -17,7 +17,9 @@ export const cryptoUtils = {
 			ballot = JSON.stringify(ballot);
 		}
 		const encryptedBallot = await this.RSA.encryptAndConvert(ballot);
-		const voteId = sessionStorage.voteId;
+
+		let voteId = Math.floor(Math.random() * 900000) + 100000;
+
 		const innerMessage = await this.prepareSubLayer(encryptedBallot, voteId);
 
 		const doubleEncryptedBallot = await this.ECDH.ECDHPart(innerMessage);
