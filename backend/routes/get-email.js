@@ -12,21 +12,29 @@ const router = express.Router();
 
 
 router.post('/', async (req, res) => {
-	const { personId, voteId, clientPublicKey } = req.body;
-	keyStore[personId] = clientPublicKey;
+	const { hashedDetail, clientPublicKey } = req.body;
+	const { personIdHash, voteIdHash, salt } = hashedDetail;
+	keyStore[personIdHash] = clientPublicKey;
 	const RSA = await serverRSA.exportKeyToString();
 	const ECDH = await serverECDH.exportKeyToString();
 	const DigSig = await serverDigSig.exportKeyToString();
 	const keyRing = { RSA: RSA, ECDH: ECDH, DigSig: DigSig };
-	connection.query('SELECT email FROM Agora.users WHERE person_id = ? AND vote_id = ?', [personId, voteId], async (err, results) => {
+
+	connection.query('SELECT email, vote_id FROM Agora.users WHERE person_id = ?', [personIdHash], async (err, results) => {
 		if (err) {
 			res.status(500).send('Error fetching email from database');
 		} else {
 			if (results.length > 0) {
 				const email = results[0].email;
+				const voteIdFromDB = results[0].vote_id;
+				const hashVoteIdFromDB = crypto.createHash('sha256').update(voteIdFromDB + salt).digest('hex');
+				if (hashVoteIdFromDB !== voteIdHash) {
+					res.status(400).send('Invalid voteId');
+					return;
+				}
 				const otp = generateOTP();
 				const timestamp = Date.now();
-				OTPStore.addOTP(personId, { otp, timestamp });
+				OTPStore.addOTP(personIdHash, { otp, timestamp });
 				try {
 					await sendEmail(email, otp);
 					console.log(otp)

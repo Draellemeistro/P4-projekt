@@ -16,19 +16,20 @@ router.post('/', async (req, res) => {
 		console.log('No token');
 		return res.sendStatus(401);
 	}
-	if (!verifyToken(token)) {
+	let decodedToken = verifyToken(token);
+	if (!decodedToken) {
 		console.log('Invalid token');
 		res.status(409).json({ message: 'Invalid token' });
 	} else {
 			const decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(
 				encryptedMessage,
 				ivValue,
-				clientPubKey
 			);
 			console.log('Decrypted message:', decryptedMessage)
 			const {innerLayer, voteId} = JSON.parse(decryptedMessage);
 			console.log('VoteID:', voteId);
 			console.log('innerLayer:', innerLayer);
+
 			const insertQuery = 'INSERT INTO Agora.used_voteID (vote_id) VALUES (?)';
 			const checkQuery = 'SELECT * FROM Agora.used_voteID WHERE vote_id = ?';
 			const ballotQuery = 'INSERT INTO Agora.ballotbox (encr_ballot) VALUES (?)';
