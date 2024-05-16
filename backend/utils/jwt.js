@@ -20,6 +20,7 @@ function verifyToken(token) {
 	let decoded;
 	try {
 		decoded = jwt.verify(token, SECRET_KEY);
+		console.log('Decoded token:', decoded);
 	} catch (err) {
 		console.log('Failed to authenticate token', err);
 		return false

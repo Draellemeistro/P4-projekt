@@ -9,7 +9,7 @@ router.post('/', async (req, res) => {
 	const authHeader = req.headers['authorization'];
 	const token = authHeader && authHeader.split(' ')[1];
 	const { message, signature } = req.body;
-	const { encryptedMessage, ivValue, clientPubKey } = JSON.parse(message);
+	const { encryptedMessage, ivValue} = JSON.parse(message);
 
 
 	if (token == null) {
