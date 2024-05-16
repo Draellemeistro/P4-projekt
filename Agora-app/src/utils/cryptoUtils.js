@@ -25,7 +25,7 @@ export const cryptoUtils = {
 	},
 
 	arrayBufferToHex: function(buffer) {
-		return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
+		return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString()).slice(-2)).join('');
 	},
 
 	// Encrypts a ballot using RSA and ECDH
@@ -33,19 +33,18 @@ export const cryptoUtils = {
 		if (typeof ballot !== 'string') {
 			ballot = JSON.stringify(ballot);
 		}
-		const encryptedBallot = await this.RSA.encryptAndConvert(ballot);
+		const encryptedBallot = await this.RSA.encrypt(ballot);
 
 		let voteId = sessionStorage.getItem('voteId')
 
 		const innerMessage = await this.prepareSubLayer(encryptedBallot, voteId);
 
-		const doubleEncryptedBallot = await this.ECDH.ECDHPart(innerMessage);
-		// include timestamp or unique voter ID in the vote??? Against replay attacks.
-		return await this.prepareMessageWithSignature(doubleEncryptedBallot);
-	},
-	genBothKeys: async function() {
-		await this.ECDH.genKeys();
-		await this.digSig.genKeys();
+		const sharedSecret = await ECDH.deriveSecret();
+		const doubleEncryptedBallot = await this.encrypt(innerMessage, sharedSecret);
+		//Returns  object: {encryptedMessage:base64, ivValue:Uint8Array}
+
+		return await this.prepareMessageWithSignature(JSON.stringify(doubleEncryptedBallot));
+		// returns stringified object: {message: string, signature: base64}
 	},
 
 	prepareSubLayer: async function(RSAEncryptedBallot, voteId) { //add hashOfMidWayEncrypted??
@@ -53,7 +52,7 @@ export const cryptoUtils = {
 			return JSON.stringify({innerLayer: RSAEncryptedBallot});
 		} else {
 			return JSON.stringify({
-				innerLayer: RSAEncryptedBallot, //string (RSA) / object (ECDH)
+				innerLayer: RSAEncryptedBallot, //string (RSA)
 				voteId: voteId, //object, strings whatever
 			});}
 	},
@@ -66,25 +65,13 @@ export const cryptoUtils = {
 	},
 
 	prepareMessageWithSignature: async function(message = '') {
-		const signature = await this.digSig.prepareSignatureToSend(message);
+		const signature = await this.digSig.sign(message);
 		return JSON.stringify({
 			message: message,
 			signature: signature
 		});
 	},
 
-
-//	sendKeysToServer: async function(RSAPublicKeyJWK, ECDHPublicKeyJWK, serverPublicKey) {
-//		const bothPublicKeys = { RSAPublicKey: RSAPublicKeyJWK, ECDHPublicKey: ECDHPublicKeyJWK };
-//		const encryptedPublicKeys = await this.RSA.encrypt(JSON.stringify(bothPublicKeys), serverPublicKey);
-//		return await fetch(`https://server.com/client-public-keys`, {
-//			method: 'POST',
-//			headers: {
-//				'Content-Type': 'application/json',
-//			},
-//			body: encryptedPublicKeys,
-//		});
-//	},
 }
 
 export default cryptoUtils;
