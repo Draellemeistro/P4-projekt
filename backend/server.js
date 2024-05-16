@@ -40,8 +40,7 @@ app.use('/get-email', getEmailRoute);
 app.use('/fetch-candidates', fetchCandidatesRoute);
 app.use('/verify-2fa', verify2faRoute);
 app.use('/handle-encrypted-ballot', handleEncryptedBallotRoute);
-app.use('/request-server-keys', requestServerKeysRoute);
-app.use('/sign-msg', signMsgRoute);
+
 
 
 const privateKey = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/privkey.pem', 'utf8');
