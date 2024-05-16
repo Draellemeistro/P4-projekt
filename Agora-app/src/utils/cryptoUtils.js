@@ -1,7 +1,7 @@
 import RSA from './cryptoProtocols/encryptionRSA.js';
 import ECDH from './cryptoProtocols/encryptionECDH.js';
 import digSig from './cryptoProtocols/digitalSignatures.js';
-
+import crypto from 'crypto';
 export const cryptoUtils = {
 
 
@@ -10,6 +10,19 @@ export const cryptoUtils = {
 	digSig: digSig, //can quickly be implemented to provide a signature for the vote,
 										// which serves as a proof of message integrity and authenticity
 
+	hashString: function(detail) {
+		const crypto = require('crypto');
+		const salt = crypto.randomBytes(16).toString('hex'); // Generate a new salt for voteId
+		const hashPersonId = crypto.createHash('sha256');
+		const hashVoteId = crypto.createHash('sha256');
+		hashPersonId.update(detail.personId);
+		hashVoteId.update(detail.voteId + salt);
+		return {
+			personIdHash: hashPersonId.digest('hex'),
+			voteIdHash: hashVoteId.digest('hex'),
+			salt: salt
+		};
+	},
 
 	// Encrypts a ballot using RSA and ECDH
   encryptBallot: async function(ballot) {

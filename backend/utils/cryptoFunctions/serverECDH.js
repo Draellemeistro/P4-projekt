@@ -46,13 +46,13 @@ class ServerECDH {
 	// }
 
 	async handleEncryptedMessage(encryptedMessage, IvValue, clientPubKey) {
-		if(clientPubKey){
-			if(!(clientPubKey instanceof CryptoKey) && typeof clientPubKey === 'string') {
-				clientPubKey = await this.keyImportTemplateECDH(clientPubKey, true);
-			}
-		} else {
-			clientPubKey = this.clientPubKey;
-		}
+		// if(clientPubKey){
+		// 	if(!(clientPubKey instanceof CryptoKey) && typeof clientPubKey === 'string') {
+		// 		clientPubKey = await this.keyImportTemplateECDH(clientPubKey, true);
+		// 	}
+		// } else {
+		// 	clientPubKey = this.clientPubKey;
+		// }
 		const sharedSecretKey = await this.deriveSecret(clientPubKey);
 		const encryptedMsgArrBuff = this.convertBase64ToArrBuffer(encryptedMessage);
 

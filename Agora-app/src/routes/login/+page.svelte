@@ -16,12 +16,13 @@
 
     const handleFormSubmitted = async ({ detail }) => {
         console.log('handleFormSubmitted called');
+        sessionStorage.setItem('voteId', voteId);
+        const hashedDetail = cryptoUtils.hashString(detail);
         personId = detail.personId;
         voteId = detail.voteId;
-        sessionStorage.setItem('voteId', voteId); // TODO CHANGE to server side for security
 
         console.log('1')
-        fetchEmail(personId, voteId)
+        fetchEmail(hashedDetail)
           .then(response => {
               if (!response.ok) {
                   console.log('2')
@@ -52,6 +53,7 @@
         await cryptoUtils.digSig.genKeys();
         const pubKeysForServer = await cryptoUtils.packagePublicKeys();
         const { twoFactorCode } = detail;
+
         verify2FA(twoFactorCode, personId, voteId, pubKeysForServer) // TODO: message can be encrypted, and/or signed(maybe) if needed
           .then(response => {
               if (!response.ok) {
