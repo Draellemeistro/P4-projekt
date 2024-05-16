@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const fs = require('fs');
+const { importTemplateRSA, base64ToArrayBuffer } = require('./utilsCrypto');
 
 class ServerRSA {
 	constructor() {
@@ -29,16 +30,16 @@ class ServerRSA {
 
 	async readPubKeyFromFile() {
 		const serverPubKeyString = fs.readFileSync('./utils/keys/serverPublicKeyRSA.json', 'utf8');
-		return await this.keyImportTemplateRSA(serverPubKeyString, true);
+		return await this.importRSA(serverPubKeyString, true);
 	}
 
 	async readPrivKeyFromFile() {
 		const serverPrivKeyString = fs.readFileSync('./utils/keys/serverPrivateKeyRSA.json', 'utf8');
-		return await this.keyImportTemplateRSA(serverPrivKeyString, false);
+		return await this.importRSA(serverPrivKeyString, false);
 	}
 
 	async decryptMessage(encryptedMessage) {
-		if(typeof encryptedMessage === 'string') encryptedMessage = this.base64ToArrBuffer(encryptedMessage);
+		if(typeof encryptedMessage === 'string') encryptedMessage = base64ToArrayBuffer(encryptedMessage);
 		const bufferFromBase64 = Buffer.from(encryptedMessage);
 		const decrypted = await crypto.subtle.decrypt(
 			{
@@ -47,7 +48,7 @@ class ServerRSA {
 			this.privKey,
 			bufferFromBase64
 		)
-		return this.ArrBuffToString(decrypted);
+		return Buffer.from(decrypted).toString();
 	}
 
 	async encryptMessage(message) {
@@ -61,34 +62,8 @@ class ServerRSA {
 		)
 	}
 
-	async keyImportTemplateRSA(keyString, isPublic = true) {
-		if (typeof keyString === 'string') keyString = JSON.parse(keyString);
-		if (!keyString.kty || keyString.kty !== 'RSA') {
-			throw new Error('Invalid JWK: "kty" parameter should be "RSA"');
-		}
-		if (isPublic) {
-			return await crypto.subtle.importKey(
-				'jwk',
-				keyString,
-				{
-					name: 'RSA-OAEP',
-					hash: { name: 'SHA-256' }
-				},
-				true,
-				['encrypt']
-			);
-		} else {
-			return await crypto.subtle.importKey(
-				'jwk',
-				keyString,
-				{
-					name: 'RSA-OAEP',
-					hash: { name: 'SHA-256' }
-				},
-				true,
-				['decrypt']
-			);
-		}
+	async importRSA(keyString, isPublic = true) {
+		return await importTemplateRSA(keyString, isPublic);
 	}
 
 	async exportKeyToString(keyToExport) {
@@ -99,14 +74,6 @@ class ServerRSA {
 			throw new Error('Invalid key. Key must be a CryptoKey.');
 		}
 		return JSON.stringify(await crypto.subtle.exportKey('jwk', keyToExport));
-	}
-
-	ArrBuffToString(message) {
-		return Buffer.from(message).toString();
-	}
-
-	base64ToArrBuffer(base64) {
-		return Buffer.from(base64, 'base64');
 	}
 }
 

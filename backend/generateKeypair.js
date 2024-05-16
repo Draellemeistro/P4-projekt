@@ -88,10 +88,10 @@ function importKeysasTest() {
 	const keyring = fs.readFileSync(__dirname + '/utils/keys/keyRing.json','utf-8');
 	console.log('Keys imported. type:',typeof keyring);
 	const keyRingObject = JSON.parse(keyring);
-	serverRSA.keyImportTemplateRSA(keyRingObject.RSA, true).then(r => {
+	serverRSA.importRSA(keyRingObject.RSA, true).then(r => {
 		console.log('RSA imported:', r);
 	});
-	serverECDH.keyImportTemplateECDH(keyRingObject.ECDH, true).then(r => {
+	serverECDH.importECDH(keyRingObject.ECDH, true).then(r => {
 		console.log('ECDH imported:', r);
 	});
 	serverDigSig.importClientKey(keyRingObject.DigSig, true).then(r => {
@@ -100,10 +100,10 @@ function importKeysasTest() {
 	const RSAJWK = JSON.parse(keyRingObject.RSA);
 	const ECDHJWK = JSON.parse(keyRingObject.ECDH);
 	const DigSigJWK = JSON.parse(keyRingObject.DigSig);
-	serverRSA.keyImportTemplateRSA(RSAJWK, true).then(r => {
+	serverRSA.importRSA(RSAJWK, true).then(r => {
 		console.log('RSA imported:', r);
 	});
-	serverECDH.keyImportTemplateECDH(ECDHJWK, true).then(r => {
+	serverECDH.importECDH(ECDHJWK, true).then(r => {
 		console.log('ECDH imported:', r);
 	});
 	serverDigSig.importClientKey(DigSigJWK, true).then(r => {

@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
+const { importTemplateDigSig, arrayBufferToBase64, base64ToArrayBuffer } = require('./utilsCrypto');
 
 const serverDigSig = {
 	pubKey: null,
@@ -32,11 +33,11 @@ const serverDigSig = {
 	},
 	readPubKeyFromFile: async function readPubKeyFromFile() {
 		const serverPubKeyString = fs.readFileSync(path.join(__dirname,'../keys/digSigKeyPub.json'), 'utf8');
-		return await this.keyImportTemplateDigSig(serverPubKeyString, true);
+		return await this.importDigSig(serverPubKeyString, true);
 	},
 	readPrivKeyFromFile: async function readPrivKeyFromFile() {
 		const serverPrivKeyString = fs.readFileSync(path.join(__dirname,'../keys/digSigKeyPriv.json'), 'utf8');
-		return await this.keyImportTemplateDigSig(serverPrivKeyString, false);
+		return await this.importDigSig(serverPrivKeyString, false);
 	},
 
 	readKeysFromFiles:  async function loadKeys() {
@@ -77,7 +78,7 @@ const serverDigSig = {
 		const encoder = new TextEncoder();
 		const data = encoder.encode(message);
 		if (typeof signature === 'string'){
-			signature = this.base64ToArrayBuffer(signature);
+			signature = base64ToArrayBuffer(signature);
 		}
 		if(!clientKey){
 			return await crypto.subtle.verify(
@@ -85,7 +86,7 @@ const serverDigSig = {
 					name: "ECDSA",
 					hash: { name: "SHA-256" },
 				},
-				this.clientKey,
+				this.clientKey, // TODO CLIENT KEY
 				signature,
 				data
 			);
@@ -104,11 +105,11 @@ const serverDigSig = {
 
 	prepareSignatureToSend: async function prepareSignForServer(message) {
 		let signature = await this.sign(message);
-		return this.arrayBufferToBase64(signature);
+		return arrayBufferToBase64(signature);
 	},
 	verifyReceivedMessage: async function verifyReceivedMessage(signature, message) {
 
-		return await this.verify(signature, message, this.clientKey).then(r => {
+		return await this.verify(signature, message, this.clientKey).then(r => { // TODO CLIENT KEY
 			return r;
 		});
 	},
@@ -124,33 +125,12 @@ const serverDigSig = {
 	},
 
 	importClientKey: async function importKey(clientKeyString){
-		this.clientKey = this.keyImportTemplateDigSig(clientKeyString, true);
+		this.clientKey = this.importDigSig(clientKeyString, true); // TODO CLIENT KEY
 	},
-	keyImportTemplateDigSig: async function keyImportTemplateDigSig(keyString, isPublic = true) {
-		if (typeof keyString === 'string') keyString = JSON.parse(keyString);
-		if(isPublic){
-			return await crypto.subtle.importKey('jwk', keyString, {
-				name: 'ECDSA',
-				namedCurve: 'P-256'
-			}, true, ['verify']);
-		} else {
-			return  await crypto.subtle.importKey('jwk', keyString, {
-				name: 'ECDSA',
-				namedCurve: 'P-256'
-			}, true, ['sign']);
-		}
+	importDigSig: async function importDigSig(keyString, isPublic = true) {
+		return await importTemplateDigSig(keyString, isPublic);
 	},
-
-	arrayBufferToBase64: function (buffer) {
-		return Buffer.from(buffer).toString('base64');
-	},
-	base64ToArrayBuffer: function(base64) {
-		return Buffer.from(base64, 'base64');
-
-	},
-
-
-}
+};
 module.exports = serverDigSig;
 
 // Usage

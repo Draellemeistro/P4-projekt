@@ -28,13 +28,13 @@ describe('serverECDH', () => {
 
 	test('keyImportTemplateECDH with JWK / Parsed string', async () => {
 		const keyStringJWK = JSON.parse(mockClientPublicKey);
-		const key1 = await serverECDH.keyImportTemplateECDH(keyStringJWK, true);
+		const key1 = await serverECDH.importECDH(keyStringJWK, true);
 		expect(key1).not.toBeNull();
 		expect(key1).toBeInstanceOf(CryptoKey);
 	});
 
 	test('keyImportTemplateECDH with string', async () => {
-		const key2 = await serverECDH.keyImportTemplateECDH(mockClientPublicKey, true);
+		const key2 = await serverECDH.importECDH(mockClientPublicKey, true);
 		expect(key2).not.toBeNull();
 		expect(key2).toBeInstanceOf(CryptoKey);
 	});
@@ -42,7 +42,7 @@ describe('serverECDH', () => {
 	test('keyImportTemplateECDH wrong key type (public private)', async () => {
 		try {
 			// Test for invalid key. Should not be able to import a public key as a private key
-			await serverECDH.keyImportTemplateECDH(mockClientPublicKey, false);
+			await serverECDH.importECDH(mockClientPublicKey, false);
 		} catch (error) {
 			expect(error).toBeInstanceOf(DOMException);
 		}
