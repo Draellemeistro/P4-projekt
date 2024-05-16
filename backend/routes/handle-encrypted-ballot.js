@@ -9,13 +9,17 @@ router.post('/', async (req, res) => {
 	const authHeader = req.headers['authorization'];
 	const token = authHeader && authHeader.split(' ')[1];
 	const { message, signature } = req.body;
-	const { encryptedMessage, ivValue, clientPubKey } = JSON.parse(message);
+	const { encryptedMessage, ivValue} = JSON.parse(message);
 
 	// const clientKeyRing = keyStore.getKeyRing(personId) //this.clientPubKey; // TODO CLIENT KEY
-	if (token == null) return res.sendStatus(401); // if there isn't any token
-	if (!verifyToken(token)) {
-		console.log('VoteID already exists in the database'); // TODO: is this the correct message?
-		res.status(409).json({ message: 'VoteID already exists in the database' });
+	if (token == null) {
+		console.log('No token');
+		return res.sendStatus(401);
+	}
+	let decodedToken = verifyToken(token);
+	if (!decodedToken) {
+		console.log('Invalid token');
+		res.status(409).json({ message: 'Invalid token' });
 	} else {
 		const verify = await serverDigSig.verifyReceivedMessage(signature, message);
 		if (!verify) {
@@ -28,21 +32,22 @@ router.post('/', async (req, res) => {
 				ivValue,
 				clientPubKey
 			);
-			const {innerLayer, voteID} = JSON.parse(decryptedMessage);
-
-			console.log('VoteID:', voteID);
+			console.log('Decrypted message:', decryptedMessage)
+			const {innerLayer, voteId} = JSON.parse(decryptedMessage);
+			console.log('VoteID:', voteId);
 			console.log('innerLayer:', innerLayer);
+
 			const insertQuery = 'INSERT INTO Agora.used_voteID (vote_id) VALUES (?)';
 			const checkQuery = 'SELECT * FROM Agora.used_voteID WHERE vote_id = ?';
 			const ballotQuery = 'INSERT INTO Agora.ballotbox (encr_ballot) VALUES (?)';
-			connection.query(checkQuery, [voteID], (err, result) => {
+			connection.query(checkQuery, [voteId], (err, result) => {
 				if (err) {
 					console.error('Error executing query:', err);
 					res.status(500).json({ message: 'Internal server error' });
 					return;
 				}
 				if (result.length === 0) { // voteID does not exist
-					connection.query(insertQuery, [voteID], (err, result) => {
+					connection.query(insertQuery, [voteId], (err, result) => {
 						if (err) {
 							console.error('Error executing query:', err);
 							res.status(500).json({ message: 'Internal server error' });
@@ -64,6 +69,9 @@ router.post('/', async (req, res) => {
 							});
 						}
 					});
+				}else{
+					console.log('VoteID already exists');
+					res.status(409).json({ message: 'VoteID already exists' });
 				}
 			});
 		}

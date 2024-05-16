@@ -33,14 +33,18 @@ export async function handleBallot(ballot) {
 	const encryptedBallot = await cryptoUtils.encryptBallot(ballot);
 	const token = sessionStorage.getItem('token');
 	const response = await sendBallotToServer(encryptedBallot, token);
-	if (response.ok) {
-		const data = await response.json();
-		const verify = await cryptoUtils.digSig.verifyReceivedMessage(data.signature, data.message);
-		if (verify) {
-			console.log('Server successfully verified the signature');
-			if (data.message ===encryptedBallot.message) {
-				console.log('Server received the correct message');
-			}
-		}
-	}
+
+			// if (response.ok) {
+			// 	const data = await response.json();
+			// 	const verify = await cryptoUtils.digSig.verifyReceivedMessage(data.signature, data.message);
+			// 	if (verify) {
+			// 		console.log('Server successfully verified the signature');
+			// 		if (data.message === encryptedBallot.message) {
+			// 			console.log('Server received the correct message');
+			// 		}
+			// 	}
+			// }
+
+
+
 }

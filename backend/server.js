@@ -3,7 +3,6 @@ const getEmailRoute = require('./routes/get-email.js');
 const fetchCandidatesRoute = require('./routes/fetch-candidates.js');
 const verify2faRoute = require('./routes/verify-2fa.js');
 const handleEncryptedBallotRoute = require('./routes/handle-encrypted-ballot.js');
-const signMsgRoute = require('./routes/sign-msg.js');
 const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
@@ -36,7 +35,7 @@ app.use('/get-email', getEmailRoute);
 app.use('/fetch-candidates', fetchCandidatesRoute);
 app.use('/verify-2fa', verify2faRoute);
 app.use('/handle-encrypted-ballot', handleEncryptedBallotRoute);
-app.use('/sign-msg', signMsgRoute);
+
 
 
 const privateKey = fs.readFileSync('/etc/letsencrypt/live/agora.servernux.com/privkey.pem', 'utf8');

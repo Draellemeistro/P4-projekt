@@ -74,7 +74,6 @@ const ECDH ={
 		return {
 			encryptedMessage: this.convertArrBuffToBase64(encryptedMessage),
 			ivValue: ivValue,
-			clientPubKey: await this.exportKeyToString()
 		};
 	},
 

@@ -10,6 +10,23 @@ export const cryptoUtils = {
 	digSig: digSig, //can quickly be implemented to provide a signature for the vote,
 										// which serves as a proof of message integrity and authenticity
 
+	hashString: async function(detail) {
+		const salt = window.crypto.getRandomValues(new Uint8Array(16)); // Generate a new salt for voteId
+		const encoder = new TextEncoder();
+		const dataPersonId = encoder.encode(detail.personId);
+		const dataVoteId = encoder.encode(detail.voteId + salt);
+		const hashPersonId = await window.crypto.subtle.digest('SHA-256', dataPersonId);
+		const hashVoteId = await window.crypto.subtle.digest('SHA-256', dataVoteId);
+		return {
+			personIdHash: this.arrayBufferToHex(hashPersonId),
+			voteIdHash: this.arrayBufferToHex(hashVoteId),
+			salt: this.arrayBufferToHex(salt)
+		};
+	},
+
+	arrayBufferToHex: function(buffer) {
+		return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
+	},
 
 	// Encrypts a ballot using RSA and ECDH
   encryptBallot: async function(ballot) {
@@ -17,7 +34,9 @@ export const cryptoUtils = {
 			ballot = JSON.stringify(ballot);
 		}
 		const encryptedBallot = await this.RSA.encryptAndConvert(ballot);
-		const voteId = sessionStorage.voteId;
+
+		let voteId = sessionStorage.getItem('voteId')
+
 		const innerMessage = await this.prepareSubLayer(encryptedBallot, voteId);
 
 		const doubleEncryptedBallot = await this.ECDH.ECDHPart(innerMessage);
