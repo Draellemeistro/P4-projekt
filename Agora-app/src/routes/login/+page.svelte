@@ -16,12 +16,11 @@
 
     const handleFormSubmitted = async ({ detail }) => {
         console.log('handleFormSubmitted called');
-        sessionStorage.setItem('voteId', voteId);
-        const hashedDetail = cryptoUtils.hashString(detail);
-        personId = detail.personId;
         voteId = detail.voteId;
+        sessionStorage.setItem('voteId', voteId);
+        const hashedDetail = await cryptoUtils.hashString(detail);
 
-        console.log('1')
+        console.log(hashedDetail)
         fetchEmail(hashedDetail)
           .then(response => {
               if (!response.ok) {

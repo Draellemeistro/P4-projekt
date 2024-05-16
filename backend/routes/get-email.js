@@ -7,6 +7,7 @@ const { keyStore } = require('../utils/keyStore.js');
 const serverECDH = require('../utils/cryptoFunctions/serverECDH');
 const serverRSA = require('../utils/cryptoFunctions/serverRSA');
 const serverDigSig = require('../utils/cryptoFunctions/ServerDigSig');
+const crypto = require('crypto');
 
 const router = express.Router();
 
