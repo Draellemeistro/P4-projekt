@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="sorry">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/apiService.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/apiService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/cryptoUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/cryptoUtils.js" afterDir="false" />
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="chg">
       <change beforePath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverECDH.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverECDH.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
@@ -216,14 +212,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00110" summary="Added loadKeys to avoid &quot;this.&quot; error">
-      <option name="closed" value="true" />
-      <created>1715691247583</created>
-      <option name="number" value="00110" />
-      <option name="presentableId" value="LOCAL-00110" />
-      <option name="project" value="LOCAL" />
-      <updated>1715691247583</updated>
     </task>
     <task id="LOCAL-00111" summary="digsig same pattern as other loadKey">
       <option name="closed" value="true" />
@@ -609,7 +597,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715859101752</updated>
     </task>
-    <option name="localTasksCounter" value="159" />
+    <task id="LOCAL-00159" summary="chg">
+      <option name="closed" value="true" />
+      <created>1715865322109</created>
+      <option name="number" value="00159" />
+      <option name="presentableId" value="LOCAL-00159" />
+      <option name="project" value="LOCAL" />
+      <updated>1715865322109</updated>
+    </task>
+    <option name="localTasksCounter" value="160" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -642,7 +638,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="digsig same pattern as other loadKey" />
     <MESSAGE value="minor change" />
     <MESSAGE value="changed read and load functions to arrow functions" />
     <MESSAGE value="changed read and loak functions to arrow functions" />
@@ -667,7 +662,8 @@
     <MESSAGE value="added error print" />
     <MESSAGE value="please work i will never be bad again" />
     <MESSAGE value="sorry" />
-    <option name="LAST_COMMIT_MESSAGE" value="sorry" />
+    <MESSAGE value="chg" />
+    <option name="LAST_COMMIT_MESSAGE" value="chg" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
