@@ -32,14 +32,14 @@ router.post('/', async (req, res) => {
 			const insertQuery = 'INSERT INTO Agora.used_voteID (vote_id) VALUES (?)';
 			const checkQuery = 'SELECT * FROM Agora.used_voteID WHERE vote_id = ?';
 			const ballotQuery = 'INSERT INTO Agora.ballotbox (encr_ballot) VALUES (?)';
-			connection.query(checkQuery, [voteID], (err, result) => {
+			connection.query(checkQuery, [voteId], (err, result) => {
 				if (err) {
 					console.error('Error executing query:', err);
 					res.status(500).json({ message: 'Internal server error' });
 					return;
 				}
 				if (result.length === 0) { // voteID does not exist
-					connection.query(insertQuery, [voteID], (err, result) => {
+					connection.query(insertQuery, [voteId], (err, result) => {
 						if (err) {
 							console.error('Error executing query:', err);
 							res.status(500).json({ message: 'Internal server error' });
