@@ -1,7 +1,7 @@
 const express = require('express');
 const connection = require('../utils/db.js');
 const serverECDH = require('../utils/cryptoFunctions/serverECDH.js');
-const serverDigSig = require('../utils/cryptoFunctions/ServerDigSig');
+const serverDigSig = require('../utils/cryptoFunctions/serverDigSig');
 const serverRSA = require('../utils/cryptoFunctions/serverRSA');
 const { verifyToken } = require('../utils/jwt');
 const router = express.Router();
