@@ -25,6 +25,7 @@ router.post('/', async (req, res) => {
 				ivValue,
 				clientPubKey
 			);
+			console.log('Decrypted message:', decryptedMessage)
 			const {innerLayer, voteID} = JSON.parse(decryptedMessage);
 			console.log('VoteID:', voteID);
 			console.log('innerLayer:', innerLayer);
