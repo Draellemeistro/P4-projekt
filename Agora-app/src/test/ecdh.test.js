@@ -7,9 +7,14 @@ const dummyKeyString = '{"crv":"P-521","ext":true,"key_ops":["deriveKey","derive
 
 const { subtle } = require('webcrypto');
 Object.defineProperty(window, 'crypto', { value: { subtle } });
-
+function reset() {
+	ECDH.serverKey = null;
+	ECDH.serverPubKeyVariant = null;
+	ECDH.pubKey = null;
+	ECDH.privKey = null;
+}
 beforeEach(async () => {
-	ECDH.reset();
+	reset();
 	await ECDH.genKeys();
 	await ECDH.saveServerKey(dummyKeyString);
 });

@@ -29,9 +29,7 @@ class ServerECDH {
 	}
 
 	async handleEncryptedMessage(encryptedMessage, IvValue, clientPubKey) {
-
-
-		clientPubKey = await this.keyImportTemplateECDH(clientPubKey, true)
+				clientPubKey = await this.importECDH(clientPubKey, true)
 		const sharedSecretKey = await this.deriveSecret(clientPubKey);
 		const encryptedMsgArrBuff = base64ToArrayBuffer(encryptedMessage);
 		let IvValueArrBuff = Buffer.from(Object.values(IvValue));
@@ -78,7 +76,7 @@ class ServerECDH {
 			if (typeof sharedSecret === 'string') {
 				sharedSecret = JSON.parse(sharedSecret);
 			}
-			sharedSecret = await crypto.subtle.importKey('jwk', JSON.parse(sharedSecret), { name: 'AES-GCM', length: 256 }, true, ['decrypt']);
+			sharedSecret = await crypto.subtle.importKey('jwk', sharedSecret, { name: 'AES-GCM', length: 256 }, true, ['decrypt']);
 		}
 
 		const decrypted = await crypto.subtle.decrypt(
@@ -92,13 +90,6 @@ class ServerECDH {
 
 		return Buffer.from(arrayBufferToBase64(decrypted),  'base64').toString();
 	}
-
-	convertArrBuffToBase64(arrayBuffer) {
-		let uint8Array = new Uint8Array(arrayBuffer);
-		return Buffer.from(uint8Array).toString('base64');
-	}
-
-
 
 	async importECDH(keyString, isPublic = true) {
 		return await importTemplateECDH(keyString, isPublic);

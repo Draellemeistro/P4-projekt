@@ -2,8 +2,10 @@ const express = require('express');
 const connection = require('../utils/db.js');
 const serverECDH = require('../utils/cryptoFunctions/serverECDH.js');
 const serverDigSig = require('../utils/cryptoFunctions/ServerDigSig');
+const serverRSA = require('../utils/cryptoFunctions/serverRSA');
 const { verifyToken } = require('../utils/jwt');
 const router = express.Router();
+const { keyStore } = require('../utils/keyStore');
 
 router.post('/', async (req, res) => {
 	const authHeader = req.headers['authorization'];
@@ -11,7 +13,6 @@ router.post('/', async (req, res) => {
 	const { message, signature } = req.body;
 	const { encryptedMessage, ivValue} = JSON.parse(message);
 
-	// const clientKeyRing = keyStore.getKeyRing(personId) //this.clientPubKey; // TODO CLIENT KEY
 	if (token == null) {
 		console.log('No token');
 		return res.sendStatus(401);
@@ -21,7 +22,11 @@ router.post('/', async (req, res) => {
 		console.log('Invalid token');
 		res.status(409).json({ message: 'Invalid token' });
 	} else {
-		const verify = await serverDigSig.verifyReceivedMessage(signature, message);
+		const verify = await serverDigSig.verify(
+			signature,
+			message,
+			keyStore[decodedToken.personId].getDigSigKey() //TODO: verify this works
+		);
 		if (!verify) {
 			console.log('Signature is invalid');
 			res.status(401).json({ message: 'Signature is invalid' });
@@ -30,12 +35,18 @@ router.post('/', async (req, res) => {
 			const decryptedMessage = await serverECDH.handleEncryptedMessage(
 				encryptedMessage,
 				ivValue,
-				clientPubKey
+				keyStore[decodedToken.personId].getECDHKey() //TODO: verify this works
 			);
 			console.log('Decrypted message:', decryptedMessage)
 			const {innerLayer, voteId} = JSON.parse(decryptedMessage);
 			console.log('VoteID:', voteId);
 			console.log('innerLayer:', innerLayer);
+
+			//////////// test to see if RSA works properly ////////////
+			const plainBallot = await serverRSA.decryptMessage(innerLayer);
+			console.log('Fully Decrypted ballot:', plainBallot);
+			//////////// test to see if RSA works properly ////////////
+
 
 			const insertQuery = 'INSERT INTO Agora.used_voteID (vote_id) VALUES (?)';
 			const checkQuery = 'SELECT * FROM Agora.used_voteID WHERE vote_id = ?';

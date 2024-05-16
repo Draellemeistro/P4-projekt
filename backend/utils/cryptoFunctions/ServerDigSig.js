@@ -51,7 +51,7 @@ class serverDigSig {
 	async sign(message){
 		const encoder = new TextEncoder();
 		const data = encoder.encode(message);
-		return await crypto.subtle.sign(
+		const signature = await crypto.subtle.sign(
 			{
 				name: "ECDSA",
 				hash: { name: "SHA-256" },
@@ -59,6 +59,7 @@ class serverDigSig {
 			this.privKey,
 			data
 		);
+		return arrayBufferToBase64(signature);
 	}
 
 // Step 3: Use the public key to verify the signature
@@ -77,17 +78,7 @@ class serverDigSig {
 			signature,
 			data
 		);
-	}
 
-	async prepareSignatureToSend(message) {
-		let signature = await this.sign(message);
-		return arrayBufferToBase64(signature);
-	}
-
-	async verifyReceivedMessage(signature, message, clientKey) {
-		return await this.verify(signature, message, clientKey).then(r => { // TODO CLIENT KEY
-			return r;
-		});
 	}
 
 	async exportKeyToString(choicePublic = true){

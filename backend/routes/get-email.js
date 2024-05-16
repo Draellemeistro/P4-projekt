@@ -3,10 +3,6 @@ const { generateOTP } = require('../utils/generateOTP');
 const connection = require('../utils/db.js');
 const OTPStore = require('../utils/otpStore.js');
 const { sendEmail } = require('../utils/sendEmail.js');
-const { keyStore } = require('../utils/keyStore.js');
-const serverECDH = require('../utils/cryptoFunctions/serverECDH');
-const serverRSA = require('../utils/cryptoFunctions/serverRSA');
-const serverDigSig = require('../utils/cryptoFunctions/ServerDigSig');
 const crypto = require('crypto');
 const { exportPublicKeys } = require('../utils/cryptoFunctions/utilsCrypto');
 
@@ -14,17 +10,14 @@ const router = express.Router();
 
 
 router.post('/', async (req, res) => {
-	const { hashedDetail, clientPublicKey } = req.body;
+	const { hashedDetail } = req.body;
 	console.log(req.body);
 	const { personIdHash, voteIdHash, salt } = hashedDetail;
-	keyStore[personIdHash] = clientPublicKey; //TODO: look at this
-	const keyRing = exportPublicKeys();
 
 
 	connection.query('SELECT email, vote_id FROM Agora.users WHERE person_id = ?', [personIdHash], async (err, results) => {
-	const { personId, voteId, clientPublicKey } = req.body;
-	keyStore[personId] = clientPublicKey;
-	const keyRing = exportPublicKeys();
+	const { personId, voteId } = req.body; //TODO: hvad sker der her?
+
 		if (err) {
 			res.status(500).send('Error fetching email from database');
 		} else {
@@ -47,7 +40,7 @@ router.post('/', async (req, res) => {
 				try {
 					await sendEmail(email, otp);
 					console.log(otp)
-
+					const keyRing = exportPublicKeys();
 					res.json({ message: 'Email sent successfully', keys: keyRing});
 				} catch (error) {
 					console.error('Error sending email: ', error);
