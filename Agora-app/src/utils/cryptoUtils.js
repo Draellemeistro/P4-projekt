@@ -18,7 +18,7 @@ export const cryptoUtils = {
 		}
 		const encryptedBallot = await this.RSA.encryptAndConvert(ballot);
 
-		let voteId = Math.floor(Math.random() * 900000) + 100000;
+		let voteId = sessionStorage.getItem('voteId')
 
 		const innerMessage = await this.prepareSubLayer(encryptedBallot, voteId);
 

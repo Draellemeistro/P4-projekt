@@ -30,11 +30,9 @@ export function formatCandidates(candidates) {
 }
 
 export async function handleBallot(ballot) {
-let i = 0
-	for (1; i < 100; i++) {
-			const encryptedBallot = await cryptoUtils.encryptBallot(ballot);
-			const token = sessionStorage.getItem('token');
-			const response = await sendBallotToServer(encryptedBallot, token);
+	const encryptedBallot = await cryptoUtils.encryptBallot(ballot);
+	const token = sessionStorage.getItem('token');
+	const response = await sendBallotToServer(encryptedBallot, token);
 
 			// if (response.ok) {
 			// 	const data = await response.json();
@@ -46,7 +44,7 @@ let i = 0
 			// 		}
 			// 	}
 			// }
-			console.log('Get hacked')
-		}
+
+
 
 }
