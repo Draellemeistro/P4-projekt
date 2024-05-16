@@ -6,7 +6,7 @@ const SECRET_KEY = '1a2s21j4321231'; // Replace with real key
 function generateToken(personId, voteId) {
 	const payload = { personId, voteId };
 
-	token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
+	token = jwt.sign(payload, SECRET_KEY, { expiresIn: '2' });
 	return token;
 }
 
