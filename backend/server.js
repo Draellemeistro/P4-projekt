@@ -3,17 +3,20 @@ const getEmailRoute = require('./routes/get-email.js');
 const fetchCandidatesRoute = require('./routes/fetch-candidates.js');
 const verify2faRoute = require('./routes/verify-2fa.js');
 const handleEncryptedBallotRoute = require('./routes/handle-encrypted-ballot.js');
-const requestServerKeysRoute = require('./routes/request-server-keys.js');
 const signMsgRoute = require('./routes/sign-msg.js');
 const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
-const ServerECDH = require('./utils/cryptoFunctions/serverECDH');
-const ServerRSA = require('./utils/cryptoFunctions/serverRSA');
-const { loadKeys: loadKeysRSA } = require('./utils/cryptoFunctions/serverRSA');
-const { loadKeys: loadKeysDigSig } = require('./utils/cryptoFunctions/ServerDigSig');
+const { loadAllKeys, allKeysAreLoaded } = require('./utils/cryptoFunctions/utilsCrypto');
 
+if(allKeysAreLoaded()) {
+	console.log('All keys are already loaded');
+} else {
+	loadAllKeys().then(r => {
+		console.log(r);
+	});
+}
 
 
 
@@ -25,15 +28,6 @@ app.use(express.json());
 app.use(cors({}));
 
 
-ServerRSA.loadKeys().then(() => {
-	console.log('RSA Keys loaded');
-});
-ServerECDH.loadKeys().then(() => {
-	console.log('ECDH Keys loaded');
-});
-loadKeysDigSig().then(() => {
-	console.log('DigSig Keys loaded');
-});
 
 
 
@@ -42,7 +36,6 @@ app.use('/get-email', getEmailRoute);
 app.use('/fetch-candidates', fetchCandidatesRoute);
 app.use('/verify-2fa', verify2faRoute);
 app.use('/handle-encrypted-ballot', handleEncryptedBallotRoute);
-app.use('/request-server-keys', requestServerKeysRoute);
 app.use('/sign-msg', signMsgRoute);
 
 

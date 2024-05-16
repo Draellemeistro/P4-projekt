@@ -26,12 +26,12 @@ router.post('/', async (req, res) => {
 				clientKeyECDH = await serverECDH.importECDH(keysParsed.ECDH, true);
 			}
 			if (typeof keysParsed.DigSig === 'string') {
-				clientKeyDigSig = await serverDigSig.importClientKey(keysParsed.DigSig, true);
+				clientKeyDigSig = await serverDigSig.importDigSig(keysParsed.DigSig, true);
 			}
 		} else {
 			try {
 				clientKeyECDH = await serverECDH.importECDH(keys.ECDH, true);
-				clientKeyDigSig = await serverDigSig.importClientKey(keys.DigSig, true);
+				clientKeyDigSig = await serverDigSig.importDigSig(keys.DigSig, true);
 			} catch (error) {
 				console.log('Error importing keys inside verify-2fa: ', error);
 			}

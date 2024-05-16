@@ -4,9 +4,7 @@ const connection = require('../utils/db.js');
 const OTPStore = require('../utils/otpStore.js');
 const { sendEmail } = require('../utils/sendEmail.js');
 const { keyStore } = require('../utils/keyStore.js');
-const serverECDH = require('../utils/cryptoFunctions/serverECDH');
-const serverRSA = require('../utils/cryptoFunctions/serverRSA');
-const serverDigSig = require('../utils/cryptoFunctions/ServerDigSig');
+const { exportPublicKeys } = require('../utils/cryptoFunctions/utilsCrypto');
 
 const router = express.Router();
 
@@ -14,10 +12,7 @@ const router = express.Router();
 router.post('/', async (req, res) => {
 	const { personId, voteId, clientPublicKey } = req.body;
 	keyStore[personId] = clientPublicKey;
-	const RSA = await serverRSA.exportKeyToString();
-	const ECDH = await serverECDH.exportKeyToString();
-	const DigSig = await serverDigSig.exportKeyToString();
-	const keyRing = { RSA: RSA, ECDH: ECDH, DigSig: DigSig };
+	const keyRing = exportPublicKeys();
 	connection.query('SELECT email FROM Agora.users WHERE person_id = ? AND vote_id = ?', [personId, voteId], async (err, results) => {
 		if (err) {
 			res.status(500).send('Error fetching email from database');

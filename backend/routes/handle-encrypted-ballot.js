@@ -1,6 +1,6 @@
 const express = require('express');
 const connection = require('../utils/db.js');
-const serverECDHCrypto = require('../utils/cryptoFunctions/serverECDH.js');
+const serverECDH = require('../utils/cryptoFunctions/serverECDH.js');
 const serverDigSig = require('../utils/cryptoFunctions/ServerDigSig');
 const { verifyToken } = require('../utils/jwt');
 const router = express.Router();
@@ -11,7 +11,7 @@ router.post('/', async (req, res) => {
 	const { message, signature } = req.body;
 	const { encryptedMessage, ivValue, clientPubKey } = JSON.parse(message);
 
-
+	// const clientKeyRing = keyStore.getKeyRing(personId) //this.clientPubKey; // TODO CLIENT KEY
 	if (token == null) return res.sendStatus(401); // if there isn't any token
 	if (!verifyToken(token)) {
 		console.log('VoteID already exists in the database'); // TODO: is this the correct message?
@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
 			res.status(401).json({ message: 'Signature is invalid' });
 		} else {
 			console.log('Signature is valid');
-			const decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(
+			const decryptedMessage = await serverECDH.handleEncryptedMessage(
 				encryptedMessage,
 				ivValue,
 				clientPubKey

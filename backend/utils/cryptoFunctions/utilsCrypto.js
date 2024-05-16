@@ -1,9 +1,8 @@
 import crypto from 'crypto';
+const serverECDH = require('./serverECDH');
+const serverRSA = require('./serverRSA');
+const serverDigSig = require('./serverDigSig');
 
-
-export async function aaa() {
-	return 1;
-}
 
 export async function importTemplateRSA(keyString, isPublic = true) {
 	if (typeof keyString === 'string') keyString = JSON.parse(keyString);
@@ -83,4 +82,30 @@ export function arrayBufferToBase64 (buffer) {
 
 export function base64ToArrayBuffer(base64) {
 	return Buffer.from(base64, 'base64');
+}
+export function exportKeyToString(key){
+	return  JSON.stringify(crypto.subtle.exportKey('jwk', key));
+}
+export function exportPublicKeys() {
+	const rsa = exportKeyToString(serverRSA.getPubKey());
+	const ecdh = exportKeyToString(serverECDH.getPubKey());
+	const digSig = exportKeyToString(serverDigSig.getPubKey());
+	return { RSA: rsa, ECDH: ecdh, DigSig: digSig };
+}
+export function allKeysAreLoaded() {
+	return publicKeysAreLoaded() && privateKeysAreLoaded();
+}
+function publicKeysAreLoaded() {
+	return serverECDH.getPubKey() !== null && serverRSA.getPubKey() !== null && serverDigSig.getPubKey() !== null;
+}
+
+function privateKeysAreLoaded() {
+	return serverECDH.privKey !== null && serverRSA.privKey !== null && serverDigSig.privKey !== null;
+}
+// serverECDH.getPubKey() === null || serverRSA.getPubKey() === null || serverDigSig.getPubKey() === null
+export async function loadAllKeys() {
+	await serverRSA.loadKeys();
+	await serverECDH.loadKeys();
+	await serverDigSig.loadKeys();
+	return 'Keys loaded successfully.'
 }

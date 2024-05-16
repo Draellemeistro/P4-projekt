@@ -1,17 +1,21 @@
 const crypto = require('crypto');
 const fs = require('fs');
 const { importTemplateECDH, base64ToArrayBuffer, arrayBufferToBase64 } = require('./utilsCrypto');
+//const { keyStore } = require('../clientPublicKeyStore');
 
 class ServerECDH {
 	constructor() {
-		this.clientPubKey = null;
 		this.pubKey = null;
 		this.privKey = null;
+		this.loadKeys().then(r => {
+			console.log(r);
+		});
 	}
 
 	async loadKeys() {
 		this.pubKey = await this.readPubKeyFromFile();
 		this.privKey = await this.readPrivKeyFromFile();
+		return 'ECDH keys loaded';
 	}
 
 	async readPubKeyFromFile() {
@@ -25,13 +29,11 @@ class ServerECDH {
 	}
 
 	async handleEncryptedMessage(encryptedMessage, IvValue, clientPubKey) {
-		if(clientPubKey){
-			if(!(clientPubKey instanceof CryptoKey) && typeof clientPubKey === 'string') {
-				clientPubKey = await this.importECDH(clientPubKey, true);
-			}
-		} else {
-			clientPubKey = this.clientPubKey; // TODO CLIENT KEY
+
+		if(!(clientPubKey instanceof CryptoKey) && typeof clientPubKey === 'string') {
+			clientPubKey = await this.importECDH(clientPubKey, true);
 		}
+
 		const sharedSecretKey = await this.deriveSecret(clientPubKey);
 		const encryptedMsgArrBuff = base64ToArrayBuffer(encryptedMessage);
 		let IvValueArrBuff = Buffer.from(Object.values(IvValue));
@@ -39,9 +41,6 @@ class ServerECDH {
 	}
 
 	async deriveSecret(clientPubKey) {
-		if (!clientPubKey) {
-			clientPubKey = this.clientPubKey; // TODO CLIENT KEY
-		}
 		try {
 			return await crypto.subtle.deriveKey(
 				{
@@ -105,6 +104,9 @@ class ServerECDH {
 
 	async importECDH(keyString, isPublic = true) {
 		return await importTemplateECDH(keyString, isPublic);
+	}
+	getPubKey() {
+		return this.pubKey;
 	}
 
 	async exportKeyToString(keyToExport) {

@@ -6,14 +6,18 @@ class ServerRSA {
 	constructor() {
 		this.pubKey = null;
 		this.privKey = null;
+		this.loadKeys().then(r => {
+			console.log(r);
+		});
 	}
 
 	async loadKeys() {
 		this.pubKey = await this.readPubKeyFromFile();
 		this.privKey = await this.readPrivKeyFromFile();
+		return 'RSA keys loaded';
 	}
 
-	async genKeys() {
+	async genKeys() { //TODO move this function to seperate file
 		const keys = await crypto.subtle.generateKey(
 			{
 				name: "RSA-OAEP",
@@ -66,6 +70,10 @@ class ServerRSA {
 		return await importTemplateRSA(keyString, isPublic);
 	}
 
+	getPubKey() {
+		return this.pubKey;
+	}
+
 	async exportKeyToString(keyToExport) {
 		if (!keyToExport) {
 			keyToExport = this.pubKey;
@@ -75,6 +83,7 @@ class ServerRSA {
 		}
 		return JSON.stringify(await crypto.subtle.exportKey('jwk', keyToExport));
 	}
+
 }
 
 module.exports = new ServerRSA();
