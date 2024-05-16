@@ -36,13 +36,14 @@ router.post('/', async (req, res) => {
 				console.log('Error importing keys inside verify-2fa: ', error);
 			}
 		}
+		keyStore[personId] = { ECDH: clientKeyECDH, DigSig: clientKeyDigSig };
 		console.log('User verified');
 		const token = generateToken(personId, voteId);
 		res.json({
 			token: token,
 			message: otpVerificationResult.message,
 		});
-		keyStore[personId] = { ECDH: clientKeyECDH, DigSig: clientKeyDigSig };
+
 
 	} else {
 		res.status(400).json({ message: otpVerificationResult.message });
