@@ -14,11 +14,10 @@ const router = express.Router();
 
 
 router.post('/', async (req, res) => {
-	const { hashedDetail } = req.body;
+	const { hashedDetail} = req.body;
+	const keyRing = await exportPublicKeys();
 	console.log(req.body);
 	const { personIdHash, voteIdHash, salt } = hashedDetail;
-	//const keyRing = await exportPublicKeys();
-	const keyRing = {RSA: '111', ECDH: '222', DigSig: '333'};
 	console.log(personIdHash)
 	connection.query('SELECT email, vote_id FROM Agora.users WHERE person_id = ?', [personIdHash], async (err, results) => {
 		if (err) {
@@ -43,15 +42,13 @@ router.post('/', async (req, res) => {
 					await sendEmail(email, otp);
 					console.log(otp)
 
-
-
-					return res.json({ message: 'Email sent successfully', keys: keyRing});
+					res.json({ message: 'Email sent successfully', keys: keyRing});
 				} catch (error) {
 					console.error('Error sending email: ', error);
-					return res.status(500).send('Error sending email');
+					res.status(500).send('Error sending email');
 				}
 			} else {
-				return res.status(404).send('No user found with the provided personId and voteId');
+				res.status(404).send('No user found with the provided personId and voteId');
 			}
 		}
 	});
