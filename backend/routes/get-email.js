@@ -45,7 +45,7 @@ router.post('/', async (req, res) => {
 					await sendEmail(email, otp);
 					console.log(otp)
 
-					res.json({ message: 'Email sent successfully', keys: keyRing});
+					res.json({ message: 'Email sent successfully', keys: JSON.stringify(keyRing)});
 				} catch (error) {
 					console.error('Error sending email: ', error);
 					res.status(500).send('Error sending email');
