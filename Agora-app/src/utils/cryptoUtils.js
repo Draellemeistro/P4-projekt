@@ -10,6 +10,7 @@ export const cryptoUtils = {
 	digSig: digSig, //can quickly be implemented to provide a signature for the vote,
 										// which serves as a proof of message integrity and authenticity
 
+	//TODO RENAME
 	hashString: async function(detail) {
 		const salt = window.crypto.getRandomValues(new Uint8Array(16)); // Generate a new salt for voteId
 		const saltHex = Array.prototype.map.call(salt, x => ('00' + x.toString(16)).slice(-2)).join('');
@@ -37,8 +38,9 @@ export const cryptoUtils = {
 		const encryptedBallot = await this.RSA.encrypt(ballot);
 
 		let voteId = sessionStorage.getItem('voteId')
+		let salt = sessionStorage.getItem('salt')
 
-		const innerMessage = await this.prepareSubLayer(encryptedBallot, voteId);
+		const innerMessage = await this.prepareSubLayer(encryptedBallot, voteId, salt);
 
 		const sharedSecret = await this.ECDH.deriveSecret();
 		const doubleEncryptedBallot = await this.ECDH.encrypt(innerMessage, sharedSecret);
@@ -52,13 +54,14 @@ export const cryptoUtils = {
 		await this.digSig.genKeys();
 	},
 
-	prepareSubLayer: async function(RSAEncryptedBallot, voteId) { //add hashOfMidWayEncrypted??
+	prepareSubLayer: async function(RSAEncryptedBallot, voteId, salt) { //add hashOfMidWayEncrypted??
 		if( voteId ===  undefined){
 			return JSON.stringify({innerLayer: RSAEncryptedBallot});
 		} else {
 			return JSON.stringify({
 				innerLayer: RSAEncryptedBallot, //string (RSA)
 				voteId: voteId, //object, strings whatever
+				salt: salt //object, strings whatever
 			});}
 	},
 

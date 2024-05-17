@@ -9,6 +9,7 @@ const serverRSA = require('../utils/cryptoFunctions/serverRSA');
 const serverDigSig = require('../utils/cryptoFunctions/serverDigSig');
 const crypto = require('crypto');
 const { exportPublicKeys } = require('../utils/keyUsage.js');
+const { hashString } = require('../utils/cryptoFunctions/serverCryptoUtils');
 
 const router = express.Router();
 
@@ -28,9 +29,10 @@ router.post('/', async (req, res) => {
 				const voteIdFromDB = results[0].vote_id;
 				//TODO EXTRACT INTO OWN FILE
 				//const hashVoteIdFromDB = crypto.createHash('sha256').update(voteIdFromDB + salt).digest('hex');
-				const encoder = new TextEncoder();
-				const dataVoteId = encoder.encode(voteIdFromDB + salt);
-				const hashVoteIdFromDB = crypto.createHash('sha256').update(dataVoteId).digest('hex');
+				const hashVoteIdFromDB = await hashString({ voteId: voteIdFromDB, salt: salt })
+				// const encoder = new TextEncoder();
+				// const dataVoteId = encoder.encode(voteIdFromDB + salt);
+				// const hashVoteIdFromDB = crypto.createHash('sha256').update(dataVoteId).digest('hex');
 				if (hashVoteIdFromDB !== voteIdHash) {
 					res.status(400).send('Invalid voteId');
 				}

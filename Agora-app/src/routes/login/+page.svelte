@@ -23,6 +23,7 @@
         console.log(hashedDetail)
         sessionStorage.setItem('personIdHash', hashedDetail.personIdHash);
         sessionStorage.setItem('voteId', hashedDetail.voteIdHash);
+        sessionStorage.setItem('salt', hashedDetail.salt)
 
 
         console.log(hashedDetail)

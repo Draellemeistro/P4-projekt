@@ -4,6 +4,7 @@ const serverECDHCrypto = require('../utils/cryptoFunctions/serverECDH.js');
 const serverDigSig = require('../utils/cryptoFunctions/serverDigSig');
 const { verifyToken } = require('../utils/jwt');
 const { keyStore } = require('../utils/keyStore');
+const { hashString } = require('../utils/cryptoFunctions/serverCryptoUtils');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
@@ -11,7 +12,6 @@ router.post('/', async (req, res) => {
 	const token = authHeader && authHeader.split(' ')[1];
 	const { message, signature } = req.body;
 	const { encryptedMessage, ivValue} = JSON.parse(message);
-
 
 	if (token == null) {
 		console.log('No token');
@@ -42,18 +42,18 @@ router.post('/', async (req, res) => {
 			ECDHKey
 		);
 		console.log('Decrypted message:', decryptedMessage);
-		const { innerLayer, voteId } = JSON.parse(decryptedMessage);
+		const { innerLayer, voteId, salt } = JSON.parse(decryptedMessage);
 		console.log('voteId:', voteId);
 		if (decodedToken.voteId !== voteId) {
 			console.log('voteId from token does not match voteId from decrypted message');
 			res.status(409).json({ message: 'voteId mismatch' });
 			return;
 		}
-
+		const voteIdHash = await hashString({ voteId, salt })
 		const checkQuery = 'SELECT * FROM Agora.votes WHERE VoteID = ?';
 		const updateQuery = 'UPDATE Agora.votes SET hasVoted = true WHERE VoteID = ?';
 		const ballotQuery = 'INSERT INTO Agora.ballotbox (encr_ballot) VALUES (?)';
-		connection.query(checkQuery, [voteId], (err, result) => {
+		connection.query(checkQuery, [voteIdHash], (err, result) => {
 			if (err) {
 				console.error('Error executing query:', err);
 				res.status(500).json({ message: 'Internal server error' });

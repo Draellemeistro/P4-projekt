@@ -80,6 +80,12 @@ const crypto = require('crypto');
 	return Buffer.from(base64, 'base64');
 }
 
+async function hashString(detail) {
+	const encoder = new TextEncoder();
+	const dataVoteId = encoder.encode(detail.voteId + detail.salt);
+	return crypto.createHash('sha256').update(dataVoteId).digest('hex');
+}
+
 
 module.exports = {
 	importTemplateRSA,
@@ -87,4 +93,5 @@ module.exports = {
 	importTemplateDigSig,
 	arrayBufferToBase64,
 	base64ToArrayBuffer,
+	hashString
 	};
