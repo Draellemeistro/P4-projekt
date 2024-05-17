@@ -22,18 +22,20 @@ router.post('/', async (req, res) => {
 		let clientKeyDigSig;
 		if (typeof keys === 'string') {
 			const keysParsed = JSON.parse(keys);
-		console.log('User verified');
-		const token = generateToken(personId, voteId);
-		res.json({
-			token: token,
-			message: otpVerificationResult.message,
-		});
+			console.log('User verified');
+			const token = generateToken(personId, voteId);
+			res.json({
+				token: token,
+				message: otpVerificationResult.message,
+			});
 
-		keyStore[personId] = { ECDH: keysParsed.ECDH, DigSig: keysParsed.DigSig };
+			keyStore[personId] = { ECDH: keysParsed.ECDH, DigSig: keysParsed.DigSig };
 
+
+		}
 	} else {
-			console.log(otpVerificationResult.message)
+		console.log(otpVerificationResult.message)
 		res.status(400).json({ message: otpVerificationResult.message });
-	}}
+	}
 });
 module.exports = router;
