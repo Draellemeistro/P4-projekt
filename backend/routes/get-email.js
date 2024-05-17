@@ -14,10 +14,9 @@ const router = express.Router();
 
 
 router.post('/', async (req, res) => {
-	const { hashedDetail, clientPublicKey } = req.body;
+	const { hashedDetail } = req.body;
 	console.log(req.body);
 	const { personIdHash, voteIdHash, salt } = hashedDetail;
-	keyStore[personIdHash] = clientPublicKey;
 	//const keyRing = await exportPublicKeys();
 	const keyRing = {RSA: '111', ECDH: '222', DigSig: '333'};
 	console.log(personIdHash)
