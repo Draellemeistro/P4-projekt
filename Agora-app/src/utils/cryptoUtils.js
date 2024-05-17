@@ -40,8 +40,8 @@ export const cryptoUtils = {
 
 		const innerMessage = await this.prepareSubLayer(encryptedBallot, voteId);
 
-		const sharedSecret = await ECDH.deriveSecret();
-		const doubleEncryptedBallot = await this.encrypt(innerMessage, sharedSecret);
+		const sharedSecret = await this.ECDH.deriveSecret();
+		const doubleEncryptedBallot = await this.ECDH.encrypt(innerMessage, sharedSecret);
 		//Returns  object: {encryptedMessage:base64, ivValue:Uint8Array}
 
 		return await this.prepareMessageWithSignature(JSON.stringify(doubleEncryptedBallot));
