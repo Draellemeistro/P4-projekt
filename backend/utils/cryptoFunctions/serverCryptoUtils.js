@@ -79,9 +79,7 @@ const crypto = require('crypto');
  function base64ToArrayBuffer(base64) {
 	return Buffer.from(base64, 'base64');
 }
- function exportKeyToString(key){
-	return  JSON.stringify(crypto.subtle.exportKey('jwk', key));
-}
+
 
 module.exports = {
 	importTemplateRSA,
@@ -89,5 +87,4 @@ module.exports = {
 	importTemplateDigSig,
 	arrayBufferToBase64,
 	base64ToArrayBuffer,
-	exportKeyToString,
-};
+	};

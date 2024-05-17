@@ -24,10 +24,21 @@ async function loadAllKeys() {
 	await serverDigSig.loadKeys();
 	return 'Keys loaded successfully.'
 }
+function exportKeyToString(key){
+	return  JSON.stringify(crypto.subtle.exportKey('jwk', key));
+}
+
+ function exportPublicKeys() {
+	 const rsa = exportKeyToString(serverRSA.getPubKey());
+	 const ecdh = exportKeyToString(serverECDH.getPubKey());
+	 const digSig = exportKeyToString(serverDigSig.getPubKey());
+	 return { RSA: rsa, ECDH: ecdh, DigSig: digSig };
+ }
 
 module.exports = {
 	allKeysAreLoaded,
 	publicKeysAreLoaded,
 	privateKeysAreLoaded,
-	loadAllKeys
+	loadAllKeys,
+	exportPublicKeys
 };

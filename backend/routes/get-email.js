@@ -8,7 +8,7 @@ const serverECDH = require('../utils/cryptoFunctions/serverECDH');
 const serverRSA = require('../utils/cryptoFunctions/serverRSA');
 const serverDigSig = require('../utils/cryptoFunctions/serverDigSig');
 const crypto = require('crypto');
-const { exportPublicKeys } = require('../utils/cryptoFunctions/serverCryptoUtils');
+const { exportPublicKeys } = require('../utils/keyUsage.js');
 
 const router = express.Router();
 
