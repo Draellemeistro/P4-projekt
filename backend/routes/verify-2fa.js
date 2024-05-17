@@ -22,19 +22,15 @@ router.post('/', async (req, res) => {
 		console.log('User verified OTP')
 		let clientKeyECDH;
 		let clientKeyDigSig;
-		if (typeof keys === 'string') {
-			const keysParsed = JSON.parse(keys);
-			console.log('User verified');
-			const token = generateToken(personId, voteId);
-			res.json({
-				token: token,
-				message: otpVerificationResult.message,
-			});
+		console.log('keys', keys)
+		console.log('User verified');
+		const token = generateToken(personId, voteId);
+		keyStore[personId] = { ECDH: keys.ECDH, DigSig: keys.DigSig };
+		res.json({
+			token: token,
+			message: otpVerificationResult.message,
+		});
 
-			keyStore[personId] = { ECDH: keysParsed.ECDH, DigSig: keysParsed.DigSig };
-
-
-		}
 	} else {
 		console.log(otpVerificationResult.message)
 		res.status(400).json({ message: otpVerificationResult.message });
