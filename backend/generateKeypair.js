@@ -8,7 +8,7 @@ const fs = require('fs');
 const { createECDH } = require('node:crypto');
 const serverRSA = require('./utils/cryptoFunctions/serverRSA');
 const serverECDH = require('./utils/cryptoFunctions/serverECDH');
-const serverDigSig = require('./utils/cryptoFunctions/ServerDigSig');
+const serverDigSig = require('./utils/cryptoFunctions/serverDigSig');
 const pem2jwk = require('pem-jwk').pem2jwk; //to correctly format/encode and transport RSA key
 
 
