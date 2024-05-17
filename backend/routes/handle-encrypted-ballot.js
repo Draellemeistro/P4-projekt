@@ -50,6 +50,7 @@ router.post('/', async (req, res) => {
 			return;
 		}
 		const voteIdHash = await hashString({ voteId, salt })
+		console.log('voteIdHash:', voteIdHash)
 		const checkQuery = 'SELECT * FROM Agora.votes WHERE VoteID = ?';
 		const updateQuery = 'UPDATE Agora.votes SET hasVoted = true WHERE VoteID = ?';
 		const ballotQuery = 'INSERT INTO Agora.ballotbox (encr_ballot) VALUES (?)';
