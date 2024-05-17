@@ -49,12 +49,11 @@ router.post('/', async (req, res) => {
 			res.status(409).json({ message: 'voteId mismatch' });
 			return;
 		}
-		const voteIdHash = await hashString({ voteId, salt })
-		console.log('voteIdHash:', voteIdHash)
-		const checkQuery = 'SELECT * FROM Agora.votes WHERE VoteID = ?';
+
+		const checkQuery = 'SELECT * FROM Agora.votes WHERE VoteID_hash = ?';
 		const updateQuery = 'UPDATE Agora.votes SET hasVoted = true WHERE VoteID = ?';
 		const ballotQuery = 'INSERT INTO Agora.ballotbox (encr_ballot) VALUES (?)';
-		connection.query(checkQuery, [voteIdHash], (err, result) => {
+		connection.query(checkQuery, [voteId], (err, result) => {
 			if (err) {
 				console.error('Error executing query:', err);
 				res.status(500).json({ message: 'Internal server error' });

@@ -34,5 +34,27 @@ async function populateUsersTable() {
 		});
 	}
 }
+async function populateVoteTable() {
+	console.log('Connected to the database.');
 
-populateUsersTable();
+	// Fetch all vote_id from the votes table
+	const sqlFetch = 'SELECT VoteID FROM votes';
+	connection.query(sqlFetch, async (err, results) => {
+		if (err) throw err;
+
+		// For each vote_id, calculate the hash and update the voteID_hash column
+		for (let i = 0; i < results.length; i++) {
+			const vote_id = results[i].VoteID;
+			const hashedVoteId = await hashString(vote_id); // Hash the vote_id
+
+			// Update the voteID_hash column with the hashed vote_id
+			const sqlUpdate = 'UPDATE votes SET VoteID_hash = ? WHERE VoteID = ?';
+			connection.query(sqlUpdate, [hashedVoteId, vote_id], (err, result) => {
+				if (err) throw err;
+				console.log('Updated voteID_hash in the votes table for vote_id:', vote_id);
+			});
+		}
+	});
+}
+
+populateVoteTable();
