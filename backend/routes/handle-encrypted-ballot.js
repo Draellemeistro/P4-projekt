@@ -78,6 +78,8 @@ router.post('/', async (req, res) => {
 						// Compare the hashed fetched voteId with the voteId from the decrypted message
 						console.log('hashedFetchedVoteId:', hashedFetchedVoteId)
 						console.log('voteId:', voteId)
+						console.log('fetchedVoteId:', fetchedVoteId + salt)
+
 						if (hashedFetchedVoteId !== voteId) {
 							console.log('voteId from database does not match voteId from decrypted message');
 							res.status(409).json({ message: 'voteId mismatch' });

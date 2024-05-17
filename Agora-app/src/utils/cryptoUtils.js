@@ -17,6 +17,7 @@ export const cryptoUtils = {
 
 		const encoder = new TextEncoder();
 		const dataPersonId = encoder.encode(detail.personId);
+		console.log(detail.voteId + saltHex)
 		const dataVoteId = encoder.encode(detail.voteId + saltHex);
 		const hashPersonId = await window.crypto.subtle.digest('SHA-256', dataPersonId);
 		const hashVoteId = await window.crypto.subtle.digest('SHA-256', dataVoteId);		return {
