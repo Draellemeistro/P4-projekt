@@ -9,7 +9,7 @@ const fs = require('fs');
 const path = require('path');
 const ServerECDH = require('./utils/cryptoFunctions/serverECDH');
 const ServerRSA = require('./utils/cryptoFunctions/serverRSA');
-const { loadAllKeys, allKeysAreLoaded } = require('./utils/cryptoFunctions/serverCryptoUtils');
+const { loadAllKeys, allKeysAreLoaded } = require('./utils/keyUsage.js');
 
 
 
