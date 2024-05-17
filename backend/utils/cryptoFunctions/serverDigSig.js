@@ -64,6 +64,9 @@ class serverDigSig {
 
 // Step 3: Use the public key to verify the signature
 	async verify(signature, message, clientKey){
+		if (!(clientKey instanceof CryptoKey)) {
+			clientKey = await this.importDigSig(clientKey, true);
+		}
 		const encoder = new TextEncoder();
 		const data = encoder.encode(message);
 		if (typeof signature === 'string'){

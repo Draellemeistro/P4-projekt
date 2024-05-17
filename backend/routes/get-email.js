@@ -26,12 +26,11 @@ router.post('/', async (req, res) => {
 			if (results.length > 0) {
 				const email = results[0].email;
 				const voteIdFromDB = results[0].vote_id;
+				//TODO EXTRACT INTO OWN FILE
 				//const hashVoteIdFromDB = crypto.createHash('sha256').update(voteIdFromDB + salt).digest('hex');
 				const encoder = new TextEncoder();
 				const dataVoteId = encoder.encode(voteIdFromDB + salt);
 				const hashVoteIdFromDB = crypto.createHash('sha256').update(dataVoteId).digest('hex');
-				console.log('hashVoteIdFromDB:', hashVoteIdFromDB)
-				console.log('voteIdHash:', voteIdHash)
 				if (hashVoteIdFromDB !== voteIdHash) {
 					res.status(400).send('Invalid voteId');
 				}
