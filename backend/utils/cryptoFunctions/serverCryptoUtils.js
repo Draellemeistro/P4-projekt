@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+const crypto = require('crypto');
 const serverECDH = require('./serverECDH');
 const serverRSA = require('./serverRSA');
 const serverDigSig = require('./serverDigSig');
