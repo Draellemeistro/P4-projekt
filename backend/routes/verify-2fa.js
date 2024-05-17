@@ -32,8 +32,8 @@ router.post('/', async (req, res) => {
 		keyStore[personId] = { ECDH: keysParsed.ECDH, DigSig: keysParsed.DigSig };
 
 	} else {
-			console.log(otpVerificationResult.message)
-		res.status(400).json({ message: otpVerificationResult.message });
+			console.log('Invalid keys');
+			res.status(400).json({ message: otpVerificationResult.message });
 	}}
 });
 module.exports = router;
