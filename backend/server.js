@@ -9,8 +9,8 @@ const fs = require('fs');
 const path = require('path');
 const ServerECDH = require('./utils/cryptoFunctions/serverECDH');
 const ServerRSA = require('./utils/cryptoFunctions/serverRSA');
-const { loadKeys: loadKeysRSA } = require('./utils/cryptoFunctions/serverRSA');
-const { loadKeys: loadKeysDigSig } = require('./utils/cryptoFunctions/ServerDigSig');
+const { loadAllKeys, allKeysAreLoaded } = require('./utils/cryptoFunctions/serverCryptoUtils');
+
 
 
 
@@ -23,15 +23,13 @@ app.use(express.json());
 app.use(cors({}));
 
 
-ServerRSA.loadKeys().then(() => {
-	console.log('RSA Keys loaded');
-});
-ServerECDH.loadKeys().then(() => {
-	console.log('ECDH Keys loaded');
-});
-loadKeysDigSig().then(() => {
-	console.log('DigSig Keys loaded');
-});
+if(allKeysAreLoaded()) {
+	console.log('All keys are already loaded');
+} else {
+	loadAllKeys().then(r => {
+		console.log(r);
+	});
+}
 
 
 

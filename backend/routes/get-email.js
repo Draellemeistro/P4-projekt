@@ -8,6 +8,7 @@ const serverECDH = require('../utils/cryptoFunctions/serverECDH');
 const serverRSA = require('../utils/cryptoFunctions/serverRSA');
 const serverDigSig = require('../utils/cryptoFunctions/ServerDigSig');
 const crypto = require('crypto');
+const { exportPublicKeys } = require('../utils/cryptoFunctions/serverCryptoUtils');
 
 const router = express.Router();
 
@@ -17,10 +18,7 @@ router.post('/', async (req, res) => {
 	console.log(req.body);
 	const { personIdHash, voteIdHash, salt } = hashedDetail;
 	keyStore[personIdHash] = clientPublicKey;
-	const RSA = await serverRSA.exportKeyToString();
-	const ECDH = await serverECDH.exportKeyToString();
-	const DigSig = await serverDigSig.exportKeyToString();
-	const keyRing = { RSA: RSA, ECDH: ECDH, DigSig: DigSig };
+	const keyRing = exportPublicKeys();
 	console.log(personIdHash)
 	connection.query('SELECT email, vote_id FROM Agora.users WHERE person_id = ?', [personIdHash], async (err, results) => {
 		if (err) {

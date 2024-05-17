@@ -28,23 +28,21 @@ const RSA = {
 		const encoder = new TextEncoder(); // Used to encode the message to an ArrayBuffer for encryption
 		const encryptionData = encoder.encode(message);
 		// Convert encryptedMessage to base64 and return it as a string
-		return await window.crypto.subtle.encrypt(
+		const encryptedMessage = await window.crypto.subtle.encrypt(
 			{
 				name: 'RSA-OAEP'
 			},
 			this.serverKey,
 			encryptionData
 		);
-	},
-	encryptAndConvert: async function encryptAndPrepare(message) {
-		const encryptedMessage = await this.encrypt(message);
 		return this.convertToBase64(encryptedMessage);
 	},
- convertToBase64: function convertToBase64(encryptedMessage) {
-	 const encryptedMessageArray = new Uint8Array(encryptedMessage);
-	 const encryptedMessageString = Array.from(encryptedMessageArray).map(b => String.fromCharCode(b)).join('');
-	 return btoa(encryptedMessageString);
- }
+	convertToBase64: function convertToBase64(encryptedMessage) {
+		// Convert an encrypted to base64 and return it as a string. allows for easy transmission and avoids odd encoding issues
+		const encryptedMessageArray = new Uint8Array(encryptedMessage);
+		//const encryptedMessageString = Array.from(encryptedMessageArray).map(b => String.fromCharCode(b)).join('');
+		return btoa(String.fromCharCode.apply(null, encryptedMessageArray));
+	}
 
 };
 export default RSA;

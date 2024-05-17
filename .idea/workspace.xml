@@ -5,7 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="please work">
-      <change beforePath="$PROJECT_DIR$/backend/routes/verify-2fa.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/verify-2fa.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverCryptoUtils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/cryptoProtocols/digitalSignatures.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/cryptoProtocols/digitalSignatures.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/cryptoProtocols/encryptionECDH.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/cryptoProtocols/encryptionECDH.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/cryptoProtocols/encryptionRSA.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/cryptoProtocols/encryptionRSA.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/src/utils/cryptoUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/utils/cryptoUtils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/get-email.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/get-email.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/handle-encrypted-ballot.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/handle-encrypted-ballot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/cryptoFunctions/ServerDigSig.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/cryptoFunctions/ServerDigSig.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverECDH.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverECDH.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverRSA.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/cryptoFunctions/serverRSA.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,7 +36,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="pentest" />
+        <entry key="$PROJECT_DIR$" value="main-crypto-clean" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -58,45 +70,45 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Node.js.server.js.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Vitest.fetchEmail sends the correct data and receives successful response.executor&quot;: &quot;Debug&quot;,
-    &quot;Vitest.login function sets isAuthenticated to true (1).executor&quot;: &quot;Run&quot;,
-    &quot;Vitest.login function sets isAuthenticated to true (2).executor&quot;: &quot;Run&quot;,
-    &quot;Vitest.login function sets isAuthenticated to true.executor&quot;: &quot;Run&quot;,
-    &quot;Vitest.validateForm returns errors for empty fields.executor&quot;: &quot;Run&quot;,
-    &quot;Vitest.validateForm returns errors for invalid SSIN.executor&quot;: &quot;Run&quot;,
-    &quot;Vitest.validateForm returns errors for invalid year in SSIN.executor&quot;: &quot;Run&quot;,
-    &quot;Vitest.validateForm returns no errors for valid SSIN and voteId.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;20.12.2&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.12.7&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/umarrashid/WebstormProjects/P4-projekt&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Node.js.server.js.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Vitest.fetchEmail sends the correct data and receives successful response.executor": "Debug",
+    "Vitest.login function sets isAuthenticated to true (1).executor": "Run",
+    "Vitest.login function sets isAuthenticated to true (2).executor": "Run",
+    "Vitest.login function sets isAuthenticated to true.executor": "Run",
+    "Vitest.validateForm returns errors for empty fields.executor": "Run",
+    "Vitest.validateForm returns errors for invalid SSIN.executor": "Run",
+    "Vitest.validateForm returns errors for invalid year in SSIN.executor": "Run",
+    "Vitest.validateForm returns no errors for valid SSIN and voteId.executor": "Run",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "javascript.nodejs.core.library.configured.version": "20.12.2",
+    "javascript.nodejs.core.library.typings.version": "20.12.7",
+    "last_opened_file_path": "/Users/umarrashid/WebstormProjects/P4-projekt",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.3.4\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;greenplum&quot;,
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "greenplum",
+      "mysql"
     ],
-    &quot;com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect&quot;: [
-      &quot;MySQL&quot;
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect": [
+      "MySQL"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ronie\OneDrive - Aalborg Universitet\Desktop\AGORA\P4-projekt\Agora-app\src\routes\login" />

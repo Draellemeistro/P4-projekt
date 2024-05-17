@@ -31,7 +31,7 @@ const ECDH ={
 	},
 
 	deriveSecret: async function deriveSecretKey() {
-	// Compute the shared secret using the client's private key and the server's public key
+		// Compute the shared secret using the client's private key and the server's public key
 		//because of some weird bug, the key_ops and ext properties are not passed on correctly
 		//this is a workaround to fix that
 		try {
@@ -121,61 +121,5 @@ const ECDH ={
 		let uint8Array = new Uint8Array(arrayBuffer);
 		return btoa(String.fromCharCode.apply(null, uint8Array));
 	},
-
-	//shouldn't be needed!!
-	// TODO: check if saveServerKeyVariant returns the same as saveServerKey. if yes, remove saveServerKeyVariant and convertStringToJWK
-	saveServerKeyVariant: async function saveServerKey(keyString) {
-		let keyToImportTwo;
-		keyToImportTwo = await this.convertStringToJWK(keyString, false);
-		const serverKey = await this.keyImportTemplateECDH(keyToImportTwo);
-		this.serverPubKeyVariant = await serverKey;
-		return serverKey;
-	},
-	convertStringToJWK: async function convertStringToJWK(keyString, KeyOps = true) {
-		if(typeof keyString !== 'string'){
-			throw new Error('Key must be a string.');
-		}
-		const keyParsed = JSON.parse(keyString);
-		//because of some weird bug, the key_ops and ext properties are not passed on correctly
-		//this is a workaround to fix that
-		let JWKToPassOn;
-		if (KeyOps === true) {
-			JWKToPassOn = {
-				crv: keyParsed.crv,
-				ext: keyParsed.ext,
-				key_ops: keyParsed.key_ops,
-				kty: keyParsed.kty,
-				x: keyParsed.x,
-				y: keyParsed.y,
-			};
-		}
-		else {
-			JWKToPassOn = {
-				crv: keyParsed.crv,
-				ext: keyParsed.ext,
-				key_ops: [],
-				kty: keyParsed.kty,
-				x: keyParsed.x,
-				y: keyParsed.y,
-			};
-		}
-		console.log('JWKToPassOn:', JWKToPassOn);
-		return JWKToPassOn;
-
-	},
-	ECDHPart: async function ECDHpart(message) {
-		let sharedSecret;
-		sharedSecret = await this.deriveSecret();
-		const encryptedMessage = await this.encrypt(message, sharedSecret);
-		return JSON.stringify(encryptedMessage);
-	},
-
-
-	reset() {
-		this.serverKey = null;
-		this.serverPubKeyVariant = null;
-		this.pubKey = null;
-		this.privKey = null;
-	}
 };
 export default ECDH;

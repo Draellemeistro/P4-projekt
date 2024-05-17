@@ -26,7 +26,13 @@ router.post('/', async (req, res) => {
 		personId = decodedToken.personId;
 		let keys = keyStore[personId];
 		console.log('Keys:', keys)
-		let ECDHKey = keys.ECDH;
+		const ECDHKey = keys.ECDH;
+		const DigSigKey = keys.DigSig;
+		const verified = await serverDigSig.verify(message, signature, DigSigKey);
+		if (verified) {
+			console.log('Signature verified');
+			console.log('DIGITAL SIGNATURES WORK\nDIGITAL SIGNATURES WORK\nDIGITAL SIGNATURES WORK\n');
+		}
 		const decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(
 			encryptedMessage,
 			ivValue,

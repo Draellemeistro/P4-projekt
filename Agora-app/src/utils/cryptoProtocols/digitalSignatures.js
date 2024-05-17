@@ -8,10 +8,7 @@ const digSig = {
 	serverKey: null,
 
 
-	putGenKeys: function putGenKeys(pubKey, privKey){
-		this.pubKey =  pubKey;
-		this.privKey = privKey;
-	},
+
 	putServerKey: function putServerKey(serverKey){
 		this.serverKey = serverKey;
 	},
@@ -36,7 +33,7 @@ const digSig = {
 	sign: async function signMessage(message){
 		const encoder = new TextEncoder();
 		const data = encoder.encode(message);
-		return await window.crypto.subtle.sign(
+		const signature = await window.crypto.subtle.sign(
 			{
 				name: "ECDSA",
 				hash: { name: "SHA-256" },
@@ -44,6 +41,7 @@ const digSig = {
 			this.privKey,
 			data
 		);
+		return this.arrayBufferToBase64(signature)
 	},
 
 // Step 3: Use the public key to verify the signature
@@ -90,9 +88,9 @@ const digSig = {
 			}, true, ['verify']);
 		} else {
 			return await window.crypto.subtle.importKey('jwk', keyString, {
-			name: 'ECDSA',
-			namedCurve: 'P-256'
-		}, true, ['sign']);
+				name: 'ECDSA',
+				namedCurve: 'P-256'
+			}, true, ['sign']);
 		}
 	},
 
@@ -102,10 +100,6 @@ const digSig = {
 		return importedKey;
 	},
 
-	prepareSignatureToSend: async function prepareSignForServer(message){
-		let signature = await this.sign(message);
-		return  this.arrayBufferToBase64(signature);
-	},
 
 	verifyReceivedMessage: function verifyReceivedMessage(signature, message) {
 		let sigStringToArrBuf = this.base64ToArrayBuffer(signature);
@@ -116,6 +110,7 @@ const digSig = {
 	},
 
 	arrayBufferToBase64: function (buffer) {
+		// Convert an encrypted to base64 and return it as a string. allows for easy transmission and avoids odd encoding issues
 		let uint8Array = new Uint8Array(buffer);
 		return btoa(String.fromCharCode.apply(null, uint8Array));
 	},
