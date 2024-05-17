@@ -1,5 +1,7 @@
-const mysql = require('mysql2');
+const mysql = require ('mysql2');
 
+//Maybe replace with mysql.createPool
+//Maybe replace with mysql.createPool
 const connection = mysql.createConnection({
 	host: '130.225.39.205',
 	user: 'user',
@@ -13,43 +15,4 @@ connection.connect((err) => {
 	console.log('Connected to MySQL');
 });
 
-const db = {
-	getVoteById: function(ID) {
-		return new Promise((resolve, reject) => {
-			const query = 'SELECT VoteID FROM Agora.votes WHERE id = ?';
-			connection.query(query, [ID], (err, results) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(results[0].VoteID);
-				}
-			});
-		});
-	},
-	updateVoteStatus: function(ID) {
-		return new Promise((resolve, reject) => {
-			const query = 'UPDATE Agora.votes SET hasVoted = true WHERE id = ?';
-			connection.query(query, [ID], (err, results) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(results);
-				}
-			});
-		});
-	},
-	insertEncryptedBallot: function(innerLayer) {
-		return new Promise((resolve, reject) => {
-			const query = 'INSERT INTO Agora.ballotbox (encr_ballot) VALUES (?)';
-			connection.query(query, [innerLayer], (err, results) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(results);
-				}
-			});
-		});
-	}
-}
-
-module.exports = db;
+module.exports = connection;
