@@ -55,14 +55,15 @@ export const cryptoUtils = {
 		await this.digSig.genKeys();
 	},
 
-	prepareSubLayer: async function(RSAEncryptedBallot, voteId, salt) { //add hashOfMidWayEncrypted??
+	prepareSubLayer: async function(RSAEncryptedBallot, voteId, salt, ID) { //add hashOfMidWayEncrypted??
 		if( voteId ===  undefined){
 			return JSON.stringify({innerLayer: RSAEncryptedBallot});
 		} else {
 			return JSON.stringify({
 				innerLayer: RSAEncryptedBallot, //string (RSA)
 				voteId: voteId, //object, strings whatever
-				salt: salt //object, strings whatever
+				salt: salt, //object, strings whatever
+				ID: ID, //object, strings whatever
 			});}
 	},
 

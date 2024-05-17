@@ -49,37 +49,65 @@ router.post('/', async (req, res) => {
 			res.status(409).json({ message: 'voteId mismatch' });
 			return;
 		}
-
 		const checkQuery = 'SELECT * FROM Agora.votes WHERE id = ?';
 		const updateQuery = 'UPDATE Agora.votes SET hasVoted = true WHERE id = ?';
 		const ballotQuery = 'INSERT INTO Agora.ballotbox (encr_ballot) VALUES (?)';
-		connection.query(checkQuery, [ID], (err, result) => {
+		const fetchVoteIdQuery = 'SELECT VoteID FROM Agora.votes WHERE id = ?';
+
+		connection.query(checkQuery, [ID], async (err, result) => {
 			if (err) {
 				console.error('Error executing query:', err);
 				res.status(500).json({ message: 'Internal server error' });
 				return;
 			}
 			if (result.length > 0 && !result[0].HasVoted) { // voteId exists and has not voted
-				connection.query(updateQuery, [ID], (err, result) => {
+				// Fetch voteId from the database using the ID
+				connection.query(fetchVoteIdQuery, [ID], async (err, result) => {
 					if (err) {
 						console.error('Error executing query:', err);
 						res.status(500).json({ message: 'Internal server error' });
-					} else {
-						console.log('VoteID updated in database');
-						connection.query(ballotQuery, [innerLayer], (err, result) => {
+						return;
+					}
+
+					if (result.length > 0) {
+						const fetchedVoteId = result[0].VoteID;
+
+						// Hash the fetched voteId with the salt
+						const hashedFetchedVoteId = await hashString(fetchedVoteId + salt);
+
+						// Compare the hashed fetched voteId with the voteId from the decrypted message
+						if (hashedFetchedVoteId !== voteId) {
+							console.log('voteId from database does not match voteId from decrypted message');
+							res.status(409).json({ message: 'voteId mismatch' });
+							return;
+						}
+
+						// If voteId matches, update the vote status and insert the encrypted ballot into the database
+						connection.query(updateQuery, [ID], (err, result) => {
 							if (err) {
 								console.error('Error executing query:', err);
 								res.status(500).json({ message: 'Internal server error' });
-								return;
+							} else {
+								console.log('VoteID updated in database');
+								connection.query(ballotQuery, [innerLayer], (err, result) => {
+									if (err) {
+										console.error('Error executing query:', err);
+										res.status(500).json({ message: 'Internal server error' });
+										return;
+									}
+									if (result.affectedRows === 0) {
+										console.log('Error Encrypted ballot not inserted into database');
+										res.status(500).json({ message: 'Error Encrypted ballot not inserted into database' });
+										return;
+									}
+									console.log('Encrypted ballot inserted into database');
+									res.status(200).json({ message: 'Encrypted ballot inserted into database' });
+								});
 							}
-							if (result.affectedRows === 0) {
-								console.log('Error Encrypted ballot not inserted into database');
-								res.status(500).json({ message: 'Error Encrypted ballot not inserted into database' });
-								return;
-							}
-							console.log('Encrypted ballot inserted into database');
-							res.status(200).json({ message: 'Encrypted ballot inserted into database' });
 						});
+					} else {
+						console.log('No vote found with the provided ID');
+						res.status(404).json({ message: 'No vote found with the provided ID' });
 					}
 				});
 			} else {
