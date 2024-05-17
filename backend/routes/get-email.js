@@ -18,8 +18,8 @@ router.post('/', async (req, res) => {
 	console.log(req.body);
 	const { personIdHash, voteIdHash, salt } = hashedDetail;
 	keyStore[personIdHash] = clientPublicKey;
-	const keyRing = await exportPublicKeys();
-
+	//const keyRing = await exportPublicKeys();
+	const keyRing = {RSA: '111', ECDH: '222', DigSig: '333'};
 	console.log(personIdHash)
 	connection.query('SELECT email, vote_id FROM Agora.users WHERE person_id = ?', [personIdHash], async (err, results) => {
 		if (err) {
@@ -52,7 +52,7 @@ router.post('/', async (req, res) => {
 					return res.status(500).send('Error sending email');
 				}
 			} else {
-				res.status(404).send('No user found with the provided personId and voteId');
+				return res.status(404).send('No user found with the provided personId and voteId');
 			}
 		}
 	});
