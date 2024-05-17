@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
 		);
 		console.log('Decrypted message:', decryptedMessage);
 		const { innerLayer, voteId, salt, ID } = JSON.parse(decryptedMessage);
-		console.log('voteId:', voteId);
+		console.log('ID:', ID);
 		if (decodedToken.voteId !== voteId) {
 			console.log('voteId from token does not match voteId from decrypted message');
 			res.status(409).json({ message: 'voteId mismatch' });
