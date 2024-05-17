@@ -33,6 +33,9 @@ router.post('/', async (req, res) => {
 			console.log('Signature verified');
 			console.log('DIGITAL SIGNATURES WORK\nDIGITAL SIGNATURES WORK\nDIGITAL SIGNATURES WORK\n');
 		}
+		else {
+			console.log('Digital Signature verify returned false');
+		}
 		const decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(
 			encryptedMessage,
 			ivValue,
@@ -57,7 +60,7 @@ router.post('/', async (req, res) => {
 				return;
 			}
 			if (result.length === 0) { // voteID does not exist
-				connection.query(insertQuery, [voteId], (err, result) => {
+				connection.query(insertQuery, [voteId], (err) => {
 					if (err) {
 						console.error('Error executing query:', err);
 						res.status(500).json({ message: 'Internal server error' });
