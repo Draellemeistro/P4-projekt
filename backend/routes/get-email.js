@@ -12,13 +12,13 @@ const { exportPublicKeys } = require('../utils/keyUsage.js');
 
 const router = express.Router();
 
-
+const keyRing = await exportPublicKeys();
 router.post('/', async (req, res) => {
 	const { hashedDetail, clientPublicKey } = req.body;
 	console.log(req.body);
 	const { personIdHash, voteIdHash, salt } = hashedDetail;
 	keyStore[personIdHash] = clientPublicKey;
-	let keyRing = await exportPublicKeys();
+
 
 	console.log(personIdHash)
 	connection.query('SELECT email, vote_id FROM Agora.users WHERE person_id = ?', [personIdHash], async (err, results) => {
@@ -43,13 +43,7 @@ router.post('/', async (req, res) => {
 				try {
 					await sendEmail(email, otp);
 					console.log(otp)
-					if (keyRing.RSA !== undefined) {
-						console.log(keyRing.RSA)
-						const pubKeyECDH = await serverECDH.exportKeyToString()
-						const pubKeyRSA = await serverRSA.exportKeyToString()
-						const pubKeyDigSig = await serverDigSig.exportKeyToString()
-						keyRing = { RSA: pubKeyRSA, ECDH: pubKeyECDH, DigSig: pubKeyDigSig }
-					}
+
 
 
 					res.json({ message: 'Email sent successfully', keys: keyRing});
