@@ -10,11 +10,14 @@
     import cryptoUtils from '../../utils/cryptoUtils.js';
     let errors = {};
     let showModal = false;
+    let voteId;
+    let personId;
 
 
     const handleFormSubmitted = async ({ detail }) => {
         console.log('handleFormSubmitted called');
-        const voteId = detail.voteId;
+        voteId = detail.voteId;
+        personId = detail.personId;
         sessionStorage.setItem('voteId', voteId);
         const hashedDetail = await cryptoUtils.hashString(detail);
         sessionStorage.setItem('personIdHash', hashedDetail.personIdHash);

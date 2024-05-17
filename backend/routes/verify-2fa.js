@@ -14,10 +14,12 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
 	const { twoFactorCode, personId, voteId, keys } = req.body;
+	console.log('personId: ', personId);
 	const otpData = OTPStore.getOTP(personId);
 	const otpVerificationResult = verifyOTP(otpData, twoFactorCode, Date.now());
 	console.log('request recieved')
 	if (otpVerificationResult.isValid) {
+		console.log('User verified OTP')
 		let clientKeyECDH;
 		let clientKeyDigSig;
 		if (typeof keys === 'string') {

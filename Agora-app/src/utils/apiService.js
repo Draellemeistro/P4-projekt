@@ -13,7 +13,7 @@ export const fetchEmail = (hashedDetail) => {
 };
 
 export const verify2FA = (twoFactorCode, personId, voteId, pubKeysForServer) => {
-	console.log('pubKeysForServer: ', pubKeysForServer);
+	console.log('personId: ', personId);
 	return fetch(`https://${serverIP}:${serverPort}/verify-2fa`, {
 		method: 'POST',
 		headers: {
