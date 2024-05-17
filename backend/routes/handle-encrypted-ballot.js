@@ -33,6 +33,9 @@ router.post('/', async (req, res) => {
 			console.log('Signature verified');
 			console.log('DIGITAL SIGNATURES WORK\nDIGITAL SIGNATURES WORK\nDIGITAL SIGNATURES WORK\n');
 		}
+		else {
+			console.log('Digital Signature verify returned false');
+		}
 		const decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(
 			encryptedMessage,
 			ivValue,
@@ -50,7 +53,6 @@ router.post('/', async (req, res) => {
 		const checkQuery = 'SELECT * FROM Agora.votes WHERE VoteID = ?';
 		const updateQuery = 'UPDATE Agora.votes SET hasVoted = true WHERE VoteID = ?';
 		const ballotQuery = 'INSERT INTO Agora.ballotbox (encr_ballot) VALUES (?)';
-
 		connection.query(checkQuery, [voteId], (err, result) => {
 			if (err) {
 				console.error('Error executing query:', err);
