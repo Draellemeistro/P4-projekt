@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
 	const ECDH = await serverECDH.exportKeyToString();
 	const DigSig = await serverDigSig.exportKeyToString();
 	const keyRing = { RSA: RSA, ECDH: ECDH, DigSig: DigSig };
-
+	console.log(personIdHash)
 	connection.query('SELECT email, vote_id FROM Agora.users WHERE person_id = ?', [personIdHash], async (err, results) => {
 		if (err) {
 			res.status(500).send('Error fetching email from database');
@@ -33,9 +33,9 @@ router.post('/', async (req, res) => {
 				const encoder = new TextEncoder();
 				const dataVoteId = encoder.encode(voteIdFromDB + salt);
 				const hashVoteIdFromDB = crypto.createHash('sha256').update(dataVoteId).digest('hex');
+				console.log('hashVoteIdFromDB:', hashVoteIdFromDB)
+				console.log('voteIdHash:', voteIdHash)
 				if (hashVoteIdFromDB !== voteIdHash) {
-					console.log('hashVoteIdFromDB:', hashVoteIdFromDB)
-					console.log('voteIdHash:', voteIdHash)
 					res.status(400).send('Invalid voteId');
 				}
 				const otp = generateOTP();

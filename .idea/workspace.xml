@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="din far">
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="please work i will never bad again">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes/get-email.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/get-email.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
@@ -212,14 +213,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00123" summary="changed Api request back to http?">
-      <option name="closed" value="true" />
-      <created>1715763293480</created>
-      <option name="number" value="00123" />
-      <option name="presentableId" value="LOCAL-00123" />
-      <option name="project" value="LOCAL" />
-      <updated>1715763293480</updated>
     </task>
     <task id="LOCAL-00124" summary="serverECDH.js cleanup">
       <option name="closed" value="true" />
@@ -605,7 +598,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715869453044</updated>
     </task>
-    <option name="localTasksCounter" value="172" />
+    <task id="LOCAL-00172" summary="please work i will never bad again">
+      <option name="closed" value="true" />
+      <created>1715935253495</created>
+      <option name="number" value="00172" />
+      <option name="presentableId" value="LOCAL-00172" />
+      <option name="project" value="LOCAL" />
+      <updated>1715935253495</updated>
+    </task>
+    <option name="localTasksCounter" value="173" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -638,7 +639,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="changed paths" />
     <MESSAGE value="added check for JWK" />
     <MESSAGE value="added json rsa keys and changed dir" />
     <MESSAGE value="Minor fix" />
@@ -663,6 +663,7 @@
     <MESSAGE value="minor change" />
     <MESSAGE value="added print" />
     <MESSAGE value="din far" />
-    <option name="LAST_COMMIT_MESSAGE" value="din far" />
+    <MESSAGE value="please work i will never bad again" />
+    <option name="LAST_COMMIT_MESSAGE" value="please work i will never bad again" />
   </component>
 </project>
