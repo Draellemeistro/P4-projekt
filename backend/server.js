@@ -4,6 +4,7 @@ const fetchCandidatesRoute = require('./routes/fetch-candidates.js');
 const verify2faRoute = require('./routes/verify-2fa.js');
 const handleEncryptedBallotRoute = require('./routes/handle-encrypted-ballot.js');
 const cors = require('cors');
+const helmet = require('helmet');
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
@@ -17,6 +18,12 @@ const { loadAllKeys, allKeysAreLoaded } = require('./utils/keyUsage.js');
 
 
 const app = express();
+
+app.use(helmet.hsts({ // Use helmet.hsts middleware
+	maxAge: 1800, // One year in seconds
+	includeSubDomains: true,
+	preload: true
+}));
 
 // Create a credentials object
 app.use(express.json());
