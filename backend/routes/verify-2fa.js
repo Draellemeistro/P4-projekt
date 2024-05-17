@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
 		console.log('User verified OTP')
 		let clientKeyECDH;
 		let clientKeyDigSig;
-		console.log('keys', keys)
+		console.log('keys', keys.ECDH, keys.DigSig)
 		console.log('User verified');
 		const token = generateToken(personId, voteId);
 		keyStore[personId] = { ECDH: keys.ECDH, DigSig: keys.DigSig };

@@ -20,8 +20,9 @@
         personId = detail.personId;
         sessionStorage.setItem('voteId', voteId);
         const hashedDetail = await cryptoUtils.hashString(detail);
+        console.log(hashedDetail)
         sessionStorage.setItem('personIdHash', hashedDetail.personIdHash);
-        sessionStorage.setItem('voteId', hashedDetail.voteId);
+        sessionStorage.setItem('voteId', hashedDetail.voteIdHash);
 
 
         console.log(hashedDetail)

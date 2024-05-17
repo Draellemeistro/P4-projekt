@@ -6,8 +6,7 @@ const SECRET_KEY = '1a2s21j4321231'; // Replace with real key
 function generateToken(personId, voteId) {
 	const payload = { personId, voteId };
 	console.log('payload', payload);
-	token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
-	return token;
+	return jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
 }
 
 // Middleware function to verify JWT and protect routes
