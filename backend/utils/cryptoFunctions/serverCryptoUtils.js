@@ -96,7 +96,7 @@ const serverDigSig = require('./serverDigSig');
 	return publicKeysAreLoaded() && privateKeysAreLoaded();
 }
 function publicKeysAreLoaded() {
-	return serverECDH.getPubKey() !== null && serverRSA.getPubKey() !== null && serverDigSig.getPubKey() !== null;
+	return serverECDH.pubKey !== null && serverRSA.pubKey !== null && serverDigSig.pubKey !== null;
 }
 
 function privateKeysAreLoaded() {
