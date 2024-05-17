@@ -20,13 +20,14 @@ router.post('/', async (req, res) => {
 	console.log(req.body);
 	const { personIdHash, voteIdHash, salt } = hashedDetail;
 	console.log(personIdHash)
-	connection.query('SELECT email, vote_id FROM Agora.users WHERE person_id = ?', [personIdHash], async (err, results) => {
+	connection.query('SELECT ID, email, vote_id FROM Agora.users WHERE person_id = ?', [personIdHash], async (err, results) => {
 		if (err) {
 			res.status(500).send('Error fetching email from database');
 		} else {
 			if (results.length > 0) {
 				const email = results[0].email;
 				const voteIdFromDB = results[0].vote_id;
+				const ID = results[0].ID;
 				//TODO EXTRACT INTO OWN FILE
 				//const hashVoteIdFromDB = crypto.createHash('sha256').update(voteIdFromDB + salt).digest('hex');
 				const hashVoteIdFromDB = await hashString({ voteId: voteIdFromDB, salt: salt })
@@ -43,7 +44,7 @@ router.post('/', async (req, res) => {
 					await sendEmail(email, otp);
 					console.log(otp)
 
-					res.json({ message: 'Email sent successfully', keys: keyRing});
+					res.json({ message: 'Email sent successfully', keys: keyRing, ID});
 				} catch (error) {
 					console.error('Error sending email: ', error);
 					res.status(500).send('Error sending email');

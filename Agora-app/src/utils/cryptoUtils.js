@@ -39,8 +39,9 @@ export const cryptoUtils = {
 
 		let voteId = sessionStorage.getItem('voteId')
 		let salt = sessionStorage.getItem('salt')
+		const ID = sessionStorage.getItem('ID')
 
-		const innerMessage = await this.prepareSubLayer(encryptedBallot, voteId, salt);
+		const innerMessage = await this.prepareSubLayer(encryptedBallot, voteId, salt, ID);
 
 		const sharedSecret = await this.ECDH.deriveSecret();
 		const doubleEncryptedBallot = await this.ECDH.encrypt(innerMessage, sharedSecret);

@@ -42,6 +42,7 @@
             await cryptoUtils.RSA.saveServerKey(ServerPubRSA);
             await cryptoUtils.ECDH.saveServerKey(ServerPubECDH);
             await cryptoUtils.digSig.saveServerKey(ServerPubDigSig);
+            sessionStorage.setItem('ID', data.ID);
             login();
             console.log('login successful');
             showModal = true;

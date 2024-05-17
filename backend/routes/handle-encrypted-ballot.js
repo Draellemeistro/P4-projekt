@@ -42,7 +42,7 @@ router.post('/', async (req, res) => {
 			ECDHKey
 		);
 		console.log('Decrypted message:', decryptedMessage);
-		const { innerLayer, voteId, salt } = JSON.parse(decryptedMessage);
+		const { innerLayer, voteId, salt, ID } = JSON.parse(decryptedMessage);
 		console.log('voteId:', voteId);
 		if (decodedToken.voteId !== voteId) {
 			console.log('voteId from token does not match voteId from decrypted message');
@@ -50,17 +50,17 @@ router.post('/', async (req, res) => {
 			return;
 		}
 
-		const checkQuery = 'SELECT * FROM Agora.votes WHERE VoteID_hash = ?';
-		const updateQuery = 'UPDATE Agora.votes SET hasVoted = true WHERE VoteID = ?';
+		const checkQuery = 'SELECT * FROM Agora.votes WHERE id = ?';
+		const updateQuery = 'UPDATE Agora.votes SET hasVoted = true WHERE id = ?';
 		const ballotQuery = 'INSERT INTO Agora.ballotbox (encr_ballot) VALUES (?)';
-		connection.query(checkQuery, [voteId], (err, result) => {
+		connection.query(checkQuery, [ID], (err, result) => {
 			if (err) {
 				console.error('Error executing query:', err);
 				res.status(500).json({ message: 'Internal server error' });
 				return;
 			}
 			if (result.length > 0 && !result[0].HasVoted) { // voteId exists and has not voted
-				connection.query(updateQuery, [voteId], (err, result) => {
+				connection.query(updateQuery, [ID], (err, result) => {
 					if (err) {
 						console.error('Error executing query:', err);
 						res.status(500).json({ message: 'Internal server error' });
