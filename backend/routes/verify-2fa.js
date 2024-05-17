@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
 	const { twoFactorCode, personId, voteId, keys } = req.body;
 	const otpData = OTPStore.getOTP(personId);
 	const otpVerificationResult = verifyOTP(otpData, twoFactorCode, Date.now());
-
+	console.log('request recieved')
 	if (otpVerificationResult.isValid) {
 		let clientKeyECDH;
 		let clientKeyDigSig;

@@ -39,6 +39,7 @@
               cryptoUtils.ECDH.saveServerKey(ServerPubECDH);
               cryptoUtils.digSig.saveServerKey(ServerPubDigSig);
               login();
+              console.log('login successful');
               showModal = true;
           })
           .catch(error => {
@@ -52,7 +53,6 @@
         await cryptoUtils.digSig.genKeys();
         const pubKeysForServer = await cryptoUtils.packagePublicKeys();
         const { twoFactorCode } = detail;
-
         verify2FA(twoFactorCode, personId, voteId, pubKeysForServer) // TODO: message can be encrypted, and/or signed(maybe) if needed
           .then(response => {
               if (!response.ok) {
