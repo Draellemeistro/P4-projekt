@@ -59,7 +59,7 @@ router.post('/', async (req, res) => {
 				res.status(500).json({ message: 'Internal server error' });
 				return;
 			}
-			if (result.length > 0 && !result[0].hasVoted) { // voteId exists and has not voted
+			if (result.length > 0 && !result[0].HasVoted) { // voteId exists and has not voted
 				connection.query(updateQuery, [voteId], (err, result) => {
 					if (err) {
 						console.error('Error executing query:', err);
@@ -84,6 +84,7 @@ router.post('/', async (req, res) => {
 				});
 			} else {
 				console.log('VoteID does not exist or has already voted');
+				console.log('Result:', result);
 				res.status(409).json({ message: 'VoteID does not exist or has already voted' });
 			}
 		});
