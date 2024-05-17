@@ -18,7 +18,9 @@ router.post('/', async (req, res) => {
 	console.log(req.body);
 	const { personIdHash, voteIdHash, salt } = hashedDetail;
 	keyStore[personIdHash] = clientPublicKey;
-	const keyRing = exportPublicKeys();
+	const keyRing = await exportPublicKeys();
+	console.log('keyRing:', keyRing);
+
 	console.log(personIdHash)
 	connection.query('SELECT email, vote_id FROM Agora.users WHERE person_id = ?', [personIdHash], async (err, results) => {
 		if (err) {

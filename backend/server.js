@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(cors({}));
 
 
-if(allKeysAreLoaded()) {
+if(!allKeysAreLoaded()) {
 	console.log('All keys are already loaded');
 } else {
 	loadAllKeys().then(r => {
