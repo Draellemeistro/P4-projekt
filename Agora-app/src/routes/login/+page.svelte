@@ -26,31 +26,27 @@
 
 
         console.log(hashedDetail)
-        fetchEmail(hashedDetail)
-          .then(response => {
-              if (!response.ok) {
-                  console.log('2')
-                  throw new Error(response.statusText);
-              }
-              return response.json();
-          })
-          .then(data => {
-              // Use the data here
-              console.log(data);
-              const ServerPubRSA = JSON.parse(data.keys.RSA);
-              const ServerPubECDH = JSON.parse(data.keys.ECDH);
-              const ServerPubDigSig = JSON.parse(data.keys.DigSig);
-              cryptoUtils.RSA.saveServerKey(ServerPubRSA);
-              cryptoUtils.ECDH.saveServerKey(ServerPubECDH);
-              cryptoUtils.digSig.saveServerKey(ServerPubDigSig);
-              login();
-              console.log('login successful');
-              showModal = true;
-          })
-          .catch(error => {
-              // Handle any errors that occurred while fetching the data
-              console.error('Error:', error);
-          });
+        const response = await fetchEmail(hashedDetail)
+        if (!response.ok) {
+            console.log('2')
+            console.log(response.statusText)
+            errors.server = response.statusText;
+        } else {
+           const data = await response.json();
+            // Use the data here
+            console.log(data);
+            const ServerPubRSA = JSON.parse(data.keys.RSA);
+            const ServerPubECDH = JSON.parse(data.keys.ECDH);
+            const ServerPubDigSig = JSON.parse(data.keys.DigSig);
+            await cryptoUtils.RSA.saveServerKey(ServerPubRSA);
+            await cryptoUtils.ECDH.saveServerKey(ServerPubECDH);
+            await cryptoUtils.digSig.saveServerKey(ServerPubDigSig);
+            login();
+            console.log('login successful');
+            showModal = true;
+        }
+
+
     };
 
     const handleModalClose = async ({ detail }) => {

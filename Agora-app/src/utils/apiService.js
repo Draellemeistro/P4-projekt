@@ -2,13 +2,13 @@
 export const serverIP = '130.225.39.205';
 export const serverPort = '443';
 
-export const fetchEmail = (hashedDetail) => {
-	return fetch(`https://${serverIP}:${serverPort}/get-email`, {
+export const fetchEmail = async (hashedDetail) => {
+	return await fetch(`https://${serverIP}:${serverPort}/get-email`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify({hashedDetail}),
+		body: JSON.stringify({ hashedDetail }),
 	});
 };
 
