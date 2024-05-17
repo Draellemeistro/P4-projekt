@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
 		console.log('keys', keys.ECDH, keys.DigSig)
 		console.log('User verified');
 		const token = generateToken(personId, voteId);
-		keyStore[personId] = { ECDH: keys.ECDH, DigSig: keys.DigSig };
+		keyStore[personId] = JSON.stringify({ ECDH: keys.ECDH, DigSig: keys.DigSig });
 		res.json({
 			token: token,
 			message: otpVerificationResult.message,
