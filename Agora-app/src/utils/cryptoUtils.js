@@ -12,12 +12,13 @@ export const cryptoUtils = {
 
 	hashString: async function(detail) {
 		const salt = window.crypto.getRandomValues(new Uint8Array(16)); // Generate a new salt for voteId
+		const saltHex = Array.prototype.map.call(salt, x => ('00' + x.toString(16)).slice(-2)).join('');
+
 		const encoder = new TextEncoder();
 		const dataPersonId = encoder.encode(detail.personId);
-		const dataVoteId = encoder.encode(detail.voteId + salt);
+		const dataVoteId = encoder.encode(detail.voteId + saltHex);
 		const hashPersonId = await window.crypto.subtle.digest('SHA-256', dataPersonId);
-		const hashVoteId = await window.crypto.subtle.digest('SHA-256', dataVoteId);
-		return {
+		const hashVoteId = await window.crypto.subtle.digest('SHA-256', dataVoteId);		return {
 			personIdHash: this.arrayBufferToHex(hashPersonId),
 			voteIdHash: this.arrayBufferToHex(hashVoteId),
 			salt: this.arrayBufferToHex(salt)
