@@ -3,6 +3,7 @@ const connection = require('../utils/db.js');
 const serverECDHCrypto = require('../utils/cryptoFunctions/serverECDH.js');
 const serverDigSig = require('../utils/cryptoFunctions/ServerDigSig');
 const { verifyToken } = require('../utils/jwt');
+const { keyStore } = require('../utils/keyStore');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
@@ -21,9 +22,13 @@ router.post('/', async (req, res) => {
 		console.log('Invalid token');
 		res.status(409).json({ message: 'Invalid token' });
 	} else {
-			const decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(
+		personId = decodedToken.personId
+		let keys = keyStore[personId];
+		let ECDHKey = keys.ECDH;
+		const decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(
 				encryptedMessage,
 				ivValue,
+			ECDHKey
 			);
 			console.log('Decrypted message:', decryptedMessage)
 			const {innerLayer, voteId} = JSON.parse(decryptedMessage);
