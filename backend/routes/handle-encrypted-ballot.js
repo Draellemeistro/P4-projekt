@@ -25,6 +25,7 @@ router.post('/', async (req, res) => {
 	} else {
 		personId = decodedToken.personId;
 		let keys = keyStore[personId];
+		console.log('Keys:', keys)
 		let ECDHKey = keys.ECDH;
 		const decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(
 			encryptedMessage,
