@@ -25,7 +25,6 @@ router.post('/', async (req, res) => {
 	} else {
 		personId = decodedToken.personId;
 		let keys = keyStore[personId];
-		console.log('Keys:', keys)
 		let ECDHKey = keys.ECDH;
 		const decryptedMessage = await serverECDHCrypto.handleEncryptedMessage(
 			encryptedMessage,
@@ -34,8 +33,12 @@ router.post('/', async (req, res) => {
 		);
 		console.log('Decrypted message:', decryptedMessage);
 		const { innerLayer, voteId } = JSON.parse(decryptedMessage);
-		console.log('VoteID:', voteId);
-		console.log('innerLayer:', innerLayer);
+
+		if (decodedToken.voteId !== voteId) {
+			console.log('voteId from token does not match voteId from decrypted message');
+			res.status(409).json({ message: 'voteId mismatch' });
+			return;
+		}
 
 		const insertQuery = 'INSERT INTO Agora.used_voteID (vote_id) VALUES (?)';
 		const checkQuery = 'SELECT * FROM Agora.used_voteID WHERE vote_id = ?';
