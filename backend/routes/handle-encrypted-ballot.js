@@ -73,7 +73,7 @@ router.post('/', async (req, res) => {
 						const fetchedVoteId = result[0].VoteID;
 
 						// Hash the fetched voteId with the salt
-						const hashedFetchedVoteId = await hashString(fetchedVoteId + salt);
+						const hashedFetchedVoteId = await hashString({voteId: fetchedVoteId, salt: salt});
 
 						// Compare the hashed fetched voteId with the voteId from the decrypted message
 						console.log('hashedFetchedVoteId:', hashedFetchedVoteId)
