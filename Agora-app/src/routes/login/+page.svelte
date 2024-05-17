@@ -57,6 +57,7 @@
         const pubKeysForServer = await cryptoUtils.packagePublicKeys();
         const { twoFactorCode } = detail;
         const personId = sessionStorage.getItem('personIdHash')
+        console.log('personId before sending', personId)
         const voteId = sessionStorage.getItem('voteId')
         verify2FA(twoFactorCode, personId, voteId, pubKeysForServer) // TODO: message can be encrypted, and/or signed(maybe) if needed
           .then(response => {

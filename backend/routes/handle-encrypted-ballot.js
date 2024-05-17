@@ -41,9 +41,7 @@ router.post('/', async (req, res) => {
 			ivValue,
 			ECDHKey
 		);
-		console.log('Decrypted message:', decryptedMessage);
 		const { innerLayer, voteId, salt, ID } = JSON.parse(decryptedMessage);
-		console.log('ID:', ID);
 		if (decodedToken.voteId !== voteId) {
 			console.log('voteId from token does not match voteId from decrypted message');
 			res.status(409).json({ message: 'voteId mismatch' });
@@ -76,9 +74,6 @@ router.post('/', async (req, res) => {
 						const hashedFetchedVoteId = await hashString({voteId: fetchedVoteId, salt: salt});
 
 						// Compare the hashed fetched voteId with the voteId from the decrypted message
-						console.log('hashedFetchedVoteId:', hashedFetchedVoteId)
-						console.log('voteId:', voteId)
-						console.log('fetchedVoteId:', fetchedVoteId + salt)
 
 						if (hashedFetchedVoteId !== voteId) {
 							console.log('voteId from database does not match voteId from decrypted message');

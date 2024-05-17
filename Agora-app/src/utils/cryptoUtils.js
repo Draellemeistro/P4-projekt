@@ -83,6 +83,17 @@ export const cryptoUtils = {
 		});
 	},
 
+	verifySignature: function(message, signature, DigSigKey) {
+		return digSig.verify(message, signature, DigSigKey);
+	},
+	decryptMessage: function(encryptedMessage, ivValue, ECDHKey) {
+		return ECDH.handleEncryptedMessage(encryptedMessage, ivValue, ECDHKey);
+	},
+	hashVoteId: function(voteId, salt) {
+		return this.hashString({voteId: voteId, salt: salt});
+	}
+
+
 
 //	sendKeysToServer: async function(RSAPublicKeyJWK, ECDHPublicKeyJWK, serverPublicKey) {
 //		const bothPublicKeys = { RSAPublicKey: RSAPublicKeyJWK, ECDHPublicKey: ECDHPublicKeyJWK };
