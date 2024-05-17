@@ -47,22 +47,23 @@ router.post('/', async (req, res) => {
 			return;
 		}
 
-		const insertQuery = 'INSERT INTO Agora.used_voteID (vote_id) VALUES (?)';
-		const checkQuery = 'SELECT * FROM Agora.used_voteID WHERE vote_id = ?';
+		const checkQuery = 'SELECT * FROM Agora.votes WHERE VoteID = ?';
+		const updateQuery = 'UPDATE Agora.votes SET hasVoted = true WHERE VoteID = ?';
 		const ballotQuery = 'INSERT INTO Agora.ballotbox (encr_ballot) VALUES (?)';
+
 		connection.query(checkQuery, [voteId], (err, result) => {
 			if (err) {
 				console.error('Error executing query:', err);
 				res.status(500).json({ message: 'Internal server error' });
 				return;
 			}
-			if (result.length === 0) { // voteID does not exist
-				connection.query(insertQuery, [voteId], (err, result) => {
+			if (result.length > 0 && !result[0].hasVoted) { // voteId exists and has not voted
+				connection.query(updateQuery, [voteId], (err, result) => {
 					if (err) {
 						console.error('Error executing query:', err);
 						res.status(500).json({ message: 'Internal server error' });
 					} else {
-						console.log('VoteID inserted into database');
+						console.log('VoteID updated in database');
 						connection.query(ballotQuery, [innerLayer], (err, result) => {
 							if (err) {
 								console.error('Error executing query:', err);
@@ -80,8 +81,8 @@ router.post('/', async (req, res) => {
 					}
 				});
 			} else {
-				console.log('VoteID already exists');
-				res.status(409).json({ message: 'VoteID already exists' });
+				console.log('VoteID does not exist or has already voted');
+				res.status(409).json({ message: 'VoteID does not exist or has already voted' });
 			}
 		});
 

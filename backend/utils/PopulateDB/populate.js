@@ -27,7 +27,7 @@ async function populateUsersTable() {
 		const email = `${crypto.randomBytes(10).toString('hex')}@example.com`;
 		const vote_id = uuid.v4();
 		console.log(ssin, hashedSSIN, email, vote_id);
-		const sql = 'INSERT INTO users (person_id, email, vote_id,) VALUES (?, ?, ?)';
+		const sql = 'INSERT INTO users (person_id, email, vote_id) VALUES (?, ?, ?)';
 		connection.query(sql, [hashedSSIN, email, vote_id], (err, result) => {
 			if (err) throw err;
 			console.log('Inserted data into the users table.');
