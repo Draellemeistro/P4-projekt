@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="please work i will never bad again">
-      <change beforePath="$PROJECT_DIR$/backend/routes/verify-2fa.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/verify-2fa.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -212,30 +212,6 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00126" summary="minor fix">
-      <option name="closed" value="true" />
-      <created>1715764113008</created>
-      <option name="number" value="00126" />
-      <option name="presentableId" value="LOCAL-00126" />
-      <option name="project" value="LOCAL" />
-      <updated>1715764113008</updated>
-    </task>
-    <task id="LOCAL-00127" summary="Refactor to use keyStores">
-      <option name="closed" value="true" />
-      <created>1715765018556</created>
-      <option name="number" value="00127" />
-      <option name="presentableId" value="LOCAL-00127" />
-      <option name="project" value="LOCAL" />
-      <updated>1715765018556</updated>
-    </task>
-    <task id="LOCAL-00128" summary="Added await to make sure keys are not promises when sent, fixed function call names">
-      <option name="closed" value="true" />
-      <created>1715766143170</created>
-      <option name="number" value="00128" />
-      <option name="presentableId" value="LOCAL-00128" />
-      <option name="project" value="LOCAL" />
-      <updated>1715766143170</updated>
     </task>
     <task id="LOCAL-00129" summary="Redo handle-encrypted-ballot.js">
       <option name="closed" value="true" />
@@ -605,7 +581,31 @@
       <option name="project" value="LOCAL" />
       <updated>1715936323109</updated>
     </task>
-    <option name="localTasksCounter" value="175" />
+    <task id="LOCAL-00175" summary="please work i will never bad again">
+      <option name="closed" value="true" />
+      <created>1715936399905</created>
+      <option name="number" value="00175" />
+      <option name="presentableId" value="LOCAL-00175" />
+      <option name="project" value="LOCAL" />
+      <updated>1715936399906</updated>
+    </task>
+    <task id="LOCAL-00176" summary="please work i will never bad again">
+      <option name="closed" value="true" />
+      <created>1715936466297</created>
+      <option name="number" value="00176" />
+      <option name="presentableId" value="LOCAL-00176" />
+      <option name="project" value="LOCAL" />
+      <updated>1715936466297</updated>
+    </task>
+    <task id="LOCAL-00177" summary="please work i will never bad again">
+      <option name="closed" value="true" />
+      <created>1715936601099</created>
+      <option name="number" value="00177" />
+      <option name="presentableId" value="LOCAL-00177" />
+      <option name="project" value="LOCAL" />
+      <updated>1715936601099</updated>
+    </task>
+    <option name="localTasksCounter" value="178" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

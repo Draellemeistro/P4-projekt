@@ -8,17 +8,18 @@
     import { login } from '../../utils/auth.js';
     import { goto } from '$app/navigation';
     import cryptoUtils from '../../utils/cryptoUtils.js';
-    let personId;
-    let voteId;
     let errors = {};
     let showModal = false;
 
 
     const handleFormSubmitted = async ({ detail }) => {
         console.log('handleFormSubmitted called');
-        voteId = detail.voteId;
+        const voteId = detail.voteId;
         sessionStorage.setItem('voteId', voteId);
         const hashedDetail = await cryptoUtils.hashString(detail);
+        sessionStorage.setItem('personIdHash', hashedDetail.personIdHash);
+        sessionStorage.setItem('voteId', hashedDetail.voteId);
+
 
         console.log(hashedDetail)
         fetchEmail(hashedDetail)
@@ -53,6 +54,8 @@
         await cryptoUtils.digSig.genKeys();
         const pubKeysForServer = await cryptoUtils.packagePublicKeys();
         const { twoFactorCode } = detail;
+        const personId = sessionStorage.getItem('personIdHash')
+        const voteId = sessionStorage.getItem('voteId')
         verify2FA(twoFactorCode, personId, voteId, pubKeysForServer) // TODO: message can be encrypted, and/or signed(maybe) if needed
           .then(response => {
               if (!response.ok) {
