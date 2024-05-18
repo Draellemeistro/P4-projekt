@@ -54,7 +54,7 @@ function insertEncryptedBallot(innerLayer) {
 		});
 	});
 }
-function (personIdHash) {
+function getUserByEmail(personIdHash) {
 	return new Promise((resolve, reject) => {
 		const query = 'SELECT ID, email, vote_id FROM Agora.users WHERE person_id = ?';
 		connection.query(query, [personIdHash], (err, results) => {
