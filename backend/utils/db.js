@@ -67,10 +67,24 @@ function getUserByEmail(personIdHash) {
 	});
 }
 
+function getCandidates() {
+	return new Promise((resolve, reject) => {
+		const query = 'SELECT candidate, party FROM Agora.ballot';
+		connection.query(query, (err, results) => {
+			if (err) {
+				reject(err);
+			} else {
+				resolve(results);
+			}
+		});
+	});
+}
+
 module.exports = {
 	connection,
 	checkVoteStatus,
 	updateVoteStatus,
 	insertEncryptedBallot,
-	getUserByEmail
+	getUserByEmail,
+	getCandidates
 };
