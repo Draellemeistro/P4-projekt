@@ -26,7 +26,8 @@ router.post('/', async (req, res) => {
 		const ID = results[0].ID;
 		const hashVoteIdFromDB = await hashString({ voteId: voteIdFromDB, salt: salt })
 		if (hashVoteIdFromDB !== voteIdHash) {
-			res.status(400).send('Invalid voteId');
+			console.log('Invalid voteId')
+			return res.status(400).send('Invalid voteId');
 		}
 		const otp = generateOTP();
 		const timestamp = Date.now();
