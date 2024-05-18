@@ -54,7 +54,7 @@ function insertEncryptedBallot(innerLayer) {
 		});
 	});
 }
-function getUserByEmail(personIdHash) {
+function getUserByPersonIdHash(personIdHash) {
 	return new Promise((resolve, reject) => {
 		const query = 'SELECT ID, email, vote_id FROM Agora.users WHERE person_id = ?';
 		connection.query(query, [personIdHash], (err, results) => {
@@ -80,11 +80,25 @@ function getCandidates() {
 	});
 }
 
+function getVoteId(ID) {
+	return new Promise((resolve, reject) => {
+		const query = 'SELECT vote_id FROM Agora.users WHERE ID = ?';
+		connection.query(query, [ID], (err, results) => {
+			if (err) {
+				reject(err);
+			} else {
+				resolve(results[0].vote_id);
+			}
+		});
+	});
+}
+
 module.exports = {
 	connection,
 	checkVoteStatus,
 	updateVoteStatus,
 	insertEncryptedBallot,
-	getUserByEmail,
-	getCandidates
+	getUserByEmail: getUserByPersonIdHash,
+	getCandidates,
+	getVoteId
 };

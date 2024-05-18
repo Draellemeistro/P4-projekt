@@ -28,6 +28,14 @@ function sendResponse(res, statusCode, message) {
 	res.status(statusCode).json({ message });
 }
 
+function checkVoteIdToken(tokenVoteId, voteId) {
+	return tokenVoteId === voteId;
+}
+
+function compareVoteIdDB(voteId, hashedFetchedVoteId) {
+	return voteId === hashedFetchedVoteId;
+}
+
 router.post('/', async (req, res) => {
 	try {
 		const authHeader = req.headers['authorization'];
@@ -63,7 +71,7 @@ router.post('/', async (req, res) => {
 		);
 		const { innerLayer, voteId, salt, ID } = JSON.parse(decryptedMessage);
 
-		const voteIDTokenMatch = cryptoUtils.checkVoteId(decodedToken.voteId, voteId);
+		const voteIDTokenMatch = checkVoteIdToken(decodedToken.voteId, voteId);
 		if (!voteIDTokenMatch) {
 			return sendResponse(res, STATUS_CODES.VOTE_ID_MISMATCH, MESSAGES.VOTE_ID_MISMATCH);
 		}
@@ -73,8 +81,12 @@ router.post('/', async (req, res) => {
 			return sendResponse(res, STATUS_CODES.VOTE_ID_NOT_EXIST, MESSAGES.VOTE_ID_NOT_EXIST);
 		}
 
-		const voteIdMatch = await cryptoUtils.compareVoteId(voteId, hashedFetchedVoteId);
-		if (!voteIdMatch) {
+		const fetchedVoteId = await db.getVoteId(ID);
+
+		const hashedFetchedVoteId = await cryptoUtils.hashString({ voteId: fetchedVoteId, salt: salt });
+
+		const voteIdDBMatch = compareVoteIdDB(voteId, hashedFetchedVoteId);
+		if (!voteIdDBMatch) {
 			return sendResponse(res, STATUS_CODES.VOTE_ID_MISMATCH, MESSAGES.VOTE_ID_MISMATCH);
 		}
 
