@@ -43,6 +43,10 @@ router.post('/', async (req, res) => {
 
 		let personId = decodedToken.personId;
 		let keys = keyStore[personId];
+		if (!keys) {
+			console.error('No keys found for personId:', personId);
+			return res.status(500).send('Internal server error');
+		}
 		const ECDHKey = keys.ECDH;
 		const DigSigKey = keys.DigSig;
 
