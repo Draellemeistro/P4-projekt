@@ -54,7 +54,6 @@ router.post('/', async (req, res) => {
 		const verified = await digSig.verify(message, signature, DigSigKey);
 		if (!verified) {
 			console.log('Digital Signature verify returned false');
-			return;
 		}
 
 		const decryptedMessage = await crypto.handleEncryptedMessage(
