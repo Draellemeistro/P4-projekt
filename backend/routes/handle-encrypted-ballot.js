@@ -3,8 +3,7 @@ const db = require('../utils/db.js');
 const crypto = require('../utils/cryptoFunctions/serverECDH.js');
 const digSig = require('../utils/cryptoFunctions/serverDigSig');
 const jwt = require('../utils/jwt');
-const keyStore = require('../utils/keyStore');
-const cryptoUtils = require('../utils/cryptoFunctions/serverCryptoUtils');
+const { keyStore } = require('../utils/keyStore');const cryptoUtils = require('../utils/cryptoFunctions/serverCryptoUtils');
 const router = express.Router();
 
 const STATUS_CODES = {
