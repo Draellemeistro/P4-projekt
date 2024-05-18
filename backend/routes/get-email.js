@@ -29,6 +29,7 @@ router.post('/', async (req, res) => {
 			console.log('Invalid voteId')
 			return res.status(400).send('Invalid voteId');
 		}
+
 		const otp = generateOTP();
 		const timestamp = Date.now();
 		OTPStore.addOTP(personIdHash, { otp, timestamp });

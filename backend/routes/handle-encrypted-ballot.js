@@ -42,6 +42,7 @@ router.post('/', async (req, res) => {
 		}
 
 		let personId = decodedToken.personId;
+		console.log('keys', keyStore[personId])
 		let keys = keyStore[personId];
 		if (!keys) {
 			console.error('No keys found for personId:', personId);
