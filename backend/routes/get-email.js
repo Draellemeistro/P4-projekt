@@ -1,6 +1,6 @@
 const express = require('express');
 const { generateOTP } = require('../utils/generateOTP');
-const db = require('../utils/db.js'); // Import db instead of connection
+const db = require('../utils/db.js');
 const OTPStore = require('../utils/otpStore.js');
 const { sendEmail } = require('../utils/sendEmail.js');
 const { keyStore } = require('../utils/keyStore.js');
@@ -13,32 +13,40 @@ const { hashString } = require('../utils/cryptoFunctions/serverCryptoUtils');
 
 const router = express.Router();
 
+async function fetchUserDetails(personIdHash) {
+	return await db.getUserByEmail(personIdHash);
+}
+
+async function generateAndStoreOTP(personIdHash) {
+	const otp = generateOTP();
+	const timestamp = Date.now();
+	OTPStore.addOTP(personIdHash, { otp, timestamp });
+	return otp;
+}
+
+async function sendOTP(email, otp) {
+	return await sendEmail(email, otp);
+}
+
 router.post('/', async (req, res) => {
-	const { hashedDetail} = req.body;
+	const { hashedDetail } = req.body;
 	const keyRing = await exportPublicKeys();
-	console.log(req.body);
 	const { personIdHash, voteIdHash, salt } = hashedDetail;
-	console.log(personIdHash)
-	const results = await db.getUserByEmail(personIdHash); // Use the new function
+	const results = await fetchUserDetails(personIdHash);
 	if (results.length > 0) {
 		const email = results[0].email;
 		const voteIdFromDB = results[0].vote_id;
 		const ID = results[0].ID;
 		const hashVoteIdFromDB = await hashString({ voteId: voteIdFromDB, salt: salt })
 		if (hashVoteIdFromDB !== voteIdHash) {
-			console.log('Invalid voteId')
 			return res.status(400).send('Invalid voteId');
 		}
 
-		const otp = generateOTP();
-		const timestamp = Date.now();
-		OTPStore.addOTP(personIdHash, { otp, timestamp });
+		const otp = await generateAndStoreOTP(personIdHash);
 		try {
-			await sendEmail(email, otp);
-			console.log(otp)
-			res.json({ message: 'Email sent successfully', keys: keyRing, ID});
+			await sendOTP(email, otp);
+			res.json({ message: 'Email sent successfully', keys: keyRing, ID });
 		} catch (error) {
-			console.error('Error sending email: ', error);
 			res.status(500).send('Error sending email');
 		}
 	} else {
