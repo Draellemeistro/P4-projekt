@@ -42,7 +42,8 @@ router.post('/', async (req, res) => {
 		}
 
 		let personId = decodedToken.personId;
-		console.log('keys', keyStore[personId])
+		console.log('personId in handle-encrypted-ballot:', personId);
+		console.log('keyStore in handle-encrypted-ballot:', keyStore);
 		let keys = keyStore[personId];
 		if (!keys) {
 			console.error('No keys found for personId:', personId);
