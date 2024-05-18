@@ -44,6 +44,7 @@ router.post('/', async (req, res) => {
 
 		const otp = await generateAndStoreOTP(personIdHash);
 		try {
+			console.log('OTP generated:', otp);
 			await sendOTP(email, otp);
 			res.json({ message: 'Email sent successfully', keys: keyRing, ID });
 		} catch (error) {
