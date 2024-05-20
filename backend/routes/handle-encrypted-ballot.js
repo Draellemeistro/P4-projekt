@@ -38,7 +38,7 @@ async function handleEncryptedBallot(req) {
 	const ECDHKey = keys.ECDH;
 	const DigSigKey = keys.DigSig;
 
-	const verified = await digSig.verify(message, signature, DigSigKey);
+	const verified = await digSig.verify(signature, message, DigSigKey);
 	if (!verified) {
 		console.log('Digital Signature verify returned false');
 	}
