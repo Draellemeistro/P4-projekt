@@ -67,8 +67,11 @@ class serverDigSig {
 		if (!(clientKey instanceof CryptoKey)) {
 			clientKey = await this.importDigSig(clientKey, true);
 		}
-		const data = message instanceof Buffer ? message : Buffer.from(Object.values(message));
-
+		const encoder = new TextEncoder();
+		const data = encoder.encode(message);
+		if (typeof signature === 'string'){
+			signature = base64ToArrayBuffer(signature);
+		}
 		return await crypto.subtle.verify(
 			{
 				name: "ECDSA",
