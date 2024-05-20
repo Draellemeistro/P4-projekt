@@ -21,6 +21,7 @@ async function generateAndStoreOTP(personIdHash) {
 	const otp = generateOTP();
 	const timestamp = Date.now();
 	OTPStore.addOTP(personIdHash, { otp, timestamp });
+	console.log('OTP generated:', otp);
 	return otp;
 }
 
