@@ -18,6 +18,7 @@ async function handleVerify2FA(twoFactorCode, personId, voteId, keys) {
 
 	if (otpVerificationResult.isValid) {
 		const token = await generateTokenAndStoreKeys(personId, voteId, keys);
+		OTPStore.deleteOTP(personId);
 		return {
 			status: 200,
 			body: {
