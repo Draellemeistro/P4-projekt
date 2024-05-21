@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('../utils/db.js');
 const { verifyToken } = require('../utils/jwt.js');
+const digSig = require('../utils/cryptoFunctions/serverDigSig');
 
 const router = express.Router();
 router.post('/', async (req, res) => {
@@ -12,7 +13,8 @@ router.post('/', async (req, res) => {
 	if (verifyToken(token)) {
 		try {
 			const results = await db.getCandidates();
-			res.json(results);
+			const signature = await  digSig.sign(JSON.stringify(results));
+			res.json({results: results, signature: signature});
 		} catch (err) {
 			console.error(err);
 			res.status(500).json({ error: 'Error fetching candidates from database' });

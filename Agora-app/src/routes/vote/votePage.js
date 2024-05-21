@@ -7,7 +7,11 @@ export async function requestCandidates(token) {
 	if (response.ok) {
 		const data = await response.json();
 		console.log('data: ', data);
-		const candidates = data.map(item => [item.candidate, item.party]);
+		const verify = await cryptoUtils.digSig.verifyReceivedMessage(data.signature, JSON.stringify(data.results));
+		if (verify) {
+			console.log('successfully verified the servers signature');
+		}
+		const candidates = data.results.map(item => [item.candidate, item.party]);
 		console.log('candidates: ', candidates);
 		return candidates;
 	} else {
