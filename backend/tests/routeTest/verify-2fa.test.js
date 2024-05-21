@@ -30,6 +30,7 @@ test('handleVerify2FA successfully verifies OTP', async () => {
 // Test for expired OTP
 test('handleVerify2FA fails with expired OTP', async () => {
 	OTPStore.getOTP.mockReturnValue({ otp: '123456', expiry: Date.now() - 30000 });
+	verifyOTP.mockReturnValue({ isValid: false, message: 'OTP expired' });
 
 	const result = await handleVerify2FA('123456', 'personId', 'voteId', { ECDH: 'ECDHKey', DigSig: 'DigSigKey' });
 
@@ -40,6 +41,7 @@ test('handleVerify2FA fails with expired OTP', async () => {
 // Test for incorrect OTP
 test('handleVerify2FA fails with incorrect OTP', async () => {
 	OTPStore.getOTP.mockReturnValue({ otp: '123456', expiry: Date.now() + 30000 });
+	verifyOTP.mockReturnValue({ isValid: false, message: 'OTP verification failed' });
 
 	const result = await handleVerify2FA('654321', 'personId', 'voteId', { ECDH: 'ECDHKey', DigSig: 'DigSigKey' });
 

@@ -1,8 +1,8 @@
 const express = require('express');
-const getEmailRoute = require('./routes/get-email.js');
+const getEmailRoute = require('./routes/handleUserAuthentication.js');
 const fetchCandidatesRoute = require('./routes/fetch-candidates.js');
-const verify2faRoute = require('./routes/verify-2fa.js');
-const handleEncryptedBallotRoute = require('./routes/handle-encrypted-ballot.js');
+const { verify2faRoute, handleVerify2FA } = require('./routes/verify-2fa');
+const { handleEncryptedBallotRoute, handleEncryptedBallot } = require('./routes/handle-encrypted-ballot.js');
 const cors = require('cors');
 const helmet = require('helmet');
 const https = require('https');

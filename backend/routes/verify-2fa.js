@@ -39,4 +39,4 @@ router.post('/', async (req, res) => {
 	res.status(result.status).json(result.body);
 });
 
-module.exports =  router;
+module.exports =  { router, handleVerify2FA };
