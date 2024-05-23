@@ -27,6 +27,7 @@ test('handleVerify2FA successfully verifies OTP', async () => {
 	expect(result.body).toHaveProperty('message', 'OTP verified');
 });
 
+
 // Test for expired OTP
 test('handleVerify2FA fails with expired OTP', async () => {
 	OTPStore.getOTP.mockReturnValue({ otp: '123456', expiry: Date.now() - 30000 });

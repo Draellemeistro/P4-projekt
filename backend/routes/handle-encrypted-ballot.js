@@ -57,7 +57,7 @@ async function handleEncryptedBallot(req) {
 
 	const voteStatus = await db.checkVoteStatus(ID);
 	if (!voteStatus) {
-		throw new Error('VoteID does not exist or has already voted');
+		throw new Error('VoteID does not exist or has already voted ');
 	}
 
 	const fetchedVoteId = await db.getVoteId(ID);
@@ -79,7 +79,7 @@ async function handleEncryptedBallot(req) {
 		throw new Error('Failed to insert encrypted ballot');
 	}
 
-	return 'Encrypted ballot inserted into database';
+	return 'Vote successfully casted';
 }
 
 router.post('/', async (req, res) => {

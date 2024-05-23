@@ -13,3 +13,4 @@ function verifyOTP(otpData, twoFactorCode, currentTime) {
 	}
 }
 module.exports = { verifyOTP }
+

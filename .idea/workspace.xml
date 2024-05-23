@@ -4,9 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="please work">
+    <list default="true" id="0d1947b7-2802-4f2f-8b2a-74380697ebba" name="Changes" comment="made otp one time use">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/Agora-app/src/routes/login/+page.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes/handle-encrypted-ballot.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/handle-encrypted-ballot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/tests/routeTest/verify-2fa.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/tests/routeTest/verify-2fa.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/verifyOTP.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/verifyOTP.js" afterDir="false" />
     </list>
     <list id="6f8a5ba7-e61f-47ce-a76e-e1e0e6ef8351" name="Changes by and" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,6 +26,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
+        <option value="Reciept.svelte" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -59,45 +68,65 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Node.js.server.js.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Vitest.fetchEmail sends the correct data and receives successful response.executor&quot;: &quot;Debug&quot;,
-    &quot;Vitest.login function sets isAuthenticated to true (1).executor&quot;: &quot;Run&quot;,
-    &quot;Vitest.login function sets isAuthenticated to true (2).executor&quot;: &quot;Run&quot;,
-    &quot;Vitest.login function sets isAuthenticated to true.executor&quot;: &quot;Run&quot;,
-    &quot;Vitest.validateForm returns errors for empty fields.executor&quot;: &quot;Run&quot;,
-    &quot;Vitest.validateForm returns errors for invalid SSIN.executor&quot;: &quot;Run&quot;,
-    &quot;Vitest.validateForm returns errors for invalid year in SSIN.executor&quot;: &quot;Run&quot;,
-    &quot;Vitest.validateForm returns no errors for valid SSIN and voteId.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;20.12.2&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.12.7&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/umarrashid/WebstormProjects/P4-projekt&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Jest.POST /handle-encrypted-ballot - ID in message exists in database and has not voted yet.executor": "Run",
+    "Jest.POST /handle-encrypted-ballot - valid inputs.executor": "Run",
+    "Jest.POST /handle-encrypted-ballot - voteId in message matches hashed voteId from database.executor": "Run",
+    "Jest.POST /handle-encrypted-ballot - voteId in message matches voteId in JWT token (1).executor": "Run",
+    "Jest.POST /handle-encrypted-ballot - voteId in message matches voteId in JWT token.executor": "Run",
+    "Jest.POST /verify-2fa successfully verifies OTP.executor": "Run",
+    "Jest.handle-encrypted-ballot.test.js.executor": "Run",
+    "Jest.handleEncryptedBallot throws \"Digital Signature verify returned false\" error.executor": "Run",
+    "Jest.handleEncryptedBallot throws \"Failed to insert encrypted ballot\" error.executor": "Run",
+    "Jest.handleEncryptedBallot throws \"Failed to update vote status\" error.executor": "Run",
+    "Jest.handleEncryptedBallot throws \"Invalid token\" error.executor": "Run",
+    "Jest.handleEncryptedBallot throws \"No keys found for personId\" error.executor": "Run",
+    "Jest.handleEncryptedBallot throws \"VoteID does not exist or has already voted\" error.executor": "Run",
+    "Jest.handleEncryptedBallot throws \"voteId mismatch\" error.executor": "Run",
+    "Jest.handleVerify2FA fails with expired OTP.executor": "Run",
+    "Jest.handleVerify2FA fails with incorrect OTP.executor": "Run",
+    "Jest.handleVerify2FA successfully verifies OTP.executor": "Run",
+    "Node.js.jwt.test.js.executor": "Run",
+    "Node.js.populate.js.executor": "Run",
+    "Node.js.server.js.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Vitest.fetchEmail sends the correct data and receives successful response.executor": "Debug",
+    "Vitest.login function sets isAuthenticated to true (1).executor": "Run",
+    "Vitest.login function sets isAuthenticated to true (2).executor": "Run",
+    "Vitest.login function sets isAuthenticated to true.executor": "Run",
+    "Vitest.validateForm returns errors for empty fields.executor": "Run",
+    "Vitest.validateForm returns errors for invalid SSIN.executor": "Run",
+    "Vitest.validateForm returns errors for invalid year in SSIN.executor": "Run",
+    "Vitest.validateForm returns no errors for valid SSIN and voteId.executor": "Run",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "javascript.nodejs.core.library.configured.version": "20.12.2",
+    "javascript.nodejs.core.library.typings.version": "20.12.7",
+    "last_opened_file_path": "/Users/umarrashid/WebstormProjects/P4-projekt",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.jest.jest_package": "/Users/umarrashid/WebstormProjects/P4-projekt/backend/node_modules/jest",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;greenplum&quot;,
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "greenplum",
+      "mysql"
     ],
-    &quot;com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect&quot;: [
-      &quot;MySQL&quot;
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect": [
+      "MySQL"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ronie\OneDrive - Aalborg Universitet\Desktop\AGORA\P4-projekt\Agora-app\src\routes\login" />
@@ -110,79 +139,74 @@
       <recent name="C:\Users\ronie\OneDrive - Aalborg Universitet\Desktop\AGORA\P4-projekt\backend" />
     </key>
   </component>
-  <component name="RunManager" selected="Vitest.validateForm returns errors for invalid year in SSIN">
-    <configuration name="login function sets isAuthenticated to true (2)" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Jest.handleVerify2FA successfully verifies OTP">
+    <configuration name="POST /verify-2fa successfully verifies OTP" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
-      <vitest-package value="$PROJECT_DIR$/Agora-app/node_modules/vitest" />
-      <working-dir value="$PROJECT_DIR$/Agora-app" />
-      <vitest-options value="--run" />
+      <jest-package value="$PROJECT_DIR$/backend/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/backend" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/Agora-app/src/test/auth.test.js" />
+      <test-file value="$PROJECT_DIR$/backend/tests/routeTest/verify-2fa.test.js" />
       <test-names>
-        <test-name value="login function sets isAuthenticated to true" />
+        <test-name value="POST /verify-2fa successfully verifies OTP" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="validateForm returns errors for empty fields" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
+    <configuration name="handleEncryptedBallot throws &quot;Failed to insert encrypted ballot&quot; error" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
-      <vitest-package value="$PROJECT_DIR$/Agora-app/node_modules/vitest" />
-      <working-dir value="$PROJECT_DIR$/Agora-app" />
-      <vitest-options value="--run" />
+      <jest-package value="$PROJECT_DIR$/backend/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/backend" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/Agora-app/src/test/formValidation.test.js" />
+      <test-file value="$PROJECT_DIR$/backend/tests/routeTest/handle-encrypted-ballot.test.js" />
       <test-names>
-        <test-name value="validateForm returns errors for empty fields" />
+        <test-name value="handleEncryptedBallot throws &quot;Failed to insert encrypted ballot&quot; error" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="validateForm returns errors for invalid SSIN" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
+    <configuration name="handleVerify2FA fails with expired OTP" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
-      <vitest-package value="$PROJECT_DIR$/Agora-app/node_modules/vitest" />
-      <working-dir value="$PROJECT_DIR$/Agora-app" />
-      <vitest-options value="--run" />
+      <jest-package value="$PROJECT_DIR$/backend/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/backend" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/Agora-app/src/test/formValidation.test.js" />
+      <test-file value="$PROJECT_DIR$/backend/tests/routeTest/verify-2fa.test.js" />
       <test-names>
-        <test-name value="validateForm returns errors for invalid SSIN" />
+        <test-name value="handleVerify2FA fails with expired OTP" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="validateForm returns errors for invalid year in SSIN" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
+    <configuration name="handleVerify2FA fails with incorrect OTP" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
-      <vitest-package value="$PROJECT_DIR$/Agora-app/node_modules/vitest" />
-      <working-dir value="$PROJECT_DIR$/Agora-app" />
-      <vitest-options value="--run" />
+      <jest-package value="$PROJECT_DIR$/backend/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/backend" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/Agora-app/src/test/formValidation.test.js" />
+      <test-file value="$PROJECT_DIR$/backend/tests/routeTest/verify-2fa.test.js" />
       <test-names>
-        <test-name value="validateForm returns errors for invalid year in SSIN" />
+        <test-name value="handleVerify2FA fails with incorrect OTP" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="validateForm returns no errors for valid SSIN and voteId" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
+    <configuration name="handleVerify2FA successfully verifies OTP" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
-      <vitest-package value="$PROJECT_DIR$/Agora-app/node_modules/vitest" />
-      <working-dir value="$PROJECT_DIR$/Agora-app" />
-      <vitest-options value="--run" />
+      <jest-package value="$PROJECT_DIR$/backend/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/backend" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/Agora-app/src/test/formValidation.test.js" />
+      <test-file value="$PROJECT_DIR$/backend/tests/routeTest/verify-2fa.test.js" />
       <test-names>
-        <test-name value="validateForm returns no errors for valid SSIN and voteId" />
+        <test-name value="handleVerify2FA successfully verifies OTP" />
       </test-names>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Vitest.validateForm returns no errors for valid SSIN and voteId" />
-        <item itemvalue="Vitest.validateForm returns errors for invalid year in SSIN" />
-        <item itemvalue="Vitest.validateForm returns errors for invalid SSIN" />
-        <item itemvalue="Vitest.validateForm returns errors for empty fields" />
-        <item itemvalue="Vitest.login function sets isAuthenticated to true (2)" />
+        <item itemvalue="Jest.handleVerify2FA successfully verifies OTP" />
+        <item itemvalue="Jest.handleVerify2FA fails with incorrect OTP" />
+        <item itemvalue="Jest.handleVerify2FA fails with expired OTP" />
+        <item itemvalue="Jest.handleEncryptedBallot throws &quot;Failed to insert encrypted ballot&quot; error" />
+        <item itemvalue="Jest.POST /verify-2fa successfully verifies OTP" />
       </list>
     </recent_temporary>
   </component>
@@ -213,310 +237,8 @@
       <workItem from="1713965341190" duration="44000" />
       <workItem from="1713965408241" duration="20657000" />
       <workItem from="1715156432173" duration="10448000" />
-    </task>
-    <task id="LOCAL-00139" summary="please work i will never be bad again">
-      <option name="closed" value="true" />
-      <created>1715787500548</created>
-      <option name="number" value="00139" />
-      <option name="presentableId" value="LOCAL-00139" />
-      <option name="project" value="LOCAL" />
-      <updated>1715787500548</updated>
-    </task>
-    <task id="LOCAL-00140" summary="please work i will never be bad again">
-      <option name="closed" value="true" />
-      <created>1715789079067</created>
-      <option name="number" value="00140" />
-      <option name="presentableId" value="LOCAL-00140" />
-      <option name="project" value="LOCAL" />
-      <updated>1715789079067</updated>
-    </task>
-    <task id="LOCAL-00141" summary="please work i will never be bad again">
-      <option name="closed" value="true" />
-      <created>1715789183974</created>
-      <option name="number" value="00141" />
-      <option name="presentableId" value="LOCAL-00141" />
-      <option name="project" value="LOCAL" />
-      <updated>1715789183974</updated>
-    </task>
-    <task id="LOCAL-00142" summary="please work i will never be bad again">
-      <option name="closed" value="true" />
-      <created>1715790686961</created>
-      <option name="number" value="00142" />
-      <option name="presentableId" value="LOCAL-00142" />
-      <option name="project" value="LOCAL" />
-      <updated>1715790686961</updated>
-    </task>
-    <task id="LOCAL-00143" summary="please work i will never be bad again">
-      <option name="closed" value="true" />
-      <created>1715790871188</created>
-      <option name="number" value="00143" />
-      <option name="presentableId" value="LOCAL-00143" />
-      <option name="project" value="LOCAL" />
-      <updated>1715790871188</updated>
-    </task>
-    <task id="LOCAL-00144" summary="please work i will never be bad again">
-      <option name="closed" value="true" />
-      <created>1715791184897</created>
-      <option name="number" value="00144" />
-      <option name="presentableId" value="LOCAL-00144" />
-      <option name="project" value="LOCAL" />
-      <updated>1715791184897</updated>
-    </task>
-    <task id="LOCAL-00145" summary="please work i will never be bad again">
-      <option name="closed" value="true" />
-      <created>1715791432467</created>
-      <option name="number" value="00145" />
-      <option name="presentableId" value="LOCAL-00145" />
-      <option name="project" value="LOCAL" />
-      <updated>1715791432467</updated>
-    </task>
-    <task id="LOCAL-00146" summary="please work i will never be bad again">
-      <option name="closed" value="true" />
-      <created>1715792165222</created>
-      <option name="number" value="00146" />
-      <option name="presentableId" value="LOCAL-00146" />
-      <option name="project" value="LOCAL" />
-      <updated>1715792165222</updated>
-    </task>
-    <task id="LOCAL-00147" summary="please work i will never be bad again">
-      <option name="closed" value="true" />
-      <created>1715792317695</created>
-      <option name="number" value="00147" />
-      <option name="presentableId" value="LOCAL-00147" />
-      <option name="project" value="LOCAL" />
-      <updated>1715792317695</updated>
-    </task>
-    <task id="LOCAL-00148" summary="please work i will never be bad again">
-      <option name="closed" value="true" />
-      <created>1715792398490</created>
-      <option name="number" value="00148" />
-      <option name="presentableId" value="LOCAL-00148" />
-      <option name="project" value="LOCAL" />
-      <updated>1715792398490</updated>
-    </task>
-    <task id="LOCAL-00149" summary="please work i will never be bad again">
-      <option name="closed" value="true" />
-      <created>1715792892873</created>
-      <option name="number" value="00149" />
-      <option name="presentableId" value="LOCAL-00149" />
-      <option name="project" value="LOCAL" />
-      <updated>1715792892873</updated>
-    </task>
-    <task id="LOCAL-00150" summary="please work i will never be bad again">
-      <option name="closed" value="true" />
-      <created>1715792994262</created>
-      <option name="number" value="00150" />
-      <option name="presentableId" value="LOCAL-00150" />
-      <option name="project" value="LOCAL" />
-      <updated>1715792994262</updated>
-    </task>
-    <task id="LOCAL-00151" summary="please work i will never be bad again">
-      <option name="closed" value="true" />
-      <created>1715857229603</created>
-      <option name="number" value="00151" />
-      <option name="presentableId" value="LOCAL-00151" />
-      <option name="project" value="LOCAL" />
-      <updated>1715857229604</updated>
-    </task>
-    <task id="LOCAL-00152" summary="please work i will never be bad again">
-      <option name="closed" value="true" />
-      <created>1715857528562</created>
-      <option name="number" value="00152" />
-      <option name="presentableId" value="LOCAL-00152" />
-      <option name="project" value="LOCAL" />
-      <updated>1715857528562</updated>
-    </task>
-    <task id="LOCAL-00153" summary="please work i will never be bad again">
-      <option name="closed" value="true" />
-      <created>1715857990216</created>
-      <option name="number" value="00153" />
-      <option name="presentableId" value="LOCAL-00153" />
-      <option name="project" value="LOCAL" />
-      <updated>1715857990216</updated>
-    </task>
-    <task id="LOCAL-00154" summary="please work i will never be bad again">
-      <option name="closed" value="true" />
-      <created>1715858130325</created>
-      <option name="number" value="00154" />
-      <option name="presentableId" value="LOCAL-00154" />
-      <option name="project" value="LOCAL" />
-      <updated>1715858130325</updated>
-    </task>
-    <task id="LOCAL-00155" summary="please work i will never be bad again">
-      <option name="closed" value="true" />
-      <created>1715858247186</created>
-      <option name="number" value="00155" />
-      <option name="presentableId" value="LOCAL-00155" />
-      <option name="project" value="LOCAL" />
-      <updated>1715858247186</updated>
-    </task>
-    <task id="LOCAL-00156" summary="please work i will never be bad again">
-      <option name="closed" value="true" />
-      <created>1715858321382</created>
-      <option name="number" value="00156" />
-      <option name="presentableId" value="LOCAL-00156" />
-      <option name="project" value="LOCAL" />
-      <updated>1715858321382</updated>
-    </task>
-    <task id="LOCAL-00157" summary="please work i will never be bad again">
-      <option name="closed" value="true" />
-      <created>1715858368168</created>
-      <option name="number" value="00157" />
-      <option name="presentableId" value="LOCAL-00157" />
-      <option name="project" value="LOCAL" />
-      <updated>1715858368168</updated>
-    </task>
-    <task id="LOCAL-00158" summary="sorry">
-      <option name="closed" value="true" />
-      <created>1715859101752</created>
-      <option name="number" value="00158" />
-      <option name="presentableId" value="LOCAL-00158" />
-      <option name="project" value="LOCAL" />
-      <updated>1715859101752</updated>
-    </task>
-    <task id="LOCAL-00159" summary="chg">
-      <option name="closed" value="true" />
-      <created>1715865322109</created>
-      <option name="number" value="00159" />
-      <option name="presentableId" value="LOCAL-00159" />
-      <option name="project" value="LOCAL" />
-      <updated>1715865322109</updated>
-    </task>
-    <task id="LOCAL-00160" summary="chg">
-      <option name="closed" value="true" />
-      <created>1715865664312</created>
-      <option name="number" value="00160" />
-      <option name="presentableId" value="LOCAL-00160" />
-      <option name="project" value="LOCAL" />
-      <updated>1715865664312</updated>
-    </task>
-    <task id="LOCAL-00161" summary="chg">
-      <option name="closed" value="true" />
-      <created>1715866682868</created>
-      <option name="number" value="00161" />
-      <option name="presentableId" value="LOCAL-00161" />
-      <option name="project" value="LOCAL" />
-      <updated>1715866682868</updated>
-    </task>
-    <task id="LOCAL-00162" summary="added hash to vote_id and person_id">
-      <option name="closed" value="true" />
-      <created>1715867939292</created>
-      <option name="number" value="00162" />
-      <option name="presentableId" value="LOCAL-00162" />
-      <option name="project" value="LOCAL" />
-      <updated>1715867939292</updated>
-    </task>
-    <task id="LOCAL-00163" summary="minor change">
-      <option name="closed" value="true" />
-      <created>1715868071608</created>
-      <option name="number" value="00163" />
-      <option name="presentableId" value="LOCAL-00163" />
-      <option name="project" value="LOCAL" />
-      <updated>1715868071608</updated>
-    </task>
-    <task id="LOCAL-00164" summary="minor change">
-      <option name="closed" value="true" />
-      <created>1715868093683</created>
-      <option name="number" value="00164" />
-      <option name="presentableId" value="LOCAL-00164" />
-      <option name="project" value="LOCAL" />
-      <updated>1715868093683</updated>
-    </task>
-    <task id="LOCAL-00165" summary="added print">
-      <option name="closed" value="true" />
-      <created>1715868251377</created>
-      <option name="number" value="00165" />
-      <option name="presentableId" value="LOCAL-00165" />
-      <option name="project" value="LOCAL" />
-      <updated>1715868251377</updated>
-    </task>
-    <task id="LOCAL-00166" summary="added print">
-      <option name="closed" value="true" />
-      <created>1715868313428</created>
-      <option name="number" value="00166" />
-      <option name="presentableId" value="LOCAL-00166" />
-      <option name="project" value="LOCAL" />
-      <updated>1715868313428</updated>
-    </task>
-    <task id="LOCAL-00167" summary="added print">
-      <option name="closed" value="true" />
-      <created>1715868408040</created>
-      <option name="number" value="00167" />
-      <option name="presentableId" value="LOCAL-00167" />
-      <option name="project" value="LOCAL" />
-      <updated>1715868408041</updated>
-    </task>
-    <task id="LOCAL-00168" summary="added print">
-      <option name="closed" value="true" />
-      <created>1715868747322</created>
-      <option name="number" value="00168" />
-      <option name="presentableId" value="LOCAL-00168" />
-      <option name="project" value="LOCAL" />
-      <updated>1715868747322</updated>
-    </task>
-    <task id="LOCAL-00169" summary="din far">
-      <option name="closed" value="true" />
-      <created>1715869132203</created>
-      <option name="number" value="00169" />
-      <option name="presentableId" value="LOCAL-00169" />
-      <option name="project" value="LOCAL" />
-      <updated>1715869132203</updated>
-    </task>
-    <task id="LOCAL-00170" summary="din far">
-      <option name="closed" value="true" />
-      <created>1715869204055</created>
-      <option name="number" value="00170" />
-      <option name="presentableId" value="LOCAL-00170" />
-      <option name="project" value="LOCAL" />
-      <updated>1715869204055</updated>
-    </task>
-    <task id="LOCAL-00171" summary="din far">
-      <option name="closed" value="true" />
-      <created>1715869453044</created>
-      <option name="number" value="00171" />
-      <option name="presentableId" value="LOCAL-00171" />
-      <option name="project" value="LOCAL" />
-      <updated>1715869453044</updated>
-    </task>
-    <task id="LOCAL-00172" summary="please work i will never bad again">
-      <option name="closed" value="true" />
-      <created>1715935253495</created>
-      <option name="number" value="00172" />
-      <option name="presentableId" value="LOCAL-00172" />
-      <option name="project" value="LOCAL" />
-      <updated>1715935253495</updated>
-    </task>
-    <task id="LOCAL-00173" summary="please work i will never bad again">
-      <option name="closed" value="true" />
-      <created>1715935804262</created>
-      <option name="number" value="00173" />
-      <option name="presentableId" value="LOCAL-00173" />
-      <option name="project" value="LOCAL" />
-      <updated>1715935804262</updated>
-    </task>
-    <task id="LOCAL-00174" summary="please work i will never bad again">
-      <option name="closed" value="true" />
-      <created>1715936323108</created>
-      <option name="number" value="00174" />
-      <option name="presentableId" value="LOCAL-00174" />
-      <option name="project" value="LOCAL" />
-      <updated>1715936323109</updated>
-    </task>
-    <task id="LOCAL-00175" summary="please work i will never bad again">
-      <option name="closed" value="true" />
-      <created>1715936399905</created>
-      <option name="number" value="00175" />
-      <option name="presentableId" value="LOCAL-00175" />
-      <option name="project" value="LOCAL" />
-      <updated>1715936399906</updated>
-    </task>
-    <task id="LOCAL-00176" summary="please work i will never bad again">
-      <option name="closed" value="true" />
-      <created>1715936466297</created>
-      <option name="number" value="00176" />
-      <option name="presentableId" value="LOCAL-00176" />
-      <option name="project" value="LOCAL" />
-      <updated>1715936466297</updated>
+      <workItem from="1716033586766" duration="4676000" />
+      <workItem from="1716292667286" duration="39351000" />
     </task>
     <task id="LOCAL-00177" summary="please work i will never bad again">
       <option name="closed" value="true" />
@@ -606,7 +328,311 @@
       <option name="project" value="LOCAL" />
       <updated>1715939107927</updated>
     </task>
-    <option name="localTasksCounter" value="188" />
+    <task id="LOCAL-00188" summary="please work">
+      <option name="closed" value="true" />
+      <created>1715939899873</created>
+      <option name="number" value="00188" />
+      <option name="presentableId" value="LOCAL-00188" />
+      <option name="project" value="LOCAL" />
+      <updated>1715939899873</updated>
+    </task>
+    <task id="LOCAL-00189" summary="digsig">
+      <option name="closed" value="true" />
+      <created>1715944504638</created>
+      <option name="number" value="00189" />
+      <option name="presentableId" value="LOCAL-00189" />
+      <option name="project" value="LOCAL" />
+      <updated>1715944504638</updated>
+    </task>
+    <task id="LOCAL-00190" summary="changed db structure">
+      <option name="closed" value="true" />
+      <created>1715945087140</created>
+      <option name="number" value="00190" />
+      <option name="presentableId" value="LOCAL-00190" />
+      <option name="project" value="LOCAL" />
+      <updated>1715945087140</updated>
+    </task>
+    <task id="LOCAL-00191" summary="changed db structure">
+      <option name="closed" value="true" />
+      <created>1715945463942</created>
+      <option name="number" value="00191" />
+      <option name="presentableId" value="LOCAL-00191" />
+      <option name="project" value="LOCAL" />
+      <updated>1715945463942</updated>
+    </task>
+    <task id="LOCAL-00192" summary="fix">
+      <option name="closed" value="true" />
+      <created>1715946364392</created>
+      <option name="number" value="00192" />
+      <option name="presentableId" value="LOCAL-00192" />
+      <option name="project" value="LOCAL" />
+      <updated>1715946364392</updated>
+    </task>
+    <task id="LOCAL-00193" summary="added print">
+      <option name="closed" value="true" />
+      <created>1715946427728</created>
+      <option name="number" value="00193" />
+      <option name="presentableId" value="LOCAL-00193" />
+      <option name="project" value="LOCAL" />
+      <updated>1715946427728</updated>
+    </task>
+    <task id="LOCAL-00194" summary="fixed hashvoteid">
+      <option name="closed" value="true" />
+      <created>1715947090975</created>
+      <option name="number" value="00194" />
+      <option name="presentableId" value="LOCAL-00194" />
+      <option name="project" value="LOCAL" />
+      <updated>1715947090975</updated>
+    </task>
+    <task id="LOCAL-00195" summary="fixed hashvoteid">
+      <option name="closed" value="true" />
+      <created>1715947267399</created>
+      <option name="number" value="00195" />
+      <option name="presentableId" value="LOCAL-00195" />
+      <option name="project" value="LOCAL" />
+      <updated>1715947267399</updated>
+    </task>
+    <task id="LOCAL-00196" summary="fixed hashvoteid">
+      <option name="closed" value="true" />
+      <created>1715950074261</created>
+      <option name="number" value="00196" />
+      <option name="presentableId" value="LOCAL-00196" />
+      <option name="project" value="LOCAL" />
+      <updated>1715950074261</updated>
+    </task>
+    <task id="LOCAL-00197" summary="Added print">
+      <option name="closed" value="true" />
+      <created>1715950164723</created>
+      <option name="number" value="00197" />
+      <option name="presentableId" value="LOCAL-00197" />
+      <option name="project" value="LOCAL" />
+      <updated>1715950164723</updated>
+    </task>
+    <task id="LOCAL-00198" summary="Added print">
+      <option name="closed" value="true" />
+      <created>1715950987354</created>
+      <option name="number" value="00198" />
+      <option name="presentableId" value="LOCAL-00198" />
+      <option name="project" value="LOCAL" />
+      <updated>1715950987354</updated>
+    </task>
+    <task id="LOCAL-00199" summary="Added print">
+      <option name="closed" value="true" />
+      <created>1715951684839</created>
+      <option name="number" value="00199" />
+      <option name="presentableId" value="LOCAL-00199" />
+      <option name="project" value="LOCAL" />
+      <updated>1715951684839</updated>
+    </task>
+    <task id="LOCAL-00200" summary="Added print">
+      <option name="closed" value="true" />
+      <created>1715951848955</created>
+      <option name="number" value="00200" />
+      <option name="presentableId" value="LOCAL-00200" />
+      <option name="project" value="LOCAL" />
+      <updated>1715951848955</updated>
+    </task>
+    <task id="LOCAL-00201" summary="Added print">
+      <option name="closed" value="true" />
+      <created>1715952051767</created>
+      <option name="number" value="00201" />
+      <option name="presentableId" value="LOCAL-00201" />
+      <option name="project" value="LOCAL" />
+      <updated>1715952051768</updated>
+    </task>
+    <task id="LOCAL-00202" summary="Added print">
+      <option name="closed" value="true" />
+      <created>1715953276776</created>
+      <option name="number" value="00202" />
+      <option name="presentableId" value="LOCAL-00202" />
+      <option name="project" value="LOCAL" />
+      <updated>1715953276776</updated>
+    </task>
+    <task id="LOCAL-00203" summary="Added print">
+      <option name="closed" value="true" />
+      <created>1715953548191</created>
+      <option name="number" value="00203" />
+      <option name="presentableId" value="LOCAL-00203" />
+      <option name="project" value="LOCAL" />
+      <updated>1715953548191</updated>
+    </task>
+    <task id="LOCAL-00204" summary="added hsts">
+      <option name="closed" value="true" />
+      <created>1715954282902</created>
+      <option name="number" value="00204" />
+      <option name="presentableId" value="LOCAL-00204" />
+      <option name="project" value="LOCAL" />
+      <updated>1715954282902</updated>
+    </task>
+    <task id="LOCAL-00205" summary="Complete refactor of handle-encrypted-ballot.js">
+      <option name="closed" value="true" />
+      <created>1716022957572</created>
+      <option name="number" value="00205" />
+      <option name="presentableId" value="LOCAL-00205" />
+      <option name="project" value="LOCAL" />
+      <updated>1716022957572</updated>
+    </task>
+    <task id="LOCAL-00206" summary="started refactor of get-email.js">
+      <option name="closed" value="true" />
+      <created>1716023194858</created>
+      <option name="number" value="00206" />
+      <option name="presentableId" value="LOCAL-00206" />
+      <option name="project" value="LOCAL" />
+      <updated>1716023194858</updated>
+    </task>
+    <task id="LOCAL-00207" summary="started refactor of get-email.js">
+      <option name="closed" value="true" />
+      <created>1716023225361</created>
+      <option name="number" value="00207" />
+      <option name="presentableId" value="LOCAL-00207" />
+      <option name="project" value="LOCAL" />
+      <updated>1716023225361</updated>
+    </task>
+    <task id="LOCAL-00208" summary="started refactor of get-email.js">
+      <option name="closed" value="true" />
+      <created>1716023237609</created>
+      <option name="number" value="00208" />
+      <option name="presentableId" value="LOCAL-00208" />
+      <option name="project" value="LOCAL" />
+      <updated>1716023237609</updated>
+    </task>
+    <task id="LOCAL-00209" summary="started refactor of get-email.js">
+      <option name="closed" value="true" />
+      <created>1716023563709</created>
+      <option name="number" value="00209" />
+      <option name="presentableId" value="LOCAL-00209" />
+      <option name="project" value="LOCAL" />
+      <updated>1716023563709</updated>
+    </task>
+    <task id="LOCAL-00210" summary="started refactor of fetch-candidates.js-email.js">
+      <option name="closed" value="true" />
+      <created>1716024068090</created>
+      <option name="number" value="00210" />
+      <option name="presentableId" value="LOCAL-00210" />
+      <option name="project" value="LOCAL" />
+      <updated>1716024068090</updated>
+    </task>
+    <task id="LOCAL-00211" summary="added log">
+      <option name="closed" value="true" />
+      <created>1716024881583</created>
+      <option name="number" value="00211" />
+      <option name="presentableId" value="LOCAL-00211" />
+      <option name="project" value="LOCAL" />
+      <updated>1716024881583</updated>
+    </task>
+    <task id="LOCAL-00212" summary="added log">
+      <option name="closed" value="true" />
+      <created>1716025645433</created>
+      <option name="number" value="00212" />
+      <option name="presentableId" value="LOCAL-00212" />
+      <option name="project" value="LOCAL" />
+      <updated>1716025645433</updated>
+    </task>
+    <task id="LOCAL-00213" summary="added log">
+      <option name="closed" value="true" />
+      <created>1716025983564</created>
+      <option name="number" value="00213" />
+      <option name="presentableId" value="LOCAL-00213" />
+      <option name="project" value="LOCAL" />
+      <updated>1716025983564</updated>
+    </task>
+    <task id="LOCAL-00214" summary="fixed">
+      <option name="closed" value="true" />
+      <created>1716026149802</created>
+      <option name="number" value="00214" />
+      <option name="presentableId" value="LOCAL-00214" />
+      <option name="project" value="LOCAL" />
+      <updated>1716026149802</updated>
+    </task>
+    <task id="LOCAL-00215" summary="fixed">
+      <option name="closed" value="true" />
+      <created>1716026251979</created>
+      <option name="number" value="00215" />
+      <option name="presentableId" value="LOCAL-00215" />
+      <option name="project" value="LOCAL" />
+      <updated>1716026251979</updated>
+    </task>
+    <task id="LOCAL-00216" summary="fixed">
+      <option name="closed" value="true" />
+      <created>1716027236065</created>
+      <option name="number" value="00216" />
+      <option name="presentableId" value="LOCAL-00216" />
+      <option name="project" value="LOCAL" />
+      <updated>1716027236065</updated>
+    </task>
+    <task id="LOCAL-00217" summary="Finished refactor of get-email.js">
+      <option name="closed" value="true" />
+      <created>1716028924576</created>
+      <option name="number" value="00217" />
+      <option name="presentableId" value="LOCAL-00217" />
+      <option name="project" value="LOCAL" />
+      <updated>1716028924576</updated>
+    </task>
+    <task id="LOCAL-00218" summary="Finished refactor of verify-2fa.js">
+      <option name="closed" value="true" />
+      <created>1716029264629</created>
+      <option name="number" value="00218" />
+      <option name="presentableId" value="LOCAL-00218" />
+      <option name="project" value="LOCAL" />
+      <updated>1716029264629</updated>
+    </task>
+    <task id="LOCAL-00219" summary="Finished refactor of verify-2fa.js">
+      <option name="closed" value="true" />
+      <created>1716033665427</created>
+      <option name="number" value="00219" />
+      <option name="presentableId" value="LOCAL-00219" />
+      <option name="project" value="LOCAL" />
+      <updated>1716033665427</updated>
+    </task>
+    <task id="LOCAL-00220" summary="Finished refactor of verify-2fa.js">
+      <option name="closed" value="true" />
+      <created>1716033845844</created>
+      <option name="number" value="00220" />
+      <option name="presentableId" value="LOCAL-00220" />
+      <option name="project" value="LOCAL" />
+      <updated>1716033845844</updated>
+    </task>
+    <task id="LOCAL-00221" summary="added otp log">
+      <option name="closed" value="true" />
+      <created>1716214418448</created>
+      <option name="number" value="00221" />
+      <option name="presentableId" value="LOCAL-00221" />
+      <option name="project" value="LOCAL" />
+      <updated>1716214418448</updated>
+    </task>
+    <task id="LOCAL-00222" summary="added otp log">
+      <option name="closed" value="true" />
+      <created>1716214587470</created>
+      <option name="number" value="00222" />
+      <option name="presentableId" value="LOCAL-00222" />
+      <option name="project" value="LOCAL" />
+      <updated>1716214587470</updated>
+    </task>
+    <task id="LOCAL-00223" summary="Fix">
+      <option name="closed" value="true" />
+      <created>1716214684162</created>
+      <option name="number" value="00223" />
+      <option name="presentableId" value="LOCAL-00223" />
+      <option name="project" value="LOCAL" />
+      <updated>1716214684162</updated>
+    </task>
+    <task id="LOCAL-00224" summary="finished verify-2fa.test.js and renamed get-email.js to handleUserAuthentication.js">
+      <option name="closed" value="true" />
+      <created>1716293731074</created>
+      <option name="number" value="00224" />
+      <option name="presentableId" value="LOCAL-00224" />
+      <option name="project" value="LOCAL" />
+      <updated>1716293731075</updated>
+    </task>
+    <task id="LOCAL-00225" summary="made otp one time use">
+      <option name="closed" value="true" />
+      <created>1716299323461</created>
+      <option name="number" value="00225" />
+      <option name="presentableId" value="LOCAL-00225" />
+      <option name="project" value="LOCAL" />
+      <updated>1716299323461</updated>
+    </task>
+    <option name="localTasksCounter" value="226" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -639,31 +665,31 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added json rsa keys and changed dir" />
-    <MESSAGE value="Minor fix" />
-    <MESSAGE value="changed port to 3366" />
-    <MESSAGE value="changed Api request back to http?" />
-    <MESSAGE value="serverECDH.js cleanup" />
-    <MESSAGE value="serverRSA.js cleanup" />
-    <MESSAGE value="minor fix" />
-    <MESSAGE value="Refactor to use keyStores" />
-    <MESSAGE value="Added await to make sure keys are not promises when sent, fixed function call names" />
-    <MESSAGE value="Redo handle-encrypted-ballot.js" />
-    <MESSAGE value="added JWT" />
-    <MESSAGE value="minor changes" />
-    <MESSAGE value="Added JWT check" />
-    <MESSAGE value="added verify token prints" />
-    <MESSAGE value="Finished adding token check to votePage.js" />
-    <MESSAGE value="added error print" />
-    <MESSAGE value="please work i will never be bad again" />
     <MESSAGE value="sorry" />
     <MESSAGE value="chg" />
     <MESSAGE value="added hash to vote_id and person_id" />
     <MESSAGE value="minor change" />
-    <MESSAGE value="added print" />
     <MESSAGE value="din far" />
     <MESSAGE value="please work i will never bad again" />
     <MESSAGE value="please work" />
-    <option name="LAST_COMMIT_MESSAGE" value="please work" />
+    <MESSAGE value="digsig" />
+    <MESSAGE value="changed db structure" />
+    <MESSAGE value="fix" />
+    <MESSAGE value="added print" />
+    <MESSAGE value="fixed hashvoteid" />
+    <MESSAGE value="Added print" />
+    <MESSAGE value="added hsts" />
+    <MESSAGE value="Complete refactor of handle-encrypted-ballot.js" />
+    <MESSAGE value="started refactor of get-email.js" />
+    <MESSAGE value="started refactor of fetch-candidates.js-email.js" />
+    <MESSAGE value="added log" />
+    <MESSAGE value="fixed" />
+    <MESSAGE value="Finished refactor of get-email.js" />
+    <MESSAGE value="Finished refactor of verify-2fa.js" />
+    <MESSAGE value="added otp log" />
+    <MESSAGE value="Fix" />
+    <MESSAGE value="finished verify-2fa.test.js and renamed get-email.js to handleUserAuthentication.js" />
+    <MESSAGE value="made otp one time use" />
+    <option name="LAST_COMMIT_MESSAGE" value="made otp one time use" />
   </component>
 </project>

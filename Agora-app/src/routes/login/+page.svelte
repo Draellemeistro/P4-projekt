@@ -15,27 +15,20 @@
 
 
     const handleFormSubmitted = async ({ detail }) => {
-        console.log('handleFormSubmitted called');
         voteId = detail.voteId;
         personId = detail.personId;
         sessionStorage.setItem('voteId', voteId);
         const hashedDetail = await cryptoUtils.hashString(detail);
-        console.log(hashedDetail)
         sessionStorage.setItem('personIdHash', hashedDetail.personIdHash);
         sessionStorage.setItem('voteId', hashedDetail.voteIdHash);
         sessionStorage.setItem('salt', hashedDetail.salt)
-
-
-        console.log(hashedDetail)
         const response = await fetchEmail(hashedDetail)
         if (!response.ok) {
-            console.log('2')
             console.log(response.statusText)
             errors.server = response.statusText;
         } else {
            const data = await response.json();
             // Use the data here
-            console.log(data);
             const ServerPubRSA = JSON.parse(data.keys.RSA);
             const ServerPubECDH = JSON.parse(data.keys.ECDH);
             const ServerPubDigSig = JSON.parse(data.keys.DigSig);
