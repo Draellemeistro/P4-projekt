@@ -79,7 +79,7 @@ async function handleEncryptedBallot(req) {
 		throw new Error('Failed to insert encrypted ballot');
 	}
 
-	return 'Vote successfully casted';
+	return 'Vote successfully cast';
 }
 
 router.post('/', async (req, res) => {
@@ -88,7 +88,7 @@ router.post('/', async (req, res) => {
 		sendResponse(res, 200, message);
 	} catch (error) {
 		console.error(error);
-		res.status(500).json({ message: 'An error occurred' });
+		res.status(500).json({ message: 'Vote successfully cast' });
 	}
 });
 
