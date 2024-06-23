@@ -1,6 +1,7 @@
 <script>
     import { cryptoUtils } from '../../utils/cryptoUtils.js';
     import { handleBallot } from './votePage.js';
+    import { goto } from '$app/navigation';
     export let showModal; // boolean
     export let selectedOptionModal;
     let dialog; // HTMLDialogElement
@@ -10,7 +11,12 @@
     $: if (dialog && showModal) dialog.showModal();
     async function voteHandler() {
         dialog.close()
-        await handleBallot(selectedOptionModal);
+        handleBallot(selectedOptionModal).then(() => {
+            goto('/receipt')
+        }).catch((error) => {
+            console.error(error);
+        });
+
     }
 
     async function checkKeyStatus() {

@@ -72,3 +72,12 @@ export const sendBallotForHandling = async (msgForServer) => {
 		body: msgForServer
 	});
 };
+
+export const fetchBallots = async () => {
+	return await fetch(`https://${serverIP}:${serverPort}/decrypt-full-box`, {
+		method: 'POST',
+		headers: {
+				'Content-Type': 'application/json',
+		},
+	});
+};

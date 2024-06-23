@@ -92,6 +92,17 @@ function getVoteId(ID) {
 		});
 	});
 }
+function getAllBallots() {
+	return new Promise((resolve, reject) => {
+		connection.query(`SELECT encr_ballot FROM Agora.ballotbox`, (error, results) => {
+			if (error) {
+				reject(error);
+			} else {
+				resolve(results.map(result => result[encr_ballot]));
+			}
+		});
+	});
+}
 
 module.exports = {
 	connection,
@@ -100,5 +111,7 @@ module.exports = {
 	insertEncryptedBallot,
 	getUserByEmail: getUserByPersonIdHash,
 	getCandidates,
-	getVoteId
+	getVoteId,
+	getAllBallots,
 };
+

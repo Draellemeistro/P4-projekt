@@ -1,6 +1,27 @@
-<div class="centered-content">
-    <h1 class="homepage-title">Welcome to Agora</h1>
-    <p class="homepage-description">Digital stemmeseddel</p>
-        <input type="button" onclick="location.href='/login';" value="go to login" />
-        <input type="button" onclick="location.href='/vote';" value="Go to voting page" />
-</div>
+<script>
+    import { fetchBallots } from "../../utils/apiService.js";
+
+    let ballots = [];
+
+    async function printDecryptedBallots() {
+        try {
+            const response = await fetchBallots();
+            if (!response.ok) {
+                console.error(`HTTP error! status: ${response.status}`);
+            }
+            ballots = await response.json();
+        } catch (error) {
+            console.error('An error occurred while fetching the ballots:', error);
+        }
+    }
+</script>
+
+<button on:click={printDecryptedBallots}>Fetch Decrypted Ballots</button>
+
+{#if ballots.length > 0}
+    <ul>
+        {#each ballots as ballot}
+            <li>{ballot}</li>
+        {/each}
+    </ul>
+{/if}

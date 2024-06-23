@@ -3,6 +3,7 @@ const getEmailRoute = require('./routes/handleUserAuthentication.js');
 const fetchCandidatesRoute = require('./routes/fetch-candidates.js');
 const { verify2faRoute, handleVerify2FA } = require('./routes/verify-2fa');
 const { handleEncryptedBallotRoute, handleEncryptedBallot } = require('./routes/handle-encrypted-ballot.js');
+const fetchDecryptedBallotsRoute = require('./routes/fetch-decrypted-ballots.js');
 const cors = require('cors');
 const helmet = require('helmet');
 const https = require('https');
@@ -45,6 +46,7 @@ app.use('/get-email', getEmailRoute);
 app.use('/fetch-candidates', fetchCandidatesRoute);
 app.use('/verify-2fa', verify2faRoute);
 app.use('/handle-encrypted-ballot', handleEncryptedBallotRoute);
+app.use('/fetch-decrypted-ballots', fetchDecryptedBallotsRoute);
 
 
 
